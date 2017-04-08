@@ -8,6 +8,6 @@ class HelloMessage extends React.Component {
 }
 
 ReactDOM.render(
-  <HelloMessage name="WAC" />,
+  <HelloMessage name="WAC2" />,
   document.getElementById('app')
 );
