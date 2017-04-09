@@ -1,9 +1,7 @@
 'use strict'
 import React from 'react'
 
-const colour = max => Math.floor(Math.random() * (2 + 1))
 const midiGain = velocity => ({ toAbsolute: () => velocity / 127, velocity: () => velocity })
-
 
 class DrumPad extends React.Component {
   constructor(props) {
