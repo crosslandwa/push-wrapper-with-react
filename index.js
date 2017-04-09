@@ -15,8 +15,11 @@ new Promise((resolve, reject) => navigator.requestMIDIAccess
 .then(app)
 
 function app(push) {
-  ReactDOM.render(
-    <Rainbow push={push} />,
-    document.getElementById('app')
-  );
+  setInterval(() => {
+    ReactDOM.render(
+      <Rainbow push={push} />,
+      document.getElementById('app')
+    );
+
+  }, 1000)
 }
