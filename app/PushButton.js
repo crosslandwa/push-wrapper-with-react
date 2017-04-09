@@ -22,6 +22,10 @@ class PushButton extends React.Component {
   }
 
   render() {
+    if (!this.props.active) {
+      this.props.pushButton.led_off()
+      return null
+    }
     let index = this.state.colourIndex
     let colour = ['red', 'green', 'blue'][index]
     let rgb = [0, 0, 0]
