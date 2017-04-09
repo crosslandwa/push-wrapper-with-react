@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const path = require('path')
 
 module.exports = {
   entry: './index.js',
@@ -8,11 +9,11 @@ module.exports = {
     filename: 'index_bundle.js'
   },
   plugins: [
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false
-    //   }
-    // }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.ejs'
@@ -22,7 +23,10 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
+        include: [
+          path.resolve(__dirname, '.'),
+          path.resolve(__dirname, 'node_modules/push-wrapper')
+        ],
         loader: 'babel-loader',
         query: {
           presets: ['es2015', 'react']
