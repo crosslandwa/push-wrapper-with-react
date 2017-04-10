@@ -1,7 +1,5 @@
 'use strict'
 const Push = require('push-wrapper')
-const context = new window.AudioContext()
-const PlayerFactory = require('wac.sample-player')(context)
 
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -18,14 +16,12 @@ function loadPush() {
 }
 
 Promise.all([
-  loadPush(),
-  PlayerFactory.forResource('Kick.mp3')
+  loadPush()
 ]).then(app)
 
-function app([push, player]) {
-  player.toMaster()
+function app([push]) {
   ReactDOM.render(
-    <App push={push} player={player} />,
+    <App push={push} />,
     document.getElementById('app')
   )
 }

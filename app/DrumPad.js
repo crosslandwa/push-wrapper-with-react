@@ -1,5 +1,6 @@
 'use strict'
 import React from 'react'
+import PushGridPad from './PushGridPad'
 
 const midiGain = velocity => ({ toAbsolute: () => velocity / 127, velocity: () => velocity })
 
@@ -8,13 +9,12 @@ class DrumPad extends React.Component {
     super(props)
     this.playing = this.playing.bind(this)
     this.stopped = this.stopped.bind(this)
-    this.padPressed = this.padPressed.bind(this)
-
+    this.playWithVelocity = this.playWithVelocity.bind(this)
     this.state = {velocity: 0}
   }
 
-  padPressed(velocity) {
-    this.props.player.play(midiGain(velocity))
+  playWithVelocity(velocity) {
+    this.state.player.play(midiGain(velocity))
   }
 
   playing(gain) {
@@ -26,22 +26,43 @@ class DrumPad extends React.Component {
   }
 
   render() {
-    let pad = this.props.pad
-    this.state.velocity ? pad.led_on(this.state.velocity) : pad.led_off()
-    return null
+    return this.state.player ? (
+      <div>
+        <PushGridPad
+          velocity={this.state.velocity}
+          pad={this.props.pad}
+          player={this.state.player}
+          playWithVelocity={this.playWithVelocity}
+          rgb={[250, 250, 0]}
+        />
+        <div>loaded {this.props.url}</div>
+      </div>
+    ) : (
+      <div>loading {this.props.url}...</div>
+    )
   }
 
   componentDidMount() {
-    this.props.pad.on('pressed', this.padPressed)
-    this.props.player.on('started', this.playing)
-    this.props.player.on('stopped', this.stopped)
+    if (this.state.player) {
+      this.state.player.on('started', this.playing)
+      this.state.player.on('stopped', this.stopped)
+    } else {
+      this.props.factory.forResource(this.props.url).then(player => {
+        player.toMaster()
+        player.on('started', this.playing)
+        player.on('stopped', this.stopped)
+        this.props.push.grid.x[2].y[2].on('pressed', this.playWithVelocity) // hacked in temporarily
+        this.setState({player})
+      })
+    }
   }
 
   componentWillUnmount() {
-    this.props.pad.removeListener('pressed', this.padPressed)
-    this.props.player.removeListener('started', this.playing)
-    this.props.player.removeListener('stopped', this.stopped)
-    this.props.pad.led_off()
+    if (this.state.player) {
+      this.state.player.removeListener('started', this.playing)
+      this.state.player.removeListener('stopped', this.stopped)
+    }
+    this.props.push.grid.x[2].y[2].removeListener('pressed', this.playWithVelocity) // hacked in temporarily
   }
 }
 

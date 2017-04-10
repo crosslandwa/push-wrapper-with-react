@@ -1,8 +1,11 @@
 'use strict'
 import React from 'react'
-import DrumPad from './DrumPad'
 import Rainbow from './Rainbow'
 import PushButton from './PushButton'
+import DrumPad from './DrumPad'
+
+const context = new window.AudioContext()
+const PlayerFactory = require('wac.sample-player')(context)
 
 class App extends React.Component {
   constructor(props) {
@@ -22,7 +25,12 @@ class App extends React.Component {
     return (
       <div>
         { this.state.drumPad ?
-          <DrumPad pad={grid.x[1].y[2]} player={this.props.player} />
+          <DrumPad
+            factory={PlayerFactory}
+            url='kick.mp3'
+            pad={grid.x[1].y[2]}
+            push={this.props.push}
+          />
           : <PushButton active="true" pushButton={grid.x[1].y[2]} />
         }
         <Rainbow push={this.props.push} />
@@ -32,13 +40,11 @@ class App extends React.Component {
 
   componentDidMount() {
     let grid = this.props.push.grid
-    grid.x[2].y[2].on('pressed', this.props.player.play)
     grid.x[3].y[2].on('pressed', this.toggleDrumPad)
   }
 
   componentWillUnmount() {
     let grid = this.props.push.grid
-    grid.x[2].y[2].removeListener('pressed', this.props.player.play)
     grid.x[3].y[2].removeListener('pressed', this.toggleDrumPad)
   }
 }
