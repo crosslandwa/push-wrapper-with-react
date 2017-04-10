@@ -14,7 +14,7 @@ class DrumPad extends React.Component {
   }
 
   playWithVelocity(velocity) {
-    this.state.player.play(midiGain(velocity))
+    this.props.player.play(midiGain(velocity))
   }
 
   playing(gain) {
@@ -26,7 +26,7 @@ class DrumPad extends React.Component {
   }
 
   render() {
-    return this.state.player ? (
+    return (
       <div>
         <PushGridPad
           velocity={this.state.velocity}
@@ -34,34 +34,19 @@ class DrumPad extends React.Component {
           playWithVelocity={this.playWithVelocity}
           rgb={[250, 250, 0]}
         />
-        <div>loaded {this.props.url}</div>
+        <div>Playing {this.props.url}</div>
       </div>
-    ) : (
-      <div>loading {this.props.url}...</div>
     )
   }
 
   componentDidMount() {
-    if (this.state.player) {
-      this.state.player.on('started', this.playing)
-      this.state.player.on('stopped', this.stopped)
-    } else {
-      this.props.factory.forResource(this.props.url).then(player => {
-        player.toMaster()
-        player.on('started', this.playing)
-        player.on('stopped', this.stopped)
-        this.props.push.grid.x[2].y[2].on('pressed', this.playWithVelocity) // hacked in temporarily
-        this.setState({player})
-      })
-    }
+    this.props.player.on('started', this.playing)
+    this.props.player.on('stopped', this.stopped)
   }
 
   componentWillUnmount() {
-    if (this.state.player) {
-      this.state.player.removeListener('started', this.playing)
-      this.state.player.removeListener('stopped', this.stopped)
-    }
-    this.props.push.grid.x[2].y[2].removeListener('pressed', this.playWithVelocity) // hacked in temporarily
+    this.props.player.removeListener('started', this.playing)
+    this.props.player.removeListener('stopped', this.stopped)
   }
 }
 

@@ -24,14 +24,21 @@ class App extends React.Component {
     let grid = this.props.push.grid
     return (
       <div>
-        { this.state.drumPad ?
+        { this.state.drumPad && this.state.player ?
           <DrumPad
-            factory={PlayerFactory}
+            player={this.state.player}
             url='kick.mp3'
             pad={grid.x[1].y[2]}
-            push={this.props.push}
           />
           : <PushButton active="true" pushButton={grid.x[1].y[2]} />
+        }
+        { (this.state.player &&
+          <DrumPad
+            player={this.state.player}
+            url='kick.mp3'
+            pad={grid.x[2].y[2]}
+          />
+        ) || <div>loading kick.mp3...</div>
         }
         <Rainbow push={this.props.push} />
       </div>
@@ -41,6 +48,10 @@ class App extends React.Component {
   componentDidMount() {
     let grid = this.props.push.grid
     grid.x[3].y[2].on('pressed', this.toggleDrumPad)
+    PlayerFactory.forResource('kick.mp3').then(player => {
+      player.toMaster()
+      this.setState({player})
+    })
   }
 
   componentWillUnmount() {
