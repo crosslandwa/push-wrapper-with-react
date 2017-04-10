@@ -8,7 +8,6 @@ class PushButton extends React.Component {
     super(props)
     this.handleClick = this.handleClick.bind(this);
     this.state = {colourIndex: colour()}
-    props.pushButton.on('pressed', this.handleClick)
   }
 
   handleClick() {
@@ -34,7 +33,12 @@ class PushButton extends React.Component {
     return <div className={colour} >This button is {colour}</div>
   }
 
+  componentDidMount() {
+    this.props.pushButton.on('pressed', this.handleClick)
+  }
+
   componentWillUnmount() {
+    this.props.pushButton.removeListener('pressed', this.handleClick)
     this.props.pushButton.led_off()
   }
 }

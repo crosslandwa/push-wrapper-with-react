@@ -9,12 +9,12 @@ module.exports = {
     filename: 'index_bundle.js'
   },
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      sourceMap: true
-    }),
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   },
+    //   sourceMap: true
+    // }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.ejs'
