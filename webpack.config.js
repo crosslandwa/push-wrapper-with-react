@@ -1,6 +1,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
+const production = process.env.ENVIRONMENT === 'production'
+
+const productionPlugins = production ? [new webpack.optimize.UglifyJsPlugin({
+  compress: {
+    warnings: false
+  }
+})] : []
 
 module.exports = {
   entry: './index.js',
@@ -8,18 +15,12 @@ module.exports = {
     path: `${__dirname}/dist`,
     filename: 'index_bundle.js'
   },
-  plugins: [
-    // new webpack.optimize.UglifyJsPlugin({
-    //   compress: {
-    //     warnings: false
-    //   },
-    //   sourceMap: true
-    // }),
+  plugins: productionPlugins.concat([
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.ejs'
     })
-  ],
+  ]),
   module: {
     rules: [
       {
