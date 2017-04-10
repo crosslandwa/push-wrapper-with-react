@@ -31,7 +31,6 @@ class DrumPad extends React.Component {
         <PushGridPad
           velocity={this.state.velocity}
           pad={this.props.pad}
-          player={this.state.player}
           playWithVelocity={this.playWithVelocity}
           rgb={[250, 250, 0]}
         />
