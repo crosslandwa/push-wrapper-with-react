@@ -5,32 +5,17 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './app/App'
 
-function loadPush() {
-  const push = pushWrapper.push()
-  if (navigator && navigator.requestMIDIAccess) {
-    return navigator.requestMIDIAccess({ sysex: true }).then(midiAccess => {
-      const inputs = Array.from(midiAccess.inputs.values())
-      const outputs = Array.from(midiAccess.outputs.values())
-      const userPort = ports => ports.filter(port => port.name === 'Ableton Push User Port')[0] || undefined
-
-      const input = userPort(inputs)
-      if (input) {
-        console.log('Binding MIDI input to ' + input.name)
-        input.onmidimessage = event => push.midiFromHardware(event.data)
-      }
-      const output = userPort(outputs)
-      if (output) {
-        console.log('Binding MIDI output to ' + output.name)
-        push.onMidiToHardware(output.send.bind(output))
-      }
-      return push
-    })
-  }
-  return Promise.reject('Web MIDI API not supported by this browser!')
-}
+const loadPush = () => pushWrapper.webMIDIio()
+  .catch(err => { console.error(err); return { inputPort: {}, outputPort: { send: () => {} } } })
+  .then(({inputPort, outputPort}) => {
+    const push = pushWrapper.push()
+    inputPort.onmidimessage = event => push.midiFromHardware(event.data)
+    push.onMidiToHardware(outputPort.send.bind(outputPort))
+    return push
+  })
 
 Promise.all([
-  loadPush().catch(err => {console.log(err); return Promise.resolve(pushWrapper.push())})
+  loadPush()
 ]).then(app)
 
 function app([push]) {
