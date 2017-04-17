@@ -22,24 +22,25 @@ class PushButton extends React.Component {
 
   render() {
     if (!this.props.active) {
-      this.props.pushButton.led_off()
+      this.props.pushButton.ledOff()
       return null
     }
     let index = this.state.colourIndex
     let colour = ['red', 'green', 'blue'][index]
     let rgb = [0, 0, 0]
     rgb[index] = 200
-    this.props.pushButton.led_rgb(...rgb)
+    this.props.pushButton.ledRGB(...rgb)
     return <div className={colour} >This button is {colour}</div>
   }
 
   componentDidMount() {
-    this.props.pushButton.on('pressed', this.handleClick)
+    const unsubscribePressedListener = this.props.pushButton.onPressed(this.handleClick)
+    this.setState({ unsubscribePressedListener })
   }
 
   componentWillUnmount() {
-    this.props.pushButton.removeListener('pressed', this.handleClick)
-    this.props.pushButton.led_off()
+    this.state.unsubscribePressedListener()
+    this.props.pushButton.ledOff()
   }
 }
 

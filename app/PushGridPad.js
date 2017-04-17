@@ -18,17 +18,18 @@ class PushGridPad extends React.Component {
 
   render() {
     let pad = this.props.pad
-    this.props.velocity ? pad.led_rgb(...fade(...this.props.rgb, this.props.velocity)) : pad.led_off()
+    this.props.velocity ? pad.ledRGB(...fade(...this.props.rgb, this.props.velocity)) : pad.ledOff()
     return null
   }
 
   componentDidMount() {
-    this.props.pad.on('pressed', this.padPressed)
+    const unsubscribePressedListener = this.props.pad.onPressed(this.padPressed)
+    this.setState({unsubscribePressedListener})
   }
 
   componentWillUnmount() {
-    this.props.pad.removeListener('pressed', this.padPressed)
-    this.props.pad.led_off()
+    this.state.unsubscribePressedListener()
+    this.props.pad.ledOff()
   }
 }
 
