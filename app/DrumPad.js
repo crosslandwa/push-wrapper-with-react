@@ -1,28 +1,9 @@
 'use strict'
 import React from 'react'
 import PushGridPad from './PushGridPad'
+import DomGridPad from './DomGridPad'
 
 const midiGain = velocity => ({ toAbsolute: () => velocity / 127, velocity: () => velocity })
-const padStyleBase = {
-  display: 'inline-block',
-  height: 64,
-  width: 64,
-  marginLeft: 5,
-  marginRight: 5,
-  backgroundColor: '#c7ccce',
-  borderRadius: 10,
-  borderWidth: 2,
-  borderStyle: 'solid',
-  borderColor: '#333333',
-  cursor: 'pointer'
-}
-
-const padStyleActive = {
-  opacity: 0.9,
-  boxShadow: 'inset 0px 0px 50px blue',
-  borderColor: 'rgba(100, 100, 100, 0.3)'
-}
-
 
 class DrumPad extends React.Component {
   constructor(props) {
@@ -46,17 +27,19 @@ class DrumPad extends React.Component {
   }
 
   render() {
+    const {velocity} = this.state
+    const {pad} = this.props
     return (
       <div>
         <PushGridPad
-          velocity={this.state.velocity}
-          pad={this.props.pad}
-          playWithVelocity={this.playWithVelocity}
+          velocity={velocity}
+          pad={pad}
+          padPressed={this.playWithVelocity}
           rgb={[250, 250, 0]}
         />
-        <div
-          onClick={() => this.playWithVelocity(100)}
-          style={Object.assign({}, padStyleBase, this.state.velocity ? padStyleActive : {})}
+        <DomGridPad
+          padPressed={this.playWithVelocity}
+          active={velocity > 0}
         />
       </div>
     )

@@ -1,10 +1,7 @@
 'use strict'
 import React from 'react'
-import DrumPad from './DrumPad'
 
-const midiGain = velocity => ({ toAbsolute: () => velocity / 127, velocity: () => velocity })
 const fade = (r, g, b, velocity) => [r, g, b].map(x => Math.round(x / 127 * velocity))
-
 
 class PushGridPad extends React.Component {
   constructor(props) {
@@ -13,12 +10,13 @@ class PushGridPad extends React.Component {
   }
 
   padPressed(velocity) {
-    this.props.playWithVelocity(velocity)
+    this.props.padPressed(velocity)
   }
 
   render() {
-    let pad = this.props.pad
-    this.props.velocity ? pad.ledRGB(...fade(...this.props.rgb, this.props.velocity)) : pad.ledOff()
+    const {pad, velocity, rgb} = this.props
+    const turnOn = rgb ? () => pad.ledRGB(...fade(...rgb, velocity)) : pad.ledOn
+    velocity ? turnOn(velocity) : pad.ledOff()
     return null
   }
 
