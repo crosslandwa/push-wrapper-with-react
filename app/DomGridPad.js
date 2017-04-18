@@ -23,6 +23,7 @@ const padStyleActive = (rgb) => ({
 
 const DomGridPad = ({pad, active, padPressed, rgb = [0, 100, 200]}) => (
   <div
+    className='pad'
     onClick={() => padPressed && padPressed(100)}
     style={Object.assign({}, padStyleBase, active ? padStyleActive(rgb) : {})}
   />

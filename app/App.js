@@ -1,7 +1,6 @@
 'use strict'
 import React from 'react'
 import Rainbow from './Rainbow'
-import PushButton from './PushButton'
 import DrumPad from './DrumPad'
 
 const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext()
@@ -11,7 +10,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.toggleDrumPad = this.toggleDrumPad.bind(this)
-    this.state = {drumPad: false}
+    this.state = {drumPad: true}
   }
 
   toggleDrumPad () {
@@ -24,13 +23,12 @@ class App extends React.Component {
     let rowOfPads = this.props.push.gridRow(1)
     return (
       <div>
-        { this.state.drumPad && this.state.player ?
+        { this.state.drumPad && this.state.player &&
           <DrumPad
             player={this.state.player}
             url='kick.mp3'
             pad={rowOfPads[0]}
           />
-          : <PushButton active="true" pushButton={rowOfPads[0]} />
         }
         { (this.state.player &&
           <DrumPad

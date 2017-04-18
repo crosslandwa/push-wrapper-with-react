@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import PushButton from './PushButton'
+import PushGridPad from './PushGridPad'
 import DomGridPad from './DomGridPad'
 
 const randomBetweenZeroAnd = x => Math.floor(Math.random() * (x + 1))
@@ -34,12 +34,14 @@ class Rainbow extends React.Component {
   render () {
     const {push} = this.props
     return (
-      <div className='row'>
+      <div className='rainbow'>
         {push.gridRow(0).map((pad, index) =>
-          <PushButton
+          <PushGridPad
             key={index}
-            active={activeIndex >= index}
-            pushButton={pad}
+            velocity={127}
+            pad={pad}
+            padPressed={() => this.toggleRainbow(index)}
+            rgb={colours[this.state.colours[index]]}
           />
         )}
         {push.gridRow(0).map((pad, index) =>

@@ -15,7 +15,7 @@ class PushGridPad extends React.Component {
 
   render() {
     const {pad, velocity, rgb} = this.props
-    const turnOn = rgb ? () => pad.ledRGB(...fade(...rgb, velocity)) : pad.ledOn
+    const turnOn = rgb ? velocity => pad.ledRGB(...fade(...rgb, velocity)) : pad.ledOn
     velocity ? turnOn(velocity) : pad.ledOff()
     return null
   }

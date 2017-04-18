@@ -30,7 +30,7 @@ class DrumPad extends React.Component {
     const {velocity} = this.state
     const {pad} = this.props
     return (
-      <div>
+      <div style={{display: 'inline-block'}} className='drumpad'>
         <PushGridPad
           velocity={velocity}
           pad={pad}
@@ -40,6 +40,7 @@ class DrumPad extends React.Component {
         <DomGridPad
           padPressed={this.playWithVelocity}
           active={velocity > 0}
+          className="pad"
         />
       </div>
     )
