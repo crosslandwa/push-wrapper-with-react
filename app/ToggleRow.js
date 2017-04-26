@@ -9,7 +9,7 @@ const ToggleRow = ({gridRow, onClick, on}) => (
     {gridRow().map((pad, index) => (
       <PushGridPad
         key={index}
-        velocity={on[index] ? 120 : 0}
+        velocity={on[index] ? 92 : 0}
         pad={pad}
         padPressed={() => onClick(index)}
       />
