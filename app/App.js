@@ -40,7 +40,7 @@ class App extends React.Component {
           />
         ) || <div>loading kick.mp3...</div>
         }
-        <Rainbow push={this.props.push} />
+        <Rainbow row={() => this.props.push.gridRow(0)} />
       </div>
     )
   }
