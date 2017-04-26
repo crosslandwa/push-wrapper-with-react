@@ -4,8 +4,9 @@ const pushWrapper = require('push-wrapper')
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { combineReducers, createStore } from 'redux'
+import { createStore } from 'redux'
 import App from './app/App'
+import rootReducer from './app/reducers'
 
 const loadPush = () => pushWrapper.webMIDIio()
   .catch(err => { console.error(err); return { inputPort: {}, outputPort: { send: () => {} } } })
@@ -22,7 +23,7 @@ Promise.all([
 
 function app([push]) {
   const store = createStore(
-    combineReducers({ toggles }),
+    rootReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 
@@ -32,14 +33,4 @@ function app([push]) {
     </Provider>,
     document.getElementById('app')
   )
-}
-
-function toggles (state = Array(8).fill(false), action) {
-  switch (action.type) {
-    case 'TOGGLE':
-      const toggles = state.slice()
-      toggles[action.index] = !toggles[action.index]
-      return toggles
-  }
-  return state
 }
