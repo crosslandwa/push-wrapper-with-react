@@ -13,6 +13,7 @@
     "push-wrapper": "^2.0.0",
     "react": "^15.5.3",
     "react-dom": "^15.5.3",
+    "react-redux": "^5.0.4",
     "wac.sample-player": "^2.0.0"
   },
   "devDependencies": {

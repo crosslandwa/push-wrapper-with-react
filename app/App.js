@@ -2,6 +2,7 @@
 import React from 'react'
 import Rainbow from './Rainbow'
 import DrumPad from './DrumPad'
+import ToggleRow from './ToggleRow'
 
 const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext()
 const PlayerFactory = require('wac.sample-player')(context)
@@ -23,6 +24,7 @@ class App extends React.Component {
     let rowOfPads = this.props.push.gridRow(1)
     return (
       <div>
+        <ToggleRow gridRow={ () => this.props.push.gridRow(2) } />
         { this.state.drumPad && this.state.player &&
           <DrumPad
             player={this.state.player}
