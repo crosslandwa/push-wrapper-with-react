@@ -4,14 +4,14 @@ import Rainbow from './Rainbow'
 import DrumPad from './DrumPad'
 import ToggleRow from './ToggleRow'
 
-const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext()
-const PlayerFactory = require('wac.sample-player')(context)
-
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.toggleDrumPad = this.toggleDrumPad.bind(this)
-    this.state = {drumPad: true}
+
+    this.state = {
+      drumPad: true,
+    }
   }
 
   toggleDrumPad () {
@@ -25,36 +25,22 @@ class App extends React.Component {
     return (
       <div>
         <ToggleRow gridRow={ () => this.props.push.gridRow(2) } />
-        { this.state.drumPad && this.state.player &&
-          <DrumPad
-            player={this.state.player}
-            url='kick.mp3'
-            pad={rowOfPads[0]}
-          />
+        { this.state.drumPad &&
+          <DrumPad sample='kick' pad={rowOfPads[0]} />
         }
-        { (this.state.player &&
-          <DrumPad
-            player={this.state.player}
-            url='kick.mp3'
-            pad={rowOfPads[1]}
-          />
-        ) || <div>loading kick.mp3...</div>
-        }
+        <DrumPad sample='snare' pad={rowOfPads[1]} />
         <Rainbow row={() => this.props.push.gridRow(0)} />
       </div>
     )
   }
 
   componentDidMount() {
-    const unsubscribe = this.props.push.gridRow(1)[2].onPressed(this.toggleDrumPad)
-    PlayerFactory.forResource('kick.mp3').then(player => {
-      player.toMaster()
-      this.setState({player, toggleDrumPadListener: unsubscribe})
-    })
+    const unsubscribeToggleDrumPadListener = this.props.push.gridRow(1)[2].onPressed(this.toggleDrumPad)
+    this.setState({unsubscribeToggleDrumPadListener})
   }
 
   componentWillUnmount() {
-    this.state.toggleDrumPadListener()
+    this.state.unsubscribeToggleDrumPadListener()
   }
 }
 

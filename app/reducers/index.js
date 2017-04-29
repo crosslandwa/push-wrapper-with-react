@@ -24,7 +24,12 @@ function rainbow (state = [...Array(8).keys()].map(randomBetweenZeroAndTwo), {ty
   return state
 }
 
+function sampleUrls (state = { snare: 'snare.mp3', kick: 'kick.mp3' }) {
+  return state
+}
+
 export default combineReducers({
   rainbow,
+  sampleUrls,
   toggles
 })

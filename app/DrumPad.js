@@ -2,59 +2,51 @@
 import React from 'react'
 import PushGridPad from './PushGridPad'
 import DomGridPad from './DomGridPad'
-
-const midiGain = velocity => ({ toAbsolute: () => velocity / 127, velocity: () => velocity })
+import SamplePlayer from './SamplePlayer'
 
 class DrumPad extends React.Component {
   constructor(props) {
     super(props)
-    this.playing = this.playing.bind(this)
-    this.stopped = this.stopped.bind(this)
-    this.playWithVelocity = this.playWithVelocity.bind(this)
-    this.state = {velocity: 0}
+    this.isPlaying = this.isPlaying.bind(this)
+    this.loading = this.loading.bind(this)
+    this.state = { velocity: 0, loading: false }
   }
 
-  playWithVelocity(velocity) {
-    this.props.player.play(midiGain(velocity))
+  isPlaying (velocity) {
+    this.setState({ velocity })
   }
 
-  playing(gain) {
-    this.setState({velocity: (gain.velocity && gain.velocity()) || 100})
-  }
-
-  stopped() {
-    this.setState({velocity: 0})
+  loading (loading) {
+    this.setState({ loading })
   }
 
   render() {
-    const {velocity} = this.state
-    const {pad} = this.props
+    const {loading, velocity} = this.state
+    const {pad, sample} = this.props
     return (
       <div style={{display: 'inline-block'}} className='drumpad'>
+        <SamplePlayer
+          ref={player => { this._player = player && player.getWrappedInstance() }}
+          playing={this.isPlaying}
+          loading={this.loading}
+          sample={sample}
+        />
         <PushGridPad
           velocity={velocity}
           pad={pad}
-          padPressed={this.playWithVelocity}
+          padPressed={velocity => { this._player && this._player.playWithVelocity(velocity) }}
           rgb={[250, 250, 0]}
         />
         <DomGridPad
-          padPressed={this.playWithVelocity}
+          padPressed={() => { this._player && this._player.playWithVelocity(100) }}
           active={velocity > 0}
+          loading={loading}
           className="pad"
         />
       </div>
     )
   }
 
-  componentDidMount() {
-    this.props.player.on('started', this.playing)
-    this.props.player.on('stopped', this.stopped)
-  }
-
-  componentWillUnmount() {
-    this.props.player.removeListener('started', this.playing)
-    this.props.player.removeListener('stopped', this.stopped)
-  }
 }
 
 export default DrumPad
