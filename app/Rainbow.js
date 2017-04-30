@@ -3,6 +3,7 @@ import React from 'react'
 import PushGridPad from './PushGridPad'
 import DomGridPad from './DomGridPad'
 import { connect } from 'react-redux'
+import { toggleRainbow } from './actions'
 
 const red = [200, 10, 0]
 const green = [0, 200, 10]
@@ -32,8 +33,8 @@ const Rainbow = ({ row, colourIndices, onClick }) => (
 )
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick: index => {
-    dispatch({ type: 'TOGGLE_RAINBOW', index })
+  onClick (index) {
+    dispatch(toggleRainbow(index))
   }
 })
 
