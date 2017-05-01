@@ -32,17 +32,17 @@ class SamplePlayer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loading && this.props.loading(true);
-    (this.state.player
-      ? Promise.resolve(player)
-      : PlayerFactory.forResource(this.props.url)
-    ).then(player => {
-      this.props.loading && this.props.loading(false)
-      player.toMaster()
-      player.on('started', this.playing)
-      player.on('stopped', this.stopped)
-      this.setState({ player })
-    })
+    const loading = this.props.loading || (() => {})
+    loading(true);
+    if (!this.state.player) {
+      PlayerFactory.forResource(this.props.url).then(player => {
+        loading(false)
+        player.toMaster()
+        player.on('started', this.playing)
+        player.on('stopped', this.stopped)
+        this.setState({ player })
+      })
+    }
   }
 
   componentWillUnmount() {
