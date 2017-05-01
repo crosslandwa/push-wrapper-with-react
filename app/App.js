@@ -3,6 +3,9 @@ import React from 'react'
 import Rainbow from './Rainbow'
 import DrumPad from './DrumPad'
 import ToggleRow from './ToggleRow'
+import SamplePlayerContainer from './SamplePlayerContainer'
+import { connect } from 'react-redux'
+import { loadSample } from './actions'
 
 class App extends React.Component {
   constructor(props) {
@@ -21,15 +24,20 @@ class App extends React.Component {
   }
 
   render() {
-    let rowOfPads = this.props.push.gridRow(1)
+    const { push, loadSample } = this.props
+    let rowOfPads = push.gridRow(1)
+    loadSample('kicko', 'kick.mp3')
+    loadSample('snarey', 'snare.mp3')
     return (
       <div>
-        <ToggleRow gridRow={ () => this.props.push.gridRow(2) } />
+        <SamplePlayerContainer sampleKey='kicko' />
+        <SamplePlayerContainer sampleKey='snarey' />
+        <ToggleRow gridRow={ () => push.gridRow(2) } />
         { this.state.drumPad &&
           <DrumPad sample='kick' pad={rowOfPads[0]} />
         }
         <DrumPad sample='snare' pad={rowOfPads[1]} />
-        <Rainbow row={() => this.props.push.gridRow(0)} />
+        <Rainbow row={() => push.gridRow(0)} />
       </div>
     )
   }
@@ -44,4 +52,11 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default connect(
+  () => ({ }), // mapStateToProps
+  (dispatch) => ({
+    loadSample (key, url) {
+      dispatch(loadSample(key, url))
+    }
+  })
+)(App)

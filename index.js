@@ -4,7 +4,8 @@ const pushWrapper = require('push-wrapper')
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import { createStore, applyMiddleware, compose } from 'redux'
 import App from './app/App'
 import rootReducer from './app/reducers'
 
@@ -21,10 +22,14 @@ Promise.all([
   loadPush()
 ]).then(app)
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
 function app([push]) {
   const store = createStore(
     rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    composeEnhancers(
+      applyMiddleware(thunkMiddleware),
+    )
   )
 
   ReactDOM.render(

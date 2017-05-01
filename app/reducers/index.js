@@ -29,8 +29,19 @@ function sampleUrls (state = { snare: 'snare.mp3', kick: 'kick.mp3' }) {
   return state
 }
 
+function samples (state = {}, { type, key, velocity = 0 }) {
+  switch (type) {
+    case 'SAMPLE_PLAYING':
+      const sample = Object.assign({}, state[key] ? state[key] : { } , { velocity })
+      console.log(sample)
+      return Object.assign({}, state, { [key]: sample })
+  }
+  return state
+}
+
 export default combineReducers({
   rainbow,
   sampleUrls,
-  toggles
+  toggles,
+  samples
 })
