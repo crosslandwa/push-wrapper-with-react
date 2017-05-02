@@ -32,11 +32,8 @@ class SamplePlayer extends React.Component {
   }
 
   componentDidMount() {
-    const loading = this.props.loading || (() => {})
-    loading(true);
     if (!this.state.player) {
       PlayerFactory.forResource(this.props.url).then(player => {
-        loading(false)
         player.toMaster()
         player.on('started', this.playing)
         player.on('stopped', this.stopped)

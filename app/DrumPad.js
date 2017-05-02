@@ -8,27 +8,21 @@ class DrumPad extends React.Component {
   constructor(props) {
     super(props)
     this.isPlaying = this.isPlaying.bind(this)
-    this.loading = this.loading.bind(this)
-    this.state = { velocity: 0, loading: false }
+    this.state = { velocity: 0 }
   }
 
   isPlaying (velocity) {
     this.setState({ velocity })
   }
 
-  loading (loading) {
-    this.setState({ loading })
-  }
-
   render() {
-    const {loading, velocity} = this.state
+    const {velocity} = this.state
     const {pad, sample} = this.props
     return (
       <div style={{display: 'inline-block'}} className='drumpad'>
         <SamplePlayer
           ref={player => { this._player = player && player.getWrappedInstance() }}
           playing={this.isPlaying}
-          loading={this.loading}
           sample={sample}
         />
         <PushGridPad
@@ -40,7 +34,6 @@ class DrumPad extends React.Component {
         <DomGridPad
           padPressed={() => { this._player && this._player.playWithVelocity(100) }}
           active={velocity > 0}
-          loading={loading}
           className="pad"
         />
       </div>
