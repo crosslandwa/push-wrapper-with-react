@@ -1,5 +1,5 @@
 export const TOGGLE_RAINBOW = 'TOGGLE_RAINBOW'
-export const TOGGLE_TOGGLES = 'TOGGLE_TOGGLES'
+export const TOGGLE_SEQUENCE = 'TOGGLE_SEQUENCE'
 
 const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext() // should this be a singleton
 const PlayerFactory = require('wac.sample-player')(context)
@@ -34,6 +34,6 @@ export function toggleRainbow (index) {
   return { type: TOGGLE_RAINBOW, index }
 }
 
-export function toggleToggles (index) {
-  return { type: TOGGLE_TOGGLES, index }
+export function toggleSequence (key, index) {
+  return { type: TOGGLE_SEQUENCE, sequence: key, index }
 }

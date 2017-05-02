@@ -3,9 +3,10 @@ import React from 'react'
 import PushGridPad from './PushGridPad'
 import DomGridPad from './DomGridPad'
 import { connect } from 'react-redux'
-import { toggleToggles } from './actions'
+import { toggleSequence } from './actions'
 
 const ToggleRow = ({gridRow, onClick, on}) => (
+
   <div className='toggleRow'>
     {gridRow().map((pad, index) => (
       <PushGridPad
@@ -25,13 +26,13 @@ const ToggleRow = ({gridRow, onClick, on}) => (
   </div>
 )
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch, { sequenceKey: key }) => ({
   onClick (index) {
-    dispatch(toggleToggles(index))
+    dispatch(toggleSequence(key, index))
   }
 })
 
 export default connect(
-  ({ toggles }) => ({ on: toggles }), // mapStateToProps
+  ({ sequences }, { sequenceKey: key }) => ({ on: sequences[key].toggles }), // mapStateToProps
   mapDispatchToProps
 )(ToggleRow)

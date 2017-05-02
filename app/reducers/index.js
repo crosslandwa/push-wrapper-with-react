@@ -1,12 +1,16 @@
 import { combineReducers } from 'redux'
-import { TOGGLE_TOGGLES, TOGGLE_RAINBOW } from '../actions'
-
-function toggles (state = Array(8).fill(false), action) {
+import { TOGGLE_SEQUENCE, TOGGLE_RAINBOW } from '../actions'
+const initialSequenceState = {
+  kicks: { toggles: Array(8).fill(false) },
+  snares: { toggles: Array(8).fill(false) }
+}
+function sequences (state = initialSequenceState, action) {
   switch (action.type) {
-    case TOGGLE_TOGGLES:
-      const toggles = state.slice()
+    case TOGGLE_SEQUENCE:
+      const toggles = state[action.sequence].toggles.slice()
       toggles[action.index] = !toggles[action.index]
-      return toggles
+      const newSequence = Object.assign({}, state[action.sequence], { toggles })
+      return Object.assign({}, state, { [action.sequence]: newSequence })
   }
   return state
 }
@@ -41,6 +45,6 @@ function samples (state = {}, { type, key, velocity = 0 }) {
 export default combineReducers({
   rainbow,
   sampleUrls,
-  toggles,
+  sequences,
   samples
 })

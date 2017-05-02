@@ -30,7 +30,8 @@ class App extends React.Component {
       <div>
         <SamplePlayerContainer sampleKey='kicko' />
         <SamplePlayerContainer sampleKey='snarey' />
-        <ToggleRow gridRow={ () => push.gridRow(2) } />
+        <ToggleRow gridRow={ () => push.gridRow(3) } sequenceKey='kicks' />
+        <ToggleRow gridRow={ () => push.gridRow(2) } sequenceKey='snares' />
         { this.state.drumPad &&
           <DrumPad sample='kick' pad={rowOfPads[0]} />
         }
