@@ -26,8 +26,6 @@ class App extends React.Component {
   render() {
     const { push, loadSample } = this.props
     let rowOfPads = push.gridRow(1)
-    loadSample('kicko', 'kick.mp3')
-    loadSample('snarey', 'snare.mp3')
     return (
       <div>
         <SamplePlayerContainer sampleKey='kicko' />
@@ -43,6 +41,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.props.loadSample('kicko', 'kick.mp3')
+    this.props.loadSample('snarey', 'snare.mp3')
     const unsubscribeToggleDrumPadListener = this.props.push.gridRow(1)[2].onPressed(this.toggleDrumPad)
     this.setState({unsubscribeToggleDrumPadListener})
   }
