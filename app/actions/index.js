@@ -18,9 +18,8 @@ export function samplePlaying (key, gain) {
 
 export function loadSample (key, url) {
   return function (dispatch) {
-    // TODO dispatch sampleLoading events
     return players[key]
-    ? player.loadResource(url)
+    ? players[key].loadResource(url)
     : PlayerFactory.forResource(url)
     .then(player => {
       players[key] = player
@@ -28,7 +27,7 @@ export function loadSample (key, url) {
       player.on('started', gain => dispatch(samplePlaying(key, gain)))
       player.on('stopped', () => dispatch(samplePlaying(key, { velocity: () => 0 })))
     })
-  }
+  } // TODO handle url load failure (does wac.sample-player reject promise correctly?)
 }
 
 export function toggleRainbow (index) {
