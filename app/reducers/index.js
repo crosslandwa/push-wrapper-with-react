@@ -1,8 +1,11 @@
 import { combineReducers } from 'redux'
-import { TOGGLE_SEQUENCE, TOGGLE_RAINBOW } from '../actions'
+import { TOGGLE_SEQUENCE, TOGGLE_RAINBOW, ADVANCE_SEQUENCE } from '../actions'
 const initialSequenceState = {
   kicks: { toggles: Array(8).fill(false) },
-  snares: { toggles: Array(8).fill(false) }
+  snares: { toggles: Array(8).fill(false) },
+  step: { toggles: Array(8).fill(false) },
+  currentStep: -1,
+  playing: false
 }
 function sequences (state = initialSequenceState, action) {
   switch (action.type) {
@@ -11,6 +14,27 @@ function sequences (state = initialSequenceState, action) {
       toggles[action.index] = !toggles[action.index]
       const newSequence = Object.assign({}, state[action.sequence], { toggles })
       return Object.assign({}, state, { [action.sequence]: newSequence })
+    case ADVANCE_SEQUENCE:
+      const nextStep = state.currentStep + 1 >= 8 ? 0 : state.currentStep + 1
+      const steps = [...Array(8).keys()].map(i => i === state.currentStep)
+      return Object.assign(
+        {},
+        state,
+        { currentStep: nextStep >= 8 ? 0 : nextStep },
+        { step: { toggles: steps } }
+      )
+    case 'SEQUENCE_START':
+      return Object.assign(
+        {},
+        state,
+        { currentStep: 0, playing: !state.playing }
+      )
+    case 'SEQUENCE_STOP':
+      return Object.assign(
+        {},
+        state,
+        { currentStep: -1, playing: false, step: initialSequenceState.step }
+      )
   }
   return state
 }

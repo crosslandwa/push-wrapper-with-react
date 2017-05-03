@@ -1,5 +1,6 @@
 export const TOGGLE_RAINBOW = 'TOGGLE_RAINBOW'
 export const TOGGLE_SEQUENCE = 'TOGGLE_SEQUENCE'
+export const ADVANCE_SEQUENCE = 'ADVANCE_SEQUENCE'
 
 const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext() // should this be a singleton
 const PlayerFactory = require('wac.sample-player')(context)
@@ -36,4 +37,26 @@ export function toggleRainbow (index) {
 
 export function toggleSequence (key, index) {
   return { type: TOGGLE_SEQUENCE, sequence: key, index }
+}
+
+export function startSequence (step = 0) {
+  return dispatch => {
+    dispatch({ type: 'SEQUENCE_START', step })
+    dispatch(advanceSequence())
+  }
+}
+
+export function advanceSequence () {
+  return (dispatch, getState) => {
+    const { sequences, sequences: { currentStep, playing } } = getState();
+    if (!playing) return dispatch({ type: 'SEQUENCE_STOP' })
+    ['kicks', 'snares'].forEach(key => {
+      if (sequences[key].toggles[currentStep]) {
+        dispatch(playSample(key === 'kicks' ? 'kicko' : 'snarey'))
+      }
+    })
+    dispatch({ type: ADVANCE_SEQUENCE })
+    setTimeout(() => dispatch(advanceSequence()), 250)
+    return Promise.resolve()
+  }
 }
