@@ -1,8 +1,7 @@
 'use strict'
 import React from 'react'
 import Rainbow from './Rainbow'
-import DomGridPad from './DomGridPad'
-import PushButton from './PushButton'
+import SequenceStartStop from './SequenceStartStop'
 import SequenceToggleRow from './SequenceToggleRow'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
@@ -15,22 +14,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { push, loadSample, playing, startSequence, stopSequence } = this.props
-    let rowOfPads = push.gridRow(1)
+    const { push } = this.props
     return (
       <div>
-        <DomGridPad
-          padPressed={() => playing ? stopSequence() : startSequence()}
-          active={playing}
-          className="pad"
-        />
-        <PushButton
-          button={push.button('Play')}
-          dim={true}
-          on={playing}
-          pressed={() => playing ? stopSequence() : startSequence()}
-        />
-
+        <SequenceStartStop button={push.button('Play')} />
         <SamplePlayerContainer sampleKey='kick' />
         <SamplePlayerContainer sampleKey='snare' />
         <SamplePlayerContainer sampleKey='hat' />
@@ -55,12 +42,6 @@ export default connect(
   (dispatch) => ({
     loadSample (key, url) {
       dispatch(loadSample(key, url))
-    },
-    startSequence () {
-      dispatch(startSequence())
-    },
-    stopSequence () {
-      dispatch(stopSequence())
     }
   })
 )(App)
