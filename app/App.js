@@ -30,7 +30,7 @@ class App extends React.Component {
         <SequenceToggleRow gridRow={ () => push.gridRow(4) } sequenceKey='kick' />
         <SequenceToggleRow gridRow={ () => push.gridRow(3) } sequenceKey='snare' />
         <SequenceToggleRow gridRow={ () => push.gridRow(2) } sequenceKey='hat' />
-        <SequenceStepDisplay gridRow={ () => push.gridRow(1) } sequenceKey='step' />
+        <SequenceStepDisplay gridRow={ () => push.gridRow(1) } />
         <Rainbow row={() => push.gridRow(0)} />
       </div>
     )

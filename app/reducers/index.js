@@ -4,7 +4,6 @@ const initialSequenceState = {
   kick: { toggles: Array(8).fill(false) },
   snare : { toggles: Array(8).fill(false) },
   hat: { toggles: [] },
-  step: { toggles: Array(8).fill(false) },
   currentStep: -1,
   playing: false
 }
@@ -21,8 +20,7 @@ function sequences (state = initialSequenceState, action) {
       return Object.assign(
         {},
         state,
-        { currentStep: nextStep >= 8 ? 0 : nextStep },
-        { step: { toggles: steps } }
+        { currentStep: nextStep >= 8 ? 0 : nextStep }
       )
     case 'SEQUENCE_START':
       return Object.assign(
@@ -34,7 +32,7 @@ function sequences (state = initialSequenceState, action) {
       return Object.assign(
         {},
         state,
-        { currentStep: -1, playing: false, step: initialSequenceState.step }
+        { currentStep: -1, playing: false }
       )
   }
   return state
