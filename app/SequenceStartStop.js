@@ -6,28 +6,23 @@ import { startSequence, stopSequence } from './actions'
 import DomGridPad from './DomGridPad'
 import PushButton from './PushButton'
 
-const SequenceStartStop = ({button, playing, startSequence, stopSequence}) => (
-  <div>
-    <DomGridPad
-      padPressed={() => playing ? stopSequence() : startSequence()}
-      active={playing}
-    />
-    <PushButton
-      button={button}
-      dim={true}
-      on={playing}
-      pressed={() => playing ? stopSequence() : startSequence()}
-    />
-  </div>
-)
+const SequenceStartStop = ({button, playing, stop, start}) => {
+  const togglePlay = () => playing ? stop() : start()
+  return (
+    <div>
+      <DomGridPad padPressed={togglePlay} active={playing} />
+      <PushButton button={button} dim={true} on={playing} pressed={togglePlay} />
+    </div>
+  )
+}
 
 export default connect(
   ({ sequences: { playing } }) => ({ playing }),
   (dispatch) => ({
-    startSequence () {
+    start () {
       dispatch(startSequence())
     },
-    stopSequence () {
+    stop () {
       dispatch(stopSequence())
     }
   })
