@@ -46,9 +46,14 @@ export function stopSequence () {
 }
 
 export function startSequence (step = 0) {
-  return dispatch => {
-    dispatch({ type: 'SEQUENCE_START', step })
-    dispatch(advanceSequence())
+  return (dispatch, getState) => {
+    const { sequences: { playing } } = getState()
+    if (!playing) {
+      dispatch({ type: 'SEQUENCE_START', step })
+      dispatch(advanceSequence())
+    } else {
+      dispatch({ type: 'SEQUENCE_NEXT_STEP', step })
+    }
   }
 }
 

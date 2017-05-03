@@ -2,16 +2,21 @@
 import React from 'react'
 import PadRow from './PadRow'
 import { connect } from 'react-redux'
-import { toggleSequence } from './actions'
+import { startSequence } from './actions'
 
-const SequenceStepDisplay = ({gridRow, currentStep}) => (
+const SequenceStepDisplay = ({gridRow, startSequence, currentStep}) => (
   <PadRow
-    onClick={index => {}}
+    onClick={startSequence}
     pads={gridRow()}
     on={gridRow().map((pad, index) => index === currentStep)}
   />
 )
 
 export default connect(
-  ({ sequences: { currentStep } }) => ({ currentStep })
+  ({ sequences: { currentStep } }) => ({ currentStep }),
+  dispatch => ({
+    startSequence (index) {
+      dispatch(startSequence(index))
+    }
+  })
 )(SequenceStepDisplay)
