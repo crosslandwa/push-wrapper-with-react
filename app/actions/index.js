@@ -50,13 +50,13 @@ export function advanceSequence () {
   return (dispatch, getState) => {
     const { sequences, sequences: { currentStep, playing } } = getState();
     if (!playing) return dispatch({ type: 'SEQUENCE_STOP' });
-    ['kick', 'snare'].forEach(key => {
+    ['kick', 'snare', 'hat'].forEach(key => {
       if (sequences[key].toggles[currentStep]) {
         dispatch(playSample(key))
       }
     })
     dispatch({ type: ADVANCE_SEQUENCE })
-    setTimeout(() => dispatch(advanceSequence()), 250)
+    setTimeout(() => dispatch(advanceSequence()), 125)
     return Promise.resolve()
   }
 }

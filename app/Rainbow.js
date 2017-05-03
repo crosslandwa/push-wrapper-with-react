@@ -39,6 +39,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default connect(
-  ({ rainbow }) => ({ colourIndices: rainbow }), // mapStateToProps
+  ({ rainbow }) => ({ colourIndices: rainbow }),
   mapDispatchToProps
 )(Rainbow)
