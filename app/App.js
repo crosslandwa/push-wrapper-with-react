@@ -6,7 +6,7 @@ import SequenceToggleRow from './SequenceToggleRow'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
 import { connect } from 'react-redux'
-import { loadSample, startSequence } from './actions'
+import { loadSample, startSequence, stopSequence } from './actions'
 
 class App extends React.Component {
   constructor(props) {
@@ -14,12 +14,12 @@ class App extends React.Component {
   }
 
   render() {
-    const { push, loadSample, playing, startSequence } = this.props
+    const { push, loadSample, playing, startSequence, stopSequence } = this.props
     let rowOfPads = push.gridRow(1)
     return (
       <div>
         <DomGridPad
-          padPressed={startSequence}
+          padPressed={() => playing ? stopSequence() : startSequence()}
           active={playing}
           className="pad"
         />
@@ -51,6 +51,9 @@ export default connect(
     },
     startSequence () {
       dispatch(startSequence())
+    },
+    stopSequence () {
+      dispatch(stopSequence())
     }
   })
 )(App)

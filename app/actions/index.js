@@ -39,6 +39,12 @@ export function toggleSequence (key, index) {
   return { type: TOGGLE_SEQUENCE, sequence: key, index }
 }
 
+export function stopSequence () {
+  return dispatch => {
+    dispatch({ type: 'SEQUENCE_STOP' })
+  }
+}
+
 export function startSequence (step = 0) {
   return dispatch => {
     dispatch({ type: 'SEQUENCE_START', step })
@@ -49,7 +55,7 @@ export function startSequence (step = 0) {
 export function advanceSequence () {
   return (dispatch, getState) => {
     const { sequences, sequences: { currentStep, playing } } = getState();
-    if (!playing) return dispatch({ type: 'SEQUENCE_STOP' });
+    if (!playing) return;
     ['kick', 'snare', 'hat'].forEach(key => {
       if (sequences[key].toggles[currentStep]) {
         dispatch(playSample(key))
