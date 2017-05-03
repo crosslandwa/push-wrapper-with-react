@@ -2,6 +2,7 @@
 import React from 'react'
 import Rainbow from './Rainbow'
 import DomGridPad from './DomGridPad'
+import PushButton from './PushButton'
 import SequenceToggleRow from './SequenceToggleRow'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
@@ -22,6 +23,12 @@ class App extends React.Component {
           padPressed={() => playing ? stopSequence() : startSequence()}
           active={playing}
           className="pad"
+        />
+        <PushButton
+          button={push.button('Play')}
+          dim={true}
+          on={playing}
+          pressed={() => playing ? stopSequence() : startSequence()}
         />
 
         <SamplePlayerContainer sampleKey='kick' />
