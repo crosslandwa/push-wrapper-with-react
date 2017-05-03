@@ -26,7 +26,7 @@ function sequences (state = initialSequenceState, action) {
       return Object.assign(
         {},
         state,
-        { currentStep: 0, playing: true }
+        { currentStep: -1, playing: true }
       )
     case 'SEQUENCE_STOP':
       return Object.assign(

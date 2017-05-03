@@ -52,17 +52,23 @@ export function startSequence (step = 0) {
   }
 }
 
-export function advanceSequence () {
+function advanceSequence () {
   return (dispatch, getState) => {
-    const { sequences, sequences: { currentStep, playing } } = getState();
-    if (!playing) return;
+    const { sequences: { playing } } = getState()
+    if (!playing) return
+    dispatch({ type: ADVANCE_SEQUENCE })
+    return dispatch(playSequencedVoices())
+  }
+}
+
+function playSequencedVoices  () {
+  return (dispatch, getState) => {
+    const { sequences, sequences: { currentStep } } = getState();
     ['kick', 'snare', 'hat'].forEach(key => {
       if (sequences[key].toggles[currentStep]) {
         dispatch(playSample(key))
       }
     })
-    dispatch({ type: ADVANCE_SEQUENCE })
     setTimeout(() => dispatch(advanceSequence()), 125)
-    return Promise.resolve()
   }
 }
