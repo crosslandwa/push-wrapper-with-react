@@ -2,7 +2,8 @@
 import React from 'react'
 import Rainbow from './Rainbow'
 import DomGridPad from './DomGridPad'
-import ToggleRow from './ToggleRow'
+import SequenceToggleRow from './SequenceToggleRow'
+import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
 import { connect } from 'react-redux'
 import { loadSample, startSequence } from './actions'
@@ -26,10 +27,10 @@ class App extends React.Component {
         <SamplePlayerContainer sampleKey='kick' />
         <SamplePlayerContainer sampleKey='snare' />
         <SamplePlayerContainer sampleKey='hat' />
-        <ToggleRow gridRow={ () => push.gridRow(4) } sequenceKey='kick' />
-        <ToggleRow gridRow={ () => push.gridRow(3) } sequenceKey='snare' />
-        <ToggleRow gridRow={ () => push.gridRow(2) } sequenceKey='hat' />
-        <ToggleRow gridRow={ () => push.gridRow(1) } sequenceKey='step' />
+        <SequenceToggleRow gridRow={ () => push.gridRow(4) } sequenceKey='kick' />
+        <SequenceToggleRow gridRow={ () => push.gridRow(3) } sequenceKey='snare' />
+        <SequenceToggleRow gridRow={ () => push.gridRow(2) } sequenceKey='hat' />
+        <SequenceStepDisplay gridRow={ () => push.gridRow(1) } sequenceKey='step' />
         <Rainbow row={() => push.gridRow(0)} />
       </div>
     )
