@@ -2,7 +2,6 @@
 import React from 'react'
 import Rainbow from './Rainbow'
 import DomGridPad from './DomGridPad'
-import DrumPad from './DrumPad'
 import ToggleRow from './ToggleRow'
 import SamplePlayerContainer from './SamplePlayerContainer'
 import { connect } from 'react-redux'
@@ -11,17 +10,6 @@ import { loadSample, startSequence } from './actions'
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.toggleDrumPad = this.toggleDrumPad.bind(this)
-
-    this.state = {
-      drumPad: true,
-    }
-  }
-
-  toggleDrumPad () {
-    this.setState(prevState => ({
-      drumPad: !prevState.drumPad
-    }))
   }
 
   render() {
@@ -38,11 +26,7 @@ class App extends React.Component {
         <SamplePlayerContainer sampleKey='snarey' />
         <ToggleRow gridRow={ () => push.gridRow(3) } sequenceKey='kicks' />
         <ToggleRow gridRow={ () => push.gridRow(2) } sequenceKey='snares' />
-        <ToggleRow gridRow={ () => push.gridRow(2) } sequenceKey='step' />
-        { this.state.drumPad &&
-          <DrumPad sample='kick' pad={rowOfPads[0]} />
-        }
-        <DrumPad sample='snare' pad={rowOfPads[1]} />
+        <ToggleRow gridRow={ () => push.gridRow(1) } sequenceKey='step' />
         <Rainbow row={() => push.gridRow(0)} />
       </div>
     )
@@ -51,12 +35,6 @@ class App extends React.Component {
   componentDidMount() {
     this.props.loadSample('kicko', 'kick.mp3')
     this.props.loadSample('snarey', 'snare.mp3')
-    const unsubscribeToggleDrumPadListener = this.props.push.gridRow(1)[2].onPressed(this.toggleDrumPad)
-    this.setState({unsubscribeToggleDrumPadListener})
-  }
-
-  componentWillUnmount() {
-    this.state.unsubscribeToggleDrumPadListener()
   }
 }
 
