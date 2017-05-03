@@ -49,7 +49,7 @@ export function startSequence (step = 0) {
 export function advanceSequence () {
   return (dispatch, getState) => {
     const { sequences, sequences: { currentStep, playing } } = getState();
-    if (!playing) return dispatch({ type: 'SEQUENCE_STOP' })
+    if (!playing) return dispatch({ type: 'SEQUENCE_STOP' });
     ['kicks', 'snares'].forEach(key => {
       if (sequences[key].toggles[currentStep]) {
         dispatch(playSample(key === 'kicks' ? 'kicko' : 'snarey'))
