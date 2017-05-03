@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
 import { TOGGLE_SEQUENCE, TOGGLE_RAINBOW, ADVANCE_SEQUENCE } from '../actions'
 const initialSequenceState = {
-  kicks: { toggles: Array(8).fill(false) },
-  snares: { toggles: Array(8).fill(false) },
+  kick: { toggles: Array(8).fill(false) },
+  snare: { toggles: Array(8).fill(false) },
   step: { toggles: Array(8).fill(false) },
   currentStep: -1,
   playing: false
