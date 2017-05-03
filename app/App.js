@@ -38,7 +38,7 @@ class App extends React.Component {
 }
 
 export default connect(
-  ({ sequences: { playing } }) => ({ playing }),
+  (state) => ({}),
   (dispatch) => ({
     loadSample (key, url) {
       dispatch(loadSample(key, url))
