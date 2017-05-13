@@ -6,14 +6,40 @@ import { startSequence, stopSequence } from './actions'
 import DomGridPad from './DomGridPad'
 import PushButton from './PushButton'
 
-const SequenceStartStop = ({button, playing, stop, start}) => {
-  const togglePlay = () => playing ? stop() : start()
-  return (
-    <div>
-      <DomGridPad padPressed={togglePlay} active={playing} />
-      <PushButton button={button} dim={true} on={playing} pressed={togglePlay} />
-    </div>
-  )
+import bindKeypress from './bindKeypress'
+
+class SequenceStartStop extends React.Component {
+  constructor(props) {
+    super(props)
+    this.keypress = this.keypress.bind(this)
+    this.togglePlay = this.togglePlay.bind(this)
+  }
+
+  keypress (event) {
+    if (" " === event.key) {
+      event.preventDefault()
+      this.togglePlay()
+    }
+  }
+
+  togglePlay () {
+    const {playing, stop, start} = this.props
+    playing ? stop() : start()
+  }
+
+  render () {
+    const {button, playing} = this.props
+    return (
+      <div>
+        <DomGridPad padPressed={this.togglePlay} active={playing} />
+        <PushButton button={button} dim={true} on={playing} pressed={this.togglePlay} />
+      </div>
+    )
+  }
+
+  componentDidMount() {
+    bindKeypress(this.keypress)
+  }
 }
 
 export default connect(
