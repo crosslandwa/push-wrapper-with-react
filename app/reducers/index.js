@@ -42,10 +42,6 @@ function rainbow (state = [...Array(8).keys()].map(randomBetweenZeroAndTwo), {ty
   return state
 }
 
-function sampleUrls (state = { snare: 'snare.mp3', kick: 'kick.mp3' }) {
-  return state
-}
-
 function samples (state = {}, { type, key, velocity = 0 }) {
   switch (type) {
     case 'SAMPLE_PLAYING':
@@ -57,7 +53,6 @@ function samples (state = {}, { type, key, velocity = 0 }) {
 
 export default combineReducers({
   rainbow,
-  sampleUrls,
   sequences,
   samples
 })

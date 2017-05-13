@@ -10,7 +10,7 @@ import App from './app/App'
 import rootReducer from './app/reducers'
 
 const loadPush = () => pushWrapper.webMIDIio()
-  .catch(err => { console.error(err); return { inputPort: {}, outputPort: { send: () => {} } } })
+  .catch(err => { console.warn(err); return { inputPort: {}, outputPort: { send: () => {} } } })
   .then(({inputPort, outputPort}) => {
     const push = pushWrapper.push()
     inputPort.onmidimessage = event => push.midiFromHardware(event.data)
