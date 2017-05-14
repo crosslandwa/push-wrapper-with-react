@@ -20,7 +20,7 @@ class App extends React.Component {
       <div>
         <TransportControls push={push} />
         {[...Array(8).keys()].map(index => (
-          <SamplePlayerContainer key={index} voice={index} />
+          <SamplePlayerContainer key={index} voice={index} pad={push.gridRow(5)[index]} />
         ))}
         <SequenceToggleRow pads={push.gridRow(4)} voice={0} />
         <SequenceToggleRow pads={push.gridRow(3)} voice={1} />
