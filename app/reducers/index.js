@@ -49,8 +49,7 @@ function voices (state = [], { type, voice, velocity = 0 }) {
     case 'SAMPLE_PLAYING':
       const voices = state.slice()
       voices[voice] = Object.assign({},
-        initialVoiceState,
-        state[voice] ? state[voice] : {},
+        state[voice] ? state[voice] : initialVoiceState,
         { velocity }
       )
       return voices
