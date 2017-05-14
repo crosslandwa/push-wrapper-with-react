@@ -1,15 +1,11 @@
 import {playSample} from '../voices/actions'
 
-export const TOGGLE_RAINBOW = 'TOGGLE_RAINBOW'
-export const TOGGLE_SEQUENCE = 'TOGGLE_SEQUENCE'
-export const ADVANCE_SEQUENCE = 'ADVANCE_SEQUENCE'
-
 export function toggleRainbow (index) {
-  return { type: TOGGLE_RAINBOW, index }
+  return { type: 'TOGGLE_RAINBOW', index }
 }
 
 export function toggleSequence (key, index) {
-  return { type: TOGGLE_SEQUENCE, sequence: key, index }
+  return { type: 'TOGGLE_SEQUENCE', sequence: key, index }
 }
 
 export function stopSequence () {
@@ -34,7 +30,7 @@ function advanceSequence () {
   return (dispatch, getState) => {
     const { sequencer: { playing } } = getState()
     if (!playing) return
-    dispatch({ type: ADVANCE_SEQUENCE })
+    dispatch({ type: 'ADVANCE_SEQUENCE' })
     return dispatch(playSequencedVoices())
   }
 }
