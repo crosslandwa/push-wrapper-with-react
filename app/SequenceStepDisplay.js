@@ -13,7 +13,7 @@ const SequenceStepDisplay = ({gridRow, startSequence, currentStep}) => (
 )
 
 export default connect(
-  ({ sequences: { currentStep } }) => ({ currentStep }),
+  ({ sequencer: { currentStep } }) => ({ currentStep }),
   dispatch => ({
     startSequence (index) {
       dispatch(startSequence(index))

@@ -9,7 +9,7 @@ const initialSequenceState = {
   nextStep: -1,
   playing: false
 }
-function sequences (state = initialSequenceState, action) {
+function sequencer (state = initialSequenceState, action) {
   switch (action.type) {
     case TOGGLE_SEQUENCE:
       const toggles = state[action.sequence].toggles.slice()
@@ -45,6 +45,6 @@ function rainbow (state = [...Array(8).keys()].map(randomBetweenZeroAndTwo), {ty
 
 export default combineReducers({
   rainbow,
-  sequences,
+  sequencer,
   voices
 })

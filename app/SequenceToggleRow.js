@@ -15,6 +15,6 @@ const mapDispatchToProps = (dispatch, { sequenceKey: key }) => ({
 })
 
 export default connect(
-  ({ sequences }, { sequenceKey: key }) => ({ on: sequences[key].toggles }),
+  ({ sequencer }, { sequenceKey: key }) => ({ on: sequencer[key].toggles }),
   mapDispatchToProps
 )(SequenceToggleRow)

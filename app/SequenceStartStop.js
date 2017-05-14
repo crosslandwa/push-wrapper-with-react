@@ -43,7 +43,7 @@ class SequenceStartStop extends React.Component {
 }
 
 export default connect(
-  ({ sequences: { playing } }) => ({ playing }),
+  ({ sequencer: { playing } }) => ({ playing }),
   (dispatch) => ({
     start () {
       dispatch(startSequence())

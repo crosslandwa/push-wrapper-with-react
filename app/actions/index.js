@@ -20,7 +20,7 @@ export function stopSequence () {
 
 export function startSequence (step = 0) {
   return (dispatch, getState) => {
-    const { sequences: { playing } } = getState()
+    const { sequencer: { playing } } = getState()
     if (!playing) {
       dispatch({ type: 'SEQUENCE_START', step })
       dispatch(advanceSequence())
@@ -32,7 +32,7 @@ export function startSequence (step = 0) {
 
 function advanceSequence () {
   return (dispatch, getState) => {
-    const { sequences: { playing } } = getState()
+    const { sequencer: { playing } } = getState()
     if (!playing) return
     dispatch({ type: ADVANCE_SEQUENCE })
     return dispatch(playSequencedVoices())
@@ -41,9 +41,9 @@ function advanceSequence () {
 
 function playSequencedVoices  () {
   return (dispatch, getState) => {
-    const { sequences, sequences: { currentStep } } = getState();
+    const { sequencer, sequencer: { currentStep } } = getState();
     ['kick', 'snare', 'hat'].forEach((key, index) => {
-      if (sequences[key].toggles[currentStep]) {
+      if (sequencer[key].toggles[currentStep]) {
         dispatch(playSample(index))
       }
     })
