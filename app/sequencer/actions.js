@@ -31,7 +31,7 @@ function advanceSequence () {
 
 function playSequencedVoices  () {
   return (dispatch, getState) => {
-    const { sequencer, sequencer: { currentStep } } = getState();
+    const { sequencer, sequencer: { currentStep } } = getState()
     sequencer.voices.forEach((voice, index) => {
       if (voice.toggles[currentStep]) {
         dispatch(playSample(index))
@@ -47,4 +47,16 @@ export function disarmSequencer () {
 
 export function armSequencer () {
   return { type: 'SEQUENCE_ARM' }
+}
+
+export function recordStep (voice, velocity) {
+  return (dispatch, getState) => {
+    const { sequencer: { recording, currentStep, playing } } = getState()
+    if (!recording) return
+    if (!playing) {
+      dispatch(startSequence(0))
+    }
+
+    dispatch(toggleSequence(voice, Math.max(0, currentStep))) // should be turn on step
+  }
 }

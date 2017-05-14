@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DomGridPad from './DomGridPad'
 import { playSample } from './voices/actions'
+import { recordStep } from './sequencer/actions'
 
 const SamplePlayerContainer = ({ velocity = 0, playSample }) => (
   <DomGridPad
@@ -17,8 +18,9 @@ export default connect(
     return { velocity: (voices[voice] && voices[voice].velocity) }
   },
   (dispatch, { voice }) => ({
-    playSample () {
-      dispatch(playSample(voice, 100))
+    playSample (velocity = 100) {
+      dispatch(playSample(voice, velocity))
+      dispatch(recordStep(voice, velocity))
     }
   })
 )(SamplePlayerContainer)
