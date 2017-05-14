@@ -8,25 +8,25 @@ const players = {}
 
 const midiGain = velocity => ({ toAbsolute: () => velocity / 127, velocity: () => velocity })
 
-export function playSample (key, velocity = 100) {
-  if (players[key]) players[key].play(midiGain(velocity))
-  return { type: 'DO_NOTHING' }
+export function playSample (voice, velocity = 100) {
+  if (players[voice]) players[voice].play(midiGain(velocity))
+  return { type: 'PLAY_SAMPLE' }
 }
 
-export function samplePlaying (key, gain) {
-  return { type: 'SAMPLE_PLAYING', velocity: gain.velocity(), key }
+export function samplePlaying (voice, gain) {
+  return { type: 'SAMPLE_PLAYING', velocity: gain.velocity(), voice }
 }
 
-export function loadSample (key, url) {
+export function loadSample (voice, url) {
   return function (dispatch) {
-    return players[key]
-    ? players[key].loadResource(url)
+    return players[voice]
+    ? players[voice].loadResource(url)
     : PlayerFactory.forResource(url)
     .then(player => {
-      players[key] = player
+      players[voice] = player
       player.toMaster()
-      player.on('started', gain => dispatch(samplePlaying(key, gain)))
-      player.on('stopped', () => dispatch(samplePlaying(key, { velocity: () => 0 })))
+      player.on('started', gain => dispatch(samplePlaying(voice, gain)))
+      player.on('stopped', () => dispatch(samplePlaying(voice, { velocity: () => 0 })))
     })
   } // TODO handle url load failure (does wac.sample-player reject promise correctly?)
 }
@@ -69,9 +69,9 @@ function advanceSequence () {
 function playSequencedVoices  () {
   return (dispatch, getState) => {
     const { sequences, sequences: { currentStep } } = getState();
-    ['kick', 'snare', 'hat'].forEach(key => {
+    ['kick', 'snare', 'hat'].forEach((key, index) => {
       if (sequences[key].toggles[currentStep]) {
-        dispatch(playSample(key))
+        dispatch(playSample(index))
       }
     })
     setTimeout(() => dispatch(advanceSequence()), 125)

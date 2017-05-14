@@ -18,9 +18,9 @@ class App extends React.Component {
     return (
       <div>
         <SequenceStartStop button={push.button('Play')} />
-        <SamplePlayerContainer sampleKey='kick' />
-        <SamplePlayerContainer sampleKey='snare' />
-        <SamplePlayerContainer sampleKey='hat' />
+        {[...Array(8).keys()].map(index => (
+          <SamplePlayerContainer key={index} voice={index} />
+        ))}
         <SequenceToggleRow gridRow={ () => push.gridRow(4) } sequenceKey='kick' />
         <SequenceToggleRow gridRow={ () => push.gridRow(3) } sequenceKey='snare' />
         <SequenceToggleRow gridRow={ () => push.gridRow(2) } sequenceKey='hat' />
@@ -31,17 +31,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadSample('kick', 'kick.mp3')
-    this.props.loadSample('snare', 'snare.mp3')
-    this.props.loadSample('hat', 'hat.mp3')
+    this.props.loadSample(0, 'kick.mp3', 'kick')
+    this.props.loadSample(1, 'snare.mp3', 'snare')
+    this.props.loadSample(2, 'hat.mp3', 'hat')
   }
 }
 
 export default connect(
   (state) => ({}),
   (dispatch) => ({
-    loadSample (key, url) {
-      dispatch(loadSample(key, url))
+    loadSample (voice, url, name) {
+      dispatch(loadSample(voice, url, name))
     }
   })
 )(App)

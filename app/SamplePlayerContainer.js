@@ -13,12 +13,12 @@ const SamplePlayerContainer = ({ velocity = 0, playSample }) => (
 )
 
 export default connect(
-  ({ samples }, { sampleKey: key }) => {
-    return { velocity: (samples[key] && samples[key].velocity) || 0 }
+  ({ voices }, { voice }) => {
+    return { velocity: (voices[voice] && voices[voice].velocity) }
   },
-  (dispatch, { sampleKey: key }) => ({
+  (dispatch, { voice }) => ({
     playSample () {
-      dispatch(playSample(key, 100))
+      dispatch(playSample(voice, 100))
     }
   })
 )(SamplePlayerContainer)
