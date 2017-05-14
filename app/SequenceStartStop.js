@@ -2,7 +2,7 @@
 import React from 'react'
 import PadRow from './PadRow'
 import { connect } from 'react-redux'
-import { startSequence, stopSequence } from './actions'
+import { startSequence, stopSequence } from './sequencer/actions'
 import DomGridPad from './DomGridPad'
 import PushButton from './PushButton'
 

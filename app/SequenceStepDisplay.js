@@ -2,7 +2,7 @@
 import React from 'react'
 import PadRow from './PadRow'
 import { connect } from 'react-redux'
-import { startSequence } from './actions'
+import { startSequence } from './sequencer/actions'
 
 const SequenceStepDisplay = ({gridRow, startSequence, currentStep}) => (
   <PadRow

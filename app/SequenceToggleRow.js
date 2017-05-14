@@ -2,7 +2,7 @@
 import React from 'react'
 import PadRow from './PadRow'
 import { connect } from 'react-redux'
-import { toggleSequence } from './actions'
+import { toggleSequence } from './sequencer/actions'
 
 const SequenceToggleRow = ({gridRow, onClick, on}) => (
   <PadRow onClick={onClick} pads={gridRow()} on={on} />
