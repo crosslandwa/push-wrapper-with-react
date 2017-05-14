@@ -4,11 +4,11 @@ import PadRow from './PadRow'
 import { connect } from 'react-redux'
 import { startSequence } from './sequencer/actions'
 
-const SequenceStepDisplay = ({gridRow, startSequence, currentStep}) => (
+const SequenceStepDisplay = ({pads, startSequence, currentStep}) => (
   <PadRow
     onClick={startSequence}
-    pads={gridRow()}
-    on={gridRow().map((pad, index) => index === currentStep)}
+    pads={pads}
+    on={pads.map((pad, index) => index === currentStep)}
   />
 )
 

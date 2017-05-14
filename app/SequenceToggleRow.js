@@ -4,8 +4,8 @@ import PadRow from './PadRow'
 import { connect } from 'react-redux'
 import { toggleSequence } from './sequencer/actions'
 
-const SequenceToggleRow = ({gridRow, onClick, on}) => (
-  <PadRow onClick={onClick} pads={gridRow()} on={on} />
+const SequenceToggleRow = ({pads, onClick, on}) => (
+  <PadRow onClick={onClick} pads={pads} on={on} />
 )
 
 const mapDispatchToProps = (dispatch, { voice }) => ({
