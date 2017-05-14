@@ -17,7 +17,7 @@ export function samplePlaying (voice, gain) {
   return { type: 'SAMPLE_PLAYING', velocity: gain.velocity(), voice }
 }
 
-export function loadSample (voice, url) {
+export function loadSample (voice, url, sample) {
   return function (dispatch) {
     return players[voice]
     ? players[voice].loadResource(url)
@@ -28,6 +28,7 @@ export function loadSample (voice, url) {
       player.on('started', gain => dispatch(samplePlaying(voice, gain)))
       player.on('stopped', () => dispatch(samplePlaying(voice, { velocity: () => 0 })))
     })
+    .then(() => dispatch({ type: 'SAMPLE_LOADED', voice, sample }))
   } // TODO handle url load failure (does wac.sample-player reject promise correctly?)
 }
 

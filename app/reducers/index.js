@@ -44,17 +44,32 @@ function rainbow (state = [...Array(8).keys()].map(randomBetweenZeroAndTwo), {ty
 
 const initialVoiceState = { velocity: 0, sample: '-'}
 
-function voices (state = [], { type, voice, velocity = 0 }) {
-  switch (type) {
+function voices (state = [], action) {
+  switch (action.type) {
     case 'SAMPLE_PLAYING':
-      const voices = state.slice()
-      voices[voice] = Object.assign({},
-        state[voice] ? state[voice] : initialVoiceState,
-        { velocity }
-      )
-      return voices
+      return voicePlaying(state, action)
+    case 'SAMPLE_LOADED':
+      return voiceLoaded(state, action)
   }
   return state
+}
+
+function voicePlaying (state = [], {voice, velocity = 0}) {
+  const voices = state.slice()
+  voices[voice] = Object.assign({},
+    state[voice] ? state[voice] : initialVoiceState,
+    { velocity }
+  )
+  return voices
+}
+
+function voiceLoaded (state = [], {voice, sample}) {
+  const voices = state.slice()
+  voices[voice] = Object.assign({},
+    state[voice] ? state[voice] : initialVoiceState,
+    { sample }
+  )
+  return voices
 }
 
 export default combineReducers({
