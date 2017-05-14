@@ -2,6 +2,7 @@
 import React from 'react'
 import Rainbow from './Rainbow'
 import SequenceStartStop from './SequenceStartStop'
+import SequencerRecOverdub from './SequencerRecOverdub'
 import SequenceToggleRow from './SequenceToggleRow'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
@@ -15,9 +16,17 @@ class App extends React.Component {
 
   render() {
     const { push } = this.props
-    return (
+
+    const transportControls = (
       <div>
         <SequenceStartStop button={push.button('Play')} />
+        <SequencerRecOverdub button={push.button('Rec')} />
+      </div>
+    )
+
+    return (
+      <div>
+        {transportControls}
         {[...Array(8).keys()].map(index => (
           <SamplePlayerContainer key={index} voice={index} />
         ))}

@@ -7,7 +7,7 @@ import PushButton from './PushButton'
 
 import bindKeypress from './bindKeypress'
 
-class SequenceStartStop extends React.Component {
+class SequencerRecOverdub extends React.Component {
   constructor(props) {
     super(props)
     this.keypress = this.keypress.bind(this)
@@ -15,7 +15,7 @@ class SequenceStartStop extends React.Component {
   }
 
   keypress (event) {
-    if (" " === event.key) {
+    if ("r" === event.key) {
       event.preventDefault()
       this.togglePlay()
     }
@@ -30,7 +30,7 @@ class SequenceStartStop extends React.Component {
     const {button, playing} = this.props
     return (
       <div>
-        <DomGridPad padPressed={this.togglePlay} active={playing} rgb={[0, 200, 10]} />
+        <DomGridPad padPressed={this.togglePlay} active={playing} rgb={[200, 10, 0]} />
         <PushButton button={button} dim={true} on={playing} pressed={this.togglePlay} />
       </div>
     )
@@ -51,4 +51,4 @@ export default connect(
       dispatch(stopSequence())
     }
   })
-)(SequenceStartStop)
+)(SequencerRecOverdub)
