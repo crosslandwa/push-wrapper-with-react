@@ -25,7 +25,7 @@ class App extends React.Component {
         <SequenceToggleRow pads={push.gridRow(4)} voice={0} />
         <SequenceToggleRow pads={push.gridRow(3)} voice={1} />
         <SequenceToggleRow pads={push.gridRow(2)} voice={2} />
-        <SequenceStepDisplay pads={push.gridRow(1)} />
+        <SequenceStepDisplay pads={push.gridSelectButtons()} />
         <Rainbow row={() => push.gridRow(0)} />
       </div>
     )
