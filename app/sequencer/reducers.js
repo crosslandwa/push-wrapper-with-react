@@ -1,19 +1,20 @@
 const initialSequenceState = {
-  kick: { toggles: [] },
-  snare : { toggles: [] },
-  hat: { toggles: [] },
+  toggles: []
+}
+
+const initialSequencerState = {
+  voices: [...Array(8).keys()].map(() => initialSequenceState),
   currentStep: -1,
   nextStep: -1,
   playing: false
 }
 
-export default function sequencer (state = initialSequenceState, action) {
+export default function sequencer (state = initialSequencerState, action) {
   switch (action.type) {
     case 'TOGGLE_SEQUENCE':
-      const toggles = state[action.sequence].toggles.slice()
-      toggles[action.index] = !toggles[action.index]
-      const newSequence = Object.assign({}, state[action.sequence], { toggles })
-      return Object.assign({}, state, { [action.sequence]: newSequence })
+      const voices = state.voices.slice()
+      voices[action.voice] = toggleStep(state.voices[action.voice], action)
+      return Object.assign({}, state, { voices })
     case 'ADVANCE_SEQUENCE':
       const { currentStep, nextStep } = state;
       return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 8 })
@@ -25,4 +26,10 @@ export default function sequencer (state = initialSequenceState, action) {
       return Object.assign({}, state, { currentStep: -1, nextStep: -1, playing: false })
   }
   return state
+}
+
+function toggleStep (state = initialSequenceState, {step}) {
+  const toggles = state.toggles.slice()
+  toggles[step] = !toggles[step]
+  return Object.assign({}, state, { toggles })
 }

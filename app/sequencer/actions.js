@@ -1,7 +1,7 @@
 import {playSample} from '../voices/actions'
 
-export function toggleSequence (key, index) {
-  return { type: 'TOGGLE_SEQUENCE', sequence: key, index }
+export function toggleSequence (voice, step) {
+  return { type: 'TOGGLE_SEQUENCE', voice, step }
 }
 
 export function stopSequence () {
@@ -34,8 +34,8 @@ function advanceSequence () {
 function playSequencedVoices  () {
   return (dispatch, getState) => {
     const { sequencer, sequencer: { currentStep } } = getState();
-    ['kick', 'snare', 'hat'].forEach((key, index) => {
-      if (sequencer[key].toggles[currentStep]) {
+    sequencer.voices.forEach((voice, index) => {
+      if (voice.toggles[currentStep]) {
         dispatch(playSample(index))
       }
     })

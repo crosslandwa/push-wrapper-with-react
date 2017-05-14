@@ -8,13 +8,13 @@ const SequenceToggleRow = ({gridRow, onClick, on}) => (
   <PadRow onClick={onClick} pads={gridRow()} on={on} />
 )
 
-const mapDispatchToProps = (dispatch, { sequenceKey: key }) => ({
+const mapDispatchToProps = (dispatch, { voice }) => ({
   onClick (index) {
-    dispatch(toggleSequence(key, index))
+    dispatch(toggleSequence(voice, index))
   }
 })
 
 export default connect(
-  ({ sequencer }, { sequenceKey: key }) => ({ on: sequencer[key].toggles }),
+  ({ sequencer }, { voice }) => ({ on: sequencer.voices[voice].toggles }),
   mapDispatchToProps
 )(SequenceToggleRow)
