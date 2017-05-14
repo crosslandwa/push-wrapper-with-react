@@ -1,8 +1,7 @@
 'use strict'
 import React from 'react'
 import Rainbow from './Rainbow'
-import SequenceStartStop from './SequenceStartStop'
-import SequencerRecOverdub from './SequencerRecOverdub'
+import TransportControls from './TransportControls'
 import SequenceToggleRow from './SequenceToggleRow'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
@@ -17,16 +16,9 @@ class App extends React.Component {
   render() {
     const { push } = this.props
 
-    const transportControls = (
-      <div>
-        <SequenceStartStop button={push.button('Play')} />
-        <SequencerRecOverdub button={push.button('Rec')} />
-      </div>
-    )
-
     return (
       <div>
-        {transportControls}
+        <TransportControls push={push} />
         {[...Array(8).keys()].map(index => (
           <SamplePlayerContainer key={index} voice={index} />
         ))}

@@ -6,7 +6,8 @@ const initialSequencerState = {
   voices: [...Array(8).keys()].map(() => initialSequenceState),
   currentStep: -1,
   nextStep: -1,
-  playing: false
+  playing: false,
+  recording: false
 }
 
 export default function sequencer (state = initialSequencerState, action) {
@@ -24,6 +25,10 @@ export default function sequencer (state = initialSequencerState, action) {
       return Object.assign({}, state, { currentStep: -1, nextStep: action.step, playing: true })
     case 'SEQUENCE_STOP':
       return Object.assign({}, state, { currentStep: -1, nextStep: -1, playing: false })
+    case 'SEQUENCE_ARM':
+      return Object.assign({}, state, { recording: true })
+    case 'SEQUENCE_DISARM':
+      return Object.assign({}, state, { recording: false })
   }
   return state
 }

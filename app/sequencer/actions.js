@@ -5,9 +5,7 @@ export function toggleSequence (voice, step) {
 }
 
 export function stopSequence () {
-  return dispatch => {
-    dispatch({ type: 'SEQUENCE_STOP' })
-  }
+  return { type: 'SEQUENCE_STOP' }
 }
 
 export function startSequence (step = 0) {
@@ -41,4 +39,12 @@ function playSequencedVoices  () {
     })
     setTimeout(() => dispatch(advanceSequence()), 125)
   }
+}
+
+export function disarmSequencer () {
+  return { type: 'SEQUENCE_DISARM' }
+}
+
+export function armSequencer () {
+  return { type: 'SEQUENCE_ARM' }
 }
