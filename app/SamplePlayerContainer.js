@@ -7,7 +7,7 @@ import { playSample } from './voices/actions'
 import { recordStep } from './sequencer/actions'
 
 const SamplePlayerContainer = ({ velocity = 0, playSample, pad }) => (
-  <div>
+  <div style={{display: 'inline-block'}} >
     <DomGridPad
       padPressed={playSample}
       active={velocity > 0}
