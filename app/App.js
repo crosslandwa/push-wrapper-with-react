@@ -6,7 +6,8 @@ import SequenceToggleRow from './SequenceToggleRow'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
 import { connect } from 'react-redux'
-import { loadSample, startSequence, stopSequence } from './actions'
+import { startSequence, stopSequence } from './actions'
+import { loadSample } from './voices/actions'
 
 class App extends React.Component {
   constructor(props) {
