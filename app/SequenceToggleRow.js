@@ -2,7 +2,7 @@
 import React from 'react'
 import PadRow from './PadRow'
 import { connect } from 'react-redux'
-import { toggleSequence } from './sequencer/actions'
+import { toggleStep } from './sequencer/actions'
 
 const SequenceToggleRow = ({pads, onClick, on}) => (
   <PadRow onClick={onClick} pads={pads} on={on} />
@@ -10,7 +10,7 @@ const SequenceToggleRow = ({pads, onClick, on}) => (
 
 const mapDispatchToProps = (dispatch, { voice }) => ({
   onClick (index) {
-    dispatch(toggleSequence(voice, index))
+    dispatch(toggleStep(voice, index))
   }
 })
 

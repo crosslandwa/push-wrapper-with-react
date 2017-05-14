@@ -12,7 +12,8 @@ const initialSequencerState = {
 
 export default function sequencer (state = initialSequencerState, action) {
   switch (action.type) {
-    case 'TOGGLE_SEQUENCE':
+    case 'TURN_STEP_ON':
+    case 'TURN_STEP_OFF':
       const voices = state.voices.slice()
       voices[action.voice] = toggleStep(state.voices[action.voice], action)
       return Object.assign({}, state, { voices })
@@ -33,8 +34,8 @@ export default function sequencer (state = initialSequencerState, action) {
   return state
 }
 
-function toggleStep (state = initialSequenceState, {step}) {
+function toggleStep (state = initialSequenceState, {type, step}) {
   const toggles = state.toggles.slice()
-  toggles[step] = !toggles[step]
+  toggles[step] = type === 'TURN_STEP_ON'
   return Object.assign({}, state, { toggles })
 }

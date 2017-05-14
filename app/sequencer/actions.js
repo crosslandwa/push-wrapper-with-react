@@ -1,7 +1,20 @@
 import {playSample} from '../voices/actions'
 
-export function toggleSequence (voice, step) {
-  return { type: 'TOGGLE_SEQUENCE', voice, step }
+export function toggleStep (voice, step) {
+  return (dispatch, getState) => {
+    const { sequencer: { voices } } = getState()
+    const stepOn = voices[voice].toggles[step]
+    const toggle = stepOn ? turnStepOff : turnStepOn
+    dispatch(toggle(voice, step))
+  }
+}
+
+function turnStepOn (voice, step) {
+  return { type: 'TURN_STEP_ON', voice, step }
+}
+
+function turnStepOff (voice, step) {
+  return { type: 'TURN_STEP_OFF', voice, step }
 }
 
 export function stopSequence () {
@@ -57,6 +70,6 @@ export function recordStep (voice, velocity) {
       dispatch(startSequence(0))
     }
 
-    dispatch(toggleSequence(voice, Math.max(0, currentStep))) // should be turn on step
+    dispatch(turnStepOn(voice, Math.max(0, currentStep)))
   }
 }
