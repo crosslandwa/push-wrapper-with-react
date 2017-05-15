@@ -10,6 +10,11 @@ class PushControlModifiers extends React.Component {
     super(props)
     this.shiftOn = this.shiftOn.bind(this)
     this.shiftOff = this.shiftOff.bind(this)
+    this.toggleShift = this.toggleShift.bind(this)
+  }
+
+  toggleShift() {
+    this.props.shift ? this.shiftOff() : this.shiftOn()
   }
 
   shiftOn () {
@@ -26,8 +31,8 @@ class PushControlModifiers extends React.Component {
       <div>
         <DomGridPad active={shift}
           rgb={[250, 160, 10]}
-          padPressed={this.shiftOn}
-          padReleased={this.shiftOff}/>
+          padPressed={this.toggleShift}
+        />
         <PushButton button={push.button('Shift')}
           dim={true}
           on={shift}
