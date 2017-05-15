@@ -18,6 +18,11 @@ export default function sequencer (state = initialSequencerState, action) {
       const voices = state.voices.slice()
       voices[action.voice] = toggleStep(state.voices[action.voice], action)
       return Object.assign({}, state, { voices })
+    case 'SEQUENCER_DELETE_MODE_ON':
+    case 'SEQUENCER_DELETE_MODE_OFF':
+      const newVoices = state.voices.slice()
+      newVoices[action.voice] = toggleDeleteMode(state.voices[action.voice], action)
+      return Object.assign({}, state, { voices: newVoices })
     case 'ADVANCE_SEQUENCE':
       const { currentStep, nextStep } = state;
       return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 8 })
@@ -35,8 +40,13 @@ export default function sequencer (state = initialSequencerState, action) {
   return state
 }
 
+// this duplication may go away with normalized data...
 function toggleStep (state = initialSequenceState, {type, step}) {
   const toggles = state.toggles.slice()
   toggles[step] = type === 'TURN_STEP_ON'
   return Object.assign({}, state, { toggles })
+}
+
+function toggleDeleteMode (state = initialSequencerState, {type}) {
+  return Object.assign({}, state, { deleteMode: type === 'SEQUENCER_DELETE_MODE_ON' })
 }

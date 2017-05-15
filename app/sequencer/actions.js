@@ -76,3 +76,11 @@ export function recordStep (voice, velocity) {
     dispatch(turnStepOn(voice, Math.max(0, currentStep)))
   }
 }
+
+export function deleteModeOn (voice) {
+  return { type: 'SEQUENCER_DELETE_MODE_ON', voice}
+}
+
+export function deleteModeOff (voice) {
+  return { type: 'SEQUENCER_DELETE_MODE_OFF', voice}
+}
