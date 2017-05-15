@@ -4,6 +4,7 @@ import Rainbow from './Rainbow'
 import TransportControls from './TransportControls'
 import PushControlModifiers from './PushControlModifiers'
 import SequenceToggleRow from './SequenceToggleRow'
+import SequencerDeleteButton from './SequencerDeleteButton'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
 import { connect } from 'react-redux'
@@ -15,15 +16,16 @@ class App extends React.Component {
   }
 
   render() {
-    const { push } = this.props
+    const { push, delModifier } = this.props
 
     return (
       <div>
         <PushControlModifiers push={push} />
         <TransportControls push={push} />
-        {[...Array(8).keys()].map(index => (
-          <SamplePlayerContainer key={index} voice={index} pad={push.gridRow(5)[index]} />
-        ))}
+        {[...Array(8).keys()].map(index => delModifier
+          ? <SequencerDeleteButton key={index} voice={index} pad={push.gridRow(5)[index]} />
+          : <SamplePlayerContainer key={index} voice={index} pad={push.gridRow(5)[index]} />
+        )}
         <SequenceToggleRow pads={push.gridRow(4)} voice={0} />
         <SequenceToggleRow pads={push.gridRow(3)} voice={1} />
         <SequenceToggleRow pads={push.gridRow(2)} voice={2} />
@@ -41,7 +43,7 @@ class App extends React.Component {
 }
 
 export default connect(
-  (state) => ({}),
+  (state) => ({ delModifier: state.push.modifiers.del }),
   (dispatch) => ({
     loadSample (voice, url, name) {
       dispatch(loadSample(voice, url, name))

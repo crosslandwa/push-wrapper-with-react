@@ -32,8 +32,8 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 
   const padActions = del
     ? {
-      padPressed: () => dispatch(deleteModeOn(voice)),
-      padReleased: () => dispatch(deleteModeOff(voice))
+      padPressed: () => {},
+      padReleased: () => console.log('asdsada')
     }
     : {
       padPressed: (velocity = 100) => {
