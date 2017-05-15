@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import DomGridPad from './DomGridPad'
 import PushGridPad from './PushGridPad'
 import { playSample } from './voices/actions'
-import { recordStep, deleteModeOff, deleteModeOn } from './sequencer/actions'
+import { recordStep } from './sequencer/actions'
 
-const SamplePlayerContainer = ({ velocity = 0, padPressed, padReleased, pad, rgb }) => (
+const SamplePlayerContainer = ({ velocity = 0, padPressed, padReleased, pad, rgb = [0, 100, 200]}) => (
   <div style={{display: 'inline-block'}} >
     <DomGridPad
       padPressed={padPressed}
@@ -25,47 +25,14 @@ const SamplePlayerContainer = ({ velocity = 0, padPressed, padReleased, pad, rgb
   </div>
 )
 
-function mergeProps(stateProps, dispatchProps, ownProps) {
-  const { del, deleteMode, velocity } = stateProps
-  const { dispatch } = dispatchProps
-  const { voice } = ownProps
-
-  const padActions = del
-    ? {
-      padPressed: () => {},
-      padReleased: () => console.log('asdsada')
-    }
-    : {
-      padPressed: (velocity = 100) => {
-        dispatch(playSample(voice, velocity))
-        dispatch(recordStep(voice, velocity))
-      },
-      padReleased: () => {}
-    }
-
-  if (!del && deleteMode) dispatch(deleteModeOff(voice))
-
-  return Object.assign({},
-    ownProps,
-    {
-      rgb: del ? [200, 100, 0] : [0, 100, 200],
-      velocity: del ? (deleteMode ? 100 : 0) : velocity
-    },
-    padActions,
-  )
-}
-
 export default connect(
-  (
-    { voices, push: { modifiers: { del } }, sequencer: { voices: seqVoices } },
-    { voice }
-  ) => {
-    return {
-      velocity: (voices[voice] && voices[voice].velocity),
-      del,
-      deleteMode: seqVoices[voice] && seqVoices[voice].deleteMode
+  ({ voices }, { voice }) => ({
+    velocity: voices[voice] && voices[voice].velocity,
+  }),
+  (dispatch, { voice }) => ({
+    padPressed (velocity) {
+      dispatch(playSample(voice, velocity))
+      dispatch(recordStep(voice, velocity))
     }
-  },
-  null,
-  mergeProps
+  })
 )(SamplePlayerContainer)
