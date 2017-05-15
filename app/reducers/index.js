@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import voices from '../voices/reducers'
 import sequencer from '../sequencer/reducers'
+import push from '../push/reducers'
 
 const randomBetweenZeroAndTwo = max => Math.floor(Math.random() * (2 + 1))
 
@@ -17,6 +18,7 @@ function rainbow (state = [...Array(8).keys()].map(randomBetweenZeroAndTwo), {ty
 }
 
 export default combineReducers({
+  push,
   rainbow,
   sequencer,
   voices

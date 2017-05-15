@@ -2,6 +2,7 @@
 import React from 'react'
 import Rainbow from './Rainbow'
 import TransportControls from './TransportControls'
+import PushControlModifiers from './PushControlModifiers'
 import SequenceToggleRow from './SequenceToggleRow'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
@@ -18,6 +19,7 @@ class App extends React.Component {
 
     return (
       <div>
+        <PushControlModifiers push={push} />
         <TransportControls push={push} />
         {[...Array(8).keys()].map(index => (
           <SamplePlayerContainer key={index} voice={index} pad={push.gridRow(5)[index]} />
