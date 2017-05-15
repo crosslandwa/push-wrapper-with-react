@@ -26,11 +26,11 @@ const SamplePlayerContainer = ({ velocity = 0, padPressed, padReleased, pad, rgb
 )
 
 function mergeProps(stateProps, dispatchProps, ownProps) {
-  const { shift, deleteMode, velocity } = stateProps
+  const { del, deleteMode, velocity } = stateProps
   const { dispatch } = dispatchProps
   const { voice } = ownProps
 
-  const padActions = shift
+  const padActions = del
     ? {
       padPressed: () => dispatch(deleteModeOn(voice)),
       padReleased: () => dispatch(deleteModeOff(voice))
@@ -43,13 +43,13 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
       padReleased: () => {}
     }
 
-  if (!shift && deleteMode) dispatch(deleteModeOff(voice))
+  if (!del && deleteMode) dispatch(deleteModeOff(voice))
 
   return Object.assign({},
     ownProps,
     {
-      rgb: shift ? [200, 100, 0] : [0, 100, 200],
-      velocity: shift ? (deleteMode ? 100 : 0) : velocity
+      rgb: del ? [200, 100, 0] : [0, 100, 200],
+      velocity: del ? (deleteMode ? 100 : 0) : velocity
     },
     padActions,
   )
@@ -57,12 +57,12 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
 
 export default connect(
   (
-    { voices, push: { modifiers: { shift } }, sequencer: { voices: seqVoices } },
+    { voices, push: { modifiers: { del } }, sequencer: { voices: seqVoices } },
     { voice }
   ) => {
     return {
       velocity: (voices[voice] && voices[voice].velocity),
-      shift,
+      del,
       deleteMode: seqVoices[voice] && seqVoices[voice].deleteMode
     }
   },

@@ -5,3 +5,11 @@ export function shiftOn () {
 export function shiftOff () {
   return { type: 'PUSH_SHIFT_OFF' }
 }
+
+export function deleteOn () {
+  return { type: 'PUSH_DELETE_ON' }
+}
+
+export function deleteOff () {
+  return { type: 'PUSH_DELETE_OFF' }
+}

@@ -1,13 +1,15 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { shiftOn, shiftOff } from './push/actions'
+import { deleteOff, deleteOn, shiftOff, shiftOn } from './push/actions'
 import DomGridPad from './DomGridPad'
 import PushButton from './PushButton'
 
 class PushControlModifiers extends React.Component {
   constructor(props) {
     super(props)
+    this.deleteOn = this.deleteOn.bind(this)
+    this.deleteOff = this.deleteOff.bind(this)
     this.shiftOn = this.shiftOn.bind(this)
     this.shiftOff = this.shiftOff.bind(this)
     this.toggleShift = this.toggleShift.bind(this)
@@ -15,6 +17,14 @@ class PushControlModifiers extends React.Component {
 
   toggleShift() {
     this.props.shift ? this.shiftOff() : this.shiftOn()
+  }
+
+  deleteOn () {
+    this.props.deleteOn()
+  }
+
+  deleteOff () {
+    this.props.deleteOff()
   }
 
   shiftOn () {
@@ -26,7 +36,7 @@ class PushControlModifiers extends React.Component {
   }
 
   render () {
-    const {shift, push} = this.props
+    const {shift, push, del} = this.props
     return (
       <div>
         <DomGridPad active={shift}
@@ -39,14 +49,26 @@ class PushControlModifiers extends React.Component {
           onPressed={this.shiftOn}
           onReleased={this.shiftOff}
         />
+        <PushButton button={push.button('Delete')}
+          dim={true}
+          on={del}
+          onPressed={this.deleteOn}
+          onReleased={this.deleteOff}
+        />
       </div>
     )
   }
 }
 
 export default connect(
-  ({ push: { modifiers: { shift } } }) => ({ shift }),
+  ({ push: { modifiers: { shift, del } } }) => ({ shift, del }),
   (dispatch) => ({
+    deleteOn () {
+      dispatch(deleteOn())
+    },
+    deleteOff () {
+      dispatch(deleteOff())
+    },
     shiftOn () {
       dispatch(shiftOn())
     },
