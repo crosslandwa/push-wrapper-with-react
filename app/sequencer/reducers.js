@@ -1,5 +1,6 @@
 const initialSequenceState = {
-  toggles: []
+  toggles: [],
+  deleteMode: false
 }
 
 const initialSequencerState = {

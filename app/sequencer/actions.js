@@ -44,10 +44,13 @@ function advanceSequence () {
 
 function playSequencedVoices  () {
   return (dispatch, getState) => {
-    const { sequencer, sequencer: { currentStep } } = getState()
-    sequencer.voices.forEach((voice, index) => {
+    const { sequencer: { currentStep, voices } } = getState()
+    voices.forEach((voice, index) => {
       if (voice.toggles[currentStep]) {
-        dispatch(playSample(index))
+        dispatch(voice.deleteMode
+          ? turnStepOff(index, currentStep)
+          : playSample(index)
+        )
       }
     })
     setTimeout(() => dispatch(advanceSequence()), 125)
