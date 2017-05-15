@@ -42,9 +42,9 @@ class TransportControls extends React.Component {
     return (
       <div>
         <DomGridPad padPressed={this.togglePlay} active={playing} rgb={[0, 200, 10]} />
-        <PushButton button={push.button('Play')} dim={true} on={playing} pressed={this.togglePlay} />
+        <PushButton button={push.button('Play')} dim={true} on={playing} onPressed={this.togglePlay} />
         <DomGridPad padPressed={this.toggleArmed} active={recording} rgb={[200, 10, 0]} />
-        <PushButton button={push.button('Rec')} dim={true} on={recording} pressed={this.toggleArmed} />
+        <PushButton button={push.button('Rec')} dim={true} on={recording} onPressed={this.toggleArmed} />
       </div>
     )
   }

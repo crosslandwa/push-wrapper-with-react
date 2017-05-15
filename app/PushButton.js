@@ -5,10 +5,15 @@ class PushButton extends React.Component {
   constructor(props) {
     super(props)
     this.pressed = this.pressed.bind(this)
+    this.released = this.released.bind(this)
   }
 
   pressed() {
-    this.props.pressed()
+    this.props.onPressed()
+  }
+
+  released() {
+    this.props.onReleased && this.props.onReleased()
   }
 
   render() {
@@ -19,11 +24,13 @@ class PushButton extends React.Component {
 
   componentDidMount() {
     const unsubscribePressedListener = this.props.button.onPressed(this.pressed)
-    this.setState({unsubscribePressedListener})
+    const unsubscribeReleasedListener = this.props.button.onReleased(this.released)
+    this.setState({unsubscribePressedListener, unsubscribeReleasedListener})
   }
 
   componentWillUnmount() {
     this.state.unsubscribePressedListener()
+    this.state.unsubscribeReleasedListener()
   }
 }
 
