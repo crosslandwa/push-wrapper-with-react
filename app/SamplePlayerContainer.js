@@ -6,7 +6,7 @@ import PushGridPad from './PushGridPad'
 import { playSample } from './voices/actions'
 import { recordStep, deleteModeOff, deleteModeOn } from './sequencer/actions'
 
-const SamplePlayerContainer = ({ velocity = 0, padPressed, padReleased, pad, shift, rgb }) => (
+const SamplePlayerContainer = ({ velocity = 0, padPressed, padReleased, pad, rgb }) => (
   <div style={{display: 'inline-block'}} >
     <DomGridPad
       padPressed={padPressed}
@@ -17,9 +17,10 @@ const SamplePlayerContainer = ({ velocity = 0, padPressed, padReleased, pad, shi
     />
     <PushGridPad
       velocity={velocity}
-      rgb = {[0, 10, 200]}
+      rgb = {rgb}
       pad={pad}
       padPressed={padPressed}
+      padReleased={padReleased}
     />
   </div>
 )
