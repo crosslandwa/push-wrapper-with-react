@@ -13,6 +13,11 @@ class PushControlModifiers extends React.Component {
     this.shiftOn = this.shiftOn.bind(this)
     this.shiftOff = this.shiftOff.bind(this)
     this.toggleShift = this.toggleShift.bind(this)
+    this.toggleDelete = this.toggleDelete.bind(this)
+  }
+
+  toggleDelete() {
+    this.props.del ? this.deleteOff() : this.deleteOn()
   }
 
   toggleShift() {
@@ -48,6 +53,10 @@ class PushControlModifiers extends React.Component {
           on={shift}
           onPressed={this.shiftOn}
           onReleased={this.shiftOff}
+        />
+        <DomGridPad active={shift}
+          rgb={[250, 160, 10]}
+          padPressed={this.toggleDelete}
         />
         <PushButton button={push.button('Delete')}
           dim={true}
