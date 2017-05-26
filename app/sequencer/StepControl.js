@@ -15,8 +15,8 @@ const colours = {
 }
 
 const colour = (active, step, currentStep) => {
-    if (step === currentStep) return active ? colours.currentStepPlaying : colours.currentStep
-    return active ? colours.activeStep : colours.off
+  if (step === currentStep) return active ? colours.currentStepPlaying : colours.currentStep
+  return active ? colours.activeStep : colours.off
 }
 
 const StepControl = ({pads, onClick, on, currentStep}) => (
@@ -48,9 +48,10 @@ const StepControl = ({pads, onClick, on, currentStep}) => (
   </div>
 )
 
-const mapDispatchToProps = (dispatch, { voice }) => ({
+const mapDispatchToProps = (dispatch, { voice, onClick }) => ({
   onClick (index) {
     dispatch(toggleStep(voice, index))
+    onClick && onClick(index)
   }
 })
 
