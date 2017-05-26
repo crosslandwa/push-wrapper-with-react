@@ -1,8 +1,8 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import DomGridPad from './DomGridPad'
-import PushGridPad from './PushGridPad'
+import DomGridPad from './push/DomGridPad'
+import PushGridPad from './push/PushGridPad'
 import { deleteModeOff, deleteModeOn } from './sequencer/actions'
 
 const SequencerDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (

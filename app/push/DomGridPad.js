@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import Colours from './push/colours'
+import Colours from './colours'
 
 const padStyleBase = {
   display: 'inline-block',

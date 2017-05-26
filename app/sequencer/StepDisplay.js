@@ -1,8 +1,8 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import PushGridPad from '../PushGridPad'
-import DomGridPad from '../DomGridPad'
+import PushGridPad from '../push/PushGridPad'
+import DomGridPad from '../push/DomGridPad'
 import arrayChunk from '../utils/arrayChunk'
 import Colours from '../push/colours'
 

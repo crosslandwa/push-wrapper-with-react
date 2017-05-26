@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { deleteOff, deleteOn, shiftOff, shiftOn } from './push/actions'
 import DomPushButton from './push/DomPushButton'
-import PushButton from './PushButton'
+import PushButton from './push/PushButton'
 
 class PushControlModifiers extends React.Component {
   constructor(props) {

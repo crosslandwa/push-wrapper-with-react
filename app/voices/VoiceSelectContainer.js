@@ -1,8 +1,8 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import DomGridPad from '../DomGridPad'
-import PushGridPad from '../PushGridPad'
+import DomGridPad from '../push/DomGridPad'
+import PushGridPad from '../push/PushGridPad'
 import { selectVoice } from '../ui/actions'
 import Colours from '../push/colours'
 
