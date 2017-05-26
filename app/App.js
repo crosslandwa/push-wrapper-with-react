@@ -5,7 +5,6 @@ import PushControlModifiers from './PushControlModifiers'
 import StepControl from './sequencer/StepControl'
 import StepJumping from './sequencer/StepJumping'
 import SequencerDeleteButton from './SequencerDeleteButton'
-import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './voices/SamplePlayerContainer'
 import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
@@ -31,7 +30,6 @@ class App extends React.Component {
       <div>
         <PushControlModifiers push={push} />
         <TransportControls push={push} />
-        <SequenceStepDisplay pads={push.gridSelectButtons()} />
         {[...Array(8).keys()].map(index => <VoicePadComponent key={index} voice={index} pad={push.gridRow(7)[index]} />)}
         <StepControlComponent pads={[...push.gridRow(1), ...push.gridRow(0)]} voice={selectedVoice} />
       </div>
