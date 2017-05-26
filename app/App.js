@@ -23,12 +23,12 @@ class App extends React.Component {
         <TransportControls push={push} />
         <SequenceStepDisplay pads={push.gridSelectButtons()} />
         {[...Array(8).keys()].map(index => delModifier
-          ? <SequencerDeleteButton key={index} voice={index} pad={push.gridRow(5)[index]} />
-          : <SamplePlayerContainer key={index} voice={index} pad={push.gridRow(5)[index]} />
+          ? <SequencerDeleteButton key={index} voice={index} pad={push.gridRow(7)[index]} />
+          : <SamplePlayerContainer key={index} voice={index} pad={push.gridRow(7)[index]} />
         )}
-        <SequenceToggleRow pads={push.gridRow(4)} voice={0} />
-        <SequenceToggleRow pads={push.gridRow(3)} voice={1} />
-        <SequenceToggleRow pads={push.gridRow(2)} voice={2} />
+        <SequenceToggleRow pads={push.gridRow(6)} voice={0} />
+        <SequenceToggleRow pads={push.gridRow(5)} voice={1} />
+        <SequenceToggleRow pads={push.gridRow(4)} voice={2} />
       </div>
     )
   }
