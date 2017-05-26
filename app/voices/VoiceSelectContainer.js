@@ -6,16 +6,18 @@ import PushGridPad from '../PushGridPad'
 import { selectVoice } from '../ui/actions'
 import Colours from '../push/colours'
 
-const VoiceSelectContainer = ({ velocity = 0, padPressed, padReleased, pad, rgb = Colours.blue}) => (
+const padColour = velocity => velocity > 0 ? Colours.blue : Colours.orange
+
+const VoiceSelectContainer = ({ velocity = 0, padPressed, padReleased, pad, selected}) => (
   <div style={{display: 'inline-block'}} >
     <DomGridPad
       padPressed={padPressed}
-      active={velocity > 0}
-      rgb={rgb}
+      active={(velocity > 0) || selected}
+      rgb={padColour(velocity)}
     />
     <PushGridPad
-      velocity={velocity}
-      rgb = {rgb}
+      velocity={(velocity > 0) ? velocity : (selected ? 100 : 0)}
+      rgb={padColour(velocity)}
       pad={pad}
       padPressed={padPressed}
     />
@@ -23,7 +25,8 @@ const VoiceSelectContainer = ({ velocity = 0, padPressed, padReleased, pad, rgb 
 )
 
 export default connect(
-  ({ voices }, { voice }) => ({
+  ({ voices, ui }, { voice }) => ({
+    selected: ui.selectedVoice === voice,
     velocity: voices[voice] && voices[voice].velocity,
   }),
   (dispatch, { voice }) => ({
