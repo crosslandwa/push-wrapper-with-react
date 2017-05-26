@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { deleteOff, deleteOn, shiftOff, shiftOn } from './push/actions'
-import DomGridPad from './DomGridPad'
+import DomPushButton from './push/DomPushButton'
 import PushButton from './PushButton'
 
 class PushControlModifiers extends React.Component {
@@ -44,8 +44,8 @@ class PushControlModifiers extends React.Component {
     const {shift, push, del} = this.props
     return (
       <div>
-        <DomGridPad active={shift}
-          rgb={[250, 160, 10]}
+        <DomPushButton active={shift}
+          label='Shift'
           padPressed={this.toggleShift}
         />
         <PushButton button={push.button('Shift')}
@@ -54,8 +54,8 @@ class PushControlModifiers extends React.Component {
           onPressed={this.shiftOn}
           onReleased={this.shiftOff}
         />
-        <DomGridPad active={shift}
-          rgb={[250, 160, 10]}
+        <DomPushButton active={del}
+          label='Delete'
           padPressed={this.toggleDelete}
         />
         <PushButton button={push.button('Delete')}
