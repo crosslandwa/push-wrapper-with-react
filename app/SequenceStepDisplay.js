@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { startSequence } from './sequencer/actions'
 import PushGridPad from './PushGridPad'
-import DomGridPad from './DomGridPad'
+import DomPushButton from './push/DomPushButton'
 import arrayChunk from './utils/arrayChunk'
 
 const SequenceStepDisplay = ({pads, startSequence, currentStep}) => (
@@ -19,11 +19,10 @@ const SequenceStepDisplay = ({pads, startSequence, currentStep}) => (
     {arrayChunk(pads, 8).map((eightPads, row) => (
       <div key={row}>
         {eightPads.map((pad, index) => (
-          <DomGridPad
+          <DomPushButton
             key={index + row * 8}
             active={(index + row * 8) === currentStep}
             padPressed={() => startSequence(index + row * 8)}
-            narrow={true}
           />
         ))}
       </div>
