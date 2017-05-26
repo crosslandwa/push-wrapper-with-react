@@ -2,9 +2,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { startSequence } from './actions'
-import StepControl from './StepControl'
+import StepDisplay from './StepDisplay'
 
-const StepJumping = (props) => <StepControl {...props} />
+const StepJumping = (props) => <StepDisplay {...props} />
 
 export default connect(
   state => ({}),
