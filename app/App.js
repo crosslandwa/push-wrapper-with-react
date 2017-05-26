@@ -4,7 +4,7 @@ import TransportControls from './TransportControls'
 import PushControlModifiers from './PushControlModifiers'
 import StepControl from './sequencer/StepControl'
 import StepJumping from './sequencer/StepJumping'
-import SequencerDeleteButton from './SequencerDeleteButton'
+import StepDeleteButton from './sequencer/StepDeleteButton'
 import SamplePlayerContainer from './voices/SamplePlayerContainer'
 import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
@@ -23,7 +23,7 @@ class App extends React.Component {
     if (shiftModifier) {
       VoicePadComponent = VoiceSelectContainer
     } else if (delModifier) {
-      VoicePadComponent = SequencerDeleteButton
+      VoicePadComponent = StepDeleteButton
     }
 
     return (

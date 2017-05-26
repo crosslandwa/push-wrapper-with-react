@@ -1,11 +1,11 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import DomGridPad from './push/DomGridPad'
-import PushGridPad from './push/PushGridPad'
-import { deleteModeOff, deleteModeOn } from './sequencer/actions'
+import DomGridPad from '../push/DomGridPad'
+import PushGridPad from '../push/PushGridPad'
+import { deleteModeOff, deleteModeOn } from './actions'
 
-const SequencerDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (
+const StepDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (
   <div style={{display: 'inline-block'}} >
     <DomGridPad
       padPressed={padPressed}
@@ -37,4 +37,4 @@ export default connect(
       dispatch(deleteModeOff(voice))
     }
   })
-)(SequencerDeleteButton)
+)(StepDeleteButton)
