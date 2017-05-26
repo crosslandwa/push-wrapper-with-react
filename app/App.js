@@ -2,7 +2,7 @@
 import React from 'react'
 import TransportControls from './TransportControls'
 import PushControlModifiers from './PushControlModifiers'
-import SequenceToggleRow from './SequenceToggleRow'
+import StepControl from './sequencer/StepControl'
 import SequencerDeleteButton from './SequencerDeleteButton'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './voices/SamplePlayerContainer'
@@ -33,7 +33,7 @@ class App extends React.Component {
           }
             return <Component key={index} voice={index} pad={push.gridRow(7)[index]} />
         })}
-        <SequenceToggleRow pads={[...push.gridRow(1), ...push.gridRow(0)]} voice={selectedVoice} />
+        <StepControl pads={[...push.gridRow(1), ...push.gridRow(0)]} voice={selectedVoice} />
       </div>
     )
   }

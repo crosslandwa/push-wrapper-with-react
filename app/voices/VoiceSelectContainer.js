@@ -6,7 +6,7 @@ import PushGridPad from '../PushGridPad'
 import { selectVoice } from '../ui/actions'
 import Colours from '../push/colours'
 
-const padColour = velocity => velocity > 0 ? Colours.blue : Colours.orange
+const padColour = velocity => velocity > 0 ? Colours.turquoise : Colours.orange
 
 const VoiceSelectContainer = ({ velocity = 0, padPressed, padReleased, pad, selected}) => (
   <div style={{display: 'inline-block'}} >

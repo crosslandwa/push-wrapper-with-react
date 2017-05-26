@@ -1,5 +1,6 @@
 'use strict'
 import React from 'react'
+import Colours from './push/colours'
 
 const padStyleBase = {
   display: 'inline-block',
@@ -21,7 +22,7 @@ const padStyleActive = (rgb) => ({
   borderColor: `rgba(100, 100, 100, 0.3)`
 })
 
-const DomGridPad = ({pad, active, padPressed, padReleased, rgb = [0, 100, 200]}) => (
+const DomGridPad = ({pad, active, padPressed, padReleased, rgb = Colours.blue}) => (
   <div
     className='pad'
     onMouseDown={() => padPressed && padPressed(100)}
