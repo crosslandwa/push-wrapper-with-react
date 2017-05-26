@@ -1,16 +1,34 @@
 'use strict'
 import React from 'react'
-import PadRow from './PadRow'
 import { connect } from 'react-redux'
 import { startSequence } from './sequencer/actions'
+import PushGridPad from './PushGridPad'
+import DomGridPad from './DomGridPad'
+import arrayChunk from './utils/arrayChunk'
 
 const SequenceStepDisplay = ({pads, startSequence, currentStep}) => (
-  <PadRow
-    onClick={startSequence}
-    pads={pads}
-    on={pads.map((pad, index) => index === currentStep)}
-    narrow={true}
-  />
+  <div>
+    {pads.map((pad, index) => (
+      <PushGridPad
+        key={index}
+        velocity={(index === currentStep) ? 92 : 0}
+        pad={pad}
+        padPressed={() => startSequence(index)}
+      />
+    ))}
+    {arrayChunk(pads, 8).map((eightPads, row) => (
+      <div key={row}>
+        {eightPads.map((pad, index) => (
+          <DomGridPad
+            key={index + row * 8}
+            active={(index + row * 8) === currentStep}
+            padPressed={() => startSequence(index + row * 8)}
+            narrow={true}
+          />
+        ))}
+      </div>
+    ))}
+  </div>
 )
 
 export default connect(
