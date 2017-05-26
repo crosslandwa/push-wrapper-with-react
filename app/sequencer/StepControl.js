@@ -24,7 +24,8 @@ const StepControl = ({pads, onClick, on, currentStep}) => (
     {pads.map((pad, index) => (
       <PushGridPad
         key={index}
-        velocity={on[index] ? 92 : 0}
+        velocity={(on[index] || (index === currentStep)) ? 127 : 0}
+        rgb={colour(on[index], index, currentStep)}
         pad={pad}
         padPressed={() => onClick(index)}
       />
