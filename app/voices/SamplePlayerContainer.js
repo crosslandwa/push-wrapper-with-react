@@ -1,9 +1,9 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { playSample } from './voices/actions'
-import { recordStep } from './sequencer/actions'
-import VoiceSelectContainer from './voices/VoiceSelectContainer'
+import { playSample } from './actions'
+import { recordStep } from '../sequencer/actions'
+import VoiceSelectContainer from './VoiceSelectContainer'
 
 const SamplePlayerContainer = (props) => <VoiceSelectContainer {...props} />
 
