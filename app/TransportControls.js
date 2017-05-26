@@ -2,7 +2,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { startSequence, stopSequence, armSequencer, disarmSequencer } from './sequencer/actions'
-import DomGridPad from './DomGridPad'
+import DomPushButton from './push/DomPushButton'
+import Colours from './push/colours'
 import PushButton from './PushButton'
 
 import bindKeypress from './bindKeypress'
@@ -41,9 +42,9 @@ class TransportControls extends React.Component {
     const {playing, recording, push} = this.props
     return (
       <div>
-        <DomGridPad padPressed={this.togglePlay} active={playing} rgb={[0, 200, 10]} />
+        <DomPushButton label='Play' padPressed={this.togglePlay} active={playing} rgb={Colours.green} />
         <PushButton button={push.button('Play')} dim={true} on={playing} onPressed={this.togglePlay} />
-        <DomGridPad padPressed={this.toggleArmed} active={recording} rgb={[200, 10, 0]} />
+        <DomPushButton label='Rec' padPressed={this.toggleArmed} active={recording} rgb={Colours.red} />
         <PushButton button={push.button('Rec')} dim={true} on={recording} onPressed={this.toggleArmed} />
       </div>
     )
