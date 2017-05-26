@@ -2,6 +2,7 @@
 import React from 'react'
 import PushGridPad from './PushGridPad'
 import DomGridPad from './DomGridPad'
+import arrayChunk from './utils/arrayChunk'
 
 const PadRow = ({pads, onClick, on, narrow}) => (
   <div className='padRow'>
@@ -13,13 +14,17 @@ const PadRow = ({pads, onClick, on, narrow}) => (
         padPressed={() => onClick(index)}
       />
     ))}
-    {pads.map((pad, index) => (
-      <DomGridPad
-        key={index}
-        active={on[index]}
-        padPressed={() => onClick(index)}
-        narrow={narrow}
-      />
+    {arrayChunk(pads, 8).map((eightPads, row) => (
+      <div key={row}>
+        {eightPads.map((pad, index) => (
+          <DomGridPad
+            key={index + row * 8}
+            active={on[index + row * 8]}
+            padPressed={() => onClick(index + row * 8)}
+            narrow={narrow}
+          />
+        ))}
+      </div>
     ))}
   </div>
 )
