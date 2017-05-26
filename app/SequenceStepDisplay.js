@@ -5,6 +5,7 @@ import { startSequence } from './sequencer/actions'
 import PushGridPad from './PushGridPad'
 import DomPushButton from './push/DomPushButton'
 import arrayChunk from './utils/arrayChunk'
+import Colours from './push/colours'
 
 const SequenceStepDisplay = ({pads, startSequence, currentStep}) => (
   <div>
@@ -12,6 +13,7 @@ const SequenceStepDisplay = ({pads, startSequence, currentStep}) => (
       <PushGridPad
         key={index}
         velocity={(index === currentStep) ? 92 : 0}
+        rgb={Colours.orange}
         pad={pad}
         padPressed={() => startSequence(index)}
       />
