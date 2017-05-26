@@ -3,7 +3,7 @@ import React from 'react'
 import PushGridPad from './PushGridPad'
 import DomGridPad from './DomGridPad'
 
-const PadRow = ({pads, onClick, on}) => (
+const PadRow = ({pads, onClick, on, narrow}) => (
   <div className='padRow'>
     {pads.map((pad, index) => (
       <PushGridPad
@@ -18,6 +18,7 @@ const PadRow = ({pads, onClick, on}) => (
         key={index}
         active={on[index]}
         padPressed={() => onClick(index)}
+        narrow={narrow}
       />
     ))}
   </div>

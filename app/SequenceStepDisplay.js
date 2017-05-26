@@ -9,6 +9,7 @@ const SequenceStepDisplay = ({pads, startSequence, currentStep}) => (
     onClick={startSequence}
     pads={pads}
     on={pads.map((pad, index) => index === currentStep)}
+    narrow={true}
   />
 )
 
