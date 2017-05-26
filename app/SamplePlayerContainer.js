@@ -5,6 +5,7 @@ import DomGridPad from './DomGridPad'
 import PushGridPad from './PushGridPad'
 import { playSample } from './voices/actions'
 import { recordStep } from './sequencer/actions'
+import { selectVoice } from './ui/actions'
 
 const SamplePlayerContainer = ({ velocity = 0, padPressed, padReleased, pad, rgb = [0, 100, 200]}) => (
   <div style={{display: 'inline-block'}} >
@@ -33,6 +34,7 @@ export default connect(
     padPressed (velocity) {
       dispatch(playSample(voice, velocity))
       dispatch(recordStep(voice, velocity))
+      dispatch(selectVoice(voice))
     }
   })
 )(SamplePlayerContainer)

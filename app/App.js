@@ -15,7 +15,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { push, delModifier } = this.props
+    const { push, delModifier, selectedVoice } = this.props
 
     return (
       <div>
@@ -26,9 +26,9 @@ class App extends React.Component {
           ? <SequencerDeleteButton key={index} voice={index} pad={push.gridRow(7)[index]} />
           : <SamplePlayerContainer key={index} voice={index} pad={push.gridRow(7)[index]} />
         )}
-        <SequenceToggleRow pads={push.gridRow(6)} voice={0} />
-        <SequenceToggleRow pads={push.gridRow(5)} voice={1} />
-        <SequenceToggleRow pads={push.gridRow(4)} voice={2} />
+        <SequenceToggleRow pads={push.gridRow(6)} voice={selectedVoice} />
+        {false && <SequenceToggleRow pads={push.gridRow(5)} voice={1} />}
+        {false && <SequenceToggleRow pads={push.gridRow(4)} voice={2} />}
       </div>
     )
   }
@@ -41,7 +41,10 @@ class App extends React.Component {
 }
 
 export default connect(
-  (state) => ({ delModifier: state.push.modifiers.del }),
+  (state) => ({
+    delModifier: state.push.modifiers.del,
+    selectedVoice: state.ui.selectedVoice
+  }),
   (dispatch) => ({
     loadSample (voice, url, name) {
       dispatch(loadSample(voice, url, name))

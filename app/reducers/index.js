@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux'
-import voices from '../voices/reducers'
-import sequencer from '../sequencer/reducers'
 import push from '../push/reducers'
+import sequencer from '../sequencer/reducers'
+import ui from '../ui/reducers'
+import voices from '../voices/reducers'
 
 export default combineReducers({
   push,
   sequencer,
+  ui,
   voices
 })
