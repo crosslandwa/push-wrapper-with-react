@@ -33,7 +33,7 @@ class App extends React.Component {
           }
             return <Component key={index} voice={index} pad={push.gridRow(7)[index]} />
         })}
-        <SequenceToggleRow pads={[...push.gridRow(6), ...push.gridRow(5)]} voice={selectedVoice} />
+        <SequenceToggleRow pads={[...push.gridRow(1), ...push.gridRow(0)]} voice={selectedVoice} />
       </div>
     )
   }
