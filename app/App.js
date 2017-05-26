@@ -6,6 +6,7 @@ import SequenceToggleRow from './SequenceToggleRow'
 import SequencerDeleteButton from './SequencerDeleteButton'
 import SequenceStepDisplay from './SequenceStepDisplay'
 import SamplePlayerContainer from './SamplePlayerContainer'
+import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
 import { loadSample } from './voices/actions'
 
@@ -15,20 +16,24 @@ class App extends React.Component {
   }
 
   render() {
-    const { push, delModifier, selectedVoice } = this.props
+    const { push, delModifier, shiftModifier, selectedVoice } = this.props
 
     return (
       <div>
         <PushControlModifiers push={push} />
         <TransportControls push={push} />
         <SequenceStepDisplay pads={push.gridSelectButtons()} />
-        {[...Array(8).keys()].map(index => delModifier
-          ? <SequencerDeleteButton key={index} voice={index} pad={push.gridRow(7)[index]} />
-          : <SamplePlayerContainer key={index} voice={index} pad={push.gridRow(7)[index]} />
-        )}
+        {[...Array(8).keys()].map(index => {
+          let Component = SamplePlayerContainer
+          switch (true) {
+            case (shiftModifier):
+              Component = VoiceSelectContainer; break;
+            case (delModifier):
+              Component = SequencerDeleteButton; break;
+          }
+            return <Component key={index} voice={index} pad={push.gridRow(7)[index]} />
+        })}
         <SequenceToggleRow pads={push.gridRow(6)} voice={selectedVoice} />
-        {false && <SequenceToggleRow pads={push.gridRow(5)} voice={1} />}
-        {false && <SequenceToggleRow pads={push.gridRow(4)} voice={2} />}
       </div>
     )
   }
@@ -43,6 +48,7 @@ class App extends React.Component {
 export default connect(
   (state) => ({
     delModifier: state.push.modifiers.del,
+    shiftModifier: state.push.modifiers.shift,
     selectedVoice: state.ui.selectedVoice
   }),
   (dispatch) => ({
