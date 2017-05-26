@@ -6,7 +6,7 @@ import DomPushButton from './push/DomPushButton'
 import Colours from './push/colours'
 import PushButton from './push/PushButton'
 
-import bindKeypress from './bindKeypress'
+import bindKeypress from './utils/bindKeypress'
 
 class TransportControls extends React.Component {
   constructor(props) {
