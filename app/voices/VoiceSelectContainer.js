@@ -29,9 +29,10 @@ export default connect(
     selected: ui.selectedVoice === voice,
     velocity: voices[voice] && voices[voice].velocity,
   }),
-  (dispatch, { voice }) => ({
+  (dispatch, { voice, padPressed }) => ({
     padPressed (velocity) {
       dispatch(selectVoice(voice))
+      padPressed && padPressed(velocity)
     }
   })
 )(VoiceSelectContainer)
