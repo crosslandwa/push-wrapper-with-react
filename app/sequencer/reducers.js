@@ -4,7 +4,7 @@ const initialSequenceState = {
 }
 
 const initialSequencerState = {
-  voices: [...Array(16).keys()].map(() => initialSequenceState),
+  voices: [...Array(32).keys()].map(() => initialSequenceState),
   currentStep: -1,
   nextStep: -1,
   playing: false,
@@ -21,7 +21,7 @@ export default function sequencer (state = initialSequencerState, action) {
       return updateVoice(state, action, toggleDeleteMode)
     case 'ADVANCE_SEQUENCE':
       const { currentStep, nextStep } = state;
-      return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 16 })
+      return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 32 })
     case 'SEQUENCE_NEXT_STEP':
       return Object.assign({}, state, { nextStep: action.step })
     case 'SEQUENCE_START':

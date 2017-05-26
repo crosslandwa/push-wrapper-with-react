@@ -31,7 +31,10 @@ class App extends React.Component {
         <PushControlModifiers push={push} />
         <TransportControls push={push} />
         {[...Array(8).keys()].map(index => <VoicePadComponent key={index} voice={index} pad={push.gridRow(7)[index]} />)}
-        <StepControlComponent pads={[...push.gridRow(1), ...push.gridRow(0)]} voice={selectedVoice} />
+        <StepControlComponent
+          pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
+          voice={selectedVoice}
+        />
       </div>
     )
   }
