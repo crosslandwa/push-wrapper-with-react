@@ -6,6 +6,7 @@ import PushControlModifiers from './PushControlModifiers'
 import StepControl from './sequencer/StepControl'
 import StepJumping from './sequencer/StepJumping'
 import StepDeleteButton from './sequencer/StepDeleteButton'
+import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import SamplePlayerContainer from './voices/SamplePlayerContainer'
 import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
@@ -34,7 +35,11 @@ class App extends React.Component {
         {[...Array(8).keys()].map(index => <VoicePadComponent key={index} voice={index} pad={push.gridRow(7)[index]} />)}
         <BlankRow />
         <BlankRow />
-        <BlankRow />
+        <ChromaticKeyboard
+          whiteRow={push.gridRow(4)}
+          voice={selectedVoice}
+          basePitch={36}
+        />
         <StepControlComponent
           pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
           voice={selectedVoice}

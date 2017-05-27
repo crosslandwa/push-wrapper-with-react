@@ -4,8 +4,11 @@ const players = {}
 
 const midiGain = velocity => ({ toAbsolute: () => velocity / 127, velocity: () => velocity })
 
-export function playSample (voice, velocity = 100) {
-  if (players[voice]) players[voice].play(midiGain(velocity))
+export function playSample (voice, velocity = 100, rate = 1) {
+  if (players[voice]) {
+    players[voice].updatePlaybackRate(rate)
+    players[voice].play(midiGain(velocity))
+  }
   return { type: 'PLAY_SAMPLE' }
 }
 
