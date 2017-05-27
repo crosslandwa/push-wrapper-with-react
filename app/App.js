@@ -34,8 +34,8 @@ class App extends React.Component {
         <TransportControls push={push} />
         {[...Array(8).keys()].map(index => <VoicePadComponent key={index} voice={index} pad={push.gridRow(7)[index]} />)}
         <BlankRow />
-        <BlankRow />
         <ChromaticKeyboard
+          blackRow={push.gridRow(5)}
           whiteRow={push.gridRow(4)}
           voice={selectedVoice}
           basePitch={36}
