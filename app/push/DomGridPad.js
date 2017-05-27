@@ -4,10 +4,10 @@ import Colours from './colours'
 
 const padStyleBase = {
   display: 'inline-block',
-  height: 64,
-  width: 64,
-  marginLeft: 5,
-  marginRight: 5,
+  height: 48,
+  width: 48,
+  marginLeft: 2,
+  marginRight: 2,
   backgroundColor: '#c7ccce',
   borderRadius: 10,
   borderWidth: 2,
@@ -22,7 +22,7 @@ const padStyleActive = (rgb) => ({
   borderColor: `rgba(100, 100, 100, 0.3)`
 })
 
-const DomGridPad = ({pad, active, padPressed, padReleased, rgb = Colours.blue}) => (
+const DomGridPad = ({pad, active = false, padPressed, padReleased, rgb = Colours.blue}) => (
   <div
     className='pad'
     onMouseDown={() => padPressed && padPressed(100)}
