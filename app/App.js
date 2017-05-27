@@ -52,6 +52,7 @@ class App extends React.Component {
     this.props.loadSample(0, 'kick.mp3', 'kick')
     this.props.loadSample(1, 'snare.mp3', 'snare')
     this.props.loadSample(2, 'hat.mp3', 'hat')
+    this.props.loadSample(3, 'bleep.mp3', 'bleep')
   }
 }
 

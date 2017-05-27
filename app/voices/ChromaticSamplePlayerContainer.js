@@ -25,9 +25,9 @@ const ChromaticSamplePlayerContainer = ({ velocity = 0, padPressed, pad}) => (
 
 export default connect(
   state => ({}),
-  (dispatch, { voice, midiPitch }) => ({
+  (dispatch, { voice, rate }) => ({
     padPressed (velocity) {
-      dispatch(playSample(voice, velocity, midiPitch / 36))
+      dispatch(playSample(voice, velocity, rate))
     }
   })
 )(ChromaticSamplePlayerContainer)
