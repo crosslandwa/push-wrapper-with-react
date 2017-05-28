@@ -8,6 +8,7 @@ import StepJumping from './sequencer/StepJumping'
 import StepDeleteButton from './sequencer/StepDeleteButton'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import SamplePlayerContainer from './voices/SamplePlayerContainer'
+import SampleRecorderContainer from './voices/SampleRecorderContainer'
 import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
 import { loadSample } from './voices/actions'
@@ -18,11 +19,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { push, delModifier, shiftModifier, selectedVoice, voices } = this.props
+    const { push, delModifier, shiftModifier, selectedVoice, voices, recording } = this.props
     const voice = voices[selectedVoice]
 
     const StepControlComponent = shiftModifier ? StepJumping : StepControl
-    let VoicePadComponent = SamplePlayerContainer
+    let VoicePadComponent = recording ? SampleRecorderContainer : SamplePlayerContainer
     if (shiftModifier) {
       VoicePadComponent = VoiceSelectContainer
     } else if (delModifier) {
@@ -65,10 +66,11 @@ class App extends React.Component {
 }
 
 export default connect(
-  ({push, ui, voices}) => ({
+  ({push, sequencer: {recording}, ui, voices}) => ({
     delModifier: push.modifiers.del,
     shiftModifier: push.modifiers.shift,
     selectedVoice: ui.selectedVoice,
+    recording,
     voices
   }),
   (dispatch) => ({

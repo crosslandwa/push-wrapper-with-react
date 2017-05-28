@@ -68,8 +68,7 @@ export function armSequencer () {
 
 export function recordStep (voice, velocity) {
   return (dispatch, getState) => {
-    const { sequencer: { recording, currentStep, playing } } = getState()
-    if (!recording) return
+    const { sequencer: { currentStep, playing } } = getState()
     if (!playing) {
       dispatch(startSequence(0))
     }
