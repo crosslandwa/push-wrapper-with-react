@@ -3,8 +3,8 @@ import {playSample} from '../voices/actions'
 export function toggleStep (voice, step) {
   return (dispatch, getState) => {
     const { sequencer: { voices } } = getState()
-    const stepOn = voices[voice].toggles[step]
-    const toggle = stepOn ? turnStepOff : turnStepOn
+    const currentStep = voices[voice].steps[step]
+    const toggle = (currentStep.midiPitch !== null) ? turnStepOff : turnStepOn
     dispatch(toggle(voice, step))
   }
 }
@@ -46,7 +46,7 @@ function playSequencedVoices  () {
   return (dispatch, getState) => {
     const { sequencer: { currentStep, voices } } = getState()
     voices.forEach((voice, index) => {
-      if (voice.toggles[currentStep]) {
+      if (voice.steps[currentStep].midiPitch !== null) {
         dispatch(voice.deleteMode
           ? turnStepOff(index, currentStep)
           : playSample(index)

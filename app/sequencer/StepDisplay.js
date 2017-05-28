@@ -55,7 +55,7 @@ const mapDispatchToProps = (dispatch, { onClick }) => ({
 
 export default connect(
   ({ sequencer: {voices, currentStep} }, { voice }) => ({
-    on: voices[voice].toggles,
+    on: voices[voice].steps.map(step => step.midiPitch !== null),
     currentStep
   }),
   mapDispatchToProps

@@ -1,10 +1,16 @@
+const clone = array =>  JSON.parse(JSON.stringify(array))
+
+const initialStepState = {
+  midiPitch: null
+}
+
 const initialSequenceState = {
-  toggles: [],
+  steps: [...Array(32).keys()].map(() => Object.assign({}, initialStepState)),
   deleteMode: false
 }
 
 const initialSequencerState = {
-  voices: [...Array(32).keys()].map(() => initialSequenceState),
+  voices: [...Array(8).keys()].map(() => Object.assign({}, initialSequenceState)),
   currentStep: -1,
   nextStep: -1,
   playing: false,
@@ -37,17 +43,19 @@ export default function sequencer (state = initialSequencerState, action) {
 }
 
 function updateVoice (state = initialSequencerState, action, func) {
-  const voices = state.voices.slice()
+  const voices = clone(state.voices)
   voices[action.voice] = func(state.voices[action.voice], action)
   return Object.assign({}, state, { voices })
 }
 
 function toggleStep (state = initialSequenceState, {type, step}) {
-  const toggles = state.toggles.slice()
-  toggles[step] = type === 'TURN_STEP_ON'
-  return Object.assign({}, state, { toggles })
+  const steps = clone(state.steps)
+  const currentStep = steps[step]
+  currentStep.midiPitch = (type === 'TURN_STEP_ON') ? 36 : null
+  steps[step] = Object.assign({}, currentStep)
+  return Object.assign({}, state, { steps })
 }
 
-function toggleDeleteMode (state = initialSequencerState, {type}) {
+function toggleDeleteMode (state = initialSequenceState, {type}) {
   return Object.assign({}, state, { deleteMode: type === 'SEQUENCER_DELETE_MODE_ON' })
 }
