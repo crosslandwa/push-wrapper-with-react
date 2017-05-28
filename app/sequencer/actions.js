@@ -46,10 +46,11 @@ function playSequencedVoices  () {
   return (dispatch, getState) => {
     const { sequencer: { currentStep, voices } } = getState()
     voices.forEach((voice, index) => {
-      if (voice.steps[currentStep].midiPitch !== null) {
+      const step = voice.steps[currentStep]
+      if (step.midiPitch !== null) {
         dispatch(voice.deleteMode
           ? turnStepOff(index, currentStep)
-          : playSample(index)
+          : playSample(index, step.midiVelocity)
         )
       }
     })

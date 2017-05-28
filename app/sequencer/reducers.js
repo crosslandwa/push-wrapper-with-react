@@ -1,11 +1,17 @@
 const clone = array =>  JSON.parse(JSON.stringify(array))
 
-const initialStepState = {
-  midiPitch: null
+const initialStepOffState = {
+  midiPitch: null,
+  midiVelocity: null
+}
+
+const initialStepOnState = {
+  midiPitch: 36,
+  midiVelocity: 100
 }
 
 const initialSequenceState = {
-  steps: [...Array(32).keys()].map(() => Object.assign({}, initialStepState)),
+  steps: [...Array(32).keys()].map(() => Object.assign({}, initialStepOffState)),
   deleteMode: false
 }
 
@@ -50,7 +56,9 @@ function updateVoice (state = initialSequencerState, action, func) {
 
 function toggleStep (state = initialSequenceState, {type, step}) {
   const steps = clone(state.steps)
-  steps[step].midiPitch = (type === 'SEQUENCER_STEP_ON') ? 36 : null
+  steps[step] = (type === 'SEQUENCER_STEP_ON')
+    ? initialStepOnState
+    : initialStepOffState
   return Object.assign({}, state, { steps })
 }
 
