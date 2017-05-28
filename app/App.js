@@ -44,10 +44,11 @@ class App extends React.Component {
         ))}
         <BlankRow />
         <ChromaticKeyboard
-          blackRow={push.gridRow(5)}
-          whiteRow={push.gridRow(4)}
-          voice={selectedVoice}
           basePitch={36}
+          blackRow={push.gridRow(5)}
+          recording={recording}
+          voice={selectedVoice}
+          whiteRow={push.gridRow(4)}
         />
         <StepControlComponent
           pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
