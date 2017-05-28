@@ -15,7 +15,6 @@ const StepDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (
       rgb={rgb}
     />
     <PushGridPad
-      velocity={100}
       rgb = {rgb}
       pad={pad}
       padPressed={padPressed}

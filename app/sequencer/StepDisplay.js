@@ -6,25 +6,17 @@ import DomGridPad from '../push/DomGridPad'
 import arrayChunk from '../utils/arrayChunk'
 import {Colours, fade, domFade} from '../push/colours'
 
-const colours = {
-  off: Colours.off,
-  currentStep: Colours.orange,
-  currentStepPlaying: Colours.turquoise,
-  activeStep: Colours.blue,
+const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => {
+  if (isCurrentStep) return hasNote ? Colours.turquoise : Colours.orange
+  return hasNote ? fadeEffect(Colours.blue, velocity) : Colours.off
 }
 
-const colour = (active, step, currentStep) => {
-  if (step === currentStep) return active ? colours.currentStepPlaying : colours.currentStep
-  return active ? colours.activeStep : colours.off
-}
-
-const StepDisplay = ({pads, onClick, on, currentStep, displayVelocity}) => (
+const StepDisplay = ({pads, onClick, stepsDisplay}) => (
   <div>
     {pads.map((pad, index) => (
       <PushGridPad
         key={index}
-        velocity={displayVelocity[index]}
-        rgb={colour(on[index], index, currentStep)}
+        rgb={displayRgb(stepsDisplay[index], fade)}
         pad={pad}
         padPressed={() => onClick(index)}
       />
@@ -36,8 +28,8 @@ const StepDisplay = ({pads, onClick, on, currentStep, displayVelocity}) => (
           return (
             <DomGridPad
               key={step}
-              active={displayVelocity[step] > 0}
-              rgb={domFade(colour(on[step], step, currentStep), displayVelocity[step])}
+              active={stepsDisplay[step].isCurrentStep || stepsDisplay[step].hasNote}
+              rgb={displayRgb(stepsDisplay[step], domFade)}
               padPressed={() => onClick(step)}
             />
           )
@@ -55,13 +47,12 @@ const mapDispatchToProps = (dispatch, { onClick }) => ({
 
 export default connect(
   ({ sequencer: {voices, currentStep} }, { voice }) => ({
-    displayVelocity: voices[voice].steps
-      .map((step, index) => (currentStep === index)
-        ? 127
-        : (step.midiVelocity !== null) ? step.midiVelocity : 0
-      ),
-    on: voices[voice].steps.map(step => step.midiVelocity !== null),
-    currentStep
+    stepsDisplay: voices[voice].steps
+      .map((step, index) => ({
+        isCurrentStep: index === currentStep,
+        hasNote: step.midiVelocity !== null,
+        velocity: step.midiVelocity
+      }))
   }),
   mapDispatchToProps
 )(StepDisplay)

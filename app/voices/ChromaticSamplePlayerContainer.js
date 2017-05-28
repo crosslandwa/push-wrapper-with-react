@@ -14,7 +14,6 @@ const ChromaticSamplePlayerContainer = ({ padPressed, pad, rgb = Colours.white }
       rgb={rgb}
     />
     <PushGridPad
-      velocity={127}
       rgb={rgb}
       pad={pad}
       padPressed={padPressed}

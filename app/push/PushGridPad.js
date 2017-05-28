@@ -1,7 +1,6 @@
 'use strict'
 import React from 'react'
-
-const fade = (r, g, b, velocity) => [r, g, b].map(x => Math.round(x / 127 * velocity))
+import { Colours } from './colours'
 
 class PushGridPad extends React.Component {
   constructor(props) {
@@ -19,9 +18,12 @@ class PushGridPad extends React.Component {
   }
 
   render() {
-    const {pad, velocity, rgb} = this.props
-    const turnOn = rgb ? velocity => pad.ledRGB(...fade(...rgb, velocity)) : pad.ledOn
-    velocity ? turnOn(velocity) : pad.ledOff()
+    const {pad, rgb, velocity} = this.props
+    if (rgb) {
+      (rgb === Colours.off) ? pad.ledOff() : pad.ledRGB(...rgb)
+    } else {
+      pad.ledOn(velocity)
+    }
     return null
   }
 
