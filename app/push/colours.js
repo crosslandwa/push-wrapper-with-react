@@ -10,5 +10,10 @@ const Colours = {
 }
 
 const fade = (rgb, velocity) => rgb.map(x => Math.round(x / 127 * velocity))
+const domFade = ([r, g, b], velocity) => [
+  Math.round(((r - 199) / 127) * velocity) + 199,
+  Math.round(((g - 204) / 127) * velocity) + 204,
+  Math.round(((b - 206) / 127) * velocity) + 206
+]
 
-export { Colours, fade }
+export { Colours, fade, domFade }

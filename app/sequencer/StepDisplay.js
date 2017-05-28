@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PushGridPad from '../push/PushGridPad'
 import DomGridPad from '../push/DomGridPad'
 import arrayChunk from '../utils/arrayChunk'
-import {Colours, fade} from '../push/colours'
+import {Colours, fade, domFade} from '../push/colours'
 
 const colours = {
   off: Colours.off,
@@ -36,8 +36,8 @@ const StepDisplay = ({pads, onClick, on, currentStep, displayVelocity}) => (
           return (
             <DomGridPad
               key={step}
-              active={on[step] || (step === currentStep)}
-              rgb={colour(on[step], step, currentStep)}
+              active={displayVelocity[step] > 0}
+              rgb={domFade(colour(on[step], step, currentStep), displayVelocity[step])}
               padPressed={() => onClick(step)}
             />
           )
