@@ -10,7 +10,7 @@ export default connect(
   state => ({}),
   (dispatch, { voice, pitch }) => ({
     padPressed (velocity) {
-      dispatch(recordStep(voice, velocity))
+      dispatch(recordStep(voice, { velocity }))
     }
   })
 )(SampleRecorderContainer)

@@ -6,11 +6,6 @@ const initialStepOffState = {
   midiVelocity: null
 }
 
-const initialStepOnState = {
-  midiPitch: null,
-  midiVelocity: 100
-}
-
 const initialSequenceState = {
   steps: arrayFillOf(initialStepOffState, 32),
   deleteMode: false
@@ -55,10 +50,10 @@ function updateVoice (state = initialSequencerState, action, func) {
   return Object.assign({}, state, { voices })
 }
 
-function toggleStep (state = initialSequenceState, {type, step}) {
+function toggleStep (state = initialSequenceState, {type, step, pitch, velocity}) {
   const steps = clone(state.steps)
   steps[step] = (type === 'SEQUENCER_STEP_ON')
-    ? initialStepOnState
+    ? { midiPitch: pitch || null, midiVelocity: velocity || 100}
     : initialStepOffState
   return Object.assign({}, state, { steps })
 }

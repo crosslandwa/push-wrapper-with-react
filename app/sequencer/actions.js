@@ -4,13 +4,13 @@ export function toggleStep (voice, step) {
   return (dispatch, getState) => {
     const { sequencer: { voices } } = getState()
     const currentStep = voices[voice].steps[step]
-    const toggle = (currentStep.midiPitch !== null) ? turnStepOff : turnStepOn
+    const toggle = (currentStep.midiVelocity !== null) ? turnStepOff : turnStepOn
     dispatch(toggle(voice, step))
   }
 }
 
-function turnStepOn (voice, step) {
-  return { type: 'SEQUENCER_STEP_ON', voice, step }
+function turnStepOn (voice, step, pitch, velocity) {
+  return { type: 'SEQUENCER_STEP_ON', voice, step, pitch, velocity }
 }
 
 function turnStepOff (voice, step) {
@@ -66,14 +66,14 @@ export function armSequencer () {
   return { type: 'SEQUENCER_ARM' }
 }
 
-export function recordStep (voice, velocity) {
+export function recordStep (voice, { pitch, velocity }) {
   return (dispatch, getState) => {
     const { sequencer: { currentStep, playing } } = getState()
     if (!playing) {
       dispatch(startSequence(0))
     }
 
-    dispatch(turnStepOn(voice, Math.max(0, currentStep)))
+    dispatch(turnStepOn(voice, Math.max(0, currentStep), pitch, velocity))
   }
 }
 
