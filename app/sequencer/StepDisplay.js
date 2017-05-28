@@ -18,12 +18,12 @@ const colour = (active, step, currentStep) => {
   return active ? colours.activeStep : colours.off
 }
 
-const StepDisplay = ({pads, onClick, on, currentStep}) => (
+const StepDisplay = ({pads, onClick, on, currentStep, displayVelocity}) => (
   <div>
     {pads.map((pad, index) => (
       <PushGridPad
         key={index}
-        velocity={(on[index] || (index === currentStep)) ? 127 : 0}
+        velocity={displayVelocity[index]}
         rgb={colour(on[index], index, currentStep)}
         pad={pad}
         padPressed={() => onClick(index)}
@@ -55,6 +55,11 @@ const mapDispatchToProps = (dispatch, { onClick }) => ({
 
 export default connect(
   ({ sequencer: {voices, currentStep} }, { voice }) => ({
+    displayVelocity: voices[voice].steps
+      .map((step, index) => (currentStep === index)
+        ? 127
+        : (step.midiVelocity !== null) ? step.midiVelocity : 0
+      ),
     on: voices[voice].steps.map(step => step.midiVelocity !== null),
     currentStep
   }),
