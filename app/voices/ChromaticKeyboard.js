@@ -4,8 +4,6 @@ import DomGridPad from '../push/DomGridPad'
 import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import Colours from '../push/colours'
 
-const midiNoteToF = note => 440.0 * Math.pow(2, (note - 69.0) / 12.0)
-
 const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow}) => (
   <div>
     <div>
@@ -14,7 +12,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow}) => (
           ? <ChromaticSamplePlayerContainer
             key={index}
             voice={voice}
-            rate={midiNoteToF(offset + basePitch) / midiNoteToF(basePitch)}
+            pitch={offset + basePitch}
             pad={blackRow[1]}
             rgb={Colours.black}
             />
@@ -26,7 +24,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow}) => (
         <ChromaticSamplePlayerContainer
           key={index}
           voice={voice}
-          rate={midiNoteToF(offset + basePitch) / midiNoteToF(basePitch)}
+          pitch={offset + basePitch}
           pad={whiteRow[index]}
         />
       ))}

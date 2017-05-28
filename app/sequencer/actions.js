@@ -50,7 +50,7 @@ function playSequencedVoices  () {
       if (step.midiPitch !== null) {
         dispatch(voice.deleteMode
           ? turnStepOff(index, currentStep)
-          : playSample(index, 1, step.midiVelocity)
+          : playSample(index, step.midiPitch, step.midiVelocity)
         )
       }
     })
