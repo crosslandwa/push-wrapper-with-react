@@ -17,7 +17,7 @@ const VoiceSelectContainer = ({ velocity = 0, padPressed, padReleased, pad, sele
       rgb={playingColour(velocity) || selectedColour(selected)}
     />
     <PushGridPad
-      rgb={playingColour(velocity) || selectedColour(selected) || Colours.off }
+      rgb={playingColour(velocity) || selectedColour(selected) || Colours.off}
       pad={pad}
       padPressed={padPressed}
     />
