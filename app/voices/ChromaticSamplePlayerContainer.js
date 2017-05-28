@@ -7,7 +7,7 @@ import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
 import Colours from '../push/colours'
 
-const ChromaticSamplePlayerContainer = ({ velocity = 0, padPressed, pad, rgb = Colours.white }) => (
+const ChromaticSamplePlayerContainer = ({ padPressed, pad, rgb = Colours.white }) => (
   <div style={{display: 'inline-block'}} >
     <DomGridPad
       padPressed={padPressed}
