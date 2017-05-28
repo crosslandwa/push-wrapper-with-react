@@ -3,7 +3,7 @@ import React from 'react'
 import DomGridPad from '../push/DomGridPad'
 import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer'
-import Colours from '../push/colours'
+import { Colours } from '../push/colours'
 
 const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording}) => {
   const Component = recording

@@ -1,4 +1,4 @@
-export default {
+const Colours = {
   black: [20, 20, 20],
   blue: [0, 100, 200],
   green: [0, 200, 10],
@@ -8,3 +8,7 @@ export default {
   turquoise: [30, 220, 170],
   white: [240, 240, 240]
 }
+
+const fade = (rgb, velocity) => rgb.map(x => Math.round(x / 127 * velocity))
+
+export { Colours, fade }

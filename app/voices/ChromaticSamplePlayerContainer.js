@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { playSample } from './actions'
 import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
-import Colours from '../push/colours'
+import { Colours } from '../push/colours'
 
 const ChromaticSamplePlayerContainer = ({ padPressed, pad, rgb = Colours.white }) => (
   <div style={{display: 'inline-block'}} >

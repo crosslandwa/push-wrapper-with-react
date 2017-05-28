@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
 import { selectVoice } from '../ui/actions'
-import Colours from '../push/colours'
+import { Colours } from '../push/colours'
 
 const padColour = velocity => velocity > 0 ? Colours.turquoise : Colours.orange
 

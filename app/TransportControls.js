@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { startSequence, stopSequence, armSequencer, disarmSequencer } from './sequencer/actions'
 import DomPushButton from './push/DomPushButton'
-import Colours from './push/colours'
+import { Colours } from './push/colours'
 import PushButton from './push/PushButton'
 
 import bindKeypress from './utils/bindKeypress'
