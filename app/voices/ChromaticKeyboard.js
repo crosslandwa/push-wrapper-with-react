@@ -18,7 +18,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording}) =>
               key={index}
               voice={voice}
               pitch={offset + basePitch}
-              pad={blackRow[1]}
+              pad={blackRow[index]}
               rgb={Colours.black}
               />
           : <DomGridPad key={index} />
