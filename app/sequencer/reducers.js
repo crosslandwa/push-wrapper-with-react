@@ -19,24 +19,24 @@ const initialSequencerState = {
 
 export default function sequencer (state = initialSequencerState, action) {
   switch (action.type) {
-    case 'TURN_STEP_ON':
-    case 'TURN_STEP_OFF':
+    case 'SEQUENCER_STEP_ON':
+    case 'SEQUENCER_STEP_OFF':
       return updateVoice(state, action, toggleStep)
     case 'SEQUENCER_DELETE_MODE_ON':
     case 'SEQUENCER_DELETE_MODE_OFF':
       return updateVoice(state, action, toggleDeleteMode)
-    case 'ADVANCE_SEQUENCE':
+    case 'SEQUENCER_ADVANCE_STEP':
       const { currentStep, nextStep } = state;
       return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 32 })
-    case 'SEQUENCE_NEXT_STEP':
+    case 'SEQUENCER_NEXT_STEP':
       return Object.assign({}, state, { nextStep: action.step })
-    case 'SEQUENCE_START':
+    case 'SEQUENCER_START':
       return Object.assign({}, state, { currentStep: -1, nextStep: action.step, playing: true })
-    case 'SEQUENCE_STOP':
+    case 'SEQUENCER_STOP':
       return Object.assign({}, state, { currentStep: -1, nextStep: -1, playing: false })
-    case 'SEQUENCE_ARM':
+    case 'SEQUENCER_ARM':
       return Object.assign({}, state, { recording: true })
-    case 'SEQUENCE_DISARM':
+    case 'SEQUENCER_DISARM':
       return Object.assign({}, state, { recording: false })
   }
   return state
@@ -50,9 +50,7 @@ function updateVoice (state = initialSequencerState, action, func) {
 
 function toggleStep (state = initialSequenceState, {type, step}) {
   const steps = clone(state.steps)
-  const currentStep = steps[step]
-  currentStep.midiPitch = (type === 'TURN_STEP_ON') ? 36 : null
-  steps[step] = Object.assign({}, currentStep)
+  steps[step].midiPitch = (type === 'SEQUENCER_STEP_ON') ? 36 : null
   return Object.assign({}, state, { steps })
 }
 

@@ -10,25 +10,25 @@ export function toggleStep (voice, step) {
 }
 
 function turnStepOn (voice, step) {
-  return { type: 'TURN_STEP_ON', voice, step }
+  return { type: 'SEQUENCER_STEP_ON', voice, step }
 }
 
 function turnStepOff (voice, step) {
-  return { type: 'TURN_STEP_OFF', voice, step }
+  return { type: 'SEQUENCER_STEP_OFF', voice, step }
 }
 
 export function stopSequence () {
-  return { type: 'SEQUENCE_STOP' }
+  return { type: 'SEQUENCER_STOP' }
 }
 
 export function startSequence (step = 0) {
   return (dispatch, getState) => {
     const { sequencer: { playing } } = getState()
     if (!playing) {
-      dispatch({ type: 'SEQUENCE_START', step })
+      dispatch({ type: 'SEQUENCER_START', step })
       dispatch(advanceSequence())
     } else {
-      dispatch({ type: 'SEQUENCE_NEXT_STEP', step })
+      dispatch({ type: 'SEQUENCER_NEXT_STEP', step })
     }
   }
 }
@@ -37,7 +37,7 @@ function advanceSequence () {
   return (dispatch, getState) => {
     const { sequencer: { playing } } = getState()
     if (!playing) return
-    dispatch({ type: 'ADVANCE_SEQUENCE' })
+    dispatch({ type: 'SEQUENCER_ADVANCE_STEP' })
     return dispatch(playSequencedVoices())
   }
 }
@@ -58,11 +58,11 @@ function playSequencedVoices  () {
 }
 
 export function disarmSequencer () {
-  return { type: 'SEQUENCE_DISARM' }
+  return { type: 'SEQUENCER_DISARM' }
 }
 
 export function armSequencer () {
-  return { type: 'SEQUENCE_ARM' }
+  return { type: 'SEQUENCER_ARM' }
 }
 
 export function recordStep (voice, velocity) {
