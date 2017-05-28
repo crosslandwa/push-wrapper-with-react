@@ -9,7 +9,7 @@ const SamplePlayerContainer = (props) => <VoiceSelectContainer {...props} />
 
 export default connect(
   state => ({}),
-  (dispatch, { voice, pitch = 36 }) => ({
+  (dispatch, { voice, pitch }) => ({
     padPressed (velocity) {
       dispatch(playSample(voice, pitch, velocity))
       dispatch(recordStep(voice, velocity))

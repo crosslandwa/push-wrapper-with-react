@@ -18,7 +18,8 @@ class App extends React.Component {
   }
 
   render() {
-    const { push, delModifier, shiftModifier, selectedVoice } = this.props
+    const { push, delModifier, shiftModifier, selectedVoice, voices } = this.props
+    const voice = voices[selectedVoice]
 
     const StepControlComponent = shiftModifier ? StepJumping : StepControl
     let VoicePadComponent = SamplePlayerContainer
@@ -32,7 +33,14 @@ class App extends React.Component {
       <div>
         <PushControlModifiers push={push} />
         <TransportControls push={push} />
-        {[...Array(8).keys()].map(index => <VoicePadComponent key={index} voice={index} pad={push.gridRow(7)[index]} />)}
+        {[...Array(8).keys()].map(index => (
+          <VoicePadComponent
+            key={index}
+            voice={index}
+            pitch={voice.pitch}
+            pad={push.gridRow(7)[index]}
+          />
+        ))}
         <BlankRow />
         <ChromaticKeyboard
           blackRow={push.gridRow(5)}
@@ -57,10 +65,11 @@ class App extends React.Component {
 }
 
 export default connect(
-  (state) => ({
-    delModifier: state.push.modifiers.del,
-    shiftModifier: state.push.modifiers.shift,
-    selectedVoice: state.ui.selectedVoice
+  ({push, ui, voices}) => ({
+    delModifier: push.modifiers.del,
+    shiftModifier: push.modifiers.shift,
+    selectedVoice: ui.selectedVoice,
+    voices
   }),
   (dispatch) => ({
     loadSample (voice, url, name) {
