@@ -2,7 +2,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { playSample } from './actions'
-import { recordStep } from '../sequencer/actions'
 import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
 import Colours from '../push/colours'
