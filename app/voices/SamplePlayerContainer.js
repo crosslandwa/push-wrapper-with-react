@@ -11,7 +11,7 @@ export default connect(
   state => ({}),
   (dispatch, { voice }) => ({
     padPressed (velocity) {
-      dispatch(playSample(voice, velocity))
+      dispatch(playSample(voice, 1, velocity))
       dispatch(recordStep(voice, velocity))
     }
   })

@@ -27,7 +27,7 @@ export default connect(
   state => ({}),
   (dispatch, { voice, rate }) => ({
     padPressed (velocity) {
-      dispatch(playSample(voice, velocity, rate))
+      dispatch(playSample(voice, rate, velocity))
     }
   })
 )(ChromaticSamplePlayerContainer)
