@@ -1,3 +1,4 @@
+import { arrayFillOf } from '../reducers/utils'
 const clone = array =>  JSON.parse(JSON.stringify(array))
 
 const initialStepOffState = {
@@ -11,12 +12,12 @@ const initialStepOnState = {
 }
 
 const initialSequenceState = {
-  steps: [...Array(32).keys()].map(() => Object.assign({}, initialStepOffState)),
+  steps: arrayFillOf(initialStepOffState, 32),
   deleteMode: false
 }
 
 const initialSequencerState = {
-  voices: [...Array(8).keys()].map(() => Object.assign({}, initialSequenceState)),
+  voices: arrayFillOf(initialSequenceState, 8),
   currentStep: -1,
   nextStep: -1,
   playing: false,

@@ -1,10 +1,12 @@
+import { arrayFillOf } from '../reducers/utils'
+
 const initialVoiceState = {
   pitch: 36,
   velocity: 0,
   sample: null
 }
 
-const initialState = [...Array(8).keys()].map(() => Object.assign({}, initialVoiceState))
+const initialState = arrayFillOf(initialVoiceState, 8)
 
 export default function voices (state = initialState, action) {
   switch (action.type) {
