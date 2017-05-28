@@ -7,7 +7,7 @@ const initialStepOffState = {
 }
 
 const initialStepOnState = {
-  midiPitch: 36,
+  // midiPitch: 36,
   midiVelocity: 100
 }
 
