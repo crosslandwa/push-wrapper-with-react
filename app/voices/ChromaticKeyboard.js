@@ -1,14 +1,15 @@
 'use strict'
 import React from 'react'
 import DomGridPad from '../push/DomGridPad'
+import ChromaticStepEditorContainer from './ChromaticStepEditorContainer'
 import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer'
 import { Colours } from '../push/colours'
 
-const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording}) => {
-  const Component = recording
-    ? ChromaticSampleRecorderContainer
-    : ChromaticSamplePlayerContainer
+const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, selectedStep}) => {
+  const Component = (selectedStep !== null)
+    ? ChromaticStepEditorContainer
+    : recording ? ChromaticSampleRecorderContainer : ChromaticSamplePlayerContainer
   return (
     <div>
       <div>
@@ -20,6 +21,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording}) =>
               pitch={offset + basePitch}
               pad={blackRow[index]}
               rgb={Colours.black}
+              selectedStep={selectedStep}
               />
           : <DomGridPad key={index} />
         ))}
@@ -31,6 +33,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording}) =>
             voice={voice}
             pitch={offset + basePitch}
             pad={whiteRow[index]}
+            selectedStep={selectedStep}
           />
         ))}
       </div>

@@ -19,7 +19,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { push, delModifier, shiftModifier, selectedVoice, voices, recording } = this.props
+    const {
+      push, delModifier, shiftModifier, selectedVoice,
+      voices, recording, selectedStep
+    } = this.props
     const voice = voices[selectedVoice]
 
     const StepControlComponent = shiftModifier ? StepJumping : StepControl
@@ -49,6 +52,7 @@ class App extends React.Component {
           recording={recording}
           voice={selectedVoice}
           whiteRow={push.gridRow(4)}
+          selectedStep={selectedStep}
         />
         <StepControlComponent
           pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
@@ -67,11 +71,12 @@ class App extends React.Component {
 }
 
 export default connect(
-  ({push, sequencer: {recording}, ui, voices}) => ({
+  ({push, sequencer: {recording, voices: seqVoices}, ui, voices}) => ({
     delModifier: push.modifiers.del,
     shiftModifier: push.modifiers.shift,
     selectedVoice: ui.selectedVoice,
     recording,
+    selectedStep: seqVoices[ui.selectedVoice].selectedStep,
     voices
   }),
   (dispatch) => ({

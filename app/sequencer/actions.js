@@ -8,6 +8,14 @@ export function exitStepEditMode (voice, step) {
   return { type: 'SEQUENCER_STEP_EDIT_OFF', voice, step }
 }
 
+export function selectStep (voice, step) {
+  return { type: 'SEQUENCER_STEP_SELECT', voice, step }
+}
+
+export function unselectStep (voice, step) {
+  return { type: 'SEQUENCER_STEP_UNSELECT', voice, step }
+}
+
 export function turnStepOn (voice, step, pitch, velocity) {
   return { type: 'SEQUENCER_STEP_ON', voice, step, pitch, velocity }
 }

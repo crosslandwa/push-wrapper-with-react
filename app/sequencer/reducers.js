@@ -9,6 +9,7 @@ const initialStepOffState = {
 const initialSequenceState = {
   steps: arrayFillOf(initialStepOffState, 32),
   deleteMode: false,
+  selectedStep: null,
   stepsUnderEdit: []
 }
 
@@ -32,6 +33,10 @@ export default function sequencer (state = initialSequencerState, action) {
       return updateVoice(state, action, addStepUnderEdit)
     case 'SEQUENCER_STEP_EDIT_OFF':
       return updateVoice(state, action, removeStepUnderEdit)
+    case 'SEQUENCER_STEP_SELECT':
+      return updateVoice(state, action, selectStep)
+    case 'SEQUENCER_STEP_UNSELECT':
+      return updateVoice(state, action, unselectStep)
     case 'SEQUENCER_ADVANCE_STEP':
       const { currentStep, nextStep } = state;
       return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 32 })
@@ -72,6 +77,16 @@ function addStepUnderEdit (state = initialSequenceState, {step}) {
 function removeStepUnderEdit (state = initialSequenceState, {step}) {
   return Object.assign({}, state, {
     stepsUnderEdit: state.stepsUnderEdit.filter(underEdit => underEdit !== step)
+  })
+}
+
+function selectStep (state = initialSequenceState, {step})  {
+  return Object.assign({}, state, { selectedStep: step})
+}
+
+function unselectStep (state = initialSequenceState, {step})  {
+  return Object.assign({}, state, {
+    selectedStep: state.selectedStep === step ? null : state.selectedStep
   })
 }
 
