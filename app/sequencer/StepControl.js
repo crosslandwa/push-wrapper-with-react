@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { toggleStep } from './actions'
 import StepDisplay from './StepDisplay'
 
-const StepJumping = (props) => <StepDisplay {...props} />
+const StepControl = (props) => <StepDisplay {...props} />
 
 export default connect(
   state => ({}),
@@ -13,4 +13,4 @@ export default connect(
       dispatch(toggleStep(voice, index))
     }
   })
-)(StepJumping)
+)(StepControl)

@@ -11,7 +11,7 @@ const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => 
   return hasNote ? fadeEffect(Colours.blue, velocity) : Colours.off
 }
 
-const StepDisplay = ({pads, onClick, stepsDisplay}) => (
+const StepDisplay = ({pads, onClick = () => {}, stepsDisplay}) => (
   <div>
     {pads.map((pad, index) => (
       <PushGridPad
@@ -39,12 +39,6 @@ const StepDisplay = ({pads, onClick, stepsDisplay}) => (
   </div>
 )
 
-const mapDispatchToProps = (dispatch, { onClick }) => ({
-  onClick (index) {
-    onClick && onClick(index)
-  }
-})
-
 export default connect(
   ({ sequencer: {voices, currentStep} }, { voice }) => ({
     stepsDisplay: voices[voice].steps
@@ -53,6 +47,5 @@ export default connect(
         hasNote: step.midiVelocity !== null,
         velocity: step.midiVelocity
       }))
-  }),
-  mapDispatchToProps
+  })
 )(StepDisplay)
