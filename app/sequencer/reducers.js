@@ -8,7 +8,8 @@ const initialStepOffState = {
 
 const initialSequenceState = {
   steps: arrayFillOf(initialStepOffState, 32),
-  deleteMode: false
+  deleteMode: false,
+  stepsUnderEdit: []
 }
 
 const initialSequencerState = {
@@ -27,6 +28,10 @@ export default function sequencer (state = initialSequencerState, action) {
     case 'SEQUENCER_DELETE_MODE_ON':
     case 'SEQUENCER_DELETE_MODE_OFF':
       return updateVoice(state, action, toggleDeleteMode)
+    case 'SEQUENCER_STEP_EDIT_ON':
+      return updateVoice(state, action, addStepUnderEdit)
+    case 'SEQUENCER_STEP_EDIT_OFF':
+      return updateVoice(state, action, removeStepUnderEdit)
     case 'SEQUENCER_ADVANCE_STEP':
       const { currentStep, nextStep } = state;
       return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 32 })
@@ -56,6 +61,18 @@ function toggleStep (state = initialSequenceState, {type, step, pitch, velocity}
     ? { midiPitch: pitch || null, midiVelocity: velocity || 100}
     : initialStepOffState
   return Object.assign({}, state, { steps })
+}
+
+function addStepUnderEdit (state = initialSequenceState, {step}) {
+  if (state.stepsUnderEdit.includes(step)) return state
+  const stepsUnderEdit = state.stepsUnderEdit.concat(step)
+  return Object.assign({}, state, { stepsUnderEdit })
+}
+
+function removeStepUnderEdit (state = initialSequenceState, {step}) {
+  return Object.assign({}, state, {
+    stepsUnderEdit: state.stepsUnderEdit.filter(underEdit => underEdit !== step)
+  })
 }
 
 function toggleDeleteMode (state = initialSequenceState, {type}) {

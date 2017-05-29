@@ -1,19 +1,18 @@
 import {playSample} from '../voices/actions'
 
-export function toggleStep (voice, step) {
-  return (dispatch, getState) => {
-    const { sequencer: { voices } } = getState()
-    const currentStep = voices[voice].steps[step]
-    const toggle = (currentStep.midiVelocity !== null) ? turnStepOff : turnStepOn
-    dispatch(toggle(voice, step))
-  }
+export function enterStepEditMode (voice, step) {
+  return { type: 'SEQUENCER_STEP_EDIT_ON', voice, step }
 }
 
-function turnStepOn (voice, step, pitch, velocity) {
+export function exitStepEditMode (voice, step) {
+  return { type: 'SEQUENCER_STEP_EDIT_OFF', voice, step }
+}
+
+export function turnStepOn (voice, step, pitch, velocity) {
   return { type: 'SEQUENCER_STEP_ON', voice, step, pitch, velocity }
 }
 
-function turnStepOff (voice, step) {
+export function turnStepOff (voice, step) {
   return { type: 'SEQUENCER_STEP_OFF', voice, step }
 }
 

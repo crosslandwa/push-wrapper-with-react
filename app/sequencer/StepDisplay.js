@@ -1,4 +1,9 @@
 'use strict'
+
+// Feels like this is doing too much, specifically parsing state and passing
+// it back up in onClick/padReleased callbacks...
+// I'm concerned this will be re-rendering all the time...
+
 import React from 'react'
 import { connect } from 'react-redux'
 import PushGridPad from '../push/PushGridPad'
@@ -11,14 +16,15 @@ const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => 
   return hasNote ? fadeEffect(Colours.blue, velocity) : Colours.off
 }
 
-const StepDisplay = ({pads, onClick = () => {}, stepsDisplay}) => (
+const StepDisplay = ({pads, onClick = () => {}, onRelease = () => {}, steps, stepsDisplay, underEdit}) => (
   <div>
-    {pads.map((pad, index) => (
+    {pads.map((pad, step) => (
       <PushGridPad
-        key={index}
-        rgb={displayRgb(stepsDisplay[index], fade)}
+        key={step}
+        rgb={displayRgb(stepsDisplay[step], fade)}
         pad={pad}
-        padPressed={() => onClick(index)}
+        padPressed={() => onClick(step, steps[step])}
+        padReleased={() => onRelease(step, underEdit[step])}
       />
     ))}
     {arrayChunk(pads, 8).map((eightPads, row) => (
@@ -30,7 +36,8 @@ const StepDisplay = ({pads, onClick = () => {}, stepsDisplay}) => (
               key={step}
               active={stepsDisplay[step].isCurrentStep || stepsDisplay[step].hasNote}
               rgb={displayRgb(stepsDisplay[step], domFade)}
-              padPressed={() => onClick(step)}
+              padPressed={() => onClick(step, steps[step])}
+              padReleased={() => onRelease(step, underEdit[step])}
             />
           )
         })}
@@ -41,6 +48,8 @@ const StepDisplay = ({pads, onClick = () => {}, stepsDisplay}) => (
 
 export default connect(
   ({ sequencer: {voices, currentStep} }, { voice }) => ({
+    underEdit: voices[voice].steps.map((step, index) => voices[voice].stepsUnderEdit.includes(index)),
+    steps: voices[voice].steps,
     stepsDisplay: voices[voice].steps
       .map((step, index) => ({
         isCurrentStep: index === currentStep,
