@@ -16,28 +16,28 @@ const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => 
   return hasNote ? fadeEffect(Colours.blue, velocity) : Colours.off
 }
 
-const StepDisplay = ({pads, onClick = () => {}, onRelease = () => {}, steps, stepsDisplay, underEdit}) => (
+const StepDisplay = ({pads, onClick, onRelease = () => {}, steps, stepsDisplay, stepsUnderEdit}) => (
   <div>
-    {pads.map((pad, step) => (
+    {pads.map((pad, stepNumber) => (
       <PushGridPad
-        key={step}
-        rgb={displayRgb(stepsDisplay[step], fade)}
+        key={stepNumber}
+        rgb={displayRgb(stepsDisplay[stepNumber], fade)}
         pad={pad}
-        padPressed={() => onClick(step, steps[step])}
-        padReleased={() => onRelease(step, underEdit[step])}
+        padPressed={() => onClick(stepNumber, steps[stepNumber])}
+        padReleased={() => onRelease(stepNumber, stepsUnderEdit.includes(stepNumber))}
       />
     ))}
     {arrayChunk(pads, 8).map((eightPads, row) => (
       <div key={row}>
         {eightPads.map((pad, index) => {
-          const step = index + row * 8
+          const stepNumber = index + row * 8
           return (
             <DomGridPad
-              key={step}
-              active={stepsDisplay[step].isCurrentStep || stepsDisplay[step].hasNote}
-              rgb={displayRgb(stepsDisplay[step], domFade)}
-              padPressed={() => onClick(step, steps[step])}
-              padReleased={() => onRelease(step, underEdit[step])}
+              key={stepNumber}
+              active={stepsDisplay[stepNumber].isCurrentStep || stepsDisplay[stepNumber].hasNote}
+              rgb={displayRgb(stepsDisplay[stepNumber], domFade)}
+              padPressed={() => onClick(stepNumber, steps[stepNumber])}
+              padReleased={() => onRelease(stepNumber, stepsUnderEdit.includes(stepNumber))}
             />
           )
         })}
@@ -47,14 +47,14 @@ const StepDisplay = ({pads, onClick = () => {}, onRelease = () => {}, steps, ste
 )
 
 export default connect(
-  ({ sequencer: {voices, currentStep} }, { voice }) => ({
-    underEdit: voices[voice].steps.map((step, index) => voices[voice].stepsUnderEdit.includes(index)),
-    steps: voices[voice].steps,
-    stepsDisplay: voices[voice].steps
-      .map((step, index) => ({
+  ({ entities: {steps}, sequencer: {voices, currentStep} }, { voice }) => ({
+    stepsUnderEdit: voices[voice].stepsUnderEdit,
+    steps: voices[voice].stepsById.map(id => steps.byId[id]),
+    stepsDisplay: voices[voice].stepsById
+      .map((id, index) => ({
         isCurrentStep: index === currentStep,
-        hasNote: step.midiVelocity !== null,
-        velocity: step.midiVelocity
+        hasNote: steps.byId[id].midiVelocity !== null,
+        velocity: steps.byId[id].midiVelocity
       }))
   })
 )(StepDisplay)

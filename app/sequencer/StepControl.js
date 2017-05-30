@@ -16,17 +16,17 @@ const StepControl = (props) => <StepDisplay {...props} />
 export default connect(
   state => ({}),
   (dispatch, { voice }) => ({
-    onClick (step, currentStep) {
-      dispatch(selectStep(voice, step))
+    onClick (stepNumber, currentStep) {
+      dispatch(selectStep(voice, stepNumber))
       if (currentStep.midiVelocity === null) {
-        dispatch(turnStepOn(voice, step)) // omitted optional pitch, velocity
-        dispatch(enterStepEditMode(voice, step))
+        dispatch(turnStepOn(voice, stepNumber)) // omitted optional pitch, velocity
+        dispatch(enterStepEditMode(voice, stepNumber))
       }
     },
-    onRelease (step, underEdit) {
-      if (!underEdit) dispatch(turnStepOff(voice, step))
-      dispatch(unselectStep(voice, step))
-      dispatch(exitStepEditMode(voice, step))
+    onRelease (stepNumber, underEdit) {
+      if (!underEdit) dispatch(turnStepOff(voice, stepNumber))
+      dispatch(unselectStep(voice, stepNumber))
+      dispatch(exitStepEditMode(voice, stepNumber))
     }
   })
 )(StepControl)

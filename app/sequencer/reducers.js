@@ -1,13 +1,7 @@
 import { arrayFillOf } from '../reducers/utils'
 const clone = array =>  JSON.parse(JSON.stringify(array))
 
-const initialStepOffState = {
-  midiPitch: null,
-  midiVelocity: null
-}
-
 const initialSequenceState = {
-  steps: arrayFillOf(initialStepOffState, 32),
   stepsById: [...Array(32).keys()].map(i => 'emptyStep'),
   deleteMode: false,
   selectedStep: null,
@@ -62,13 +56,9 @@ function updateVoice (state = initialSequencerState, action, func) {
 }
 
 function toggleStep (state = initialSequenceState, {id, stepNumber, type, step, pitch, velocity}) {
-  const steps = clone(state.steps)
-  steps[step] = (type === 'SEQUENCER_STEP_ON')
-    ? { midiPitch: pitch || null, midiVelocity: velocity || 100}
-    : initialStepOffState
   const stepsById = state.stepsById.slice()
   stepsById[stepNumber] = stepsById[stepNumber] === id ? 'emptyStep' : id
-  return Object.assign({}, state, { steps, stepsById })
+  return Object.assign({}, state, { stepsById })
 }
 
 function addStepUnderEdit (state = initialSequenceState, {step}) {

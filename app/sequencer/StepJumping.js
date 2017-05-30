@@ -9,8 +9,8 @@ const StepJumping = (props) => <StepDisplay {...props} />
 export default connect(
   state => ({}),
   (dispatch, { voice }) => ({
-    onClick (index) {
-      dispatch(startSequence(index))
+    onClick (stepNumber) {
+      dispatch(startSequence(stepNumber))
     }
   })
 )(StepJumping)
