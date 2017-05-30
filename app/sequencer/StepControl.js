@@ -23,8 +23,8 @@ export default connect(
         dispatch(enterStepEditMode(voice, stepNumber))
       }
     },
-    onRelease (stepNumber, underEdit) {
-      if (!underEdit) dispatch(turnStepOff(voice, stepNumber))
+    onRelease (stepNumber, step, underEdit) {
+      if (!underEdit) dispatch(turnStepOff(step.id))
       dispatch(unselectStep(voice, stepNumber))
       dispatch(exitStepEditMode(voice, stepNumber))
     }

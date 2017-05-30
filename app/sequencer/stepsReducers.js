@@ -1,17 +1,18 @@
-const step = (pitch = null, velocity = null) => ({
+const step = (id, pitch = null, velocity = null) => ({
+  id,
   midiPitch: pitch,
   midiVelocity: velocity
 })
 
 const intialState = {
-  byId: { emptyStep: step()},
+  byId: { emptyStep: step('emptyStep')},
   allIds: ['emptyStep']
 }
 
 export default function steps (state = intialState, action) {
   switch (action.type) {
     case 'SEQUENCER_STEP_ON':
-    case 'SEQUENCER_STEP_OFF':
+    case 'STEP_TURN_OFF':
       return 'SEQUENCER_STEP_ON' === action.type
         ? addStep(state, action)
         : removeStep(state, action)
@@ -21,7 +22,7 @@ export default function steps (state = intialState, action) {
 
 function addStep(state, {id, pitch, velocity}) {
   const updated = JSON.parse(JSON.stringify(state))
-  updated.byId[id] = step(pitch, velocity || 100)
+  updated.byId[id] = step(id, pitch, velocity || 100)
   updated.allIds.push(id)
   return updated
 }

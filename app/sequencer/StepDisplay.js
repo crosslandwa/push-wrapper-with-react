@@ -37,7 +37,7 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, steps, stepsDisplay, 
               active={stepsDisplay[stepNumber].isCurrentStep || stepsDisplay[stepNumber].hasNote}
               rgb={displayRgb(stepsDisplay[stepNumber], domFade)}
               padPressed={() => onClick(stepNumber, steps[stepNumber])}
-              padReleased={() => onRelease(stepNumber, stepsUnderEdit.includes(stepNumber))}
+              padReleased={() => onRelease(stepNumber, steps[stepNumber], stepsUnderEdit.includes(stepNumber))}
             />
           )
         })}

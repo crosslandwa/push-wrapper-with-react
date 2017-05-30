@@ -31,12 +31,11 @@ export function turnStepOn (voice, stepNumber, pitch, velocity) {
   }
 }
 
-export function turnStepOff (voice, stepNumber) { // TODO pass stepId here
+export function turnStepOff (id) {
   return (dispatch, getState) => {
-    const {sequencer: {voices}} = getState()
-    const id = voices[voice].stepsById[stepNumber]
     if (id === 'emptyStep') return
-    return dispatch({ type: 'SEQUENCER_STEP_OFF', voice, step: stepNumber, stepNumber, id })
+    dispatch({ type: 'SEQUENCER_STEP_OFF', id })
+    dispatch({ type: 'STEP_TURN_OFF', id })
   }
 }
 
@@ -73,10 +72,11 @@ function playSequencedVoices  () {
       entities: { steps }
     } = getState()
     voices.forEach((voice, index) => {
-      const step = steps.byId[voice.stepsById[currentStep]]
+      const stepId = voice.stepsById[currentStep]
+      const step = steps.byId[stepId]
       if (step.midiVelocity !== null) {
         dispatch(voice.deleteMode
-          ? turnStepOff(index, currentStep)
+          ? turnStepOff(stepId)
           : playSample(index, step.midiPitch || voicesState[index].pitch, step.midiVelocity)
         )
       }
