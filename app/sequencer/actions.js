@@ -67,9 +67,13 @@ function advanceSequence () {
 
 function playSequencedVoices  () {
   return (dispatch, getState) => {
-    const { voices: voicesState, sequencer: { currentStep, voices } } = getState()
+    const {
+      voices: voicesState,
+      sequencer: { currentStep, voices },
+      entities: { steps }
+    } = getState()
     voices.forEach((voice, index) => {
-      const step = voice.steps[currentStep]
+      const step = steps.byId[voice.stepsById[currentStep]]
       if (step.midiVelocity !== null) {
         dispatch(voice.deleteMode
           ? turnStepOff(index, currentStep)
