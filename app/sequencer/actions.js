@@ -16,12 +16,28 @@ export function unselectStep (voice, step) {
   return { type: 'SEQUENCER_STEP_UNSELECT', voice, step }
 }
 
-export function turnStepOn (voice, step, pitch, velocity) {
-  return { type: 'SEQUENCER_STEP_ON', voice, step, pitch, velocity }
+export function turnStepOn (voice, stepNumber, pitch, velocity) {
+  return (dispatch, getState) => {
+    const { entities: { steps: { allIds } } } = getState()
+    return dispatch({
+      type: 'SEQUENCER_STEP_ON',
+      id: `step${allIds.length}`,
+      voice,
+      stepNumber,
+      step: stepNumber,
+      pitch,
+      velocity
+    })
+  }
 }
 
-export function turnStepOff (voice, step) {
-  return { type: 'SEQUENCER_STEP_OFF', voice, step }
+export function turnStepOff (voice, stepNumber) { // TODO pass stepId here
+  return (dispatch, getState) => {
+    const {sequencer: {voices}} = getState()
+    const id = voices[voice].stepsById[stepNumber]
+    if (id === 'emptyStep') return
+    return dispatch({ type: 'SEQUENCER_STEP_OFF', voice, step: stepNumber, stepNumber, id })
+  }
 }
 
 export function stopSequence () {

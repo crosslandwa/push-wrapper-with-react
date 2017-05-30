@@ -8,6 +8,7 @@ const initialStepOffState = {
 
 const initialSequenceState = {
   steps: arrayFillOf(initialStepOffState, 32),
+  stepsById: [...Array(32).keys()].map(i => 'emptyStep'),
   deleteMode: false,
   selectedStep: null,
   stepsUnderEdit: []
@@ -60,12 +61,14 @@ function updateVoice (state = initialSequencerState, action, func) {
   return Object.assign({}, state, { voices })
 }
 
-function toggleStep (state = initialSequenceState, {type, step, pitch, velocity}) {
+function toggleStep (state = initialSequenceState, {id, stepNumber, type, step, pitch, velocity}) {
   const steps = clone(state.steps)
   steps[step] = (type === 'SEQUENCER_STEP_ON')
     ? { midiPitch: pitch || null, midiVelocity: velocity || 100}
     : initialStepOffState
-  return Object.assign({}, state, { steps })
+  const stepsById = state.stepsById.slice()
+  stepsById[stepNumber] = stepsById[stepNumber] === id ? 'emptyStep' : id
+  return Object.assign({}, state, { steps, stepsById })
 }
 
 function addStepUnderEdit (state = initialSequenceState, {step}) {
