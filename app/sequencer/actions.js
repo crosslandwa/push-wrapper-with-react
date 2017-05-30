@@ -31,6 +31,10 @@ export function turnStepOn (voice, stepNumber, pitch, velocity) {
   }
 }
 
+export function updateStepPitch(id, pitch) {
+  return { type: 'STEP_UPDATE_PITCH', id, pitch }
+}
+
 export function turnStepOff (id) {
   return (dispatch, getState) => {
     if (id === 'emptyStep') return

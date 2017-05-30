@@ -71,12 +71,12 @@ class App extends React.Component {
 }
 
 export default connect(
-  ({push, sequencer: {recording, voices: seqVoices}, ui, voices}) => ({
+  ({push, entities: {steps}, sequencer: {recording, voices: seqVoices}, ui, voices}) => ({
     delModifier: push.modifiers.del,
     shiftModifier: push.modifiers.shift,
     selectedVoice: ui.selectedVoice,
     recording,
-    selectedStep: seqVoices[ui.selectedVoice].selectedStep,
+    selectedStep: steps.byId[seqVoices[ui.selectedVoice].stepsById[seqVoices[ui.selectedVoice].selectedStep]], // horrendous, fix please
     voices
   }),
   (dispatch) => ({
