@@ -47,13 +47,13 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
 )
 
 export default connect(
-  ({ entities: {steps}, sequencer: {voices, currentStep} }, { voice }) => ({
+  ({ entities: {steps}, sequencer: {voices, currentStep, stepsUnderEdit} }, { voice }) => ({
     stepData: voices[voice].stepsById
       .map((id, index) => ({
         id,
         isCurrentStep: index === currentStep,
         hasNote: steps.byId[id].midiVelocity !== null,
-        underEdit: voices[voice].stepsUnderEdit.includes(id),
+        underEdit: stepsUnderEdit.includes(id),
         velocity: steps.byId[id].midiVelocity
       }))
   })

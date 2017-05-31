@@ -3,15 +3,15 @@ const clone = array =>  JSON.parse(JSON.stringify(array))
 
 const initialSequenceState = {
   stepsById: [...Array(32).keys()].map(i => 'emptyStep'),
-  deleteMode: false,
-  selectedStepId: null,
-  stepsUnderEdit: []
+  deleteMode: false
 }
 
 const initialSequencerState = {
   voices: arrayFillOf(initialSequenceState, 8),
   currentStep: -1,
   nextStep: -1,
+  selectedStepId: null,
+  stepsUnderEdit: [],
   playing: false,
   recording: false
 }
@@ -26,13 +26,13 @@ export default function sequencer (state = initialSequencerState, action) {
     case 'SEQUENCER_DELETE_MODE_OFF':
       return updateVoice(state, action, toggleDeleteMode)
     case 'SEQUENCER_STEP_EDIT_ON':
-      return updateVoice(state, action, addStepUnderEdit)
+      return addStepUnderEdit(state, action)
     case 'SEQUENCER_STEP_EDIT_OFF':
-      return updateVoice(state, action, removeStepUnderEdit)
+      return removeStepUnderEdit(state, action)
     case 'SEQUENCER_STEP_SELECT':
-      return updateVoice(state, action, selectStep)
+      return selectStep(state, action)
     case 'SEQUENCER_STEP_UNSELECT':
-      return updateVoice(state, action, unselectStep)
+      return unselectStep(state, action)
     case 'SEQUENCER_ADVANCE_STEP':
       const { currentStep, nextStep } = state;
       return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 32 })
@@ -50,7 +50,7 @@ export default function sequencer (state = initialSequencerState, action) {
   return state
 }
 
-function updateVoice (state = initialSequencerState, action, func) {
+function updateVoice (state, action, func) {
   const voices = clone(state.voices)
   voices[action.voice] = func(state.voices[action.voice], action)
   return Object.assign({}, state, { voices })
@@ -62,7 +62,7 @@ function turnStepOn (state = initialSequenceState, {id, stepNumber}) {
   return Object.assign({}, state, { stepsById })
 }
 
-function removeStep (state = initialSequencerState, {id}) {
+function removeStep (state, {id}) {
   const updated = clone(state)
   updated.voices.forEach(voice => {
     voice.stepsById[voice.stepsById.indexOf(id)] = 'emptyStep'
@@ -70,23 +70,23 @@ function removeStep (state = initialSequencerState, {id}) {
   return updated
 }
 
-function addStepUnderEdit (state = initialSequenceState, {stepId}) {
+function addStepUnderEdit (state, {stepId}) {
   if (state.stepsUnderEdit.includes(stepId)) return state
   const stepsUnderEdit = state.stepsUnderEdit.concat(stepId)
   return Object.assign({}, state, { stepsUnderEdit })
 }
 
-function removeStepUnderEdit (state = initialSequenceState, {stepId}) {
+function removeStepUnderEdit (state, {stepId}) {
   return Object.assign({}, state, {
     stepsUnderEdit: state.stepsUnderEdit.filter(underEdit => underEdit !== stepId)
   })
 }
 
-function selectStep (state = initialSequenceState, {stepId})  {
+function selectStep (state, {stepId})  {
   return Object.assign({}, state, { selectedStepId: stepId})
 }
 
-function unselectStep (state = initialSequenceState, {stepId})  {
+function unselectStep (state, {stepId})  {
   return Object.assign({}, state, {
     selectedStepId: state.selectedStepId === stepId ? null : state.selectedStepId
   })
