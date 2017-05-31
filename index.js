@@ -8,6 +8,7 @@ import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose } from 'redux'
 import App from './app/App'
 import rootReducer from './app/reducers'
+import { init } from './app/initialisationActions'
 
 const loadPush = () => pushWrapper.webMIDIio()
   .catch(err => { console.warn(err); return { inputPort: {}, outputPort: { send: () => {} } } })
@@ -31,6 +32,8 @@ function app([push]) {
       applyMiddleware(thunkMiddleware),
     )
   )
+
+  store.dispatch(init())
 
   ReactDOM.render(
     <Provider store={store}>

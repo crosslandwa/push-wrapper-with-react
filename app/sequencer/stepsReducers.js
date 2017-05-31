@@ -1,4 +1,5 @@
-const clone = x => JSON.parse(JSON.stringify(x))
+import {clone} from '../reducers/utils'
+
 const step = (id, pitch = null, velocity = null) => ({
   id,
   midiPitch: pitch,
