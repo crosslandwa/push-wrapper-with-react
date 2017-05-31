@@ -24,7 +24,7 @@ export default connect(
       }
       dispatch(selectStep(voice, selectedStepId))
     },
-    onRelease (stepNumber, stepId, underEdit) { // TODO remove pasing stepNumber
+    onRelease (stepId, underEdit) {
       if (!underEdit) dispatch(turnStepOff(stepId))
       dispatch(unselectStep(voice, stepId))
       dispatch(exitStepEditMode(voice, stepId))

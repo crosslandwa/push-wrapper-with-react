@@ -24,7 +24,7 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
         rgb={displayRgb(stepData[stepNumber], fade)}
         pad={pad}
         padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
-        padReleased={() => onRelease(stepNumber, stepData[stepNumber].id, stepData[stepNumber].underEdit)}
+        padReleased={() => onRelease(stepData[stepNumber].id, stepData[stepNumber].underEdit)}
       />
     ))}
     {arrayChunk(pads, 8).map((eightPads, row) => (
@@ -37,7 +37,7 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
               active={stepData[stepNumber].isCurrentStep || stepData[stepNumber].hasNote}
               rgb={displayRgb(stepData[stepNumber], domFade)}
               padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
-              padReleased={() => onRelease(stepNumber, stepData[stepNumber].id, stepData[stepNumber].underEdit)}
+              padReleased={() => onRelease(stepData[stepNumber].id, stepData[stepNumber].underEdit)}
             />
           )
         })}
