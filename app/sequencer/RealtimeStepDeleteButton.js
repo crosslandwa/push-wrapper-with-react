@@ -5,7 +5,7 @@ import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
 import { deleteModeOff, deleteModeOn } from './actions'
 
-const StepDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (
+const RealtimeStepDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (
   <div style={{display: 'inline-block'}} >
     <DomGridPad
       padPressed={padPressed}
@@ -36,4 +36,4 @@ export default connect(
       dispatch(deleteModeOff(voice))
     }
   })
-)(StepDeleteButton)
+)(RealtimeStepDeleteButton)

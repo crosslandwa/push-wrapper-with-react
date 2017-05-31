@@ -5,7 +5,7 @@ import TransportControls from './TransportControls'
 import PushControlModifiers from './PushControlModifiers'
 import StepControl from './sequencer/StepControl'
 import StepJumping from './sequencer/StepJumping'
-import StepDeleteButton from './sequencer/StepDeleteButton'
+import RealtimeStepDeleteButton from './sequencer/RealtimeStepDeleteButton'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import SamplePlayerContainer from './voices/SamplePlayerContainer'
 import SampleRecorderContainer from './voices/SampleRecorderContainer'
@@ -30,7 +30,7 @@ class App extends React.Component {
     if (shiftModifier) {
       VoicePadComponent = VoiceSelectContainer
     } else if (delModifier) {
-      VoicePadComponent = StepDeleteButton
+      VoicePadComponent = RealtimeStepDeleteButton
     }
 
     return (
