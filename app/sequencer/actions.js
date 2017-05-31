@@ -1,19 +1,19 @@
 import {playSample} from '../voices/actions'
 
-export function enterStepEditMode (voice, step) {
-  return { type: 'SEQUENCER_STEP_EDIT_ON', voice, step }
+export function enterStepEditMode (voice, stepId) {
+  return { type: 'SEQUENCER_STEP_EDIT_ON', voice, stepId }
 }
 
-export function exitStepEditMode (voice, step) {
-  return { type: 'SEQUENCER_STEP_EDIT_OFF', voice, step }
+export function exitStepEditMode (voice, stepId) {
+  return { type: 'SEQUENCER_STEP_EDIT_OFF', voice, stepId }
 }
 
-export function selectStep (voice, step) {
-  return { type: 'SEQUENCER_STEP_SELECT', voice, step }
+export function selectStep (voice, stepId) {
+  return { type: 'SEQUENCER_STEP_SELECT', voice, stepId }
 }
 
-export function unselectStep (voice, step) {
-  return { type: 'SEQUENCER_STEP_UNSELECT', voice, step }
+export function unselectStep (voice, stepId) {
+  return { type: 'SEQUENCER_STEP_UNSELECT', voice, stepId }
 }
 
 export function turnStepOn (voice, stepNumber, pitch, velocity) {
@@ -22,6 +22,7 @@ export function turnStepOn (voice, stepNumber, pitch, velocity) {
     const id = `step${allIds.length}`
     dispatch({ type: 'STEP_TURN_ON', id, pitch, velocity })
     dispatch({ type: 'SEQUENCER_STEP_ON', id, voice, stepNumber })
+    return id
   }
 }
 

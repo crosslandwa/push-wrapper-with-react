@@ -4,7 +4,7 @@ const clone = array =>  JSON.parse(JSON.stringify(array))
 const initialSequenceState = {
   stepsById: [...Array(32).keys()].map(i => 'emptyStep'),
   deleteMode: false,
-  selectedStep: null,
+  selectedStepId: null,
   stepsUnderEdit: []
 }
 
@@ -70,25 +70,25 @@ function removeStep (state = initialSequencerState, {id}) {
   return updated
 }
 
-function addStepUnderEdit (state = initialSequenceState, {step}) {
-  if (state.stepsUnderEdit.includes(step)) return state
-  const stepsUnderEdit = state.stepsUnderEdit.concat(step)
+function addStepUnderEdit (state = initialSequenceState, {stepId}) {
+  if (state.stepsUnderEdit.includes(stepId)) return state
+  const stepsUnderEdit = state.stepsUnderEdit.concat(stepId)
   return Object.assign({}, state, { stepsUnderEdit })
 }
 
-function removeStepUnderEdit (state = initialSequenceState, {step}) {
+function removeStepUnderEdit (state = initialSequenceState, {stepId}) {
   return Object.assign({}, state, {
-    stepsUnderEdit: state.stepsUnderEdit.filter(underEdit => underEdit !== step)
+    stepsUnderEdit: state.stepsUnderEdit.filter(underEdit => underEdit !== stepId)
   })
 }
 
-function selectStep (state = initialSequenceState, {step})  {
-  return Object.assign({}, state, { selectedStep: step})
+function selectStep (state = initialSequenceState, {stepId})  {
+  return Object.assign({}, state, { selectedStepId: stepId})
 }
 
-function unselectStep (state = initialSequenceState, {step})  {
+function unselectStep (state = initialSequenceState, {stepId})  {
   return Object.assign({}, state, {
-    selectedStep: state.selectedStep === step ? null : state.selectedStep
+    selectedStepId: state.selectedStepId === stepId ? null : state.selectedStepId
   })
 }
 

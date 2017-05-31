@@ -23,7 +23,7 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
         key={stepNumber}
         rgb={displayRgb(stepData[stepNumber], fade)}
         pad={pad}
-        padPressed={() => onClick(stepNumber, stepData[stepNumber].velocity)}
+        padPressed={() => onClick(stepNumber, stepData[stepNumber].id, stepData[stepNumber].velocity)}
         padReleased={() => onRelease(stepNumber, stepData[stepNumber].id, stepData[stepNumber].underEdit)}
       />
     ))}
@@ -36,7 +36,7 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
               key={stepNumber}
               active={stepData[stepNumber].isCurrentStep || stepData[stepNumber].hasNote}
               rgb={displayRgb(stepData[stepNumber], domFade)}
-              padPressed={() => onClick(stepNumber, stepData[stepNumber].velocity)}
+              padPressed={() => onClick(stepNumber, stepData[stepNumber].id, stepData[stepNumber].velocity)}
               padReleased={() => onRelease(stepNumber, stepData[stepNumber].id, stepData[stepNumber].underEdit)}
             />
           )
@@ -53,7 +53,7 @@ export default connect(
         id,
         isCurrentStep: index === currentStep,
         hasNote: steps.byId[id].midiVelocity !== null,
-        underEdit: voices[voice].stepsUnderEdit.includes(index),
+        underEdit: voices[voice].stepsUnderEdit.includes(id),
         velocity: steps.byId[id].midiVelocity
       }))
   })

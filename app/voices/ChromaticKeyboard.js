@@ -6,8 +6,8 @@ import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer'
 import { Colours } from '../push/colours'
 
-const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, selectedStep}) => {
-  const Component = selectedStep
+const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, selectedStepId}) => {
+  const Component = selectedStepId
     ? ChromaticStepEditorContainer
     : recording ? ChromaticSampleRecorderContainer : ChromaticSamplePlayerContainer
   return (
@@ -21,7 +21,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, sel
               pitch={offset + basePitch}
               pad={blackRow[index]}
               rgb={Colours.black}
-              selectedStep={selectedStep}
+              selectedStepId={selectedStepId}
               />
           : <DomGridPad key={index} />
         ))}
@@ -33,7 +33,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, sel
             voice={voice}
             pitch={offset + basePitch}
             pad={whiteRow[index]}
-            selectedStep={selectedStep}
+            selectedStepId={selectedStepId}
           />
         ))}
       </div>

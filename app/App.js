@@ -21,7 +21,7 @@ class App extends React.Component {
   render() {
     const {
       push, delModifier, shiftModifier, selectedVoice,
-      voices, recording, selectedStep
+      voices, recording, selectedStepId
     } = this.props
     const voice = voices[selectedVoice]
 
@@ -52,7 +52,7 @@ class App extends React.Component {
           recording={recording}
           voice={selectedVoice}
           whiteRow={push.gridRow(4)}
-          selectedStep={selectedStep}
+          selectedStepId={selectedStepId}
         />
         <StepControlComponent
           pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
@@ -76,7 +76,7 @@ export default connect(
     shiftModifier: push.modifiers.shift,
     selectedVoice: ui.selectedVoice,
     recording,
-    selectedStep: steps.byId[seqVoices[ui.selectedVoice].stepsById[seqVoices[ui.selectedVoice].selectedStep]], // horrendous, fix please
+    selectedStepId: seqVoices[ui.selectedVoice].selectedStepId,
     voices
   }),
   (dispatch) => ({
