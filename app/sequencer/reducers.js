@@ -23,8 +23,9 @@ export default function sequencer (state = initialSequencerState, action) {
     case 'STEP_TURN_ON':
       return turnStepOn(state, action.voice, action.id, action.stepNumber)
     case 'SEQUENCER_DELETE_MODE_ON':
+      return deleteModeOn(state, action.voice)
     case 'SEQUENCER_DELETE_MODE_OFF':
-      return updateVoice(state, action, toggleDeleteMode)
+      return deleteModeOff(state, action.voice)
     case 'SEQUENCER_STEP_EDIT_ON':
       return addStepUnderEdit(state, action)
     case 'SEQUENCER_STEP_EDIT_OFF':
@@ -48,12 +49,6 @@ export default function sequencer (state = initialSequencerState, action) {
       return Object.assign({}, state, { recording: false })
   }
   return state
-}
-
-function updateVoice (state, action, func) {
-  const voices = clone(state.voices)
-  voices[action.voice] = func(state.voices[action.voice], action)
-  return Object.assign({}, state, { voices })
 }
 
 function turnStepOn (state, voice, stepId, stepNumber) {
@@ -92,6 +87,14 @@ function unselectStep (state, {stepId})  {
   })
 }
 
-function toggleDeleteMode (state = initialSequenceState, {type}) {
-  return Object.assign({}, state, { deleteMode: type === 'SEQUENCER_DELETE_MODE_ON' })
+function deleteModeOn (state, voice) {
+  const updated = clone(state)
+  updated.voices[voice].deleteMode = true
+  return updated
+}
+
+function deleteModeOff (state, voice) {
+  const updated = clone(state)
+  updated.voices[voice].deleteMode = false
+  return updated
 }
