@@ -8,7 +8,7 @@ const ChromaticStepEditorContainer = (props) => <ChromaticSamplePlayerContainer 
 
 export default connect(
   state => ({}),
-  (dispatch, { voice, selectedStepId, pitch }) => ({
+  (dispatch, { selectedStepId, pitch }) => ({
     padPressed (velocity) {
       dispatch(updateStepPitch(selectedStepId, pitch))
     }
