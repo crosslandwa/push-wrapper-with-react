@@ -11,7 +11,6 @@ const initialSequencerState = {
   currentStep: -1,
   nextStep: -1,
   selectedStepId: null,
-  stepsUnderEdit: [],
   playing: false,
   recording: false
 }
@@ -26,10 +25,6 @@ export default function sequencer (state = initialSequencerState, action) {
       return deleteModeOn(state, action.voice)
     case 'SEQUENCER_DELETE_MODE_OFF':
       return deleteModeOff(state, action.voice)
-    case 'SEQUENCER_STEP_EDIT_ON':
-      return addStepUnderEdit(state, action)
-    case 'SEQUENCER_STEP_EDIT_OFF':
-      return removeStepUnderEdit(state, action)
     case 'SEQUENCER_STEP_SELECT':
       return selectStep(state, action)
     case 'SEQUENCER_STEP_UNSELECT':
@@ -63,18 +58,6 @@ function removeStep (state, id) {
     voice.stepsById[voice.stepsById.indexOf(id)] = 'emptyStep'
   })
   return updated
-}
-
-function addStepUnderEdit (state, {stepId}) {
-  if (state.stepsUnderEdit.includes(stepId)) return state
-  const stepsUnderEdit = state.stepsUnderEdit.concat(stepId)
-  return Object.assign({}, state, { stepsUnderEdit })
-}
-
-function removeStepUnderEdit (state, {stepId}) {
-  return Object.assign({}, state, {
-    stepsUnderEdit: state.stepsUnderEdit.filter(underEdit => underEdit !== stepId)
-  })
 }
 
 function selectStep (state, {stepId})  {

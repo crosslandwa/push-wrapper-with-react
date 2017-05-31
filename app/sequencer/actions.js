@@ -1,13 +1,5 @@
 import {playSample} from '../voices/actions'
 
-export function enterStepEditMode (voice, stepId) {
-  return { type: 'SEQUENCER_STEP_EDIT_ON', voice, stepId }
-}
-
-export function exitStepEditMode (voice, stepId) {
-  return { type: 'SEQUENCER_STEP_EDIT_OFF', voice, stepId }
-}
-
 export function selectStep (voice, stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', voice, stepId }
 }
