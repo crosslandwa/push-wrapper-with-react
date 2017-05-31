@@ -1,12 +1,13 @@
 'use strict'
 import React from 'react'
+import { connect } from 'react-redux'
 import DomGridPad from '../push/DomGridPad'
 import ChromaticStepEditorContainer from './ChromaticStepEditorContainer'
 import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer'
 import { Colours } from '../push/colours'
 
-const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, selectedStepId}) => {
+const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, selectedStepId, selectedStepPitch}) => {
   const Component = selectedStepId
     ? ChromaticStepEditorContainer
     : recording ? ChromaticSampleRecorderContainer : ChromaticSamplePlayerContainer
@@ -20,7 +21,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, sel
               voice={voice}
               pitch={offset + basePitch}
               pad={blackRow[index]}
-              rgb={Colours.black}
+              rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.black}
               selectedStepId={selectedStepId}
               />
           : <DomGridPad key={index} />
@@ -33,6 +34,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, sel
             voice={voice}
             pitch={offset + basePitch}
             pad={whiteRow[index]}
+            rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.white}
             selectedStepId={selectedStepId}
           />
         ))}
@@ -41,4 +43,8 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, sel
   )
 }
 
-export default ChromaticKeyboard
+export default connect(
+  ({sequencer: {selectedStepId}, ui: {selectedVoice: selectedVoiceNumber}, entities: {steps}, voices}) => ({
+    selectedStepPitch: (selectedStepId !== null) ? (steps.byId[selectedStepId].midiPitch || voices[selectedVoiceNumber].pitch) : null
+  }),
+)(ChromaticKeyboard)
