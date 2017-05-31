@@ -20,8 +20,7 @@ export function turnStepOn (voice, stepNumber, pitch, velocity) {
   return (dispatch, getState) => {
     const { entities: { steps: { allIds } } } = getState()
     const id = `step${allIds.length}`
-    dispatch({ type: 'STEP_TURN_ON', id, pitch, velocity })
-    dispatch({ type: 'SEQUENCER_STEP_ON', id, voice, stepNumber })
+    dispatch({ type: 'STEP_TURN_ON', id, voice, stepNumber, pitch, velocity })
     return id
   }
 }
@@ -33,7 +32,6 @@ export function updateStepPitch(id, pitch) {
 export function turnStepOff (id) {
   return (dispatch, getState) => {
     if (id === 'emptyStep') return
-    dispatch({ type: 'SEQUENCER_STEP_OFF', id })
     dispatch({ type: 'STEP_TURN_OFF', id })
   }
 }

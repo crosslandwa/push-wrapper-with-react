@@ -18,10 +18,10 @@ const initialSequencerState = {
 
 export default function sequencer (state = initialSequencerState, action) {
   switch (action.type) {
-    case 'SEQUENCER_STEP_OFF':
-      return removeStep(state, action)
-    case 'SEQUENCER_STEP_ON':
-      return updateVoice(state, action, turnStepOn)
+    case 'STEP_TURN_OFF':
+      return removeStep(state, action.id)
+    case 'STEP_TURN_ON':
+      return turnStepOn(state, action.voice, action.id, action.stepNumber)
     case 'SEQUENCER_DELETE_MODE_ON':
     case 'SEQUENCER_DELETE_MODE_OFF':
       return updateVoice(state, action, toggleDeleteMode)
@@ -56,13 +56,13 @@ function updateVoice (state, action, func) {
   return Object.assign({}, state, { voices })
 }
 
-function turnStepOn (state = initialSequenceState, {id, stepNumber}) {
-  const stepsById = state.stepsById.slice()
-  stepsById[stepNumber] = id
-  return Object.assign({}, state, { stepsById })
+function turnStepOn (state, voice, stepId, stepNumber) {
+  const updated = clone(state)
+  updated.voices[voice].stepsById[stepNumber] = stepId
+  return updated
 }
 
-function removeStep (state, {id}) {
+function removeStep (state, id) {
   const updated = clone(state)
   updated.voices.forEach(voice => {
     voice.stepsById[voice.stepsById.indexOf(id)] = 'emptyStep'
