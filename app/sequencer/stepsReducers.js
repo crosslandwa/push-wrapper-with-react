@@ -12,11 +12,10 @@ const intialState = {
 
 export default function steps (state = intialState, action) {
   switch (action.type) {
-    case 'SEQUENCER_STEP_ON':
+    case 'STEP_TURN_ON':
+      return addStep(state, action)
     case 'STEP_TURN_OFF':
-      return 'SEQUENCER_STEP_ON' === action.type
-        ? addStep(state, action)
-        : removeStep(state, action)
+      return removeStep(state, action)
     case 'STEP_UPDATE_PITCH':
       return updatePitch(state, action)
   }

@@ -19,15 +19,9 @@ export function unselectStep (voice, step) {
 export function turnStepOn (voice, stepNumber, pitch, velocity) {
   return (dispatch, getState) => {
     const { entities: { steps: { allIds } } } = getState()
-    return dispatch({
-      type: 'SEQUENCER_STEP_ON',
-      id: `step${allIds.length}`,
-      voice,
-      stepNumber,
-      step: stepNumber,
-      pitch,
-      velocity
-    })
+    const id = `step${allIds.length}`
+    dispatch({ type: 'STEP_TURN_ON', id, pitch, velocity })
+    dispatch({ type: 'SEQUENCER_STEP_ON', id, voice, stepNumber })
   }
 }
 
