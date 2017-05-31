@@ -2,12 +2,12 @@ import { arrayFillOf } from '../reducers/utils'
 const clone = array =>  JSON.parse(JSON.stringify(array))
 
 const initialSequenceState = {
-  stepsById: [...Array(32).keys()].map(i => 'emptyStep'),
-  deleteMode: false
+  stepsById: [...Array(32).keys()].map(i => 'emptyStep')
 }
 
 const initialSequencerState = {
   voices: arrayFillOf(initialSequenceState, 8),
+  sequencesInDeleteMode: [],
   currentStep: -1,
   nextStep: -1,
   selectedStepId: null,
@@ -70,14 +70,16 @@ function unselectStep (state, {stepId})  {
   })
 }
 
-function deleteModeOn (state, voice) {
+function deleteModeOn (state, voiceNumber) {
   const updated = clone(state)
-  updated.voices[voice].deleteMode = true
+  if (!updated.sequencesInDeleteMode.includes(voiceNumber)) {
+    updated.sequencesInDeleteMode = updated.sequencesInDeleteMode.concat(voiceNumber)
+  }
   return updated
 }
 
-function deleteModeOff (state, voice) {
+function deleteModeOff (state, voiceNumber) {
   const updated = clone(state)
-  updated.voices[voice].deleteMode = false
+  updated.sequencesInDeleteMode = updated.sequencesInDeleteMode.filter(x => x !== voiceNumber)
   return updated
 }
