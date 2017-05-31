@@ -1,14 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import {
-  turnStepOff,
-  turnStepOn,
-  enterStepEditMode,
-  exitStepEditMode,
-  selectStep,
-  unselectStep
-} from './actions'
+import { turnStepOn, enterStepEditMode, exitStepEditMode, selectStep, unselectStep } from './actions'
 import StepDisplay from './StepDisplay'
 
 const StepControl = (props) => <StepDisplay {...props} />
@@ -24,8 +17,7 @@ export default connect(
       }
       dispatch(selectStep(voice, selectedStepId))
     },
-    onRelease (stepId, underEdit) { // TODO use mergeProps instead of passing underEdit up from StepDisplay
-      if (!underEdit) dispatch(turnStepOff(stepId))
+    onRelease (stepId) {
       dispatch(unselectStep(voice, stepId))
       dispatch(exitStepEditMode(voice, stepId))
     }

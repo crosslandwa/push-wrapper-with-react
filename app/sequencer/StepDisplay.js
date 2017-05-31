@@ -24,7 +24,7 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
         rgb={displayRgb(stepData[stepNumber], fade)}
         pad={pad}
         padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
-        padReleased={() => onRelease(stepData[stepNumber].id, stepData[stepNumber].underEdit)}
+        padReleased={() => onRelease(stepData[stepNumber].id)}
       />
     ))}
     {arrayChunk(pads, 8).map((eightPads, row) => (
@@ -37,7 +37,7 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
               active={stepData[stepNumber].isCurrentStep || stepData[stepNumber].hasNote}
               rgb={displayRgb(stepData[stepNumber], domFade)}
               padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
-              padReleased={() => onRelease(stepData[stepNumber].id, stepData[stepNumber].underEdit)}
+              padReleased={() => onRelease(stepData[stepNumber].id)}
             />
           )
         })}
@@ -47,13 +47,12 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
 )
 
 export default connect(
-  ({ entities: {steps}, sequencer: {voices, currentStep, stepsUnderEdit} }, { voice }) => ({
+  ({ entities: {steps}, sequencer: {voices, currentStep} }, { voice }) => ({
     stepData: voices[voice].stepsById
       .map((id, index) => ({
         id,
         isCurrentStep: index === currentStep,
         hasNote: steps.byId[id].midiVelocity !== null,
-        underEdit: stepsUnderEdit.includes(id),
         velocity: steps.byId[id].midiVelocity
       }))
   })

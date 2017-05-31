@@ -4,6 +4,7 @@ import BlankRow from './ui/BlankRow'
 import TransportControls from './TransportControls'
 import PushControlModifiers from './PushControlModifiers'
 import StepControl from './sequencer/StepControl'
+import StepDelete from './sequencer/StepDelete'
 import StepJumping from './sequencer/StepJumping'
 import RealtimeStepDeleteButton from './sequencer/RealtimeStepDeleteButton'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
@@ -25,11 +26,13 @@ class App extends React.Component {
     } = this.props
     const voice = voices[selectedVoice]
 
-    const StepControlComponent = shiftModifier ? StepJumping : StepControl
+    let StepControlComponent = StepControl
     let VoicePadComponent = recording ? SampleRecorderContainer : SamplePlayerContainer
     if (shiftModifier) {
+      StepControlComponent = StepJumping
       VoicePadComponent = VoiceSelectContainer
     } else if (delModifier) {
+      StepControlComponent = StepDelete
       VoicePadComponent = RealtimeStepDeleteButton
     }
 
