@@ -42,14 +42,14 @@ export function stopSequence () {
   return { type: 'SEQUENCER_STOP' }
 }
 
-export function startSequence (step = 0) {
+export function startSequence (stepNumber = 0) {
   return (dispatch, getState) => {
     const { sequencer: { playing } } = getState()
     if (!playing) {
-      dispatch({ type: 'SEQUENCER_START', step })
+      dispatch({ type: 'SEQUENCER_START', stepNumber })
       dispatch(advanceSequence())
     } else {
-      dispatch({ type: 'SEQUENCER_NEXT_STEP', step })
+      dispatch({ type: 'SEQUENCER_NEXT_STEP', stepNumber })
     }
   }
 }

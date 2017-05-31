@@ -37,9 +37,9 @@ export default function sequencer (state = initialSequencerState, action) {
       const { currentStep, nextStep } = state;
       return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 32 })
     case 'SEQUENCER_NEXT_STEP':
-      return Object.assign({}, state, { nextStep: action.step })
+      return Object.assign({}, state, { nextStep: action.stepNumber })
     case 'SEQUENCER_START':
-      return Object.assign({}, state, { currentStep: -1, nextStep: action.step, playing: true })
+      return Object.assign({}, state, { currentStep: -1, nextStep: action.stepNumber, playing: true })
     case 'SEQUENCER_STOP':
       return Object.assign({}, state, { currentStep: -1, nextStep: -1, playing: false })
     case 'SEQUENCER_ARM':

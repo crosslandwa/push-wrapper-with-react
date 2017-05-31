@@ -5,9 +5,11 @@ const step = (id, pitch = null, velocity = null) => ({
   midiVelocity: velocity
 })
 
+const emptyStep = step('emptyStep')
+
 const intialState = {
-  byId: { emptyStep: step('emptyStep')},
-  allIds: ['emptyStep']
+  byId: { [emptyStep.id]: emptyStep},
+  allIds: [emptyStep.id]
 }
 
 export default function steps (state = intialState, action) {
