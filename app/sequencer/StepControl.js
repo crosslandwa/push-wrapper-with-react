@@ -24,7 +24,7 @@ export default connect(
       }
       dispatch(selectStep(voice, selectedStepId))
     },
-    onRelease (stepId, underEdit) {
+    onRelease (stepId, underEdit) { // TODO use mergeProps instead of passing underEdit up from StepDisplay
       if (!underEdit) dispatch(turnStepOff(stepId))
       dispatch(unselectStep(voice, stepId))
       dispatch(exitStepEditMode(voice, stepId))
