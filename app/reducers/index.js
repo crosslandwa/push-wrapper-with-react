@@ -4,7 +4,7 @@ import sequencer from '../sequencer/reducers'
 import ui from '../ui/reducers'
 import voices from '../voices/reducers'
 import steps from '../sequencer/stepsreducers'
-import sequences from '../sequencer/sequencesreducers'
+import patterns from '../sequencer/patternsreducers'
 
 export default combineReducers({
   push,
@@ -12,7 +12,7 @@ export default combineReducers({
   ui,
   voices,
   entities: combineReducers({
-    steps,
-    sequences
+    patterns,
+    steps
   })
 })

@@ -6,7 +6,7 @@ const emptySequence = (id, length = 32) => ({
 
 const intialState = { byId: {}, allIds: [] }
 
-export default function sequences (state = intialState, action) {
+export default function patterns (state = intialState, action) {
   switch (action.type) {
     case 'xxx':
       return state
