@@ -7,7 +7,7 @@ import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer
 import { Colours } from '../push/colours'
 
 const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, selectedStep}) => {
-  const Component = (selectedStep !== null)
+  const Component = selectedStep
     ? ChromaticStepEditorContainer
     : recording ? ChromaticSampleRecorderContainer : ChromaticSamplePlayerContainer
   return (
