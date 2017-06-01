@@ -1,7 +1,8 @@
-import {createPattern} from './sequencer/patternActions'
+import {createPattern, selectPattern} from './sequencer/patternActions'
 
 export function init () {
   return (dispatch, getState) => {
-    dispatch(createPattern(0))
+    const id = dispatch(createPattern(0))
+    dispatch(selectPattern(id))
   }
 }
