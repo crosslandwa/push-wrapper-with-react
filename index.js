@@ -34,11 +34,12 @@ function app([push]) {
   )
 
   store.dispatch(init())
-
-  ReactDOM.render(
-    <Provider store={store}>
-      <App push={push} />
-    </Provider>,
-    document.getElementById('app')
-  )
+    .then(() => {
+      ReactDOM.render(
+        <Provider store={store}>
+          <App push={push} />
+        </Provider>,
+        document.getElementById('app')
+      )
+    })
 }

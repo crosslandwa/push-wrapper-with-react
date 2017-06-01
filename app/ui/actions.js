@@ -1,3 +1,3 @@
-export function selectVoice (voice) {
-  return { type: 'UI_SELECT_VOICE', voice }
+export function selectVoice (voiceId) {
+  return { type: 'UI_SELECT_VOICE', voiceId }
 }

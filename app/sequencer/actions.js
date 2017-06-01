@@ -58,18 +58,21 @@ function advanceSequence () {
 function playSequencedVoices  () {
   return (dispatch, getState) => {
     const {
-      voices,
       sequencer: { currentStep, patternId, sequencesInDeleteMode },
-      entities: { steps, patterns, tracks }
+      entities: { steps, patterns, tracks, voices }
     } = getState()
-    patterns.byId[patternId].trackIds.forEach((trackId, voiceNumber) => {
+    patterns.byId[patternId].trackIds.forEach((trackId, index) => {
       const track = tracks.byId[trackId]
       const stepId = track.stepIds[currentStep]
+      const voiceId = voices.allIds[index] // TODO fix mapping of track -> voice
       if (!stepId) return
       const step = steps.byId[stepId]
-      dispatch(sequencesInDeleteMode.includes(voiceNumber)
+      dispatch(sequencesInDeleteMode.includes(trackId) // TODO fix
         ? turnStepOff(stepId)
-        : playSample(voiceNumber, step.midiPitch || voices[voiceNumber].pitch, step.midiVelocity)
+        : playSample(voiceId, {
+            pitch: step.midiPitch,
+            velocity: step.midiVelocity
+          })
       )
     })
     setTimeout(() => dispatch(advanceSequence()), 125)

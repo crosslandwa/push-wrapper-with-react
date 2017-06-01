@@ -9,7 +9,7 @@ const initialState = {
 
 export default function voices (state = initialState, action) {
   switch (action.type) {
-    case 'SAMPLE_PLAYING':
+    case 'VOICE_PLAYING':
       return voicePlaying(state, action)
     case 'VOICE_CREATE':
       return voiceLoaded(state, action)

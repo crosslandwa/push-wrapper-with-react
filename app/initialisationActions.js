@@ -1,12 +1,14 @@
-import {createPattern, selectPattern} from './sequencer/patternActions'
+import { createPattern, selectPattern } from './sequencer/patternActions'
 import { loadSample, createVoice } from './voices/actions'
+import { selectVoice } from './ui/actions'
 
 export function init () {
   return (dispatch, getState) => {
-    const id = dispatch(createPattern(0))
-    dispatch(selectPattern(id))
+    const patternId = dispatch(createPattern())
+    dispatch(selectPattern(patternId))
     return dispatch(loadSample(0, 'kick.mp3', 'kick'))
       .then(sampleId => dispatch(createVoice(sampleId)))
+      .then(voiceId => dispatch(selectVoice(voiceId)))
       .then(() => dispatch(loadSample(1, 'snare.mp3', 'snare')))
       .then(sampleId => dispatch(createVoice(sampleId)))
       .then(() => dispatch(loadSample(2, 'hat.mp3', 'hat')))

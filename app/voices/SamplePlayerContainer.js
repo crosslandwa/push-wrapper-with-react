@@ -8,9 +8,9 @@ const SamplePlayerContainer = (props) => <VoiceSelectContainer {...props} />
 
 export default connect(
   state => ({}),
-  (dispatch, { voice, pitch, padPressed }) => ({
+  (dispatch, { voiceId, padPressed }) => ({
     padPressed (velocity) {
-      dispatch(playSample(voice, pitch, velocity))
+      dispatch(playSample(voiceId, {velocity}))
       padPressed && padPressed(velocity)
     }
   })

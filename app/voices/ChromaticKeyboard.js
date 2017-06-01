@@ -7,7 +7,7 @@ import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer'
 import { Colours } from '../push/colours'
 
-const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, selectedStepId, selectedStepPitch}) => {
+const ChromaticKeyboard = ({voiceId, basePitch, blackRow, whiteRow, recording, selectedStepId, selectedStepPitch}) => {
   const Component = selectedStepId
     ? ChromaticStepEditorContainer
     : recording ? ChromaticSampleRecorderContainer : ChromaticSamplePlayerContainer
@@ -18,7 +18,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, sel
           offset
             ? <Component
               key={index}
-              voice={voice}
+              voiceId={voiceId}
               pitch={offset + basePitch}
               pad={blackRow[index]}
               rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.black}
@@ -31,7 +31,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, sel
         {[0, 2, 4, 5, 7, 9, 11, 12].map((offset, index) => (
           <Component
             key={index}
-            voice={voice}
+            voiceId={voiceId}
             pitch={offset + basePitch}
             pad={whiteRow[index]}
             rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.white}
@@ -44,7 +44,7 @@ const ChromaticKeyboard = ({voice, basePitch, blackRow, whiteRow, recording, sel
 }
 
 export default connect(
-  ({sequencer: {selectedStepId}, ui: {selectedVoice: selectedVoiceNumber}, entities: {steps}, voices}) => ({
-    selectedStepPitch: (selectedStepId !== null) ? (steps.byId[selectedStepId].midiPitch || voices[selectedVoiceNumber].pitch) : null
+  ({sequencer: {selectedStepId}, ui: { selectedVoiceId }, entities: {steps, voices}}) => ({
+    selectedStepPitch: (selectedStepId !== null) ? (steps.byId[selectedStepId].midiPitch || voices.byId[selectedVoiceId].pitch) : null
   }),
 )(ChromaticKeyboard)

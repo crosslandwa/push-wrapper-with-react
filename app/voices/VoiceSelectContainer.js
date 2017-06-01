@@ -25,13 +25,13 @@ const VoiceSelectContainer = ({ velocity = 0, padPressed, padReleased, pad, sele
 )
 
 export default connect(
-  ({ voices, ui }, { voice }) => ({
-    selected: ui.selectedVoice === voice,
-    velocity: voices[voice] && voices[voice].velocity,
+  ({ entities: { voices }, ui }, { voiceId }) => ({
+    selected: ui.selectedVoiceId === voiceId,
+    velocity: voices.byId[voiceId].velocity,
   }),
-  (dispatch, { voice, padPressed }) => ({
+  (dispatch, { voiceId, padPressed }) => ({
     padPressed (velocity) {
-      dispatch(selectVoice(voice))
+      dispatch(selectVoice(voiceId))
       padPressed && padPressed(velocity)
     }
   })

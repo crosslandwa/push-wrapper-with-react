@@ -13,8 +13,7 @@ import SampleRecorderContainer from './voices/SampleRecorderContainer'
 import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
 
-const App = ({ push, pushState, selectedVoice, voices, recording, selectedStepId }) => {
-  const voice = voices[selectedVoice]
+const App = ({ push, pushState, voiceIds, selectedVoiceId, recording, selectedStepId, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
   let VoicePadComponent = recording ? SampleRecorderContainer : SamplePlayerContainer
@@ -30,11 +29,10 @@ const App = ({ push, pushState, selectedVoice, voices, recording, selectedStepId
     <div>
       <PushControlModifiers push={push} />
       <TransportControls push={push} />
-      {[...Array(8).keys()].map(index => (
+      {voiceIds.map((voiceId, index) => (
         <VoicePadComponent
-          key={index}
-          voice={index}
-          pitch={voice.pitch}
+          key={voiceId}
+          voiceId={voiceId}
           pad={push.gridRow(7)[index]}
         />
       ))}
@@ -43,24 +41,25 @@ const App = ({ push, pushState, selectedVoice, voices, recording, selectedStepId
         basePitch={36}
         blackRow={push.gridRow(5)}
         recording={recording}
-        voice={selectedVoice}
+        voiceId={selectedVoiceId}
         whiteRow={push.gridRow(4)}
         selectedStepId={selectedStepId}
       />
       <StepControlComponent
         pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
-        trackId={`track${selectedVoice}`} // TODO fix this hack
+        trackId={selectedTrackId}
       />
     </div>
   )
 }
 
 export default connect(
-  ({push, entities: {steps}, sequencer: {recording, selectedStepId}, ui, voices}) => ({
+  ({push, entities: {steps, tracks, voices}, sequencer: {recording, selectedStepId}, ui: {selectedVoiceId}}) => ({
     pushState: push,
-    selectedVoice: ui.selectedVoice,
+    selectedVoiceId,
     recording,
     selectedStepId,
-    voices
+    voiceIds: voices.allIds,
+    selectedTrackId: tracks.allIds[voices.allIds.indexOf(selectedVoiceId)] // TODO this isn't quite right
   })
 )(App)

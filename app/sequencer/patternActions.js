@@ -3,7 +3,7 @@ function filterUnique (arr) {
   return arr.filter(unique)
 }
 
-export function createPattern (patternNumber) {
+export function createPattern () {
   return (dispatch, getState) => {
     const {entities: {
       patterns: {allIds: allPatternIds},
@@ -11,7 +11,7 @@ export function createPattern (patternNumber) {
     }} = getState()
     const id = `pattern${allPatternIds.length}`
     const trackIds = [...Array(8).keys()].map(x => `track${allTrackIds.length + x}`)
-    dispatch({ type: 'PATTERN_CREATE', id, trackIds, patternNumber })
+    dispatch({ type: 'PATTERN_CREATE', id, trackIds })
     return id
   }
 }

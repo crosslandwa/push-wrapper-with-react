@@ -1,5 +1,5 @@
 const initialUiState = {
-  selectedVoice: 0
+  selectedVoiceId: null
 }
 
 export default function push (state = initialUiState, action) {
@@ -7,7 +7,7 @@ export default function push (state = initialUiState, action) {
     case 'UI_SELECT_VOICE':
       return Object.assign({},
         state,
-        { selectedVoice: action.voice }
+        { selectedVoiceId: action.voiceId }
       )
   }
   return state
