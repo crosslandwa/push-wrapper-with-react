@@ -7,6 +7,7 @@ const initialSequenceState = {
 
 const initialSequencerState = {
   voices: arrayFillOf(initialSequenceState, 8),
+  patternId: 'pattern0',
   sequencesInDeleteMode: [],
   currentStep: -1,
   nextStep: -1,
