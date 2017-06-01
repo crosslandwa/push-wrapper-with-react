@@ -1,20 +1,20 @@
 import {playSample} from '../voices/actions'
 
-export function selectStep (voice, stepId) {
-  return { type: 'SEQUENCER_STEP_SELECT', voice, stepId }
+export function selectStep (stepId) {
+  return { type: 'SEQUENCER_STEP_SELECT', stepId }
 }
 
-export function unselectStep (voice, stepId) {
-  return { type: 'SEQUENCER_STEP_UNSELECT', voice, stepId }
+export function unselectStep (stepId) {
+  return { type: 'SEQUENCER_STEP_UNSELECT', stepId }
 }
 
-export function turnStepOn (voice, stepNumber, pitch, velocity) {
+export function turnStepOn (trackId, stepNumber, pitch, velocity) {
   return (dispatch, getState) => {
     const {
       entities: { steps: { allIds } }
     } = getState()
     const id = `step${allIds.length}`
-    dispatch({ type: 'STEP_TURN_ON', id, trackId: `track${voice}`, voice, stepNumber, pitch, velocity })
+    dispatch({ type: 'STEP_TURN_ON', id, trackId, stepNumber, pitch, velocity })
     return id
   }
 }
@@ -91,7 +91,7 @@ export function recordStep (voice, { pitch, velocity }) {
       dispatch(startSequence(0))
     }
 
-    dispatch(turnStepOn(voice, Math.max(0, currentStep), pitch, velocity))
+    dispatch(turnStepOn(`track${voice}`, Math.max(0, currentStep), pitch, velocity)) // TODO trackId hack
   }
 }
 

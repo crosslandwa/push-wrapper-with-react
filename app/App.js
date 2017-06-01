@@ -59,7 +59,7 @@ class App extends React.Component {
         />
         <StepControlComponent
           pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
-          voice={selectedVoice}
+          trackId={`track${selectedVoice}`} // TODO fix this hack
         />
       </div>
     )

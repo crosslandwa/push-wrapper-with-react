@@ -8,7 +8,7 @@ const StepDelete = (props) => <StepDisplay {...props} />
 
 export default connect(
   state => ({}),
-  (dispatch, { voice }) => ({
+  (dispatch, { }) => ({
     onClick (stepNumber, stepId) {
       dispatch(turnStepOff(stepId))
     }
