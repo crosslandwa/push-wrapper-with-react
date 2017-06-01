@@ -13,9 +13,9 @@ export default function samples (state = initialState, action) {
   return state
 }
 
-function sampleLoaded (state, {id, sample, url}) {
+function sampleLoaded (state, {id, sample, url, loaded}) {
   const updated = clone(state)
-  updated.byId[id] = { id, name: sample, url }
+  updated.byId[id] = { id, name: sample, url, loaded }
   updated.allIds = updated.allIds.concat(id)
   return updated
 }
