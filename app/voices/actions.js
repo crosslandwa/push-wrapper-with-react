@@ -25,7 +25,7 @@ function samplePlaying (voiceId, gain) {
   return { type: 'VOICE_PLAYING', velocity: gain.velocity(), id: voiceId }
 }
 
-export function loadSample (voice, url, sample) {
+export function loadSample (url, sample) {
   return function (dispatch, getState) {
     const {entities: {samples: {allIds}}} = getState()
     const voiceId = `voice${allIds.length}` // TODO hack - should associate player -> voiceId on initialising voice
