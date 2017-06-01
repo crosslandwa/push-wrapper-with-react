@@ -13,15 +13,15 @@ import SampleRecorderContainer from './voices/SampleRecorderContainer'
 import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
 
-const App = ({ push, delModifier, shiftModifier, selectedVoice, voices, recording, selectedStepId }) => {
+const App = ({ push, pushState, selectedVoice, voices, recording, selectedStepId }) => {
   const voice = voices[selectedVoice]
 
   let StepControlComponent = StepControl
   let VoicePadComponent = recording ? SampleRecorderContainer : SamplePlayerContainer
-  if (shiftModifier) {
+  if (pushState.modifiers.shift) {
     StepControlComponent = StepJumping
     VoicePadComponent = VoiceSelectContainer
-  } else if (delModifier) {
+  } else if (pushState.modifiers.del) {
     StepControlComponent = StepDelete
     VoicePadComponent = RealtimeStepDeleteButton
   }
@@ -57,8 +57,7 @@ const App = ({ push, delModifier, shiftModifier, selectedVoice, voices, recordin
 
 export default connect(
   ({push, entities: {steps}, sequencer: {recording, selectedStepId}, ui, voices}) => ({
-    delModifier: push.modifiers.del,
-    shiftModifier: push.modifiers.shift,
+    pushState: push,
     selectedVoice: ui.selectedVoice,
     recording,
     selectedStepId,
