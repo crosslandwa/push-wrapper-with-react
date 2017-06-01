@@ -87,11 +87,10 @@ export function armSequencer () {
 export function recordStep (voice, { pitch, velocity }) {
   return (dispatch, getState) => {
     const { sequencer: { currentStep, playing } } = getState()
+    dispatch(turnStepOn(`track${voice}`, Math.max(0, currentStep), pitch, velocity)) // TODO trackId hack
     if (!playing) {
       dispatch(startSequence(0))
     }
-
-    dispatch(turnStepOn(`track${voice}`, Math.max(0, currentStep), pitch, velocity)) // TODO trackId hack
   }
 }
 
