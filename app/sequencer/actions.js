@@ -25,7 +25,6 @@ export function updateStepPitch(id, pitch) {
 
 export function turnStepOff (id) {
   return (dispatch, getState) => {
-    if (id === 'emptyStep') return
     dispatch({ type: 'STEP_TURN_OFF', id })
   }
 }
