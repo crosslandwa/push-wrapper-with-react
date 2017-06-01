@@ -34,7 +34,10 @@ export function selectPattern (id) {
     }, [])
 
     const current = {
-      pattern,
+      patterns: {
+        byId: {[pattern.id]: pattern},
+        allIds: [pattern.id]
+      },
       tracks: copiedTracks,
       steps: {
         byId: stepIds.reduce((byId, stepId) => {
