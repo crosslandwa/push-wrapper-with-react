@@ -15,8 +15,4 @@ function addPattern (state, id, trackIds) {
     byId: Object.assign({}, state.byIds, {[id]: {id, trackIds}}),
     allIds: state.allIds.concat(id)
   }
-  // const updated = clone(state)
-  // updated.byId.id = {id, trackIds}
-  // updated.allIds = updated.allIds.concat(id)
-  // return updated
 }
