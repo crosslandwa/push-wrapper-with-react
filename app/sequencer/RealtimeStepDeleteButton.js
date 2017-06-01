@@ -25,15 +25,15 @@ const RealtimeStepDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (
 )
 
 export default connect(
-  ({ sequencer: { sequencesInDeleteMode } }, { voice }) => ({
-    rgb: sequencesInDeleteMode.includes(voice) ? Colours.red.map(x => x + 30) : Colours.red.map(x => x - 30)
+  ({ sequencer: { deleteModeTrackIds } }, { trackId }) => ({
+    rgb: deleteModeTrackIds.includes(trackId) ? Colours.red.map(x => x + 30) : Colours.red.map(x => x - 30)
   }),
-  (dispatch, { voice }) => ({
+  (dispatch, { trackId }) => ({
     padPressed () {
-      dispatch(deleteModeOn(voice))
+      dispatch(deleteModeOn(trackId))
     },
     padReleased () {
-      dispatch(deleteModeOff(voice))
+      dispatch(deleteModeOff(trackId))
     }
   })
 )(RealtimeStepDeleteButton)

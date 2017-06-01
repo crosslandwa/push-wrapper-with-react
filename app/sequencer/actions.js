@@ -58,7 +58,7 @@ function advanceSequence () {
 function playSequencedVoices  () {
   return (dispatch, getState) => {
     const {
-      sequencer: { currentStep, patternId, sequencesInDeleteMode },
+      sequencer: { currentStep, patternId, deleteModeTrackIds },
       entities: { steps, patterns, tracks, voices }
     } = getState()
     patterns.byId[patternId].trackIds.forEach((trackId, index) => {
@@ -67,7 +67,7 @@ function playSequencedVoices  () {
       const voiceId = voices.allIds[index] // TODO fix mapping of track -> voice
       if (!stepId) return
       const step = steps.byId[stepId]
-      dispatch(sequencesInDeleteMode.includes(trackId) // TODO fix
+      dispatch(deleteModeTrackIds.includes(trackId)
         ? turnStepOff(stepId)
         : playSample(voiceId, {
             pitch: step.midiPitch,
@@ -98,10 +98,10 @@ export function recordStep (voiceId, { pitch, velocity }) {
   }
 }
 
-export function deleteModeOn (voice) {
-  return { type: 'SEQUENCER_DELETE_MODE_ON', voice}
+export function deleteModeOn (trackId) {
+  return { type: 'SEQUENCER_DELETE_MODE_ON', trackId}
 }
 
-export function deleteModeOff (voice) {
-  return { type: 'SEQUENCER_DELETE_MODE_OFF', voice}
+export function deleteModeOff (trackId) {
+  return { type: 'SEQUENCER_DELETE_MODE_OFF', trackId}
 }

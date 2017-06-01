@@ -13,7 +13,7 @@ import SampleRecorderContainer from './voices/SampleRecorderContainer'
 import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
 
-const App = ({ push, pushState, voiceIds, selectedVoiceId, recording, selectedStepId, selectedTrackId }) => {
+const App = ({ push, pushState, voiceIds, trackIds, selectedVoiceId, recording, selectedStepId, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
   let VoicePadComponent = recording ? SampleRecorderContainer : SamplePlayerContainer
@@ -33,6 +33,7 @@ const App = ({ push, pushState, voiceIds, selectedVoiceId, recording, selectedSt
         <VoicePadComponent
           key={voiceId}
           voiceId={voiceId}
+          trackId={trackIds[index]} // TODO fix track <-> voice mappings
           pad={push.gridRow(7)[index]}
         />
       ))}
@@ -60,6 +61,7 @@ export default connect(
     recording,
     selectedStepId,
     voiceIds: voices.allIds,
+    trackIds: tracks.allIds,
     selectedTrackId: tracks.allIds[voices.allIds.indexOf(selectedVoiceId)] // TODO this isn't quite right
   })
 )(App)

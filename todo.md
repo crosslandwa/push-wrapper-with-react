@@ -1,3 +1,8 @@
+CONSIDER
+- play/record/delete realtime based on trackId (passed through Components)
+- within actions, convert trackId -> voiceId
+
+
 - knob to change selected voice pitch
 - edit the velocity for a given step
 - realtime step record to nearest (rather than next) step

@@ -10,7 +10,6 @@ export default connect(
   state => ({}),
   (dispatch, { trackId }) => ({
     onClick (stepNumber, stepId) {
-      console.log(trackId)
       let selectedStepId = stepId
       if (!stepId) {
         selectedStepId = dispatch(turnStepOn(trackId, stepNumber)) // omitted optional pitch, velocity

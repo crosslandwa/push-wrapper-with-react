@@ -2,7 +2,7 @@ import { clone } from '../reducers/utils'
 
 const initialSequencerState = {
   patternId: 'pattern0',
-  sequencesInDeleteMode: [],
+  deleteModeTrackIds: [],
   currentStep: -1,
   nextStep: -1,
   selectedStepId: null,
@@ -13,9 +13,9 @@ const initialSequencerState = {
 export default function sequencer (state = initialSequencerState, action) {
   switch (action.type) {
     case 'SEQUENCER_DELETE_MODE_ON':
-      return deleteModeOn(state, action.voice)
+      return deleteModeOn(state, action.trackId)
     case 'SEQUENCER_DELETE_MODE_OFF':
-      return deleteModeOff(state, action.voice)
+      return deleteModeOff(state, action.trackId)
     case 'SEQUENCER_STEP_SELECT':
       return selectStep(state, action)
     case 'SEQUENCER_STEP_UNSELECT':
@@ -47,16 +47,16 @@ function unselectStep (state, {stepId})  {
   })
 }
 
-function deleteModeOn (state, voiceNumber) {
+function deleteModeOn (state, trackId) {
   const updated = clone(state)
-  if (!updated.sequencesInDeleteMode.includes(voiceNumber)) {
-    updated.sequencesInDeleteMode = updated.sequencesInDeleteMode.concat(voiceNumber)
+  if (!updated.deleteModeTrackIds.includes(trackId)) {
+    updated.deleteModeTrackIds = updated.deleteModeTrackIds.concat(trackId)
   }
   return updated
 }
 
-function deleteModeOff (state, voiceNumber) {
+function deleteModeOff (state, trackId) {
   const updated = clone(state)
-  updated.sequencesInDeleteMode = updated.sequencesInDeleteMode.filter(x => x !== voiceNumber)
+  updated.deleteModeTrackIds = updated.deleteModeTrackIds.filter(x => x !== trackId)
   return updated
 }
