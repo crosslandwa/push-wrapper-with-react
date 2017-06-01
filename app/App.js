@@ -67,9 +67,9 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.loadSample(0, 'kick.mp3', 'kick')
-    this.props.loadSample(1, 'snare.mp3', 'snare')
-    this.props.loadSample(2, 'hat.mp3', 'hat')
-    this.props.loadSample(3, 'bleep.mp3', 'bleep')
+      .then(() => this.props.loadSample(1, 'snare.mp3', 'snare'))
+      .then(() => this.props.loadSample(2, 'hat.mp3', 'hat'))
+      .then(() => this.props.loadSample(3, 'bleep.mp3', 'bleep'))
   }
 }
 
@@ -84,7 +84,7 @@ export default connect(
   }),
   (dispatch) => ({
     loadSample (voice, url, name) {
-      dispatch(loadSample(voice, url, name))
+      return dispatch(loadSample(voice, url, name))
     }
   })
 )(App)

@@ -3,7 +3,7 @@ import push from '../push/reducers'
 import sequencer from '../sequencer/reducers'
 import ui from '../ui/reducers'
 import oldVoices from '../voices/oldreducers'
-import voices from '../voices/reducers'
+import samples from '../voices/samplereducers'
 import steps from '../sequencer/stepsreducers'
 import patterns from '../sequencer/patternreducers'
 import tracks from '../sequencer/trackreducers'
@@ -25,7 +25,7 @@ export default combineReducers({
   entities: combineReducers({
     patterns,
     steps,
-    tracks,
-    voices
+    samples,
+    tracks
   })
 })
