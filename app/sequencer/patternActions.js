@@ -33,7 +33,7 @@ export function selectPattern (id) {
       return filterUnique(acc.concat(copiedTracks.byId[trackId].stepIds))
     }, [])
 
-    const scratch = {
+    const current = {
       pattern,
       tracks: copiedTracks,
       steps: {
@@ -44,6 +44,6 @@ export function selectPattern (id) {
         allIds: stepIds
       }
     }
-    dispatch({ type: 'PATTERN_SELECT', id, scratch })
+    dispatch({ type: 'PATTERN_SELECT', id, current })
   }
 }

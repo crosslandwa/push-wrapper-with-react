@@ -7,10 +7,10 @@ import steps from '../sequencer/stepsreducers'
 import patterns from '../sequencer/patternreducers'
 import tracks from '../sequencer/trackreducers'
 
-function scratch (state = {}, action) {
+function current (state = {}, action) {
   switch (action.type) {
     case 'PATTERN_SELECT':
-      return action.scratch
+      return action.current
   }
   return state
 }
@@ -20,7 +20,7 @@ export default combineReducers({
   sequencer,
   ui,
   voices,
-  scratch,
+  current,
   entities: combineReducers({
     patterns,
     steps,
