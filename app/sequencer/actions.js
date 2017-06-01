@@ -87,10 +87,11 @@ export function armSequencer () {
   return { type: 'SEQUENCER_ARM' }
 }
 
-export function recordStep (voice, { pitch, velocity }) {
+export function recordStep (voiceId, { pitch, velocity }) {
   return (dispatch, getState) => {
-    const { sequencer: { currentStep, playing } } = getState()
-    dispatch(turnStepOn(`track${voice}`, Math.max(0, currentStep), pitch, velocity)) // TODO trackId hack
+    const { entities: { tracks, voices }, sequencer: { currentStep, playing } } = getState()
+    const trackId = tracks.allIds[voices.allIds.indexOf(voiceId)] // TODO fix voice -> track mapping
+    dispatch(turnStepOn(trackId, Math.max(0, currentStep), pitch, velocity))
     if (!playing) {
       dispatch(startSequence(0))
     }
