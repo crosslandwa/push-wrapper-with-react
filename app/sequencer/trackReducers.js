@@ -14,6 +14,8 @@ export default function tracks (state = intialState, action) {
       return addTracks(state, action.trackIds)
     case 'STEP_TURN_ON':
       return addStep(state, action.trackId, action.id, action.stepNumber)
+    case 'STEP_TURN_OFF':
+      return removeStep(state, action.id)
   }
   return state
 }
@@ -29,11 +31,18 @@ function addTracks (state, ids) {
 }
 
 function addStep (state, trackId, stepId, stepNumber) {
-  const track = state.byId[trackId]
-  const updated = {
-    id: track.id,
-    stepIds: track.stepIds.slice()
-  }
-  updated.stepIds[stepNumber] = stepId
+  const updated = clone(state)
+  updated.byId[trackId].stepIds[stepNumber] = stepId
+  return updated
+}
+
+function removeStep (state, stepId) {
+  const updated = clone(state)
+  updated.allIds.forEach(trackId => {
+    const stepIds = updated.byId[trackId].stepIds
+    if (stepIds.includes(stepId)) {
+      stepIds[stepIds.indexOf(stepId)] = null
+    }
+  })
   return updated
 }
