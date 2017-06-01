@@ -6,14 +6,16 @@ export function init () {
   return (dispatch, getState) => {
     const patternId = dispatch(createPattern())
     dispatch(selectPattern(patternId))
-    return dispatch(loadSample('kick.mp3', 'kick'))
-      .then(sampleId => dispatch(createVoice(sampleId)))
-      .then(voiceId => dispatch(selectVoice(voiceId)))
-      .then(() => dispatch(loadSample('snare.mp3', 'snare')))
-      .then(sampleId => dispatch(createVoice(sampleId)))
-      .then(() => dispatch(loadSample('hat.mp3', 'hat')))
-      .then(sampleId => dispatch(createVoice(sampleId)))
-      .then(() => dispatch(loadSample('bleep.mp3', 'bleep')))
-      .then(sampleId => dispatch(createVoice(sampleId)))
+
+    return Promise.all([
+      dispatch(loadSample('kick.mp3', 'kick')),
+      dispatch(loadSample('snare.mp3', 'snare')),
+      dispatch(loadSample('hat.mp3', 'hat')),
+      dispatch(loadSample('bleep.mp3', 'bleep'))
+    ]).then(([firstSampleId, ...rest]) => {
+      const voiceId = dispatch(createVoice(firstSampleId))
+      dispatch(selectVoice(voiceId))
+      rest.forEach(sampleId => dispatch(createVoice(sampleId)))
+    })
   }
 }
