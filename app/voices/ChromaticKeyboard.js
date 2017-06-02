@@ -44,7 +44,10 @@ const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, s
 }
 
 export default connect(
-  ({sequencer: {selectedStepId}, ui: { selectedVoiceId }, entities: {steps, voices}}) => ({
-    selectedStepPitch: (selectedStepId !== null) ? (steps.byId[selectedStepId].midiPitch || voices.byId[selectedVoiceId].pitch) : null
-  }),
+  ({sequencer: {selectedStepId}, ui: { selectedTrackId }, entities: {steps, tracks, voices}}) => {
+    const voiceId = tracks.byId[selectedTrackId].voiceId
+    return {
+      selectedStepPitch: (selectedStepId !== null) ? (steps.byId[selectedStepId].midiPitch || voices.byId[voiceId].pitch) : null
+    }
+  }
 )(ChromaticKeyboard)

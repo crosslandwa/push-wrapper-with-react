@@ -1,6 +1,6 @@
 import { createPattern, selectPattern } from './sequencer/patternActions'
 import { loadSample, createVoice } from './voices/actions'
-import { selectVoice } from './ui/actions'
+import { selectTrack } from './ui/actions'
 
 export function init () {
   return (dispatch, getState) => {
@@ -11,9 +11,6 @@ export function init () {
       dispatch(loadSample('bleep.mp3', 'bleep'))
     ]).then(sampleIds => {
       return sampleIds.map(sampleId => dispatch(createVoice(sampleId)))
-    }).then(voiceIds => {
-      dispatch(selectVoice(voiceIds[0]))
-      return voiceIds
     }).then(voiceIds => {
       const patternId = dispatch(createPattern(voiceIds))
       dispatch(selectPattern(patternId))

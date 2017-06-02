@@ -1,3 +1,5 @@
+import { selectTrack } from '../ui/actions'
+
 const unique = (x, i, self) => self.indexOf(x) === i
 function filterUnique (arr) {
   return arr.filter(unique)
@@ -48,5 +50,8 @@ export function selectPattern (id) {
       }
     }
     dispatch({ type: 'PATTERN_SELECT', id, current })
+    console.log(pattern.trackIds[0])
+    dispatch(selectTrack(pattern.trackIds[0]))
+
   }
 }

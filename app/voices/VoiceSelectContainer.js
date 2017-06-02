@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
-import { selectVoice } from '../ui/actions'
+import { selectTrack } from '../ui/actions'
 import { Colours } from '../push/colours'
 
 const playingColour = velocity => velocity > 0 ? Colours.turquoise : false
@@ -25,13 +25,16 @@ const VoiceSelectContainer = ({ velocity = 0, padPressed, padReleased, pad, sele
 )
 
 export default connect(
-  ({ entities: { voices }, ui }, { voiceId }) => ({
-    selected: ui.selectedVoiceId === voiceId,
-    velocity: voices.byId[voiceId].velocity,
-  }),
-  (dispatch, { voiceId, padPressed }) => ({
+  ({ entities: { voices, tracks }, ui: { selectedTrackId } }, { trackId }) => {
+    const voiceId = tracks.byId[trackId].voiceId
+    return {
+      selected: selectedTrackId === voiceId,
+      velocity: voices.byId[voiceId].velocity,
+    }
+  },
+  (dispatch, { trackId, padPressed }) => ({
     padPressed (velocity) {
-      dispatch(selectVoice(voiceId))
+      dispatch(selectTrack(trackId))
       padPressed && padPressed(velocity)
     }
   })

@@ -1,13 +1,13 @@
 const initialUiState = {
-  selectedVoiceId: null
+  selectedTrackId: null
 }
 
 export default function push (state = initialUiState, action) {
   switch (action.type) {
-    case 'UI_SELECT_VOICE':
+    case 'UI_SELECT_TRACK':
       return Object.assign({},
         state,
-        { selectedVoiceId: action.voiceId }
+        { selectedTrackId: action.trackId }
       )
   }
   return state

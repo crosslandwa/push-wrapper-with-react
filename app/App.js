@@ -13,7 +13,7 @@ import SampleRecorderContainer from './voices/SampleRecorderContainer'
 import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
 
-const App = ({ push, pushState, voiceIds, trackIds, recording, selectedStepId, selectedTrackId }) => {
+const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
   let VoicePadComponent = recording ? SampleRecorderContainer : SamplePlayerContainer
@@ -24,16 +24,15 @@ const App = ({ push, pushState, voiceIds, trackIds, recording, selectedStepId, s
     StepControlComponent = StepDelete
     VoicePadComponent = RealtimeStepDeleteButton
   }
-
+  
   return (
     <div>
       <PushControlModifiers push={push} />
       <TransportControls push={push} />
-      {voiceIds.map((voiceId, index) => (
+      {trackIds.map((trackId, index) => (
         <VoicePadComponent
-          key={voiceId}
-          voiceId={voiceId}
-          trackId={trackIds[index]} // TODO fix track <-> voice mappings
+          key={index}
+          trackId={trackId}
           pad={push.gridRow(7)[index]}
         />
       ))}
@@ -55,12 +54,11 @@ const App = ({ push, pushState, voiceIds, trackIds, recording, selectedStepId, s
 }
 
 export default connect(
-  ({push, entities: {steps, tracks, voices}, sequencer: {recording, selectedStepId}, ui: {selectedVoiceId}}) => ({
+  ({push, entities: {steps, tracks}, sequencer: {recording, selectedStepId}, ui: {selectedTrackId}}) => ({
     pushState: push,
     recording,
     selectedStepId,
-    voiceIds: voices.allIds,
-    trackIds: tracks.allIds,
-    selectedTrackId: tracks.allIds[voices.allIds.indexOf(selectedVoiceId)] // TODO this isn't quite right
+    trackIds: tracks.allIds, // TODO this should be derived from selected pattern
+    selectedTrackId
   })
 )(App)
