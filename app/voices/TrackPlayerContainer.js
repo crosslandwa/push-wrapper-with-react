@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { playSample } from './actions'
 import TrackSelectContainer from './TrackSelectContainer'
 
-const SamplePlayerContainer = (props) => <TrackSelectContainer {...props} />
+const TrackPlayerContainer = (props) => <TrackSelectContainer {...props} />
 
 export default connect(
   state => ({}),
@@ -14,4 +14,4 @@ export default connect(
       padPressed && padPressed(velocity)
     }
   })
-)(SamplePlayerContainer)
+)(TrackPlayerContainer)
