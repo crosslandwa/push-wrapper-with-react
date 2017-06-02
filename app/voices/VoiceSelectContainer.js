@@ -28,7 +28,7 @@ export default connect(
   ({ entities: { voices, tracks }, ui: { selectedTrackId } }, { trackId }) => {
     const voiceId = tracks.byId[trackId].voiceId
     return {
-      selected: selectedTrackId === voiceId,
+      selected: selectedTrackId === trackId,
       velocity: voices.byId[voiceId].velocity,
     }
   },
