@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { recordStep } from '../sequencer/actions'
 import TrackPlayerContainer from './TrackPlayerContainer'
 
-const SampleRecorderContainer = (props) => <TrackPlayerContainer {...props} />
+const TrackRecorderContainer = (props) => <TrackPlayerContainer {...props} />
 
 export default connect(
   state => ({}),
@@ -13,4 +13,4 @@ export default connect(
       dispatch(recordStep(trackId, { velocity }))
     }
   })
-)(SampleRecorderContainer)
+)(TrackRecorderContainer)
