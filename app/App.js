@@ -13,7 +13,7 @@ import SampleRecorderContainer from './voices/SampleRecorderContainer'
 import VoiceSelectContainer from './voices/VoiceSelectContainer'
 import { connect } from 'react-redux'
 
-const App = ({ push, pushState, voiceIds, trackIds, selectedVoiceId, recording, selectedStepId, selectedTrackId }) => {
+const App = ({ push, pushState, voiceIds, trackIds, recording, selectedStepId, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
   let VoicePadComponent = recording ? SampleRecorderContainer : SamplePlayerContainer
@@ -42,7 +42,6 @@ const App = ({ push, pushState, voiceIds, trackIds, selectedVoiceId, recording, 
         basePitch={36}
         blackRow={push.gridRow(5)}
         recording={recording}
-        voiceId={selectedVoiceId}
         whiteRow={push.gridRow(4)}
         trackId={selectedTrackId}
         selectedStepId={selectedStepId}
@@ -58,7 +57,6 @@ const App = ({ push, pushState, voiceIds, trackIds, selectedVoiceId, recording, 
 export default connect(
   ({push, entities: {steps, tracks, voices}, sequencer: {recording, selectedStepId}, ui: {selectedVoiceId}}) => ({
     pushState: push,
-    selectedVoiceId,
     recording,
     selectedStepId,
     voiceIds: voices.allIds,
