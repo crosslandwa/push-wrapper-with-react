@@ -54,11 +54,11 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
 }
 
 export default connect(
-  ({push, entities: {steps, tracks}, sequencer: {recording, selectedStepId}, ui: {selectedTrackId}}) => ({
+  ({push, entities: {patterns, steps, tracks}, sequencer: {patternId, recording, selectedStepId}, ui: {selectedTrackId}}) => ({
     pushState: push,
     recording,
     selectedStepId,
-    trackIds: tracks.allIds, // TODO this should be derived from selected pattern
+    trackIds: patterns.byId[patternId].trackIds,
     selectedTrackId
   })
 )(App)
