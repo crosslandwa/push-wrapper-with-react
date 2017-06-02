@@ -6,23 +6,17 @@ import PushControlModifiers from './PushControlModifiers'
 import StepControl from './sequencer/StepControl'
 import StepDelete from './sequencer/StepDelete'
 import StepJumping from './sequencer/StepJumping'
-import RealtimeStepDeleteButton from './sequencer/RealtimeStepDeleteButton'
+import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
-import SamplePlayerContainer from './voices/SamplePlayerContainer'
-import SampleRecorderContainer from './voices/SampleRecorderContainer'
-import TrackSelectContainer from './voices/TrackSelectContainer'
 import { connect } from 'react-redux'
 
 const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
-  let VoicePadComponent = recording ? SampleRecorderContainer : SamplePlayerContainer
   if (pushState.modifiers.shift) {
     StepControlComponent = StepJumping
-    VoicePadComponent = TrackSelectContainer
   } else if (pushState.modifiers.del) {
     StepControlComponent = StepDelete
-    VoicePadComponent = RealtimeStepDeleteButton
   }
 
   return (
@@ -30,8 +24,11 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
       <PushControlModifiers push={push} />
       <TransportControls push={push} />
       {trackIds.map((trackId, index) => (
-        <VoicePadComponent
+        <TrackControlComponent
           key={index}
+          shift={pushState.modifiers.shift}
+          recording={recording}
+          del={pushState.modifiers.del}
           trackId={trackId}
           pad={push.gridRow(7)[index]}
         />
