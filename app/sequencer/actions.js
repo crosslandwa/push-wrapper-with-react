@@ -63,12 +63,11 @@ function playSequencedVoices  () {
     patterns.byId[patternId].trackIds.forEach((trackId, index) => {
       const track = tracks.byId[trackId]
       const stepId = track.stepIds[currentStep]
-      const voiceId = voices.allIds[index] // TODO fix mapping of track -> voice
       if (!stepId) return
       const step = steps.byId[stepId]
       dispatch(deleteModeTrackIds.includes(trackId)
         ? turnStepOff(stepId)
-        : playSample(voiceId, {
+        : playSample(trackId, {
             pitch: step.midiPitch,
             velocity: step.midiVelocity
           })
@@ -86,10 +85,9 @@ export function armSequencer () {
   return { type: 'SEQUENCER_ARM' }
 }
 
-export function recordStep (voiceId, { pitch, velocity }) {
+export function recordStep (trackId, { pitch, velocity }) {
   return (dispatch, getState) => {
     const { entities: { tracks, voices }, sequencer: { currentStep, playing } } = getState()
-    const trackId = tracks.allIds[voices.allIds.indexOf(voiceId)] // TODO fix voice -> track mapping
     dispatch(turnStepOn(trackId, Math.max(0, currentStep), pitch, velocity))
     if (!playing) {
       dispatch(startSequence(0))

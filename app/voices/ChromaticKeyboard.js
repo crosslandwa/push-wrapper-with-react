@@ -7,7 +7,7 @@ import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer'
 import { Colours } from '../push/colours'
 
-const ChromaticKeyboard = ({voiceId, basePitch, blackRow, whiteRow, recording, selectedStepId, selectedStepPitch}) => {
+const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, selectedStepId, selectedStepPitch}) => {
   const Component = selectedStepId
     ? ChromaticStepEditorContainer
     : recording ? ChromaticSampleRecorderContainer : ChromaticSamplePlayerContainer
@@ -18,7 +18,7 @@ const ChromaticKeyboard = ({voiceId, basePitch, blackRow, whiteRow, recording, s
           offset
             ? <Component
               key={index}
-              voiceId={voiceId}
+              trackId={trackId}
               pitch={offset + basePitch}
               pad={blackRow[index]}
               rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.black}
@@ -31,7 +31,7 @@ const ChromaticKeyboard = ({voiceId, basePitch, blackRow, whiteRow, recording, s
         {[0, 2, 4, 5, 7, 9, 11, 12].map((offset, index) => (
           <Component
             key={index}
-            voiceId={voiceId}
+            trackId={trackId}
             pitch={offset + basePitch}
             pad={whiteRow[index]}
             rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.white}

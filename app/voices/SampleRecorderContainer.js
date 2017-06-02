@@ -8,9 +8,9 @@ const SampleRecorderContainer = (props) => <SamplePlayerContainer {...props} />
 
 export default connect(
   state => ({}),
-  (dispatch, { voiceId }) => ({
+  (dispatch, { trackId }) => ({
     padPressed (velocity) {
-      dispatch(recordStep(voiceId, { velocity }))
+      dispatch(recordStep(trackId, { velocity }))
     }
   })
 )(SampleRecorderContainer)

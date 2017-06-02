@@ -23,9 +23,9 @@ const ChromaticSamplePlayerContainer = ({ padPressed, pad, rgb = Colours.white }
 
 export default connect(
   state => ({}),
-  (dispatch, { voiceId, pitch, padPressed }) => ({
+  (dispatch, { trackId, pitch, padPressed }) => ({
     padPressed (velocity) {
-      dispatch(playSample(voiceId, {pitch, velocity}))
+      dispatch(playSample(trackId, {pitch, velocity}))
       padPressed && padPressed(velocity)
     }
   })

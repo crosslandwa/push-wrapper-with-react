@@ -44,6 +44,7 @@ const App = ({ push, pushState, voiceIds, trackIds, selectedVoiceId, recording, 
         recording={recording}
         voiceId={selectedVoiceId}
         whiteRow={push.gridRow(4)}
+        trackId={selectedTrackId}
         selectedStepId={selectedStepId}
       />
       <StepControlComponent

@@ -8,9 +8,10 @@ const midiNoteToF = note => 440.0 * Math.pow(2, (note - 69.0) / 12.0)
 const middleCFreq = midiNoteToF(36)
 const playbackRate = note => midiNoteToF(note) / middleCFreq
 
-export function playSample (voiceId, {pitch, velocity}) {
+export function playSample (trackId, {pitch, velocity}) {
   return (dispatch, getState) => {
-    const { entities: { voices, samples } } = getState()
+    const { entities: { voices, samples, tracks } } = getState()
+    const voiceId = tracks.byId[trackId].voiceId
     const voice = voices.byId[voiceId]
     const sampleId = voice.sampleId
     if (players[sampleId]) {

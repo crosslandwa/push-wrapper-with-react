@@ -8,9 +8,9 @@ const ChromaticSampleRecorderContainer = (props) => <ChromaticSamplePlayerContai
 
 export default connect(
   state => ({}),
-  (dispatch, { voiceId, pitch }) => ({
+  (dispatch, { trackId, pitch }) => ({
     padPressed (velocity) {
-      dispatch(recordStep(voiceId, { pitch, velocity }))
+      dispatch(recordStep(trackId, { pitch, velocity }))
     }
   })
 )(ChromaticSampleRecorderContainer)
