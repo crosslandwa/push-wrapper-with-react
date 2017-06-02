@@ -9,7 +9,7 @@ import { Colours } from '../push/colours'
 const playingColour = velocity => velocity > 0 ? Colours.turquoise : false
 const selectedColour = selected => selected ? Colours.orange : false
 
-const VoiceSelectContainer = ({ velocity = 0, padPressed, padReleased, pad, selected}) => (
+const TrackSelectContainer = ({ velocity = 0, padPressed, padReleased, pad, selected}) => (
   <div style={{display: 'inline-block'}} >
     <DomGridPad
       padPressed={padPressed}
@@ -38,4 +38,4 @@ export default connect(
       padPressed && padPressed(velocity)
     }
   })
-)(VoiceSelectContainer)
+)(TrackSelectContainer)

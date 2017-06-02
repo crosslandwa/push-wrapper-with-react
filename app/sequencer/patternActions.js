@@ -50,8 +50,6 @@ export function selectPattern (id) {
       }
     }
     dispatch({ type: 'PATTERN_SELECT', id, current })
-    console.log(pattern.trackIds[0])
     dispatch(selectTrack(pattern.trackIds[0]))
-
   }
 }

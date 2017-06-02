@@ -2,9 +2,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { playSample } from './actions'
-import VoiceSelectContainer from './VoiceSelectContainer'
+import TrackSelectContainer from './TrackSelectContainer'
 
-const SamplePlayerContainer = (props) => <VoiceSelectContainer {...props} />
+const SamplePlayerContainer = (props) => <TrackSelectContainer {...props} />
 
 export default connect(
   state => ({}),

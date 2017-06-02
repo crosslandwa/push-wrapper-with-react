@@ -10,7 +10,7 @@ import RealtimeStepDeleteButton from './sequencer/RealtimeStepDeleteButton'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import SamplePlayerContainer from './voices/SamplePlayerContainer'
 import SampleRecorderContainer from './voices/SampleRecorderContainer'
-import VoiceSelectContainer from './voices/VoiceSelectContainer'
+import TrackSelectContainer from './voices/TrackSelectContainer'
 import { connect } from 'react-redux'
 
 const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTrackId }) => {
@@ -19,12 +19,12 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
   let VoicePadComponent = recording ? SampleRecorderContainer : SamplePlayerContainer
   if (pushState.modifiers.shift) {
     StepControlComponent = StepJumping
-    VoicePadComponent = VoiceSelectContainer
+    VoicePadComponent = TrackSelectContainer
   } else if (pushState.modifiers.del) {
     StepControlComponent = StepDelete
     VoicePadComponent = RealtimeStepDeleteButton
   }
-  
+
   return (
     <div>
       <PushControlModifiers push={push} />
