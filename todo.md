@@ -10,5 +10,4 @@
 - sample switching
 - stutter
 
-- switch to normalized data stored in entities
 - investigate https://github.com/reactjs/reselect
