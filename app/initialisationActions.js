@@ -4,18 +4,19 @@ import { selectVoice } from './ui/actions'
 
 export function init () {
   return (dispatch, getState) => {
-    const patternId = dispatch(createPattern())
-    dispatch(selectPattern(patternId))
-
     return Promise.all([
       dispatch(loadSample('kick.mp3', 'kick')),
       dispatch(loadSample('snare.mp3', 'snare')),
       dispatch(loadSample('hat.mp3', 'hat')),
       dispatch(loadSample('bleep.mp3', 'bleep'))
-    ]).then(([firstSampleId, ...rest]) => {
-      const voiceId = dispatch(createVoice(firstSampleId))
-      dispatch(selectVoice(voiceId))
-      rest.forEach(sampleId => dispatch(createVoice(sampleId)))
+    ]).then(sampleIds => {
+      return sampleIds.map(sampleId => dispatch(createVoice(sampleId)))
+    }).then(voiceIds => {
+      dispatch(selectVoice(voiceIds[0]))
+      return voiceIds
+    }).then(voiceIds => {
+      const patternId = dispatch(createPattern(voiceIds))
+      dispatch(selectPattern(patternId))
     })
   }
 }

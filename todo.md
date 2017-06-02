@@ -2,6 +2,10 @@ CONSIDER
 - play/record/delete realtime based on trackId (passed through Components)
 - within actions, convert trackId -> voiceId
 
+next
+- pass voiceIds to createPattern
+- create pattern with track.voiceId
+- start swapping out/consolidating on use of trackId instead of voiceId
 
 - knob to change selected voice pitch
 - edit the velocity for a given step

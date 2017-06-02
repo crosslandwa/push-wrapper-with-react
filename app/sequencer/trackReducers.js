@@ -1,17 +1,11 @@
 import {clone} from '../reducers/utils'
 
-const emptyTrack = (id, length = 32) => ({
-  id,
-  numberOfSteps: length,
-  stepIds: []
-})
-
 const intialState = { byId: {}, allIds: [] }
 
 export default function tracks (state = intialState, action) {
   switch (action.type) {
     case 'PATTERN_CREATE':
-      return addTracks(state, action.trackIds)
+      return addTracks(state, action.trackIds, action.voiceIds)
     case 'STEP_TURN_ON':
       return addStep(state, action.trackId, action.id, action.stepNumber)
     case 'STEP_TURN_OFF':
@@ -20,10 +14,15 @@ export default function tracks (state = intialState, action) {
   return state
 }
 
-function addTracks (state, ids) {
+function addTracks (state, ids, voiceIds) {
   return {
-    byId: ids.reduce((byId, id) => {
-      byId[id] = emptyTrack(id)
+    byId: ids.reduce((byId, id, index) => {
+      byId[id] = {
+        id,
+        numberOfSteps: 32,
+        stepIds: [],
+        voiceId: voiceIds[index]
+      }
       return byId
     }, clone(state.byId)),
     allIds: state.allIds.concat(ids)
