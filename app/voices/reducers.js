@@ -11,8 +11,8 @@ export default function voices (state = initialState, action) {
   switch (action.type) {
     case 'VOICE_PLAYING':
       return voicePlaying(state, action)
-    case 'VOICE_CREATE':
-      return voiceLoaded(state, action)
+    case 'PATTERN_CREATE':
+      return createVoices(state, action.voiceIds, action.sampleIds)
   }
   return state
 }
@@ -23,14 +23,17 @@ function voicePlaying (state = [], {id, velocity = 0}) {
   return updated
 }
 
-function voiceLoaded (state, {id, sampleId}) {
-  const updated = clone(state)
-  updated.byId[id] = {
-    id,
-    sampleId,
-    pitch: 36,
-    velocity: 0
+function createVoices (state, ids, sampleIds) {
+  return {
+    byId: ids.reduce((byId, id, index) => {
+      byId[id] = {
+        id,
+        sampleId: sampleIds[index],
+        pitch: 36,
+        velocity: 0
+      }
+      return byId
+    }, clone(state.byId)),
+    allIds: state.allIds.concat(ids)
   }
-  updated.allIds = updated.allIds.concat(id)
-  return updated
 }

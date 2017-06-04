@@ -45,12 +45,3 @@ export function loadSample (url, sample) {
     .then(() => id)
   } // TODO handle url load failure (does wac.sample-player reject promise correctly?)
 }
-
-export function createVoice(sampleId) {
-  return (dispatch, getState) => {
-    const { entities: { voices: { allIds } } } = getState()
-    const id = `voice${allIds.length}`
-    dispatch({ type: 'VOICE_CREATE', id, sampleId })
-    return id
-  }
-}

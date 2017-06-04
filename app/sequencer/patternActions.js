@@ -5,15 +5,17 @@ function filterUnique (arr) {
   return arr.filter(unique)
 }
 
-export function createPattern (voiceIds) {
+export function createPattern (sampleIds) {
   return (dispatch, getState) => {
     const {entities: {
       patterns: {allIds: allPatternIds},
       tracks: {allIds: allTrackIds},
+      voices: {allIds: allVoiceIds}
     }} = getState()
     const id = `pattern${allPatternIds.length}`
-    const trackIds = voiceIds.map((voiceId, x) => `track${allTrackIds.length + x}`)
-    dispatch({ type: 'PATTERN_CREATE', id, trackIds, voiceIds })
+    const voiceIds = sampleIds.map((sampleId, x) => `voice${allVoiceIds.length + x}`)
+    const trackIds = sampleIds.map((sampleId, x) => `track${allTrackIds.length + x}`)
+    dispatch({ type: 'PATTERN_CREATE', id, sampleIds, trackIds, voiceIds })
     return id
   }
 }
