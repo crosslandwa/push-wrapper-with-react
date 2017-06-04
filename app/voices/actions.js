@@ -10,7 +10,7 @@ const midiNoteToF = note => 440.0 * Math.pow(2, (note - 69.0) / 12.0)
 const middleCFreq = midiNoteToF(36)
 const playbackRate = note => midiNoteToF(note) / middleCFreq
 
-export function playSample (trackId, {pitch, velocity}) {
+export function playVoiceForTrack (trackId, {pitch, velocity}) {
   return (dispatch, getState) => {
     const { entities: { patterns, voices, samples, tracks }, sequencer: { patternId } } = getState()
     const voiceId = tracks.byId[trackId].voiceId
@@ -22,7 +22,7 @@ export function playSample (trackId, {pitch, velocity}) {
   }
 }
 
-function samplePlaying (voiceId, gain) {
+function voicePlaying (voiceId, gain) {
   return { type: 'VOICE_PLAYING', velocity: gain.velocity(), id: voiceId }
 }
 
@@ -39,13 +39,13 @@ export function initialisePlayers () {
           const { entities: { patterns, tracks }, sequencer: { patternId }} = getState()
           const trackId = patterns.byId[patternId].trackIds[index]
           const voiceId = tracks.byId[trackId].voiceId
-          dispatch(samplePlaying(voiceId, gain))
+          dispatch(voicePlaying(voiceId, gain))
         })
         player.on('stopped', () => {
           const { entities: { patterns, tracks }, sequencer: { patternId }} = getState()
           const trackId = patterns.byId[patternId].trackIds[index]
           const voiceId = tracks.byId[trackId].voiceId
-          dispatch(samplePlaying(voiceId, { velocity: () => 0 }))
+          dispatch(voicePlaying(voiceId, { velocity: () => 0 }))
         })
       })
     })

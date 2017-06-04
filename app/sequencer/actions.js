@@ -1,4 +1,4 @@
-import {playSample} from '../voices/actions'
+import {playVoiceForTrack} from '../voices/actions'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -67,7 +67,7 @@ function playSequencedVoices  () {
       const step = steps.byId[stepId]
       dispatch(deleteModeTrackIds.includes(trackId)
         ? turnStepOff(stepId)
-        : playSample(trackId, {
+        : playVoiceForTrack(trackId, {
             pitch: step.midiPitch,
             velocity: step.midiVelocity
           })

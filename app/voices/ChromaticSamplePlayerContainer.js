@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { playSample } from './actions'
+import { playVoiceForTrack } from './actions'
 import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
 import { Colours } from '../push/colours'
@@ -25,7 +25,7 @@ export default connect(
   state => ({}),
   (dispatch, { trackId, pitch, padPressed }) => ({
     padPressed (velocity) {
-      dispatch(playSample(trackId, {pitch, velocity}))
+      dispatch(playVoiceForTrack(trackId, {pitch, velocity}))
       padPressed && padPressed(velocity)
     }
   })
