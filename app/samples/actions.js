@@ -1,5 +1,10 @@
 // TODO probably pass this is in, created as singleton in App...
 const audioContext = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext()
+const buffers = {}
+
+export function sampleBuffer (sampleId) {
+  return buffers[sampleId]
+}
 
 function loadFromUrl (url) {
   return new Promise((resolve, reject) => {
@@ -16,8 +21,6 @@ function loadFromUrl (url) {
     request.send()
   })
 }
-
-const buffers = {} // TODO how to access this from players in voice actions?
 
 export function loadSample (url, name) {
   return (dispatch, getState) => {

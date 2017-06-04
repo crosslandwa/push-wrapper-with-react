@@ -16,7 +16,7 @@
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
-    "wac.sample-player": "^2.0.0"
+    "wac.sample-player": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
