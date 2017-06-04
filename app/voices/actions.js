@@ -31,7 +31,7 @@ export function loadSample (url, sample) {
     const {entities: {samples: {allIds}}} = getState()
     const voiceId = `voice${allIds.length}` // TODO hack - should associate player -> voiceId on initialising voice
     const id = `sample${allIds.length}`
-    dispatch({ type: 'SAMPLE_LOADED', id, url, sample, loaded: false })
+    dispatch({ type: 'SAMPLE_LOADING', id, url, sample })
     return players[id]
     ? players[id].loadResource(url)
     : PlayerFactory.forResource(url)
@@ -41,7 +41,7 @@ export function loadSample (url, sample) {
       player.on('started', gain => dispatch(samplePlaying(voiceId, gain)))
       player.on('stopped', () => dispatch(samplePlaying(voiceId, { velocity: () => 0 })))
     })
-    .then(() => dispatch({ type: 'SAMPLE_LOADED', id, url, sample, loaded: true }))
+    .then(() => dispatch({ type: 'SAMPLE_LOADED', id }))
     .then(() => id)
   } // TODO handle url load failure (does wac.sample-player reject promise correctly?)
 }

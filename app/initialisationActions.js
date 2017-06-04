@@ -1,6 +1,8 @@
 import { createPattern, selectPattern } from './sequencer/patternActions'
-import { loadSample, createVoice } from './voices/actions'
 import { selectTrack } from './ui/actions'
+import { loadSample, createVoice } from './voices/actions'
+// import { createVoice } from './voices/actions'
+// import { loadSample } from './samples/actions'
 
 export function init () {
   return (dispatch, getState) => {
