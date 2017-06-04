@@ -61,3 +61,12 @@ export function switchPlayerToTrack (trackId) {
     players[index].setBuffer(sampleBuffer(sampleId))
   }
 }
+
+export function switchSample(trackId, sampleId) {
+  return (dispatch, getState) => {
+    const { entities: { tracks } } = getState()
+    const voiceId = tracks.byId[trackId].voiceId
+    dispatch({ type: 'VOICE_SWITCH_SAMPLE', voiceId, sampleId })
+    dispatch(switchPlayerToTrack(trackId))
+  }
+}

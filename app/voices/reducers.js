@@ -13,6 +13,8 @@ export default function voices (state = initialState, action) {
       return voicePlaying(state, action)
     case 'PATTERN_CREATE':
       return createVoices(state, action.voiceIds, action.sampleIds)
+    case 'VOICE_SWITCH_SAMPLE':
+      return switchSample(state, action.voiceId, action.sampleId)
   }
   return state
 }
@@ -36,4 +38,10 @@ function createVoices (state, ids, sampleIds) {
     }, clone(state.byId)),
     allIds: state.allIds.concat(ids)
   }
+}
+
+function switchSample(state, id, sampleId) {
+  const updated = clone(state)
+  updated.byId[id].sampleId = sampleId
+  return updated
 }
