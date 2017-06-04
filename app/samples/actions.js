@@ -28,9 +28,7 @@ export function loadSample (url, name) {
       .then(buffer => {
         buffers[id] = buffer
       })
-      .then(() => {
-        dispatch({ type: 'SAMPLE_LOADED', id })
-      })
+      .then(() => dispatch({ type: 'SAMPLE_LOADED', id }))
       .then(
         () => id,
         e => { console.error(e); return id }
