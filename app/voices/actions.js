@@ -52,7 +52,7 @@ export function initialisePlayers () {
   }
 }
 
-export function focusPlayer (trackId) {
+export function switchPlayerToTrack (trackId) {
   return (dispatch, getState) => {
     const { entities: { patterns, tracks, voices }, sequencer: { patternId } } = getState()
     const index = patterns.byId[patternId].trackIds.indexOf(trackId)

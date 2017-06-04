@@ -1,5 +1,5 @@
 import { selectTrack } from '../ui/actions'
-import { focusPlayer } from '../voices/actions'
+import { switchPlayerToTrack } from '../voices/actions'
 
 const unique = (x, i, self) => self.indexOf(x) === i
 function filterUnique (arr) {
@@ -52,9 +52,9 @@ export function selectPattern (id) {
         allIds: stepIds
       }
     }
-    
+
     dispatch({ type: 'PATTERN_SELECT', id, current })
-    pattern.trackIds.forEach(trackId => dispatch(focusPlayer(trackId)))
+    pattern.trackIds.forEach(trackId => dispatch(switchPlayerToTrack(trackId)))
     dispatch(selectTrack(pattern.trackIds[0]))
   }
 }
