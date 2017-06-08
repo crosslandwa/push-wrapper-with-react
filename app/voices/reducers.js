@@ -15,6 +15,8 @@ export default function voices (state = initialState, action) {
       return createVoices(state, action.voiceIds, action.sampleIds)
     case 'VOICE_SWITCH_SAMPLE':
       return switchSample(state, action.voiceId, action.sampleId)
+    case 'VOICE_UPDATE_PITCH':
+      return updatePitch(state, action.voiceId, action.delta)
   }
   return state
 }
@@ -43,5 +45,12 @@ function createVoices (state, ids, sampleIds) {
 function switchSample(state, id, sampleId) {
   const updated = clone(state)
   updated.byId[id].sampleId = sampleId
+  return updated
+}
+
+function updatePitch(state, id, delta) {
+  const updated = clone(state)
+  const newPitch = updated.byId[id].pitch + delta
+  updated.byId[id].pitch = Math.max(0, Math.min(newPitch, 127))
   return updated
 }

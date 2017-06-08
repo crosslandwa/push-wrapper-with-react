@@ -8,6 +8,7 @@ import StepDelete from './sequencer/StepDelete'
 import StepJumping from './sequencer/StepJumping'
 import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
+import TrackVoiceControl from './voices/TrackVoiceControl'
 import { connect } from 'react-redux'
 
 const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTrackId }) => {
@@ -23,6 +24,7 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
     <div>
       <PushControlModifiers push={push} />
       <TransportControls push={push} />
+      <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
       {trackIds.map((trackId, index) => (
         <TrackControlComponent
           key={index}

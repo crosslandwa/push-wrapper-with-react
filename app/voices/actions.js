@@ -70,3 +70,11 @@ export function switchSample(trackId, sampleId) {
     dispatch(switchPlayerToTrack(trackId))
   }
 }
+
+export function updatePitch(trackId, delta) {
+  return (dispatch, getState) => {
+    const { entities: { tracks } } = getState()
+    const voiceId = tracks.byId[trackId].voiceId
+    dispatch({ type: 'VOICE_UPDATE_PITCH', voiceId, delta })
+  }
+}
