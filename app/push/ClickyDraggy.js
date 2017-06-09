@@ -1,8 +1,5 @@
 'use strict'
 import React from 'react'
-import DomKnob from './DomKnob'
-
-const noop = () => {}
 
 class ClickyDraggy extends React.Component {
   constructor(props) {
@@ -10,7 +7,7 @@ class ClickyDraggy extends React.Component {
     this.click = this.click.bind(this)
     this.release = this.release.bind(this)
     this.drag = this.drag.bind(this)
-    this.state = { selected: false, moveListener: noop }
+    this.state = { selected: false }
   }
 
   click (e) {
@@ -40,7 +37,7 @@ class ClickyDraggy extends React.Component {
       <div
         onMouseDown={this.click}
         onMouseUp={this.release}
-        onMouseLeave={this.release} // TODO this is wrong if we are currently dragging...
+        onMouseLeave={this.release}
         onMouseMove={this.state.selected && this.drag}
       >
         {this.props.children}
