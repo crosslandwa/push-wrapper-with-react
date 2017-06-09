@@ -12,7 +12,7 @@ export function init () {
       dispatch(loadSample('hat.mp3', 'hat')),
       dispatch(loadSample('bleep.mp3', 'bleep'))
     ]).then(([x, ...sampleIds]) => {
-      const patternId = dispatch(createPattern(sampleIds))
+      const patternId = dispatch(createPattern(sampleIds.concat(sampleIds)))
       dispatch(selectPattern(patternId))
     })
   }
