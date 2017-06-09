@@ -12,7 +12,7 @@ const padStyleBase = {
   marginRight: 2,
   marginBottom: 2,
   backgroundColor: '#c7ccce',
-  borderRadius: 10,
+  borderRadius: 4,
   borderWidth: 2,
   borderStyle: 'solid',
   borderColor: '#333333',

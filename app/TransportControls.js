@@ -42,10 +42,10 @@ class TransportControls extends React.Component {
     const {playing, recording, push} = this.props
     return (
       <div>
+      <DomPushButton label='Rec' padPressed={this.toggleArmed} active={recording} rgb={Colours.red} />
+      <PushButton button={push.button('Rec')} dim={true} on={recording} onPressed={this.toggleArmed} />
         <DomPushButton label='Play' padPressed={this.togglePlay} active={playing} rgb={Colours.green} />
         <PushButton button={push.button('Play')} dim={true} on={playing} onPressed={this.togglePlay} />
-        <DomPushButton label='Rec' padPressed={this.toggleArmed} active={recording} rgb={Colours.red} />
-        <PushButton button={push.button('Rec')} dim={true} on={recording} onPressed={this.toggleArmed} />
       </div>
     )
   }

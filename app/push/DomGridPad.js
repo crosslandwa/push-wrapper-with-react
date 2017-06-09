@@ -5,7 +5,7 @@ import { Colours } from './colours'
 const padStyleBase = {
   display: 'inline-block',
   height: 48,
-  width: 48,
+  width: 60,
   marginLeft: 2,
   marginRight: 2,
   backgroundColor: '#c7ccce', // 199, 204, 206
