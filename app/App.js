@@ -55,7 +55,7 @@ const buttonColumnStyle = {
   verticalAlign: 'bottom'
 }
 
-const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTrackId }) => {
+const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTrackId, selectedVoicePitch }) => {
 
   let StepControlComponent = StepControl
   if (pushState.modifiers.shift) {
@@ -78,7 +78,9 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
         <TrackVoiceControl style={{display: 'table-cell'}} knobs={push.channelKnobs()} trackId={selectedTrackId} />
         </div>
         <div style={{display: 'table-row'}} >
-          <div style={lcdStyle} />
+          <div style={lcdStyle} >
+            {selectedVoicePitch}
+          </div>
         </div>
         <div style={gridStyle}>
           {trackIds.map((trackId, index) => (
@@ -116,11 +118,12 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
 }
 
 export default connect(
-  ({push, entities: {patterns, steps, tracks}, sequencer: {patternId, recording, selectedStepId}, ui: {selectedTrackId}}) => ({
+  ({push, entities: {patterns, steps, tracks, voices}, sequencer: {patternId, recording, selectedStepId}, ui: {selectedTrackId}}) => ({
     pushState: push,
     recording,
     selectedStepId,
     trackIds: patterns.byId[patternId].trackIds,
-    selectedTrackId
+    selectedTrackId,
+    selectedVoicePitch: voices.byId[tracks.byId[selectedTrackId].voiceId].pitch
   })
 )(App)
