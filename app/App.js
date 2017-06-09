@@ -40,6 +40,15 @@ const gridStyle = {
   verticalAlign: 'top'
 }
 
+const lcdStyle = {
+  display: 'table-cell',
+  height: 100,
+  backgroundColor: '#e16301',
+  borderStyle: 'solid',
+  borderRadius: 4,
+  boxShadow: 'inset 0px 0px 20px rgba(25, 25, 25, 1)',
+}
+
 const buttonColumnStyle = {
   display: 'inline-block',
   width: columnWidth,
@@ -64,31 +73,38 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
         </div>
         <div style={buttonColumnStyle} />
       </div>
-      <div style={gridStyle}>
-        <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
-        {trackIds.map((trackId, index) => (
-          <TrackControlComponent
-          key={index}
-          shift={pushState.modifiers.shift}
+      <div style={{display: 'table', borderSpacing: 6}} >
+        <div style={{display: 'table-row'}} >
+        <TrackVoiceControl style={{display: 'table-cell'}} knobs={push.channelKnobs()} trackId={selectedTrackId} />
+        </div>
+        <div style={{display: 'table-row'}} >
+          <div style={lcdStyle} />
+        </div>
+        <div style={gridStyle}>
+          {trackIds.map((trackId, index) => (
+            <TrackControlComponent
+            key={index}
+            shift={pushState.modifiers.shift}
+            recording={recording}
+            del={pushState.modifiers.del}
+            trackId={trackId}
+            pad={push.gridRow(7)[index]}
+            />
+          ))}
+          <BlankRow />
+          <ChromaticKeyboard
+          basePitch={36}
+          blackRow={push.gridRow(5)}
           recording={recording}
-          del={pushState.modifiers.del}
-          trackId={trackId}
-          pad={push.gridRow(7)[index]}
+          whiteRow={push.gridRow(4)}
+          trackId={selectedTrackId}
+          selectedStepId={selectedStepId}
           />
-        ))}
-        <BlankRow />
-        <ChromaticKeyboard
-        basePitch={36}
-        blackRow={push.gridRow(5)}
-        recording={recording}
-        whiteRow={push.gridRow(4)}
-        trackId={selectedTrackId}
-        selectedStepId={selectedStepId}
-        />
-        <StepControlComponent
-        pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
-        trackId={selectedTrackId}
-        />
+          <StepControlComponent
+          pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
+          trackId={selectedTrackId}
+          />
+        </div>
       </div>
       <div style={rhButtonsStyle} >
         <div style={buttonColumnStyle} />
