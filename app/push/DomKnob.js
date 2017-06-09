@@ -8,11 +8,12 @@ const style = {
   width: 48,
   marginLeft: 2,
   marginRight: 2,
-  backgroundColor: '#c7ccce', // 199, 204, 206
+  backgroundColor: '#333333', // 199, 204, 206
   borderRadius: 50,
   borderWidth: 2,
   borderStyle: 'solid',
-  borderColor: '#333333',
+  borderColor: '#111111',
+  boxShadow: 'inset 0px 0px 8px rgba(200, 200, 200, 1)',
   cursor: 'pointer'
 }
 
