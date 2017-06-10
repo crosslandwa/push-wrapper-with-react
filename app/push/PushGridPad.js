@@ -27,6 +27,16 @@ class PushGridPad extends React.Component {
     return null
   }
 
+  shouldComponentUpdate(nextProps) {
+    // assumes pad is fixed for duration of Components lifecycle
+    if (this.props.rgb) {
+      const [r1, g1, b1] = this.props.rgb
+      const [r2, g2, b2] = nextProps.rgb || []
+      return (r1 !== r2) || (g1 !== g2) || (b1 !== b2)
+    }
+    return this.props.velocity !== nextProps.velocity
+  }
+
   componentDidMount() {
     const unsubscribePressedListener = this.props.pad.onPressed(this.padPressed)
     const unsubscribeReleasedListener = this.props.pad.onReleased(this.padReleased)
