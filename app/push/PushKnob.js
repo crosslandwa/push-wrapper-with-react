@@ -26,7 +26,7 @@ class PushKnob extends React.Component {
   }
 
   shouldComponentUpdate() {
-    return true
+    return false
   }
 
   componentDidMount() {

@@ -2,12 +2,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import DomLcdSegment from '../push/DomLcdSegment'
+import PushLcdSegment from '../push//PushLcdSegment'
 
-const VoiceFeedback = ({selectedVoicePitch}) => {
+const VoiceFeedback = ({selectedVoicePitch, lcdSegmentsTopRow, lcdSegmentsBottomRow}) => {
   return (
     <div style={{display: 'table', width: '100%'}}>
       <div style={{display: 'table-row'}}>
         <DomLcdSegment text={selectedVoicePitch} />
+        <PushLcdSegment lcdSegment={lcdSegmentsTopRow[0]} text={selectedVoicePitch} />
         <DomLcdSegment/>
         <DomLcdSegment/>
         <DomLcdSegment/>
@@ -18,6 +20,7 @@ const VoiceFeedback = ({selectedVoicePitch}) => {
       </div>
       <div style={{display: 'table-row'}}>
         <DomLcdSegment text='pitch' />
+        <PushLcdSegment lcdSegment={lcdSegmentsBottomRow[0]} text='pitch' />
         <DomLcdSegment/>
         <DomLcdSegment/>
         <DomLcdSegment/>

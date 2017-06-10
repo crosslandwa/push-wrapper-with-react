@@ -84,7 +84,10 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
         </div>
         <div style={{display: 'table-row'}} >
           <div style={lcdStyle} >
-            <VoiceFeedback />
+            <VoiceFeedback
+              lcdSegmentsTopRow={push.lcdSegmentsRow(3)}
+              lcdSegmentsBottomRow={push.lcdSegmentsRow(2)}
+            />
           </div>
         </div>
         <div style={gridStyle}>
