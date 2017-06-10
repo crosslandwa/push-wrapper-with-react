@@ -5,6 +5,8 @@ import { deleteOff, deleteOn, shiftOff, shiftOn } from './push/actions'
 import DomPushButton from './push/DomPushButton'
 import PushButton from './push/PushButton'
 
+import bindKeypress from './utils/bindKeypress'
+
 class PushControlModifiers extends React.Component {
   constructor(props) {
     super(props)
@@ -14,6 +16,20 @@ class PushControlModifiers extends React.Component {
     this.shiftOff = this.shiftOff.bind(this)
     this.toggleShift = this.toggleShift.bind(this)
     this.toggleDelete = this.toggleDelete.bind(this)
+    this.keypress = this.keypress.bind(this)
+  }
+
+  keypress (event) {
+    switch(event.key) {
+      case "Shift":
+        event.preventDefault()
+        this.toggleShift()
+        break;
+      case "Backspace":
+        event.preventDefault()
+        this.toggleDelete();
+        break;
+    }
   }
 
   toggleDelete() {
@@ -66,6 +82,10 @@ class PushControlModifiers extends React.Component {
         />
       </div>
     )
+  }
+
+  componentDidMount() {
+    bindKeypress(this.keypress)
   }
 }
 
