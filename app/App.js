@@ -9,7 +9,7 @@ import StepJumping from './sequencer/StepJumping'
 import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
-import DomLcdSegment from './push/DomLcdSegment'
+import VoiceFeedback from './voices/VoiceFeedback'
 import { connect } from 'react-redux'
 
 const columnWidth = 56
@@ -60,7 +60,7 @@ const buttonColumnStyle = {
   verticalAlign: 'bottom'
 }
 
-const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTrackId, selectedVoicePitch }) => {
+const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
   if (pushState.modifiers.shift) {
@@ -80,30 +80,11 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
       </div>
       <div style={{display: 'table', borderSpacing: 6}} >
         <div style={{display: 'table-row'}} >
-        <TrackVoiceControl style={{display: 'table-cell'}} knobs={push.channelKnobs()} trackId={selectedTrackId} />
+          <TrackVoiceControl style={{display: 'table-cell'}} knobs={push.channelKnobs()} trackId={selectedTrackId} />
         </div>
         <div style={{display: 'table-row'}} >
           <div style={lcdStyle} >
-            <div style={{display: 'table-row'}}>
-              <DomLcdSegment text={selectedVoicePitch} />
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-            </div>
-            <div style={{display: 'table-row'}}>
-              <DomLcdSegment text='pitch' />
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-              <DomLcdSegment/>
-            </div>
+            <VoiceFeedback />
           </div>
         </div>
         <div style={gridStyle}>
@@ -147,7 +128,6 @@ export default connect(
     recording,
     selectedStepId,
     trackIds: patterns.byId[patternId].trackIds,
-    selectedTrackId,
-    selectedVoicePitch: voices.byId[tracks.byId[selectedTrackId].voiceId].pitch
+    selectedTrackId
   })
 )(App)
