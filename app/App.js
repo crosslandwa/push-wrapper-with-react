@@ -9,6 +9,7 @@ import StepJumping from './sequencer/StepJumping'
 import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
+import DomLcdSegment from './push/DomLcdSegment'
 import { connect } from 'react-redux'
 
 const columnWidth = 56
@@ -17,6 +18,7 @@ const pushContainerStyle = {
   display: 'table',
   backgroundColor: '#4a4a4a',
   borderStyle: 'solid',
+  borderWidth: 2,
   borderRadius: 4,
   boxShadow: 'inset 0px 0px 200px rgba(25, 25, 25, 1)',
   padding: 12
@@ -41,13 +43,16 @@ const gridStyle = {
 }
 
 const lcdStyle = {
-  display: 'table-cell',
-  height: 100,
+  display: 'table',
+  width: '100%',
   backgroundColor: '#e16301',
   borderStyle: 'solid',
+  borderWidth: 2,
   borderRadius: 4,
   boxShadow: 'inset 0px 0px 20px rgba(25, 25, 25, 1)',
 }
+
+// const lcdRowStyle
 
 const buttonColumnStyle = {
   display: 'inline-block',
@@ -79,7 +84,26 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
         </div>
         <div style={{display: 'table-row'}} >
           <div style={lcdStyle} >
-            {selectedVoicePitch}
+            <div style={{display: 'table-row'}}>
+              <DomLcdSegment text={selectedVoicePitch} />
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+            </div>
+            <div style={{display: 'table-row'}}>
+              <DomLcdSegment text='pitch' />
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+              <DomLcdSegment/>
+            </div>
           </div>
         </div>
         <div style={gridStyle}>

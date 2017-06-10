@@ -1,7 +1,11 @@
 PITCH CONTROL
-- DOM ui for knob
 - display selected track pitch in UI/push LCD
 - realtime sequence recording/parameter lock type behaviour. What I think....?
+
+- bug where i delete selected step
+ - press and hold a step (selects it)
+ - press delete (enter delete mode)
+ - press the same step again = BOOM (is this only a Dom/UI issue, as i can't press a push button twice without releasing it first...)
 
 - knob to change selected track sample (more samples!)
 - edit the velocity for a given step
