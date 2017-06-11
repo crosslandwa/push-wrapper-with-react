@@ -33,6 +33,8 @@ function app([push]) {
     )
   )
 
+  push.clearLCD()
+
   store.dispatch(init())
     .then(() => {
       ReactDOM.render(
