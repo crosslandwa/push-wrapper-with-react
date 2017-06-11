@@ -10,6 +10,7 @@ import StepJumping from './sequencer/StepJumping'
 import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
+import TrackSelectButton from './voices/TrackSelectButton'
 import VoiceFeedback from './voices/VoiceFeedback'
 import { connect } from 'react-redux'
 
@@ -93,17 +94,22 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
         </div>
         <div style={{display: 'table-row'}} >
           <BlankGridButtonRow />
-          <BlankGridButtonRow />
+          {trackIds.map((trackId, index) => (
+            <TrackSelectButton
+              key={index}
+              trackId={trackId}
+            />
+          ))}
         </div>
         <div style={gridStyle}>
           {trackIds.map((trackId, index) => (
             <TrackControlComponent
-            key={index}
-            shift={pushState.modifiers.shift}
-            recording={recording}
-            del={pushState.modifiers.del}
-            trackId={trackId}
-            pad={push.gridRow(7)[index]}
+              key={index}
+              shift={pushState.modifiers.shift}
+              recording={recording}
+              del={pushState.modifiers.del}
+              trackId={trackId}
+              pad={push.gridRow(7)[index]}
             />
           ))}
           <BlankRow />

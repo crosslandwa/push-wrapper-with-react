@@ -10,7 +10,6 @@ const padStyleBase = {
   width: 60,
   marginLeft: 2,
   marginRight: 2,
-  marginBottom: 2,
   backgroundColor: '#c7ccce',
   borderRadius: 4,
   borderWidth: 2,
@@ -25,18 +24,15 @@ const padStyleActive = (rgb) => ({
   borderColor: `rgba(100, 100, 100, 0.3)`
 })
 
-const DomGridButton = ({pad, active, padPressed, padReleased, rgb = Colours.orange, label = ''}) => (
+const DomGridButton = ({active, onPressed, onReleased, rgb = Colours.orange}) => (
   <div
-    className='pad'
-    onMouseDown={() => padPressed && padPressed()}
-    onMouseUp={() => padReleased && padReleased()}
+    onMouseDown={() => onPressed && onPressed()}
+    onMouseUp={() => onReleased && onReleased()}
     style={Object.assign({},
       padStyleBase,
       active ? padStyleActive(rgb) : {}
     )}
-  >
-    {label}
-  </div>
+  />
 )
 
 export default DomGridButton
