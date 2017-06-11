@@ -81,21 +81,17 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
         </div>
         <div style={buttonColumnStyle} />
       </div>
-      <div style={{display: 'table', borderSpacing: 6}} >
-        <div style={{display: 'table-row'}} >
-          <TrackVoiceControl style={{display: 'table-cell'}} knobs={push.channelKnobs()} trackId={selectedTrackId} />
-        </div>
-        <div style={{display: 'table-row'}} >
-          <div style={lcdStyle} >
-            <VoiceFeedback
-              lcdSegmentsTopRow={push.lcdSegmentsRow(3)}
-              lcdSegmentsBottomRow={push.lcdSegmentsRow(2)}
-            />
-            <StatusFeedback
-              lcdSegmentsTopRow={push.lcdSegmentsRow(1)}
-              lcdSegmentsBottomRow={push.lcdSegmentsRow(0)}
-            />
-          </div>
+      <div style={{display: 'table', borderSpacing: 3}} >
+        <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
+        <div style={lcdStyle} >
+          <VoiceFeedback
+            lcdSegmentsTopRow={push.lcdSegmentsRow(3)}
+            lcdSegmentsBottomRow={push.lcdSegmentsRow(2)}
+          />
+          <StatusFeedback
+            lcdSegmentsTopRow={push.lcdSegmentsRow(1)}
+            lcdSegmentsBottomRow={push.lcdSegmentsRow(0)}
+          />
         </div>
         <div style={{display: 'table-row'}} >
           <BlankGridButtonRow />

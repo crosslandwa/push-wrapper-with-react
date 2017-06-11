@@ -5,8 +5,8 @@ import { Colours } from './colours'
 const style = {
   height: 48,
   width: 48,
-  marginLeft: 2,
-  marginRight: 2,
+  marginLeft: 'auto',
+  marginRight: 'auto',
   backgroundColor: '#333333', // 199, 204, 206
   borderRadius: 50,
   borderWidth: 2,
