@@ -3,7 +3,6 @@ import React from 'react'
 import { Colours } from './colours'
 
 const style = {
-  display: 'inline-block',
   height: 48,
   width: 48,
   marginLeft: 2,

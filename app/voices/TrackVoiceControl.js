@@ -9,19 +9,41 @@ import SampleSelect from './SampleSelect'
 
 const TrackVoiceControl = ({knobs, trackId}) => {
   return (
-    <div>
-      <PitchControl trackId={trackId} >
-        <PushKnob knob={knobs[0]} />
-        <ClickyDraggy>
-          <DomKnob />
-        </ClickyDraggy>
-      </PitchControl>
-      <SampleSelect trackId={trackId} >
-        <PushKnob knob={knobs[1]} />
-        <ClickyDraggy>
-          <DomKnob />
-        </ClickyDraggy>
-      </SampleSelect>
+    <div style={{display: 'table', width: '100%'}}>
+      <div style={{display: 'table-cell', width: '12.5%'}}>
+        <PitchControl trackId={trackId} >
+          <PushKnob knob={knobs[0]} />
+          <ClickyDraggy>
+            <DomKnob />
+          </ClickyDraggy>
+        </PitchControl>
+      </div>
+      <div style={{display: 'table-cell', width: '12.5%'}}>
+        <SampleSelect trackId={trackId} >
+          <PushKnob knob={knobs[1]} />
+          <ClickyDraggy>
+            <DomKnob />
+          </ClickyDraggy>
+        </SampleSelect>
+      </div>
+      <div style={{display: 'table-cell', width: '12.5%'}}>
+        <DomKnob />
+      </div>
+      <div style={{display: 'table-cell', width: '12.5%'}}>
+        <DomKnob />
+      </div>
+      <div style={{display: 'table-cell', width: '12.5%'}}>
+        <DomKnob />
+      </div>
+      <div style={{display: 'table-cell', width: '12.5%'}}>
+        <DomKnob />
+      </div>
+      <div style={{display: 'table-cell', width: '12.5%'}}>
+        <DomKnob />
+      </div>
+      <div style={{display: 'table-cell', width: '12.5%'}}>
+        <DomKnob />
+      </div>
     </div>
   )
 }

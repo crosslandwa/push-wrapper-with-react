@@ -9,7 +9,8 @@ const style = {
   width: '12.5%',
   borderRadius: 4,
   boxShadow: 'inset 0px 0px 10px rgba(25, 25, 25, 0.5)',
-  padding: 4
+  padding: 4,
+  fontSize: '11px'
 }
 
 const DomLcdSegment = ({text}) => <div style={style}>{text}</div>

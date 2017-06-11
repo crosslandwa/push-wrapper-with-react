@@ -33,7 +33,7 @@ class ClickyDraggy extends React.Component {
   render () {
     const {onPressed, onReleased, onTurned} = this.props
     return (
-      <div style={{display: 'inline-block'}}
+      <div
         onMouseDown={this.click}
         onMouseUp={this.release}
         onMouseLeave={this.release}

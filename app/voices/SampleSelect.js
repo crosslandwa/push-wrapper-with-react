@@ -6,7 +6,7 @@ import { switchSample } from './actions'
 const SampleSelect = props => {
   const {trackId, changeSample, nextSampleId, prevSampleId} = props
   return (
-    <div style={{display: 'inline-block'}}>
+    <div>
       {React.Children.map(props.children, (child) => React.cloneElement(
         child,
         { onTurned: delta => changeSample(trackId, delta > 0 ? nextSampleId : prevSampleId) }
