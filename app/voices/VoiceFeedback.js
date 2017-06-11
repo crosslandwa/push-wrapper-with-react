@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import DomLcdSegment from '../push/DomLcdSegment'
 import PushLcdSegment from '../push//PushLcdSegment'
 
-const VoiceFeedback = ({selectedVoicePitch, lcdSegmentsTopRow, lcdSegmentsBottomRow}) => {
+const VoiceFeedback = ({sampleName, selectedVoicePitch, lcdSegmentsTopRow, lcdSegmentsBottomRow}) => {
   return (
     <div style={{display: 'table', width: '100%'}}>
       <div style={{display: 'table-row'}}>
@@ -26,17 +26,22 @@ const VoiceFeedback = ({selectedVoicePitch, lcdSegmentsTopRow, lcdSegmentsBottom
         <DomLcdSegment/>
         <DomLcdSegment/>
         <DomLcdSegment/>
-        <DomLcdSegment/>
-        <DomLcdSegment/>
+        <DomLcdSegment text='voice: ' />
+        <PushLcdSegment lcdSegment={lcdSegmentsBottomRow[6]} text='voice:' />
+        <DomLcdSegment text={sampleName} />
+        <PushLcdSegment lcdSegment={lcdSegmentsBottomRow[7]} text={sampleName} />
       </div>
     </div>
   )
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { entities: { tracks, voices }, ui: { selectedTrackId } } = state
+  const { entities: { samples, tracks, voices }, ui: { selectedTrackId } } = state
+  const voiceId = tracks.byId[selectedTrackId].voiceId
+  const sampleId = voices.byId[voiceId].sampleId
   return {
-    selectedVoicePitch: voices.byId[tracks.byId[selectedTrackId].voiceId].pitch
+    selectedVoicePitch: voices.byId[voiceId].pitch,
+    sampleName: samples.byId[sampleId].name
   }
 }
 

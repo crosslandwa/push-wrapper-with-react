@@ -97,6 +97,7 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
           {trackIds.map((trackId, index) => (
             <TrackSelectButton
               key={index}
+              button={push.gridSelectButtons()[index]}
               trackId={trackId}
             />
           ))}

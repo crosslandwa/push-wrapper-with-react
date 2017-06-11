@@ -46,7 +46,6 @@ class PushGridPad extends React.Component {
   componentWillUnmount() {
     this.state.unsubscribePressedListener()
     this.state.unsubscribeReleasedListener()
-    this.props.pad.ledOff()
   }
 }
 
