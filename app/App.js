@@ -105,7 +105,6 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
           {trackIds.map((trackId, index) => (
             <TrackControlComponent
               key={index}
-              shift={pushState.modifiers.shift}
               recording={recording}
               del={pushState.modifiers.del}
               trackId={trackId}
