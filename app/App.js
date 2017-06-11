@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
 import BlankRow from './ui/BlankRow'
+import BlankGridButtonRow from './ui/BlankGridButtonRow'
 import TransportControls from './TransportControls'
 import PushControlModifiers from './PushControlModifiers'
 import StepControl from './sequencer/StepControl'
@@ -89,6 +90,10 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
               lcdSegmentsBottomRow={push.lcdSegmentsRow(2)}
             />
           </div>
+        </div>
+        <div style={{display: 'table-row'}} >
+          <BlankGridButtonRow />
+          <BlankGridButtonRow />
         </div>
         <div style={gridStyle}>
           {trackIds.map((trackId, index) => (
