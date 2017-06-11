@@ -1,6 +1,6 @@
 PITCH CONTROL
-- display selected track pitch in UI/push LCD
 - realtime sequence recording/parameter lock type behaviour. What I think....?
+- how to delete a parameter lock for a step?
 
 - bug where i delete selected step
  - press and hold a step (selects it)
@@ -8,8 +8,6 @@ PITCH CONTROL
  - press the same step again = BOOM (is this only a Dom/UI issue, as i can't press a push button twice without releasing it first...)
  - can replicate on push (hold step, press and hold delete, release and re-press step)
  - clear selected step when entering delete mode?
-
-- select voice from row of buttons above grid (rather than shift press/on voice playback)
 
 - knob to change selected track sample (more samples!)
 - edit the velocity for a given step

@@ -12,6 +12,7 @@ import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
 import TrackSelectButton from './voices/TrackSelectButton'
 import VoiceFeedback from './voices/VoiceFeedback'
+import StatusFeedback from './ui/StatusFeedback'
 import { connect } from 'react-redux'
 
 const columnWidth = 56
@@ -90,6 +91,10 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
               lcdSegmentsTopRow={push.lcdSegmentsRow(3)}
               lcdSegmentsBottomRow={push.lcdSegmentsRow(2)}
             />
+            <StatusFeedback
+              lcdSegmentsTopRow={push.lcdSegmentsRow(1)}
+              lcdSegmentsBottomRow={push.lcdSegmentsRow(0)}
+            />
           </div>
         </div>
         <div style={{display: 'table-row'}} >
@@ -114,16 +119,16 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
           ))}
           <BlankRow />
           <ChromaticKeyboard
-          basePitch={36}
-          blackRow={push.gridRow(5)}
-          recording={recording}
-          whiteRow={push.gridRow(4)}
-          trackId={selectedTrackId}
-          selectedStepId={selectedStepId}
+            basePitch={36}
+            blackRow={push.gridRow(5)}
+            recording={recording}
+            whiteRow={push.gridRow(4)}
+            trackId={selectedTrackId}
+            selectedStepId={selectedStepId}
           />
           <StepControlComponent
-          pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
-          trackId={selectedTrackId}
+            pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
+            trackId={selectedTrackId}
           />
         </div>
       </div>
