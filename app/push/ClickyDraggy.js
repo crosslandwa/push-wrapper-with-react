@@ -32,9 +32,8 @@ class ClickyDraggy extends React.Component {
 
   render () {
     const {onPressed, onReleased, onTurned} = this.props
-    // TODO div is currently full width of page, so I can click/drag it anywhere!
     return (
-      <div
+      <div style={{display: 'inline-block'}}
         onMouseDown={this.click}
         onMouseUp={this.release}
         onMouseLeave={this.release}
