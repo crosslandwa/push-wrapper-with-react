@@ -6,7 +6,7 @@ import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
 import { Colours } from '../push/colours'
 
-const TrackPlayerContainer = ({ velocity = 0, padPressed, padReleased, pad}) => (
+const TrackPlayerPad = ({ velocity = 0, padPressed, padReleased, pad}) => (
   <div style={{display: 'inline-block'}} >
     <DomGridPad
       padPressed={padPressed}
@@ -35,4 +35,4 @@ const mapDispatchToProps = (dispatch, { trackId, padPressed }) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(TrackPlayerContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(TrackPlayerPad)

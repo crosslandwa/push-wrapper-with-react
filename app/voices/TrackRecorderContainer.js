@@ -2,9 +2,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { recordStep } from '../sequencer/actions'
-import TrackPlayerContainer from './TrackPlayerContainer'
+import TrackPlayerPad from './TrackPlayerPad'
 
-const TrackRecorderContainer = (props) => <TrackPlayerContainer {...props} />
+const TrackRecorderContainer = (props) => <TrackPlayerPad {...props} />
 
 export default connect(
   state => ({}),
