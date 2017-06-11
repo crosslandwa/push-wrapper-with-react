@@ -1,6 +1,5 @@
 'use strict'
 import React from 'react'
-import { connect } from 'react-redux'
 import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
 import { Colours } from '../push/colours'
@@ -20,11 +19,4 @@ const TrackSelectContainer = ({ velocity = 0, padPressed, padReleased, pad}) => 
   </div>
 )
 
-export default connect(
-  ({ entities: { voices, tracks } }, { trackId }) => {
-    const voiceId = tracks.byId[trackId].voiceId
-    return {
-      velocity: voices.byId[voiceId].velocity,
-    }
-  }
-)(TrackSelectContainer)
+export default TrackSelectContainer

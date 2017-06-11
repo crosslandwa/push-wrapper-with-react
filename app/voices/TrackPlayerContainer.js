@@ -6,12 +6,18 @@ import TrackSelectContainer from './TrackSelectContainer'
 
 const TrackPlayerContainer = (props) => <TrackSelectContainer {...props} />
 
-export default connect(
-  state => ({}),
-  (dispatch, { trackId, padPressed }) => ({
-    padPressed (velocity) {
-      dispatch(playVoiceForTrack(trackId, {velocity}))
-      padPressed && padPressed(velocity)
-    }
-  })
-)(TrackPlayerContainer)
+const mapStateToProps = ({ entities: { voices, tracks } }, { trackId }) => {
+  const voiceId = tracks.byId[trackId].voiceId
+  return {
+    velocity: voices.byId[voiceId].velocity,
+  }
+}
+
+const mapDispatchToProps = (dispatch, { trackId, padPressed }) => ({
+  padPressed (velocity) {
+    dispatch(playVoiceForTrack(trackId, {velocity}))
+    padPressed && padPressed(velocity)
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrackPlayerContainer)
