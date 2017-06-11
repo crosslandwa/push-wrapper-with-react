@@ -5,6 +5,7 @@ import PushKnob from '../push/PushKnob'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
 import PitchControl from './PitchControl'
+import SampleSelect from './SampleSelect'
 
 const TrackVoiceControl = ({knobs, trackId}) => {
   return (
@@ -15,6 +16,12 @@ const TrackVoiceControl = ({knobs, trackId}) => {
           <DomKnob />
         </ClickyDraggy>
       </PitchControl>
+      <SampleSelect trackId={trackId} >
+        <PushKnob knob={knobs[1]} />
+        <ClickyDraggy>
+          <DomKnob />
+        </ClickyDraggy>
+      </SampleSelect>
     </div>
   )
 }

@@ -18,12 +18,13 @@ const VoiceFeedback = ({topRow, bottomRow, lcdSegmentsTopRow, lcdSegmentsBottomR
 )
 
 const mapStateToProps = (state, ownProps) => {
-  const { entities: { tracks, voices }, ui: { selectedTrackId } } = state
+  const { entities: { samples, tracks, voices }, ui: { selectedTrackId } } = state
   const voiceId = tracks.byId[selectedTrackId].voiceId
+  const sampleId = voices.byId[voiceId].sampleId
   const selectedVoicePitch = voices.byId[voiceId].pitch
   return {
-    topRow: [selectedVoicePitch, '', '', '' , '', '', '', ''],
-    bottomRow: ['pitch', '', '', '' , '', '', '', '']
+    topRow: [selectedVoicePitch, samples.byId[sampleId].name, '', '' , '', '', '', ''],
+    bottomRow: ['pitch', 'sample', '', '' , '', '', '', '']
   }
 }
 

@@ -6,7 +6,7 @@ import { updatePitch } from './actions'
 const PitchControl = props => {
   const {trackId, updatePitch} = props
   return (
-    <div>
+    <div style={{display: 'inline-block'}}>
       {React.Children.map(props.children, (child) => React.cloneElement(
         child,
         { onTurned: delta => updatePitch(trackId, delta) }

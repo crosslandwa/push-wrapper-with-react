@@ -20,11 +20,11 @@ const StatusFeedback = ({topRow, bottomRow, lcdSegmentsTopRow, lcdSegmentsBottom
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { entities: { samples, tracks, voices }, ui: { selectedTrackId } } = state
+  const { entities: { patterns, tracks, voices }, sequencer: {patternId}, ui: { selectedTrackId } } = state
   const voiceId = tracks.byId[selectedTrackId].voiceId
-  const sampleId = voices.byId[voiceId].sampleId
+  const trackIndex = patterns.byId[patternId].trackIds.indexOf(selectedTrackId)
   return {
-    topRow: ['voice: ', samples.byId[sampleId].name, '', '', '', '', '', ''],
+    topRow: [`voice: ${trackIndex}`, '', '', '', '', '', '', ''],
     bottomRow: ['', '', '', '', '', '', '', '']
   }
 }
