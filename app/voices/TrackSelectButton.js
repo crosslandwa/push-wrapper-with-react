@@ -7,7 +7,7 @@ import { selectTrack } from '../ui/actions'
 import { Colours } from '../push/colours'
 
 const TrackSelectButton = ({ button, onPressed, trackId, selected }) => (
-  <div style={{display: 'inline-block'}} >
+  <div style={{display: 'table-cell'}}>
     <DomGridButton
       onPressed={onPressed}
       active={selected}

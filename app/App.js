@@ -40,7 +40,7 @@ const rhButtonsStyle = {
 }
 
 const gridStyle = {
-  display: 'table-cell',
+  display: 'table',
   width: columnWidth * 10,
   verticalAlign: 'top'
 }
@@ -93,8 +93,9 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
             lcdSegmentsBottomRow={push.lcdSegmentsRow(0)}
           />
         </div>
-        <div style={{display: 'table-row'}} >
+        <div style={{display: 'table', width: '100%'}}>
           <BlankGridButtonRow />
+          <div style={{display: 'table-row'}}>
           {trackIds.map((trackId, index) => (
             <TrackSelectButton
               key={index}
@@ -102,6 +103,7 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
               trackId={trackId}
             />
           ))}
+          </div>
         </div>
         <div style={gridStyle}>
           {trackIds.map((trackId, index) => (

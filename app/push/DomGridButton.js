@@ -3,13 +3,12 @@ import React from 'react'
 import { Colours } from './colours'
 
 const padStyleBase = {
-  display: 'inline-block',
   height: 24,
   lineHeight: '24px',
   textAlign: 'center',
   width: 60,
-  marginLeft: 2,
-  marginRight: 2,
+  marginLeft: 'auto',
+  marginRight: 'auto',
   backgroundColor: '#c7ccce',
   borderRadius: 4,
   borderWidth: 2,
