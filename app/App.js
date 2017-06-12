@@ -39,12 +39,6 @@ const rhButtonsStyle = {
   verticalAlign: 'bottom'
 }
 
-const gridStyle = {
-  display: 'table',
-  width: columnWidth * 10,
-  verticalAlign: 'top'
-}
-
 const lcdStyle = {
   display: 'table',
   width: '100%',
@@ -55,7 +49,13 @@ const lcdStyle = {
   boxShadow: 'inset 0px 0px 20px rgba(25, 25, 25, 1)',
 }
 
-// const lcdRowStyle
+const gridStyle = {
+  display: 'table',
+  width: '100%',
+  borderStyle: 'solid',
+  borderWidth: 2,
+  borderColor: 'transparent'
+}
 
 const buttonColumnStyle = {
   display: 'inline-block',
@@ -82,7 +82,9 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
         <div style={buttonColumnStyle} />
       </div>
       <div style={{display: 'table', borderSpacing: 3}} >
-        <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
+        <div style={gridStyle}>
+          <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
+        </div>
         <div style={lcdStyle} >
           <VoiceFeedback
             lcdSegmentsTopRow={push.lcdSegmentsRow(3)}
@@ -93,7 +95,7 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
             lcdSegmentsBottomRow={push.lcdSegmentsRow(0)}
           />
         </div>
-        <div style={{display: 'table', width: '100%'}}>
+        <div style={gridStyle}>
           <BlankGridButtonRow />
           <div style={{display: 'table-row'}}>
           {trackIds.map((trackId, index) => (

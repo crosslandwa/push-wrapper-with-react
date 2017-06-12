@@ -9,7 +9,7 @@ import SampleSelect from './SampleSelect'
 
 const TrackVoiceControl = ({knobs, trackId}) => {
   return (
-    <div style={{display: 'table', width: '100%'}}>
+    <div style={{display: 'table-row'}}>
       <div style={{display: 'table-cell', width: '12.5%'}}>
         <PitchControl trackId={trackId} >
           <PushKnob knob={knobs[0]} />
