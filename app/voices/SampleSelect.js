@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { switchSample } from './actions'
-import { currentSample, samplesSelector } from '../selectors'
+import { currentSample, sampleIds } from '../selectors'
 
 const SampleSelect = props => {
   const {trackId, changeSample, nextSampleId, prevSampleId} = props
@@ -17,15 +17,15 @@ const SampleSelect = props => {
 }
 
 const mapStateToProps = (state, { trackId }) => {
-  const samples = samplesSelector(state)
+  const allSampleIds = sampleIds(state)
   const sampleId = currentSample(state).id
-  const index = samples.allIds.indexOf(sampleId)
+  const index = allSampleIds.indexOf(sampleId)
   const isFirstSample = index === 0
-  const isLastSample = index === (samples.allIds.length - 1)
+  const isLastSample = index === (allSampleIds.length - 1)
 
   return {
-    nextSampleId: samples.allIds[isLastSample ? 0 : index + 1],
-    prevSampleId: samples.allIds[isFirstSample ? samples.allIds.length - 1 : index - 1]
+    nextSampleId: allSampleIds[isLastSample ? 0 : index + 1],
+    prevSampleId: allSampleIds[isFirstSample ? allSampleIds.length - 1 : index - 1]
   }
 }
 

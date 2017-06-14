@@ -1,4 +1,5 @@
 import {playVoiceForTrack} from '../voices/actions'
+import { currentPattern, stepSelector, trackSelector } from '../selectors'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -56,15 +57,12 @@ function advanceSequence () {
 
 function playSequencedVoices  () {
   return (dispatch, getState) => {
-    const {
-      sequencer: { currentStep, patternId, deleteModeTrackIds },
-      entities: { steps, patterns, tracks, voices }
-    } = getState()
-    patterns.byId[patternId].trackIds.forEach((trackId, index) => {
-      const track = tracks.byId[trackId]
+    const { sequencer: { currentStep, deleteModeTrackIds } } = getState()
+    currentPattern(getState()).trackIds.forEach((trackId, index) => {
+      const track = trackSelector(getState(), trackId)
       const stepId = track.stepIds[currentStep]
       if (!stepId) return
-      const step = steps.byId[stepId]
+      const step = stepSelector(getState(), stepId)
       dispatch(deleteModeTrackIds.includes(trackId)
         ? turnStepOff(stepId)
         : playVoiceForTrack(trackId, {

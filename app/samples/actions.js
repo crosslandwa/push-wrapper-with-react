@@ -1,4 +1,6 @@
 // TODO probably pass this is in, created as singleton in App...
+import { sampleIds } from '../selectors'
+
 const audioContext = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext()
 const buffers = {}
 
@@ -24,7 +26,7 @@ function loadFromUrl (url) {
 
 export function loadSample (url, name) {
   return (dispatch, getState) => {
-    const {entities: {samples: {allIds}}} = getState()
+    const allIds = sampleIds(getState())
     const id = `sample${allIds.length}`
     dispatch({ type: 'SAMPLE_LOADING', id, url, sample: name })
     return loadFromUrl(url)
