@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DomLcdSegment from '../push/DomLcdSegment'
 import PushLcdSegment from '../push//PushLcdSegment'
+import { currentSample, currentVoice } from '../selectors'
 
 const VoiceFeedback = ({topRow, bottomRow, lcdSegmentsTopRow, lcdSegmentsBottomRow}) => (
   <div style={{display: 'table', width: '100%'}}>
@@ -18,12 +19,8 @@ const VoiceFeedback = ({topRow, bottomRow, lcdSegmentsTopRow, lcdSegmentsBottomR
 )
 
 const mapStateToProps = (state, ownProps) => {
-  const { entities: { samples, tracks, voices }, ui: { selectedTrackId } } = state
-  const voiceId = tracks.byId[selectedTrackId].voiceId
-  const sampleId = voices.byId[voiceId].sampleId
-  const selectedVoicePitch = voices.byId[voiceId].pitch
   return {
-    topRow: [selectedVoicePitch, samples.byId[sampleId].name, '', '' , '', '', '', ''],
+    topRow: [currentVoice(state).pitch, currentSample(state).name, '', '' , '', '', '', ''],
     bottomRow: ['pitch', 'sample', '', '' , '', '', '', '']
   }
 }
