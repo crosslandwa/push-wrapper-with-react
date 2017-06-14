@@ -2,6 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { switchSample } from './actions'
+import { currentSample, samplesSelector } from '../selectors'
 
 const SampleSelect = props => {
   const {trackId, changeSample, nextSampleId, prevSampleId} = props
@@ -15,9 +16,9 @@ const SampleSelect = props => {
   )
 }
 
-const mapStateToProps = ({entities: {voices, tracks, samples}}, { trackId }) => {
-  const voiceId = tracks.byId[trackId].voiceId
-  const sampleId = voices.byId[voiceId].sampleId
+const mapStateToProps = (state, { trackId }) => {
+  const samples = samplesSelector(state)
+  const sampleId = currentSample(state).id
   const index = samples.allIds.indexOf(sampleId)
   const isFirstSample = index === 0
   const isLastSample = index === (samples.allIds.length - 1)

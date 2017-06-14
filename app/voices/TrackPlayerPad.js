@@ -5,6 +5,7 @@ import { playVoiceForTrack } from './actions'
 import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
 import { Colours } from '../push/colours'
+import { voiceForTrack } from '../selectors'
 
 const TrackPlayerPad = ({ active, padPressed, padReleased, pad}) => (
   <div style={{display: 'inline-block'}} >
@@ -21,12 +22,9 @@ const TrackPlayerPad = ({ active, padPressed, padReleased, pad}) => (
   </div>
 )
 
-const mapStateToProps = ({ entities: { voices, tracks } }, { trackId }) => {
-  const voiceId = tracks.byId[trackId].voiceId
-  return {
-    active: voices.byId[voiceId].velocity > 0,
-  }
-}
+const mapStateToProps = (state, { trackId }) => ({
+  active: voiceForTrack(state, trackId).velocity > 0,
+})
 
 const mapDispatchToProps = (dispatch, { trackId, padPressed }) => ({
   padPressed (velocity) {
