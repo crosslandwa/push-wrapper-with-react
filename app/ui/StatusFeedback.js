@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DomLcdSegment from '../push/DomLcdSegment'
 import PushLcdSegment from '../push//PushLcdSegment'
+import { currentPattern, currentTrack } from '../selectors'
 
 const StatusFeedback = ({topRow, bottomRow, lcdSegmentsTopRow, lcdSegmentsBottomRow}) => {
   return (
@@ -20,9 +21,7 @@ const StatusFeedback = ({topRow, bottomRow, lcdSegmentsTopRow, lcdSegmentsBottom
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { entities: { patterns, tracks, voices }, sequencer: {patternId}, ui: { selectedTrackId } } = state
-  const voiceId = tracks.byId[selectedTrackId].voiceId
-  const trackIndex = patterns.byId[patternId].trackIds.indexOf(selectedTrackId)
+  const trackIndex = currentPattern(state).trackIds.indexOf(currentTrack(state).id)
   return {
     topRow: [`voice: ${trackIndex}`, '', '', '', '', '', '', ''],
     bottomRow: ['', '', '', '', '', '', '', '']

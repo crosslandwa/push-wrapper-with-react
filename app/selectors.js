@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-const currentTrack = state => state.entities.tracks.byId[state.ui.selectedTrackId]
+export const currentTrack = state => state.entities.tracks.byId[state.ui.selectedTrackId]
 
 const currentPatternId = state => state.sequencer.patternId
 
