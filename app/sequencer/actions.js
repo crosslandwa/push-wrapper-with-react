@@ -1,4 +1,4 @@
-import {playVoiceForTrack} from '../voices/actions'
+import { playVoiceForTrack } from '../voices/actions'
 import { currentPattern, stepSelector, trackSelector } from '../selectors'
 
 export function selectStep (stepId) {
@@ -11,9 +11,7 @@ export function unselectStep (stepId) {
 
 export function turnStepOn (trackId, stepNumber, pitch, velocity) {
   return (dispatch, getState) => {
-    const {
-      entities: { steps: { allIds } }
-    } = getState()
+    const { entities: { steps: { allIds } } } = getState()
     const id = `step${allIds.length}`
     dispatch({ type: 'STEP_TURN_ON', id, trackId, stepNumber, pitch, velocity })
     return id

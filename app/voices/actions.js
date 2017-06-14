@@ -1,4 +1,5 @@
 import { sampleBuffer } from '../samples/actions'
+import { currentPattern, sampleForTrack, voiceForTrack } from '../selectors'
 
 const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext() // should this be a singleton
 const PlayerFactory = require('wac.sample-player')(context)
@@ -12,10 +13,8 @@ const playbackRate = note => midiNoteToF(note) / middleCFreq
 
 export function playVoiceForTrack (trackId, {pitch, velocity}) {
   return (dispatch, getState) => {
-    const { entities: { patterns, voices, samples, tracks }, sequencer: { patternId } } = getState()
-    const voiceId = tracks.byId[trackId].voiceId
-    const voice = voices.byId[voiceId]
-    const playerIndex = patterns.byId[patternId].trackIds.indexOf(trackId)
+    const voice = voiceForTrack(getState(), trackId)
+    const playerIndex = currentPattern(getState()).trackIds.indexOf(trackId)
     players[playerIndex]
       .updatePlaybackRate(playbackRate(pitch || voice.pitch))
       .play(midiGain(velocity))
@@ -36,15 +35,13 @@ export function initialisePlayers () {
       players.forEach((player, index) => {
         player.toMaster()
         player.on('started', gain => {
-          const { entities: { patterns, tracks }, sequencer: { patternId }} = getState()
-          const trackId = patterns.byId[patternId].trackIds[index]
-          const voiceId = tracks.byId[trackId].voiceId
+          const trackId = currentPattern(getState()).trackIds[index]
+          const voiceId = voiceForTrack(getState(), trackId).id
           dispatch(voicePlaying(voiceId, gain))
         })
         player.on('stopped', () => {
-          const { entities: { patterns, tracks }, sequencer: { patternId }} = getState()
-          const trackId = patterns.byId[patternId].trackIds[index]
-          const voiceId = tracks.byId[trackId].voiceId
+          const trackId = currentPattern(getState()).trackIds[index]
+          const voiceId = voiceForTrack(getState(), trackId).id
           dispatch(voicePlaying(voiceId, { velocity: () => 0 }))
         })
       })
@@ -54,18 +51,15 @@ export function initialisePlayers () {
 
 export function switchPlayerToTrack (trackId) {
   return (dispatch, getState) => {
-    const { entities: { patterns, tracks, voices }, sequencer: { patternId } } = getState()
-    const index = patterns.byId[patternId].trackIds.indexOf(trackId)
-    const voiceId = tracks.byId[trackId].voiceId
-    const sampleId = voices.byId[voiceId].sampleId
-    players[index].setBuffer(sampleBuffer(sampleId))
+    const index = currentPattern(getState()).trackIds.indexOf(trackId)
+    const sample = sampleForTrack(getState(), trackId)
+    players[index].setBuffer(sampleBuffer(sample.id))
   }
 }
 
 export function switchSample(trackId, sampleId) {
   return (dispatch, getState) => {
-    const { entities: { tracks } } = getState()
-    const voiceId = tracks.byId[trackId].voiceId
+    const voiceId = voiceForTrack(getState(), trackId).id
     dispatch({ type: 'VOICE_SWITCH_SAMPLE', voiceId, sampleId })
     dispatch(switchPlayerToTrack(trackId))
   }
@@ -73,8 +67,7 @@ export function switchSample(trackId, sampleId) {
 
 export function updatePitch(trackId, delta) {
   return (dispatch, getState) => {
-    const { entities: { tracks } } = getState()
-    const voiceId = tracks.byId[trackId].voiceId
+    const voiceId = voiceForTrack(getState(), trackId).id
     dispatch({ type: 'VOICE_UPDATE_PITCH', voiceId, delta })
   }
 }

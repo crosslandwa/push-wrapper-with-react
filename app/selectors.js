@@ -42,6 +42,11 @@ export const voiceForTrack = createSelector(
   (track, voices) => voices.byId[track.voiceId]
 )
 
+export const sampleForTrack = createSelector(
+  [voiceForTrack, samplesSelector],
+  (voice, samples) => samples.byId[voice.sampleId]
+)
+
 export const currentSample = createSelector(
   [currentVoice, samplesSelector],
   (currentVoice, samples) => samples.byId[currentVoice.sampleId]
