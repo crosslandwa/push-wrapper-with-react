@@ -14,7 +14,8 @@ import TrackSelectButton from './voices/TrackSelectButton'
 import VoiceFeedback from './voices/VoiceFeedback'
 import StatusFeedback from './ui/StatusFeedback'
 import { connect } from 'react-redux'
-import { currentPattern } from './selectors'
+import { currentPattern, patternIds } from './selectors'
+import PatternSelect from './sequencer/PatternSelect'
 
 const columnWidth = 56
 
@@ -64,7 +65,7 @@ const buttonColumnStyle = {
   verticalAlign: 'bottom'
 }
 
-const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTrackId }) => {
+const App = ({ patternIds, push, pushState, trackIds, recording, selectedStepId, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
   if (pushState.modifiers.shift) {
@@ -99,13 +100,20 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
         <div style={gridStyle}>
           <BlankGridButtonRow />
           <div style={{display: 'table-row'}}>
-          {trackIds.map((trackId, index) => (
-            <TrackSelectButton
-              key={index}
-              button={push.gridSelectButtons()[index]}
-              trackId={trackId}
-            />
-          ))}
+            {trackIds.map((trackId, index) => (
+              <TrackSelectButton
+                key={index}
+                button={push.gridSelectButtons()[index]}
+                trackId={trackId}
+              />
+            ))}
+            {[0, 1, 2, 3].map((i) => (
+              <PatternSelect
+                key={i}
+                patternId={patternIds[i]}
+                button={push.gridSelectButtons()[i + 4]}
+              />
+            ))}
           </div>
         </div>
         <div style={gridStyle}>
@@ -145,6 +153,7 @@ const App = ({ push, pushState, trackIds, recording, selectedStepId, selectedTra
 const mapStateToProps = (state, ownProps) => {
   const {push, sequencer: {recording, selectedStepId}, ui: {selectedTrackId}} = state
   return {
+    patternIds: patternIds(state),
     pushState: push,
     recording,
     selectedStepId,

@@ -9,7 +9,7 @@ PITCH CONTROL
  - can replicate on push (hold step, press and hold delete, release and re-press step)
  - clear selected step when entering delete mode?
 
-- knob to change selected track sample (more samples!)
+- more samples
 - edit the velocity for a given step
 - realtime step record to nearest (rather than next) step
 - investigate re-rendering (react PureComponent should help here!)
@@ -19,4 +19,6 @@ PITCH CONTROL
 - sample player decay envelope
 - stutter
 
-- investigate https://github.com/reactjs/reselect
+- pattern length (per voice?)
+- bpm
+- swing
