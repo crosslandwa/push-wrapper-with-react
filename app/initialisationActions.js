@@ -11,8 +11,8 @@ export function init () {
       dispatch(loadSample('snare.mp3', 'snare')),
       dispatch(loadSample('hat.mp3', 'hat')),
       dispatch(loadSample('bleep.mp3', 'bleep'))
-    ]).then(([x, ...sampleIds]) => {
-      const patternId = dispatch(createPattern(sampleIds.concat(sampleIds)))
+    ]).then(() => {
+      const patternId = dispatch(createPattern())
       dispatch(selectPattern(patternId))
     })
   }

@@ -12,6 +12,8 @@ const samplesSelector = state => state.entities.samples
 
 const stepsSelector = state => state.entities.steps
 
+export const patternIds = state => state.entities.patterns.allIds
+
 export const sampleIds = createSelector(
   samplesSelector,
   samples => samples.allIds
