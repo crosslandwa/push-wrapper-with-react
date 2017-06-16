@@ -12,7 +12,7 @@ export default function patterns (state = intialState, action) {
 
 function addPattern (state, id, trackIds) {
   return {
-    byId: Object.assign({}, state.byIds, {[id]: {id, trackIds}}),
+    byId: Object.assign({}, state.byId, {[id]: {id, trackIds}}),
     allIds: state.allIds.concat(id)
   }
 }
