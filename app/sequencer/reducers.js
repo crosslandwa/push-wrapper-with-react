@@ -1,7 +1,7 @@
 import { clone } from '../reducers/utils'
 
 const initialSequencerState = {
-  patternId: 'pattern0',
+  patternId: null,
   deleteModeTrackIds: [],
   currentStep: -1,
   nextStep: -1,
@@ -33,6 +33,8 @@ export default function sequencer (state = initialSequencerState, action) {
       return Object.assign({}, state, { recording: true })
     case 'SEQUENCER_DISARM':
       return Object.assign({}, state, { recording: false })
+    case 'PATTERN_SELECT':
+      return Object.assign({}, state, { patternId: action.id })
   }
   return state
 }
