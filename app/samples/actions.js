@@ -24,10 +24,10 @@ function loadFromUrl (url) {
   })
 }
 
-export function loadSample (url, name) {
+export function loadSample (url, name, sampleId) {
   return (dispatch, getState) => {
     const allIds = sampleIds(getState())
-    const id = `sample${allIds.length}`
+    const id = sampleId || `sample${allIds.length}`
     dispatch({ type: 'SAMPLE_LOADING', id, url, sample: name })
     return loadFromUrl(url)
       .then(buffer => {

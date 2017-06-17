@@ -18,7 +18,9 @@ export default function samples (state = initialState, action) {
 function sampleLoading (state, {id, sample, url}) {
   const updated = clone(state)
   updated.byId[id] = { id, name: sample, url, loaded: false }
-  updated.allIds = updated.allIds.concat(id)
+  if (!updated.allIds.includes(id)) {
+    updated.allIds = updated.allIds.concat(id)
+  }
   return updated
 }
 

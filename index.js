@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { createStore, applyMiddleware, compose } from 'redux'
+import persistState from 'redux-localstorage'
 import App from './app/App'
 import rootReducer from './app/reducers'
 import { init } from './app/initialisationActions'
@@ -30,6 +31,7 @@ function app([push]) {
     rootReducer,
     composeEnhancers(
       applyMiddleware(thunkMiddleware),
+      persistState()
     )
   )
 

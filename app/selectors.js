@@ -38,6 +38,8 @@ export const trackSelector = (state, trackId) => tracksSelector(state).byId[trac
 
 export const stepSelector = (state, stepId) => stepsSelector(state).byId[stepId]
 
+export const sampleSelector = (state, sampleId) => samplesSelector(state).byId[sampleId]
+
 export const voiceForTrack = createSelector(
   trackSelector,
   voicesSelector,
