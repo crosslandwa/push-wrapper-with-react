@@ -19,7 +19,8 @@ export default function sequencer (state = initialSequencerState, action) {
     case 'SEQUENCER_STEP_SELECT':
       return selectStep(state, action)
     case 'SEQUENCER_STEP_UNSELECT':
-      return unselectStep(state, action)
+    case 'STEP_TURN_OFF':
+      return unselectStep(state, action.id)
     case 'SEQUENCER_ADVANCE_STEP':
       const { currentStep, nextStep } = state;
       return Object.assign({}, state, { currentStep: nextStep, nextStep: (nextStep + 1) % 32 })
@@ -43,7 +44,7 @@ function selectStep (state, {stepId})  {
   return Object.assign({}, state, { selectedStepId: stepId})
 }
 
-function unselectStep (state, {stepId})  {
+function unselectStep (state, stepId)  {
   return Object.assign({}, state, {
     selectedStepId: state.selectedStepId === stepId ? null : state.selectedStepId
   })

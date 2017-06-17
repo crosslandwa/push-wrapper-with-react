@@ -6,6 +6,7 @@ import ChromaticStepEditorContainer from './ChromaticStepEditorContainer'
 import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer'
 import { Colours } from '../push/colours'
+import { currentVoice, stepSelector } from '../selectors'
 
 const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, selectedStepId, selectedStepPitch}) => {
   const Component = selectedStepId
@@ -43,11 +44,12 @@ const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, s
   )
 }
 
-export default connect(
-  ({sequencer: {selectedStepId}, ui: { selectedTrackId }, entities: {steps, tracks, voices}}) => {
-    const voiceId = tracks.byId[selectedTrackId].voiceId
-    return {
-      selectedStepPitch: (selectedStepId !== null) ? (steps.byId[selectedStepId].midiPitch || voices.byId[voiceId].pitch) : null
-    }
+const mapStateToProps = (state, ownProps) => {
+  const voice = currentVoice(state)
+  const selectedStep = stepSelector(state, ownProps.selectedStepId)
+  return {
+    selectedStepPitch: selectedStep ? (selectedStep.midiPitch || voice.pitch) : null
   }
-)(ChromaticKeyboard)
+}
+
+export default connect(mapStateToProps)(ChromaticKeyboard)
