@@ -31,7 +31,7 @@ function app([push]) {
     rootReducer,
     composeEnhancers(
       applyMiddleware(thunkMiddleware),
-      persistState()
+      persistState('entities', {  key: 'push-with-react' })
     )
   )
 
