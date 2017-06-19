@@ -8,14 +8,6 @@ import steps from '../sequencer/stepsreducers'
 import patterns from '../sequencer/patternreducers'
 import tracks from '../sequencer/trackreducers'
 
-function current (state = {}, action) {
-  switch (action.type) {
-    case 'PATTERN_SELECT':
-      return action.current
-  }
-  return state
-}
-
 export default combineReducers({
   push,
   sequencer,
