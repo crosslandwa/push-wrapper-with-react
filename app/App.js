@@ -14,7 +14,7 @@ import TrackSelectButton from './voices/TrackSelectButton'
 import VoiceFeedback from './voices/VoiceFeedback'
 import StatusFeedback from './ui/StatusFeedback'
 import { connect } from 'react-redux'
-import { currentPattern, patternIds } from './selectors'
+import { currentPattern, patternIds, currentTrack } from './selectors'
 import PatternSelect from './sequencer/PatternSelect'
 
 const columnWidth = 56
@@ -151,14 +151,14 @@ const App = ({ patternIds, push, pushState, trackIds, recording, selectedStepId,
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const {push, sequencer: {recording, selectedStepId}, ui: {selectedTrackId}} = state
+  const {push, sequencer: {recording, selectedStepId}} = state
   return {
     patternIds: patternIds(state),
     pushState: push,
     recording,
     selectedStepId,
     trackIds: currentPattern(state).trackIds,
-    selectedTrackId
+    selectedTrackId: currentTrack(state).id
   }
 }
 
