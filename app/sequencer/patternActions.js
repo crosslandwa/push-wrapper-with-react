@@ -1,11 +1,6 @@
 import { selectTrack } from '../ui/actions'
 import { switchPlayerToTrack } from '../voices/actions'
-import { patternIds, sampleIds } from '../selectors'
-
-const unique = (x, i, self) => self.indexOf(x) === i
-function filterUnique (arr) {
-  return arr.filter(unique)
-}
+import { patternIds, patternSelector, sampleIds } from '../selectors'
 
 export function createPattern () {
   return (dispatch, getState) => {
@@ -24,37 +19,8 @@ export function createPattern () {
 
 export function selectPattern (id) {
   return (dispatch, getState) => {
-    const {entities: { patterns, tracks, steps }} = getState()
-    const pattern = patterns.byId[id]
-
-    const copiedTracks = {
-      byId: Object.keys(tracks.byId).reduce((byId, trackId) => {
-        byId[trackId] = tracks.byId[trackId]
-        return byId
-      }, {}),
-      allIds: pattern.trackIds
-    }
-
-    const stepIds = copiedTracks.allIds.reduce((acc, trackId) => {
-      return filterUnique(acc.concat(copiedTracks.byId[trackId].stepIds))
-    }, [])
-
-    const current = {
-      patterns: {
-        byId: {[pattern.id]: pattern},
-        allIds: [pattern.id]
-      },
-      tracks: copiedTracks,
-      steps: {
-        byId: stepIds.reduce((byId, stepId) => {
-          byId[stepId] = steps.byId[stepId]
-          return byId
-        }, {}),
-        allIds: stepIds
-      }
-    }
-
-    dispatch({ type: 'PATTERN_SELECT', id, current })
+    const pattern = patternSelector(getState(), id)
+    dispatch({ type: 'PATTERN_SELECT', id })
     pattern.trackIds.forEach(trackId => dispatch(switchPlayerToTrack(trackId)))
     dispatch(selectTrack(pattern.trackIds[0]))
   }

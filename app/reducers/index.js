@@ -20,7 +20,6 @@ export default combineReducers({
   push,
   sequencer,
   ui,
-  current,
   entities: combineReducers({
     patterns,
     steps,

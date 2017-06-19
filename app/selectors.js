@@ -40,6 +40,8 @@ export const stepSelector = (state, stepId) => stepsSelector(state).byId[stepId]
 
 export const sampleSelector = (state, sampleId) => samplesSelector(state).byId[sampleId]
 
+export const patternSelector = (state, id) => patternsSelector(state).byId[id]
+
 export const voiceForTrack = createSelector(
   trackSelector,
   voicesSelector,
