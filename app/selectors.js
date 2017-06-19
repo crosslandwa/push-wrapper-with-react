@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect'
 
+const identity = index => (...args) => args[index]
+
 // ############ PATTERN
 const currentPatternId = state => state.sequencer.patternId
 const patternsSelector = state => state.entities.patterns
@@ -27,7 +29,10 @@ const stepsSelector = state => state.entities.steps
 
 export const stepIds = state => stepsSelector(state).allIds
 
-export const stepSelector = (state, stepId) => stepsSelector(state).byId[stepId]
+export const stepSelector = createSelector(
+  [stepsSelector, identity(1)],
+  (steps, stepId) => steps.byId[stepId]
+)
 
 // ############ VOICE
 const voicesSelector = state => state.entities.voices

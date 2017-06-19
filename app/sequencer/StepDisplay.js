@@ -9,7 +9,8 @@ import { connect } from 'react-redux'
 import PushGridPad from '../push/PushGridPad'
 import DomGridPad from '../push/DomGridPad'
 import arrayChunk from '../utils/arrayChunk'
-import {Colours, fade, domFade} from '../push/colours'
+import { Colours, fade, domFade } from '../push/colours'
+import { stepSelector } from '../selectors'
 
 const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => {
   if (isCurrentStep) return hasNote ? Colours.turquoise : Colours.orange
@@ -46,8 +47,10 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
   </div>
 )
 
-export default connect(
-  ({ entities: {steps, tracks}, sequencer: {currentStep} }, { trackId }) => ({
+
+const mapStateToProps = (state, { trackId }) => {
+  const { entities: {tracks}, sequencer: {currentStep} } = state
+  return {
     stepData: [...Array(tracks.byId[trackId].numberOfSteps).keys()]
       .map(stepNumber => {
         const stepId = tracks.byId[trackId].stepIds[stepNumber]
@@ -55,8 +58,9 @@ export default connect(
           id: stepId,
           isCurrentStep: stepNumber === currentStep,
           hasNote: !!stepId,
-          velocity: stepId && steps.byId[stepId].midiVelocity
+          velocity: stepId && stepSelector(state, stepId).midiVelocity
         }
       })
-  })
-)(StepDisplay)
+  }
+}
+export default connect(mapStateToProps)(StepDisplay)
