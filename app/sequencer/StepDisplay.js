@@ -47,7 +47,6 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
   </div>
 )
 
-
 const mapStateToProps = (state, { trackId }) => {
   const { sequencer: {currentStep} } = state
   const track = trackSelector(state, trackId)
@@ -63,4 +62,5 @@ const mapStateToProps = (state, { trackId }) => {
     })
   }
 }
+
 export default connect(mapStateToProps)(StepDisplay)
