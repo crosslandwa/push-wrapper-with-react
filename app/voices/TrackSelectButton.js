@@ -5,6 +5,7 @@ import DomGridButton from '../push/DomGridButton'
 import PushGridSelectButton from '../push/PushGridSelectButton'
 import { selectTrack } from '../ui/actions'
 import { Colours } from '../push/colours'
+import { currentTrack } from '../selectors'
 
 const TrackSelectButton = ({ button, onPressed, trackId, selected }) => (
   <div style={{display: 'table-cell'}}>
@@ -21,8 +22,8 @@ const TrackSelectButton = ({ button, onPressed, trackId, selected }) => (
   </div>
 )
 
-const mapStateToProps = ({ ui: { selectedTrackId } }, { trackId }) => ({
-  selected: selectedTrackId === trackId,
+const mapStateToProps = (state, { trackId }) => ({
+  selected: currentTrack(state).id === trackId,
 })
 
 const mapDispatchToProps = (dispatch, { trackId }) => ({
