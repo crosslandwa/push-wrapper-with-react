@@ -52,16 +52,15 @@ const mapStateToProps = (state, { trackId }) => {
   const { sequencer: {currentStep} } = state
   const track = trackSelector(state, trackId)
   return {
-    stepData: [...Array(track.numberOfSteps).keys()]
-      .map(stepNumber => {
-        const stepId = track.stepIds[stepNumber]
-        return {
-          id: stepId,
-          isCurrentStep: stepNumber === currentStep,
-          hasNote: !!stepId,
-          velocity: stepId && stepSelector(state, stepId).midiVelocity
-        }
-      })
+    stepData: [...Array(track.numberOfSteps).keys()].map(stepNumber => {
+      const stepId = track.stepIds[stepNumber]
+      return {
+        id: stepId,
+        isCurrentStep: stepNumber === currentStep,
+        hasNote: !!stepId,
+        velocity: stepId && stepSelector(state, stepId).midiVelocity
+      }
+    })
   }
 }
 export default connect(mapStateToProps)(StepDisplay)
