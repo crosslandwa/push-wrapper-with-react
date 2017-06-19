@@ -64,8 +64,8 @@ export const voiceIds = state => voicesSelector(state).allIds
 export const currentVoice = state => voiceForTrack(state, currentTrack(state).id)
 
 export const voiceForTrack = createSelector( // state, trackId
-  [trackSelector, patternForTrack, kitsSelector, voicesSelector, identity(1)],
-  (track, pattern, kits, voices, trackId) => {
+  [patternForTrack, kitsSelector, voicesSelector, identity(1)],
+  (pattern, kits, voices, trackId) => {
     const index = pattern.trackIds.indexOf(trackId)
     const voiceId = kits.byId[pattern.kitId].voiceIds[index]
     return voices.byId[voiceId]
