@@ -15,6 +15,11 @@ export const currentPattern = createSelector(
   (patterns, id) => patterns.byId[id]
 )
 
+// ############ KIT
+const kitsSelector = state => state.entities.kits
+
+export const kitIds = state => kitsSelector(state).allIds
+
 // ############ TRACK
 const tracksSelector = state => state.entities.tracks
 
