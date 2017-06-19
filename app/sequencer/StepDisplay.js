@@ -10,7 +10,7 @@ import PushGridPad from '../push/PushGridPad'
 import DomGridPad from '../push/DomGridPad'
 import arrayChunk from '../utils/arrayChunk'
 import { Colours, fade, domFade } from '../push/colours'
-import { stepSelector } from '../selectors'
+import { stepSelector, trackSelector } from '../selectors'
 
 const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => {
   if (isCurrentStep) return hasNote ? Colours.turquoise : Colours.orange
@@ -49,11 +49,12 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
 
 
 const mapStateToProps = (state, { trackId }) => {
-  const { entities: {tracks}, sequencer: {currentStep} } = state
+  const { sequencer: {currentStep} } = state
+  const track = trackSelector(state, trackId)
   return {
-    stepData: [...Array(tracks.byId[trackId].numberOfSteps).keys()]
+    stepData: [...Array(track.numberOfSteps).keys()]
       .map(stepNumber => {
-        const stepId = tracks.byId[trackId].stepIds[stepNumber]
+        const stepId = track.stepIds[stepNumber]
         return {
           id: stepId,
           isCurrentStep: stepNumber === currentStep,

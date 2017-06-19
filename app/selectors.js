@@ -22,7 +22,10 @@ export const trackIds = state => tracksSelector(state).allIds
 
 export const currentTrack = state => tracksSelector(state).byId[state.ui.selectedTrackId]
 
-export const trackSelector = (state, trackId) => tracksSelector(state).byId[trackId]
+export const trackSelector = createSelector(
+  [tracksSelector, identity(1)],
+  (tracks, id) => tracks.byId[id]
+)
 
 // ############ STEPS
 const stepsSelector = state => state.entities.steps
