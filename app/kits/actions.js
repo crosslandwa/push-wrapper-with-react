@@ -1,9 +1,12 @@
-import { kitIds } from '../selectors'
+import { kitIds, voiceIds } from '../selectors'
 
-export function createKit (voiceIds) {
+export function createKit (sampleIds) {
   return (dispatch, getState) => {
+    const allVoiceIds = voiceIds(getState())
+    const kitVoiceIds = sampleIds.map((sampleId, x) => `voice-${allVoiceIds.length + x}`)
+
     const id = `kit-${kitIds(getState()).length}`
-    dispatch({ type: 'KIT_CREATE', id, voiceIds })
+    dispatch({ type: 'KIT_CREATE', id, voiceIds: kitVoiceIds, sampleIds })
     return id
   }
 }

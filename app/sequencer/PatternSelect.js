@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { createPattern, selectPattern } from './patternActions'
+import { createPatternWithCurrentKit, selectPattern } from './patternActions'
 import DomGridButton from '../push/DomGridButton'
 import PushGridSelectButton from '../push/PushGridSelectButton'
 import { Colours } from '../push/colours'
@@ -32,7 +32,7 @@ const mapStateToProps = (state, { patternId }) => ({
 const mapDispatchToProps = (dispatch, { patternId }) => {
   return {
     selectPattern() {
-      const toSelect = patternId || dispatch(createPattern())
+      const toSelect = patternId || dispatch(createPatternWithCurrentKit())
       dispatch(selectPattern(toSelect))
     }
   }

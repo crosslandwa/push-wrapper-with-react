@@ -15,10 +15,24 @@ export const currentPattern = createSelector(
   (patterns, id) => patterns.byId[id]
 )
 
+const patternForTrack = createSelector( // state, trackId
+  [patternsSelector, identity(1)],
+  (patterns, trackId) => patterns.allIds
+    .map(id => patterns.byId[id])
+    .filter(pattern => pattern.trackIds.includes(trackId))[0]
+)
+
 // ############ KIT
 const kitsSelector = state => state.entities.kits
 
+const kitSelector = (state, id) => kitSelector(state).byId[id]
+
 export const kitIds = state => kitsSelector(state).allIds
+
+export const currentKit = createSelector( // state
+  [currentPattern, kitsSelector],
+  (pattern, kits) => kits.byId[pattern.kitId]
+)
 
 // ############ TRACK
 const tracksSelector = state => state.entities.tracks
@@ -47,18 +61,15 @@ const voicesSelector = state => state.entities.voices
 
 export const voiceIds = state => voicesSelector(state).allIds
 
-export const currentVoice = createSelector(
-  currentTrack,
-  voicesSelector,
-  (currentTrack, voices) => {
-    return voices.byId[currentTrack.voiceId]
-  }
-)
+export const currentVoice = state => voiceForTrack(state, currentTrack(state).id)
 
-export const voiceForTrack = createSelector(
-  trackSelector,
-  voicesSelector,
-  (track, voices) => voices.byId[track.voiceId]
+export const voiceForTrack = createSelector( // state, trackId
+  [trackSelector, patternForTrack, kitsSelector, voicesSelector, identity(1)],
+  (track, pattern, kits, voices, trackId) => {
+    const index = pattern.trackIds.indexOf(trackId)
+    const voiceId = kits.byId[pattern.kitId].voiceIds[index]
+    return voices.byId[voiceId]
+  }
 )
 
 // ############ SAMPLE
@@ -76,7 +87,7 @@ export const currentSample = createSelector(
   (currentVoice, samples) => samples.byId[currentVoice.sampleId]
 )
 
-export const sampleForTrack = createSelector(
+export const sampleForTrack = createSelector( // state, trackId
   [voiceForTrack, samplesSelector],
   (voice, samples) => samples.byId[voice.sampleId]
 )

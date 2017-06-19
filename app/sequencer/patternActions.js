@@ -1,22 +1,23 @@
 import { selectTrack } from '../ui/actions'
 import { switchPlayerToTrack } from '../voices/actions'
-import { patternIds, patternSelector, sampleIds, trackIds, voiceIds } from '../selectors'
+import { currentKit, patternIds, patternSelector, sampleIds, trackIds } from '../selectors'
+
+export function createPatternWithCurrentKit() {
+  return (dispatch, getState) => dispatch(createPattern(currentKit(getState()).id))
+}
 
 export function createPattern (kitId) {
   return (dispatch, getState) => {
     const allTrackIds = trackIds(getState())
-    const allVoiceIds = voiceIds(getState())
     const patternSampleIds = sampleIds(getState())
     const id = `pattern${patternIds(getState()).length}`
-    const patternVoiceIds = patternSampleIds.map((sampleId, x) => `voice${allVoiceIds.length + x}`)
     const patternTrackIds = patternSampleIds.map((sampleId, x) => `track${allTrackIds.length + x}`)
     dispatch({
       type: 'PATTERN_CREATE',
       id,
       kitId,
       sampleIds: patternSampleIds,
-      trackIds: patternTrackIds,
-      voiceIds: patternVoiceIds
+      trackIds: patternTrackIds
     })
     return id
   }

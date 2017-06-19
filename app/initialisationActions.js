@@ -24,9 +24,9 @@ export function init () {
               return dispatch(loadSample(sample.url, sample.name, sample.id))
           }))
       })
-      .then(() => {
+      .then(sampleIds => {
         return (currentKitIds.length == 0)
-          ? dispatch(createKit([])) // TODO pass voice IDs
+          ? dispatch(createKit(sampleIds))
           : currentKitIds[0]
       })
       .then(kitId => {

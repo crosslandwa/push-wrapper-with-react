@@ -5,7 +5,7 @@ const intialState = { byId: {}, allIds: [] }
 export default function tracks (state = intialState, action) {
   switch (action.type) {
     case 'PATTERN_CREATE':
-      return addTracks(state, action.trackIds, action.voiceIds)
+      return addTracks(state, action.trackIds)
     case 'STEP_TURN_ON':
       return addStep(state, action.trackId, action.id, action.stepNumber)
     case 'STEP_TURN_OFF':
@@ -14,14 +14,13 @@ export default function tracks (state = intialState, action) {
   return state
 }
 
-function addTracks (state, ids, voiceIds) {
+function addTracks (state, ids) {
   return {
     byId: ids.reduce((byId, id, index) => {
       byId[id] = {
         id,
         numberOfSteps: 32,
-        stepIds: [],
-        voiceId: voiceIds[index]
+        stepIds: []
       }
       return byId
     }, clone(state.byId)),

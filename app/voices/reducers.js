@@ -11,7 +11,7 @@ export default function voices (state = initialState, action) {
   switch (action.type) {
     case 'VOICE_PLAYING':
       return voicePlaying(state, action)
-    case 'PATTERN_CREATE':
+    case 'KIT_CREATE':
       return createVoices(state, action.voiceIds, action.sampleIds)
     case 'VOICE_SWITCH_SAMPLE':
       return switchSample(state, action.voiceId, action.sampleId)
