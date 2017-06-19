@@ -1,18 +1,22 @@
 import { selectTrack } from '../ui/actions'
 import { switchPlayerToTrack } from '../voices/actions'
-import { patternIds, patternSelector, sampleIds } from '../selectors'
+import { patternIds, patternSelector, sampleIds, trackIds, voiceIds } from '../selectors'
 
 export function createPattern () {
   return (dispatch, getState) => {
-    const {entities: {
-      tracks: {allIds: allTrackIds},
-      voices: {allIds: allVoiceIds}
-    }} = getState()
+    const allTrackIds = trackIds(getState())
+    const allVoiceIds = voiceIds(getState())
     const patternSampleIds = sampleIds(getState())
     const id = `pattern${patternIds(getState()).length}`
-    const voiceIds = patternSampleIds.map((sampleId, x) => `voice${allVoiceIds.length + x}`)
-    const trackIds = patternSampleIds.map((sampleId, x) => `track${allTrackIds.length + x}`)
-    dispatch({ type: 'PATTERN_CREATE', id, sampleIds: patternSampleIds, trackIds, voiceIds })
+    const patternVoiceIds = patternSampleIds.map((sampleId, x) => `voice${allVoiceIds.length + x}`)
+    const patternTrackIds = patternSampleIds.map((sampleId, x) => `track${allTrackIds.length + x}`)
+    dispatch({
+      type: 'PATTERN_CREATE',
+      id,
+      sampleIds: patternSampleIds,
+      trackIds: patternTrackIds,
+      voiceIds: patternVoiceIds
+    })
     return id
   }
 }

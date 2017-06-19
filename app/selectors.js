@@ -4,7 +4,7 @@ import { createSelector } from 'reselect'
 const currentPatternId = state => state.sequencer.patternId
 const patternsSelector = state => state.entities.patterns
 
-export const patternIds = state => state.entities.patterns.allIds
+export const patternIds = state => patternsSelector(state).allIds
 
 export const patternSelector = (state, id) => patternsSelector(state).byId[id]
 
@@ -14,22 +14,25 @@ export const currentPattern = createSelector(
 )
 
 // ############ TRACK
-export const currentTrack = state => state.entities.tracks.byId[state.ui.selectedTrackId]
-
-// ############ TRACK
 const tracksSelector = state => state.entities.tracks
+
+export const trackIds = state => tracksSelector(state).allIds
+
+export const currentTrack = state => tracksSelector(state).byId[state.ui.selectedTrackId]
 
 export const trackSelector = (state, trackId) => tracksSelector(state).byId[trackId]
 
 // ############ STEPS
 const stepsSelector = state => state.entities.steps
 
-export const stepIds = state => state.entities.steps.allIds
+export const stepIds = state => stepsSelector(state).allIds
 
 export const stepSelector = (state, stepId) => stepsSelector(state).byId[stepId]
 
 // ############ VOICE
 const voicesSelector = state => state.entities.voices
+
+export const voiceIds = state => voicesSelector(state).allIds
 
 export const currentVoice = createSelector(
   currentTrack,
