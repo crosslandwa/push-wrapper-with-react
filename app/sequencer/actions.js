@@ -1,5 +1,5 @@
 import { playVoiceForTrack } from '../voices/actions'
-import { currentPattern, stepSelector, trackSelector } from '../selectors'
+import { currentPattern, stepIds, stepSelector, trackSelector } from '../selectors'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -11,8 +11,7 @@ export function unselectStep (stepId) {
 
 export function turnStepOn (trackId, stepNumber, pitch, velocity) {
   return (dispatch, getState) => {
-    const { entities: { steps: { allIds } } } = getState()
-    const indexesLargestFirst = allIds.map(id => id.split('-')[1])
+    const indexesLargestFirst = stepIds(getState()).map(id => id.split('-')[1])
       .map(Number).sort((a, b) => b - a)
     const id = `step-${indexesLargestFirst.length > 0 ? indexesLargestFirst[0] + 1 : 0}`
     dispatch({ type: 'STEP_TURN_ON', id, trackId, stepNumber, pitch, velocity })

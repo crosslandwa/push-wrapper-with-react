@@ -24,6 +24,8 @@ export const trackSelector = (state, trackId) => tracksSelector(state).byId[trac
 // ############ STEPS
 const stepsSelector = state => state.entities.steps
 
+export const stepIds = state => state.entities.steps.allIds
+
 export const stepSelector = (state, stepId) => stepsSelector(state).byId[stepId]
 
 // ############ VOICE
