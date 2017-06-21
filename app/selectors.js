@@ -49,6 +49,8 @@ export const trackSelector = createSelector(
 // ############ STEPS
 const stepsSelector = state => state.entities.steps
 
+const selectedStepIdSelector = state => state.sequencer.selectedStepId
+
 export const stepIds = state => stepsSelector(state).allIds
 
 export const stepSelector = createSelector(
@@ -56,6 +58,8 @@ export const stepSelector = createSelector(
   (steps, stepId) => steps.byId[stepId]
 )
 
+export const selectedStep = state => stepSelector(state, selectedStepIdSelector(state))
+  
 // ############ VOICE
 const voicesSelector = state => state.entities.voices
 
