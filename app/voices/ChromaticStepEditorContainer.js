@@ -1,16 +1,16 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateStepPitch } from '../sequencer/actions'
+import { updateSelectedStepPitch } from '../sequencer/actions'
 import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 
 const ChromaticStepEditorContainer = (props) => <ChromaticSamplePlayerContainer {...props} />
 
 export default connect(
   state => ({}),
-  (dispatch, { selectedStepId, pitch }) => ({
+  (dispatch, { pitch }) => ({
     padPressed (velocity) {
-      dispatch(updateStepPitch(selectedStepId, pitch))
+      dispatch(updateSelectedStepPitch(pitch))
     }
   })
 )(ChromaticStepEditorContainer)

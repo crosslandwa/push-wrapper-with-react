@@ -6,10 +6,10 @@ import ChromaticStepEditorContainer from './ChromaticStepEditorContainer'
 import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer'
 import { Colours } from '../push/colours'
-import { currentVoice, stepSelector } from '../selectors'
+import { currentVoice, selectedStep } from '../selectors'
 
-const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, selectedStepId, selectedStepPitch}) => {
-  const Component = selectedStepId
+const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, isStepSelected, selectedStepPitch}) => {
+  const Component = isStepSelected
     ? ChromaticStepEditorContainer
     : recording ? ChromaticSampleRecorderContainer : ChromaticSamplePlayerContainer
   return (
@@ -23,7 +23,6 @@ const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, s
               pitch={offset + basePitch}
               pad={blackRow[index]}
               rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.black}
-              selectedStepId={selectedStepId}
               />
           : <DomGridPad key={index} />
         ))}
@@ -36,7 +35,6 @@ const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, s
             pitch={offset + basePitch}
             pad={whiteRow[index]}
             rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.white}
-            selectedStepId={selectedStepId}
           />
         ))}
       </div>
@@ -46,9 +44,10 @@ const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, s
 
 const mapStateToProps = (state, ownProps) => {
   const voice = currentVoice(state)
-  const selectedStep = stepSelector(state, ownProps.selectedStepId)
+  const step = selectedStep(state)
   return {
-    selectedStepPitch: selectedStep ? (selectedStep.midiPitch || voice.pitch) : null
+    isStepSelected: !!step,
+    selectedStepPitch: step ? (step.midiPitch || voice.pitch) : null
   }
 }
 

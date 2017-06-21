@@ -1,5 +1,5 @@
 import { playVoiceForTrack } from '../voices/actions'
-import { currentPattern, stepIds, stepSelector, trackSelector } from '../selectors'
+import { currentPattern, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -19,8 +19,10 @@ export function turnStepOn (trackId, stepNumber, pitch, velocity) {
   }
 }
 
-export function updateStepPitch(id, pitch) {
-  return { type: 'STEP_UPDATE_PITCH', id, pitch }
+export function updateSelectedStepPitch(pitch) {
+  return (dispatch, getState) => dispatch({
+    type: 'STEP_UPDATE_PITCH', id: selectedStep(getState()).id, pitch
+  })
 }
 
 export function turnStepOff (id) {

@@ -54,7 +54,7 @@ const buttonColumnStyle = {
   verticalAlign: 'bottom'
 }
 
-const App = ({ patternIds, push, pushState, trackIds, recording, selectedStepId, selectedTrackId }) => {
+const App = ({ patternIds, push, pushState, trackIds, recording, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
   if (pushState.modifiers.shift) {
@@ -113,7 +113,6 @@ const App = ({ patternIds, push, pushState, trackIds, recording, selectedStepId,
             recording={recording}
             whiteRow={push.gridRow(4)}
             trackId={selectedTrackId}
-            selectedStepId={selectedStepId}
           />
           <StepControlComponent
             pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
@@ -131,12 +130,11 @@ const App = ({ patternIds, push, pushState, trackIds, recording, selectedStepId,
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const {push, sequencer: {recording, selectedStepId}} = state
+  const {push, sequencer: {recording}} = state
   return {
     patternIds: patternIds(state),
     pushState: push,
     recording,
-    selectedStepId,
     trackIds: currentPattern(state).trackIds,
     selectedTrackId: currentTrack(state).id
   }
