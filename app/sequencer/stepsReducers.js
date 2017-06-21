@@ -19,6 +19,8 @@ export default function steps (state = intialState, action) {
       return removeStep(state, action)
     case 'STEP_UPDATE_PITCH':
       return updatePitch(state, action)
+    case 'STEP_UPDATE_VELOCITY':
+      return updateVelocity(state, action.id, action.velocity)
   }
   return state
 }
@@ -26,6 +28,12 @@ export default function steps (state = intialState, action) {
 function updatePitch(state, {id, pitch}) {
   const updated = clone(state)
   updated.byId[id].midiPitch = pitch
+  return updated
+}
+
+function updateVelocity(state, id, velocity) {
+  const updated = clone(state)
+  updated.byId[id].midiVelocity = velocity
   return updated
 }
 

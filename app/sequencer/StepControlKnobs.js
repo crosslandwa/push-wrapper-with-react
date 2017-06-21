@@ -5,6 +5,7 @@ import PushKnob from '../push/PushKnob'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
 import StepPitchControl from './StepPitchControl'
+import StepVelocityControl from './StepVelocityControl'
 import ChannelKnobs from '../ui/ChannelKnobs'
 import { selectedStep } from '../selectors'
 
@@ -15,10 +16,10 @@ const StepControlKnobs = ({knobs, stepId}) => {
         <PushKnob knob={knobs[0]} />
         <ClickyDraggy><DomKnob /></ClickyDraggy>
       </StepPitchControl>
-      <StepPitchControl stepId={stepId} >
-        <PushKnob knob={knobs[0]} />
+      <StepVelocityControl stepId={stepId} >
+        <PushKnob knob={knobs[1]} />
         <ClickyDraggy><DomKnob /></ClickyDraggy>
-      </StepPitchControl>
+      </StepVelocityControl>
     </ChannelKnobs>
   )
 }

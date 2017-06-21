@@ -26,6 +26,14 @@ export function changeStepPitchBy(id, delta) {
   ))
 }
 
+export function changeStepVelocityBy(id, delta) {
+  return (dispatch, getState) => dispatch({
+    type: 'STEP_UPDATE_VELOCITY',
+    id,
+    velocity: Math.max(1, Math.min(stepSelector(getState(), id).midiVelocity + delta, 127))
+  })
+}
+
 function updateStepPitch(id, pitch) {
   return {type: 'STEP_UPDATE_PITCH', id, pitch}
 }
