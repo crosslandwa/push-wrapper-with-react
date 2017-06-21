@@ -12,9 +12,10 @@ import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
 import TrackSelectButton from './voices/TrackSelectButton'
 import { connect } from 'react-redux'
-import { currentPattern, patternIds, currentTrack } from './selectors'
+import { currentPattern, patternIds, currentTrack, selectedStep } from './selectors'
 import PatternSelect from './sequencer/PatternSelect'
 import LCDComponent from './ui/LCDComponent'
+import StepControlKnobs from './sequencer/StepControlKnobs'
 
 const columnWidth = 56
 
@@ -54,7 +55,7 @@ const buttonColumnStyle = {
   verticalAlign: 'bottom'
 }
 
-const App = ({ patternIds, push, pushState, trackIds, recording, selectedTrackId }) => {
+const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
   if (pushState.modifiers.shift) {
@@ -74,7 +75,10 @@ const App = ({ patternIds, push, pushState, trackIds, recording, selectedTrackId
       </div>
       <div style={{display: 'table', borderSpacing: 3}} >
         <div style={gridStyle}>
-          <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
+          {isStepSelected
+            ? <StepControlKnobs knobs={push.channelKnobs()} />
+            : <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
+          }
         </div>
         <LCDComponent pushLcdSegmentsRow={push.lcdSegmentsRow}/>
         <div style={gridStyle}>
@@ -136,6 +140,7 @@ const mapStateToProps = (state, ownProps) => {
     pushState: push,
     recording,
     trackIds: currentPattern(state).trackIds,
+    isStepSelected: !!selectedStep(state),
     selectedTrackId: currentTrack(state).id
   }
 }
