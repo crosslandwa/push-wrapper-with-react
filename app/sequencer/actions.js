@@ -1,5 +1,8 @@
+const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext() // should this be a singleton
+const Scheduling = require('wac.scheduling')(context)
+
 import { playVoiceForTrack } from '../voices/actions'
-import { currentPattern, currentVoice, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
+import { currentBpm, currentPattern, currentVoice, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -64,18 +67,26 @@ export function startSequence (stepNumber = 0) {
   }
 }
 
-function advanceSequence () {
+function advanceSequence (stepTimeMs) {
   return (dispatch, getState) => {
     const { sequencer: { playing } } = getState()
     if (!playing) return
-    dispatch({ type: 'SEQUENCER_ADVANCE_STEP' })
+    dispatch({ type: 'SEQUENCER_ADVANCE_STEP', nowMs: stepTimeMs || Scheduling.nowMs() })
     return dispatch(playSequencedVoices())
   }
 }
 
+function beatLengthMs (bpm) {
+  return (60 / bpm) * 1000 // 1 beat = 1000ms at 60bpm, 1 beat = 500ms at 120bpm
+}
+
+function stepLengthMs(bpm) {
+  return beatLengthMs(bpm) * 0.25 // assume 16n for now
+}
+
 function playSequencedVoices  () {
   return (dispatch, getState) => {
-    const { sequencer: { currentStep, deleteModeTrackIds } } = getState()
+    const { sequencer: { bpm, currentStep, deleteModeTrackIds, lastStepTimeMs } } = getState()
     currentPattern(getState()).trackIds.forEach((trackId, index) => {
       const track = trackSelector(getState(), trackId)
       const stepId = track.stepIds[currentStep]
@@ -89,7 +100,8 @@ function playSequencedVoices  () {
           })
       )
     })
-    setTimeout(() => dispatch(advanceSequence()), 125)
+    const nextStepTime = lastStepTimeMs + stepLengthMs(bpm)
+    Scheduling.atATime(() => dispatch(advanceSequence(nextStepTime)), nextStepTime)
   }
 }
 
@@ -117,4 +129,11 @@ export function deleteModeOn (trackId) {
 
 export function deleteModeOff (trackId) {
   return { type: 'SEQUENCER_DELETE_MODE_OFF', trackId}
+}
+
+export function changeBpmBy (delta) {
+  return (dispatch, getState) => dispatch({
+    type: 'SEQUENCER_UPDATE_BPM',
+    bpm: Math.max(20, Math.min(currentBpm(getState()) + delta, 300))
+  })
 }

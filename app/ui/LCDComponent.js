@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import LCD from './LCD'
-import { currentPattern, currentSample, currentTrack, currentVoice, selectedStep } from '../selectors'
+import { currentBpm, currentPattern, currentSample, currentTrack, currentVoice, selectedStep } from '../selectors'
 
 const LCDComponent = (props) => <LCD {...props} />
 
@@ -10,8 +10,8 @@ const voiceDisplay = (state, ownProps) => {
   const trackIndex = currentPattern(state).trackIds.indexOf(currentTrack(state).id)
   return {
     data: [
-      [currentVoice(state).pitch, currentSample(state).name],
-      ['pitch', 'sample'],
+      [currentVoice(state).pitch, currentSample(state).name, currentBpm(state)],
+      ['pitch', 'sample', 'bpm'],
       [`voice: ${trackIndex}`]
     ]
   }

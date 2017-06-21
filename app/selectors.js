@@ -2,6 +2,8 @@ import { createSelector } from 'reselect'
 
 const identity = index => (...args) => args[index]
 
+export const currentBpm = state => state.sequencer.bpm
+
 // ############ PATTERN
 const currentPatternId = state => state.sequencer.patternId
 const patternsSelector = state => state.entities.patterns
@@ -59,7 +61,7 @@ export const stepSelector = createSelector(
 )
 
 export const selectedStep = state => stepSelector(state, selectedStepIdSelector(state))
-  
+
 // ############ VOICE
 const voicesSelector = state => state.entities.voices
 
