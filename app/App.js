@@ -11,11 +11,10 @@ import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
 import TrackSelectButton from './voices/TrackSelectButton'
-import VoiceFeedback from './voices/VoiceFeedback'
-import StatusFeedback from './ui/StatusFeedback'
 import { connect } from 'react-redux'
 import { currentPattern, patternIds, currentTrack } from './selectors'
 import PatternSelect from './sequencer/PatternSelect'
+import LCDComponent from './ui/LCDComponent'
 
 const columnWidth = 56
 
@@ -39,16 +38,6 @@ const rhButtonsStyle = {
   display: 'table-cell',
   width: columnWidth * 3,
   verticalAlign: 'bottom'
-}
-
-const lcdStyle = {
-  display: 'table',
-  width: '100%',
-  backgroundColor: '#e16301',
-  borderStyle: 'solid',
-  borderWidth: 2,
-  borderRadius: 4,
-  boxShadow: 'inset 0px 0px 20px rgba(25, 25, 25, 1)',
 }
 
 const gridStyle = {
@@ -87,16 +76,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, selectedStepId,
         <div style={gridStyle}>
           <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
         </div>
-        <div style={lcdStyle} >
-          <VoiceFeedback
-            lcdSegmentsTopRow={push.lcdSegmentsRow(3)}
-            lcdSegmentsBottomRow={push.lcdSegmentsRow(2)}
-          />
-          <StatusFeedback
-            lcdSegmentsTopRow={push.lcdSegmentsRow(1)}
-            lcdSegmentsBottomRow={push.lcdSegmentsRow(0)}
-          />
-        </div>
+        <LCDComponent pushLcdSegmentsRow={push.lcdSegmentsRow}/>
         <div style={gridStyle}>
           <BlankGridButtonRow />
           <div style={{display: 'table-row'}}>
