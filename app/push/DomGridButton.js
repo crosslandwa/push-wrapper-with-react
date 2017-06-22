@@ -4,11 +4,8 @@ import { Colours } from './colours'
 
 const padStyleBase = {
   height: 24,
-  lineHeight: '24px',
-  textAlign: 'center',
-  width: 60,
-  marginLeft: 'auto',
-  marginRight: 'auto',
+  width: '11%',
+  marginTop: 4,
   backgroundColor: '#c7ccce',
   borderRadius: 4,
   borderWidth: 2,

@@ -10,18 +10,17 @@ import { currentPattern } from '../selectors'
 const PatternSelect = props => {
   const {button, patternId, selectPattern, selected} = props
   return (
-    <div style={{display: 'table-cell'}}>
-      <DomGridButton
-        onPressed={selectPattern}
-        active={true}
-        rgb={selected ? Colours.blue : (patternId ? Colours.orange : Colours.off)}
-      />
       <PushGridSelectButton
         button={button}
         onPressed={selectPattern}
         rgb={selected ? Colours.blue : (patternId ? Colours.orange : Colours.off)}
-      />
-    </div>
+      >
+        <DomGridButton
+          onPressed={selectPattern}
+          active={true}
+          rgb={selected ? Colours.blue : (patternId ? Colours.orange : Colours.off)}
+        />
+      </PushGridSelectButton>
   )
 }
 

@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import BlankRow from './ui/BlankRow'
-import BlankGridButtonRow from './ui/BlankGridButtonRow'
+import GridSelectButtons from './ui/GridSelectButtons'
 import TransportControls from './TransportControls'
 import PushControlModifiers from './PushControlModifiers'
 import StepControl from './sequencer/StepControl'
@@ -10,10 +10,9 @@ import StepJumping from './sequencer/StepJumping'
 import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
-import TrackSelectButton from './voices/TrackSelectButton'
+
 import { connect } from 'react-redux'
 import { currentPattern, patternIds, currentTrack, selectedStep } from './selectors'
-import PatternSelect from './sequencer/PatternSelect'
 import LCDComponent from './ui/LCDComponent'
 import StepControlKnobs from './sequencer/StepControlKnobs'
 
@@ -81,25 +80,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
           }
         </div>
         <LCDComponent pushLcdSegmentsRow={push.lcdSegmentsRow}/>
-        <div style={gridStyle}>
-          <BlankGridButtonRow />
-          <div style={{display: 'table-row'}}>
-            {trackIds.map((trackId, index) => (
-              <TrackSelectButton
-                key={index}
-                button={push.gridSelectButtons()[index]}
-                trackId={trackId}
-              />
-            ))}
-            {[0, 1, 2, 3].map((i) => (
-              <PatternSelect
-                key={i}
-                patternId={patternIds[i]}
-                button={push.gridSelectButtons()[i + 4]}
-              />
-            ))}
-          </div>
-        </div>
+        <GridSelectButtons trackIds={trackIds} patternIds={patternIds} push={push}/>
         <div style={gridStyle}>
           {trackIds.map((trackId, index) => (
             <TrackControlComponent
