@@ -72,7 +72,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
         </div>
         <div style={buttonColumnStyle} />
       </div>
-      <div style={{display: 'table', borderSpacing: 3}} >
+      <div>
         <div style={gridStyle}>
           {isStepSelected
             ? <StepControlKnobs knobs={push.channelKnobs()} />
