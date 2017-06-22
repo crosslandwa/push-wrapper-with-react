@@ -7,18 +7,17 @@ import PushGridPad from '../push/PushGridPad'
 import { Colours } from '../push/colours'
 
 const ChromaticSamplePlayerContainer = ({ padPressed, pad, rgb = Colours.white }) => (
-  <div style={{display: 'inline-block'}} >
+  <PushGridPad
+    rgb={rgb}
+    pad={pad}
+    padPressed={padPressed}
+  >
     <DomGridPad
       padPressed={padPressed}
       active={true}
       rgb={rgb}
     />
-    <PushGridPad
-      rgb={rgb}
-      pad={pad}
-      padPressed={padPressed}
-    />
-  </div>
+  </PushGridPad>
 )
 
 export default connect(

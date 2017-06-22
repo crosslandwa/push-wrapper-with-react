@@ -8,18 +8,17 @@ import { Colours } from '../push/colours'
 import { voiceForTrack } from '../selectors'
 
 const TrackPlayerPad = ({ active, padPressed, padReleased, pad}) => (
-  <div style={{display: 'inline-block'}} >
+  <PushGridPad
+    rgb={active ? Colours.turquoise : Colours.off}
+    pad={pad}
+    padPressed={padPressed}
+  >
     <DomGridPad
       padPressed={padPressed}
       active={active}
       rgb={Colours.turquoise}
     />
-    <PushGridPad
-      rgb={active ? Colours.turquoise : Colours.off}
-      pad={pad}
-      padPressed={padPressed}
-    />
-  </div>
+  </PushGridPad>
 )
 
 const mapStateToProps = (state, { trackId }) => ({
