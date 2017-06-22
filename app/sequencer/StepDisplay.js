@@ -8,7 +8,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PushGridPad from '../push/PushGridPad'
 import DomGridPad from '../push/DomGridPad'
-import arrayChunk from '../utils/arrayChunk'
 import { Colours, fade, domFade } from '../push/colours'
 import { stepSelector, trackSelector } from '../selectors'
 
@@ -26,23 +25,15 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
         pad={pad}
         padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
         padReleased={() => onRelease(stepData[stepNumber].id)}
-      />
-    ))}
-    {arrayChunk(pads, 8).map((eightPads, row) => (
-      <div key={row}>
-        {eightPads.map((pad, index) => {
-          const stepNumber = index + row * 8
-          return (
-            <DomGridPad
-              key={stepNumber}
-              active={stepData[stepNumber].isCurrentStep || stepData[stepNumber].hasNote}
-              rgb={displayRgb(stepData[stepNumber], domFade)}
-              padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
-              padReleased={() => onRelease(stepData[stepNumber].id)}
-            />
-          )
-        })}
-      </div>
+      >
+        <DomGridPad
+          key={stepNumber}
+          active={stepData[stepNumber].isCurrentStep || stepData[stepNumber].hasNote}
+          rgb={displayRgb(stepData[stepNumber], domFade)}
+          padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
+          padReleased={() => onRelease(stepData[stepNumber].id)}
+        />
+      </PushGridPad>
     ))}
   </div>
 )

@@ -72,7 +72,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
         </div>
         <div style={buttonColumnStyle} />
       </div>
-      <div>
+      <div style={{width: 544}}>
         {isStepSelected
           ? <StepControlKnobs knobs={push.channelKnobs()} />
           : <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
