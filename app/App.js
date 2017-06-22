@@ -73,12 +73,10 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
         <div style={buttonColumnStyle} />
       </div>
       <div>
-        <div style={gridStyle}>
-          {isStepSelected
-            ? <StepControlKnobs knobs={push.channelKnobs()} />
-            : <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
-          }
-        </div>
+        {isStepSelected
+          ? <StepControlKnobs knobs={push.channelKnobs()} />
+          : <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
+        }
         <LCDComponent pushLcdSegmentsRow={push.lcdSegmentsRow}/>
         <GridSelectButtons trackIds={trackIds} patternIds={patternIds} push={push}/>
         <div style={gridStyle}>
