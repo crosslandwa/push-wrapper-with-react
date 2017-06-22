@@ -8,14 +8,19 @@ import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer
 import { Colours } from '../push/colours'
 import { currentVoice, selectedStep } from '../selectors'
 
+const style = {
+  display: 'flex',
+  justifyContent: 'space-around',
+  flexWrap: 'wrap'
+}
+
 const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, isStepSelected, selectedStepPitch}) => {
   const Component = isStepSelected
     ? ChromaticStepEditorContainer
     : recording ? ChromaticSampleRecorderContainer : ChromaticSamplePlayerContainer
   return (
-    <div>
-      <div>
-        {[0, 1, 3, 0, 6, 8, 10, 0].map((offset, index) => (
+    <div style={style} >
+      {[0, 1, 3, 0, 6, 8, 10, 0].map((offset, index) => (
           offset
             ? <Component
               key={index}
@@ -24,20 +29,17 @@ const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, i
               pad={blackRow[index]}
               rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.black}
               />
-          : <DomGridPad key={index} />
-        ))}
-      </div>
-      <div>
-        {[0, 2, 4, 5, 7, 9, 11, 12].map((offset, index) => (
-          <Component
-            key={index}
-            trackId={trackId}
-            pitch={offset + basePitch}
-            pad={whiteRow[index]}
-            rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.white}
-          />
-        ))}
-      </div>
+        : <DomGridPad key={index} />
+      ))}
+      {[0, 2, 4, 5, 7, 9, 11, 12].map((offset, index) => (
+        <Component
+          key={index}
+          trackId={trackId}
+          pitch={offset + basePitch}
+          pad={whiteRow[index]}
+          rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.white}
+        />
+      ))}
     </div>
   )
 }

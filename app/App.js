@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import BlankRow from './ui/BlankRow'
+import DomGridPad from './push/DomGridPad'
 import GridSelectButtons from './ui/GridSelectButtons'
 import TransportControls from './TransportControls'
 import PushControlModifiers from './PushControlModifiers'
@@ -41,7 +41,9 @@ const rhButtonsStyle = {
 }
 
 const gridStyle = {
-  display: 'table',
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'space-around',
   width: '100%',
   borderStyle: 'solid',
   borderWidth: 2,
@@ -80,16 +82,16 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
         <LCDComponent pushLcdSegmentsRow={push.lcdSegmentsRow}/>
         <GridSelectButtons trackIds={trackIds} patternIds={patternIds} push={push}/>
         <div style={gridStyle}>
-          {trackIds.map((trackId, index) => (
+          {[...Array(8).keys()].map(index => (
             <TrackControlComponent
               key={index}
               recording={recording}
               del={pushState.modifiers.del}
-              trackId={trackId}
+              trackId={trackIds[index]}
               pad={push.gridRow(7)[index]}
             />
           ))}
-          <BlankRow />
+          {[...Array(8).keys()].map(index => <DomGridPad key={index} />)}
           <ChromaticKeyboard
             basePitch={36}
             blackRow={push.gridRow(5)}

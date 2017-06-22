@@ -11,13 +11,19 @@ import DomGridPad from '../push/DomGridPad'
 import { Colours, fade, domFade } from '../push/colours'
 import { stepSelector, trackSelector } from '../selectors'
 
+const style = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'space-around'
+}
+
 const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => {
   if (isCurrentStep) return hasNote ? Colours.turquoise : Colours.orange
   return hasNote ? fadeEffect(Colours.blue, velocity) : Colours.off
 }
 
 const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
-  <div>
+  <div style={style} >
     {pads.map((pad, stepNumber) => (
       <PushGridPad
         key={stepNumber}

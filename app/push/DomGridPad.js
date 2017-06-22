@@ -6,8 +6,7 @@ const padStyleBase = {
   display: 'inline-block',
   height: 48,
   width: 60,
-  marginLeft: 2,
-  marginRight: 2,
+  marginTop: 4,
   backgroundColor: '#c7ccce', // 199, 204, 206
   borderRadius: 10,
   borderWidth: 2,
@@ -17,9 +16,8 @@ const padStyleBase = {
 }
 
 const padStyleActive = (rgb) => ({
-  opacity: 0.9,
   boxShadow: `inset 0px 0px 50px rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
-  borderColor: `rgba(100, 100, 100, 0.3)`
+  borderColor: `rgba(100, 100, 100, 0.6)`
 })
 
 const DomGridPad = ({pad, active = false, padPressed, padReleased, rgb = Colours.blue}) => (
