@@ -1,48 +1,39 @@
 import { sampleBuffer } from '../samples/actions'
 import { currentPattern, sampleForTrack, voiceForTrack } from '../selectors'
+import Player from '../player'
 
 const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext() // should this be a singleton
-const PlayerFactory = require('wac.sample-player')(context)
 let players = []
 
-const midiGain = velocity => ({ toAbsolute: () => velocity / 127, velocity: () => velocity })
-
-const midiNoteToF = note => 440.0 * Math.pow(2, (note - 69.0) / 12.0)
-const middleCFreq = midiNoteToF(36)
-const playbackRate = note => midiNoteToF(note) / middleCFreq
 
 export function playVoiceForTrack (trackId, {pitch, velocity}) {
   return (dispatch, getState) => {
     const voice = voiceForTrack(getState(), trackId)
     const playerIndex = currentPattern(getState()).trackIds.indexOf(trackId)
-    players[playerIndex]
-      .updatePlaybackRate(playbackRate(pitch || voice.pitch))
-      .play(midiGain(velocity))
+    players[playerIndex].play(pitch || voice.pitch, velocity)
   }
 }
 
-function voicePlaying (voiceId, gain) {
-  return { type: 'VOICE_PLAYING', velocity: gain.velocity(), id: voiceId }
+function voicePlaying (voiceId, velocity) {
+  return { type: 'VOICE_PLAYING', velocity, id: voiceId }
 }
 
 export function initialisePlayers () {
-  const emptyBuffer = context.createBuffer(1, context.sampleRate / 1000, context.sampleRate)
   return (dispatch, getState) => {
     return Promise.all(
-      [...Array(8).keys()].map(index => PlayerFactory.withBuffer(emptyBuffer))
+      [...Array(8).keys()].map(index => new Player())
     ).then(newPlayers => {
       players = newPlayers
       players.forEach((player, index) => {
-        player.toMaster()
-        player.on('started', gain => {
+        player.onStarted(velocity => {
           const trackId = currentPattern(getState()).trackIds[index]
           const voiceId = voiceForTrack(getState(), trackId).id
-          dispatch(voicePlaying(voiceId, gain))
+          dispatch(voicePlaying(voiceId, velocity))
         })
-        player.on('stopped', () => {
+        player.onStopped(() => {
           const trackId = currentPattern(getState()).trackIds[index]
           const voiceId = voiceForTrack(getState(), trackId).id
-          dispatch(voicePlaying(voiceId, { velocity: () => 0 }))
+          dispatch(voicePlaying(voiceId, 0))
         })
       })
     })
@@ -53,7 +44,7 @@ export function switchPlayerToTrack (trackId) {
   return (dispatch, getState) => {
     const index = currentPattern(getState()).trackIds.indexOf(trackId)
     const sample = sampleForTrack(getState(), trackId)
-    players[index].setBuffer(sampleBuffer(sample.id))
+    return players[index].changeSample(sampleBuffer(sample.id))
   }
 }
 
