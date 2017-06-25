@@ -2,9 +2,7 @@ import { sampleBuffer } from '../samples/actions'
 import { currentPattern, sampleForTrack, voiceForTrack } from '../selectors'
 import Player from '../player'
 
-const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext() // should this be a singleton
 let players = []
-
 
 export function playVoiceForTrack (trackId, {pitch, velocity}) {
   return (dispatch, getState) => {
