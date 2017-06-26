@@ -8,17 +8,17 @@ import { Colours } from '../push/colours'
 import { currentTrack } from '../selectors'
 
 const TrackSelectButton = ({ button, onPressed, trackId, selected }) => (
+  <DomGridButton
+    onPressed={onPressed}
+    active={selected}
+    rgb={Colours.orange}
+  >
     <PushGridSelectButton
       button={button}
       onPressed={onPressed}
       rgb={selected ? Colours.orange : Colours.off}
-    >
-      <DomGridButton
-        onPressed={onPressed}
-        active={selected}
-        rgb={Colours.orange}
-      />
-    </PushGridSelectButton>
+    />
+  </DomGridButton>
 )
 
 const mapStateToProps = (state, { trackId }) => ({

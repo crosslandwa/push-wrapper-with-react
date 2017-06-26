@@ -24,7 +24,7 @@ class PushGridPad extends React.Component {
     } else {
       pad.ledOn(velocity)
     }
-    return this.props.children || null
+    return null
   }
 
   shouldComponentUpdate(nextProps) {

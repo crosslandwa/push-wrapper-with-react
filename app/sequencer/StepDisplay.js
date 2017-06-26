@@ -25,21 +25,21 @@ const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => 
 const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
   <div style={style} >
     {pads.map((pad, stepNumber) => (
-      <PushGridPad
+      <DomGridPad
         key={stepNumber}
-        rgb={displayRgb(stepData[stepNumber], fade)}
-        pad={pad}
+        active={stepData[stepNumber].isCurrentStep || stepData[stepNumber].hasNote}
+        rgb={displayRgb(stepData[stepNumber], domFade)}
         padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
         padReleased={() => onRelease(stepData[stepNumber].id)}
       >
-        <DomGridPad
+        <PushGridPad
           key={stepNumber}
-          active={stepData[stepNumber].isCurrentStep || stepData[stepNumber].hasNote}
-          rgb={displayRgb(stepData[stepNumber], domFade)}
+          rgb={displayRgb(stepData[stepNumber], fade)}
+          pad={pad}
           padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
           padReleased={() => onRelease(stepData[stepNumber].id)}
         />
-      </PushGridPad>
+      </DomGridPad>
     ))}
   </div>
 )

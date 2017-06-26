@@ -20,7 +20,7 @@ const padStyleActive = (rgb) => ({
   borderColor: `rgba(100, 100, 100, 0.6)`
 })
 
-const DomGridPad = ({pad, active = false, padPressed, padReleased, rgb = Colours.blue}) => (
+const DomGridPad = ({children, pad, active = false, padPressed, padReleased, rgb = Colours.blue}) => (
   <div
     className='pad'
     onMouseDown={() => padPressed && padPressed(100)}
@@ -29,7 +29,9 @@ const DomGridPad = ({pad, active = false, padPressed, padReleased, rgb = Colours
       padStyleBase,
       active ? padStyleActive(rgb) : {}
     )}
-  />
+  >
+    {children}
+  </div>
 )
 
 export default DomGridPad

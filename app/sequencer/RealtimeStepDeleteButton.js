@@ -7,20 +7,20 @@ import { deleteModeOff, deleteModeOn } from './actions'
 import { Colours } from '../push/colours'
 
 const RealtimeStepDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (
-  <PushGridPad
-    rgb = {rgb}
-    pad={pad}
+  <DomGridPad
     padPressed={padPressed}
     padReleased={padReleased}
+    active={true}
+    className="pad"
+    rgb={rgb}
   >
-    <DomGridPad
+    <PushGridPad
+      rgb = {rgb}
+      pad={pad}
       padPressed={padPressed}
       padReleased={padReleased}
-      active={true}
-      className="pad"
-      rgb={rgb}
     />
-  </PushGridPad>
+  </DomGridPad>
 )
 
 export default connect(
