@@ -4,11 +4,15 @@ import Player from '../player'
 
 let players = []
 
+const clamp = (min, max) => x => Math.max(min, Math.min(x, max))
+const clampBetween0And127 = clamp(0, 127)
+const clampBetween1And100 = clamp(1, 100)
+
 export function playVoiceForTrack (trackId, {pitch, velocity}) {
   return (dispatch, getState) => {
     const voice = voiceForTrack(getState(), trackId)
     const playerIndex = currentPattern(getState()).trackIds.indexOf(trackId)
-    players[playerIndex].play(pitch || voice.pitch, velocity)
+    players[playerIndex].play(pitch || voice.pitch, velocity, voice.decay)
   }
 }
 
@@ -56,7 +60,22 @@ export function switchSample(trackId, sampleId) {
 
 export function updatePitch(trackId, delta) {
   return (dispatch, getState) => {
-    const voiceId = voiceForTrack(getState(), trackId).id
-    dispatch({ type: 'VOICE_UPDATE_PITCH', voiceId, delta })
+    const voice = voiceForTrack(getState(), trackId)
+    dispatch({
+      type: 'VOICE_UPDATE_PITCH',
+      id: voice.id,
+      pitch: clampBetween0And127(voice.pitch + delta)
+    })
+  }
+}
+
+export function updateDecay(trackId, delta) {
+  return (dispatch, getState) => {
+    const voice = voiceForTrack(getState(), trackId)
+    dispatch({
+      type: 'VOICE_UPDATE_DECAY',
+      id: voice.id,
+      decay: clampBetween1And100((voice.decay || 100) + delta)
+    })
   }
 }

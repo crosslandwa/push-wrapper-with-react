@@ -6,6 +6,7 @@ import DomKnob from '../push/DomKnob'
 import PitchControl from './PitchControl'
 import SampleSelect from './SampleSelect'
 import BpmControlKnob from '../sequencer/BpmControlKnob'
+import DecayKnob from './DecayKnob'
 import ChannelKnobs from '../ui/ChannelKnobs'
 
 const TrackVoiceControl = ({knobs, trackId}) => {
@@ -23,6 +24,10 @@ const TrackVoiceControl = ({knobs, trackId}) => {
         <PushKnob knob={knobs[2]} />
         <ClickyDraggy><DomKnob /></ClickyDraggy>
       </BpmControlKnob>
+      <DecayKnob trackId={trackId} >
+        <PushKnob knob={knobs[3]} />
+        <ClickyDraggy><DomKnob /></ClickyDraggy>
+      </DecayKnob>
     </ChannelKnobs>
   )
 }

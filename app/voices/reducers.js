@@ -16,7 +16,9 @@ export default function voices (state = initialState, action) {
     case 'VOICE_SWITCH_SAMPLE':
       return switchSample(state, action.voiceId, action.sampleId)
     case 'VOICE_UPDATE_PITCH':
-      return updatePitch(state, action.voiceId, action.delta)
+      return updatePitch(state, action.id, action.pitch)
+    case 'VOICE_UPDATE_DECAY':
+      return updateDecay(state, action.id, action.decay)
   }
   return state
 }
@@ -34,7 +36,8 @@ function createVoices (state, ids, sampleIds) {
         id,
         sampleId: sampleIds[index],
         pitch: 36,
-        velocity: 0
+        velocity: 0,
+        decay: 100
       }
       return byId
     }, clone(state.byId)),
@@ -48,9 +51,14 @@ function switchSample(state, id, sampleId) {
   return updated
 }
 
-function updatePitch(state, id, delta) {
+function updatePitch(state, id, pitch) {
   const updated = clone(state)
-  const newPitch = updated.byId[id].pitch + delta
-  updated.byId[id].pitch = Math.max(0, Math.min(newPitch, 127))
+  updated.byId[id].pitch = pitch
+  return updated
+}
+
+function updateDecay(state, id, decay = 100) {
+  const updated = clone(state)
+  updated.byId[id].decay = decay
   return updated
 }

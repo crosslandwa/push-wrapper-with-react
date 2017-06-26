@@ -8,10 +8,11 @@ const LCDComponent = (props) => <LCD {...props} />
 
 const voiceDisplay = (state, ownProps) => {
   const trackIndex = currentPattern(state).trackIds.indexOf(currentTrack(state).id)
+  const voice = currentVoice(state)
   return {
     data: [
-      [currentVoice(state).pitch, currentSample(state).name, currentBpm(state)],
-      ['pitch', 'sample', 'bpm'],
+      [voice.pitch, currentSample(state).name, currentBpm(state), voice.decay],
+      ['pitch', 'sample', 'bpm', 'decay'],
       [`voice: ${trackIndex}`]
     ]
   }

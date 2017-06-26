@@ -6,7 +6,7 @@ PITCH CONTROL
 - realtime step record to nearest (rather than next) step
 - multiple/switchable patterns (work on current one in a 'scratch pad')
 - save state to/from JSON
-- sample player decay envelope
+- sample player decay envelope. How to apply this to all voices at once
 - stutter
 
 - pattern length (per voice?)
