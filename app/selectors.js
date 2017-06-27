@@ -50,7 +50,7 @@ export const trackSelector = createSelector(
 
 export const selectedTrackIndex = createSelector(
   [currentPattern, currentTrack],
-  (pattern, track) => (pattern && pattern.trackIds.indexOf(track.id)) || -1
+  (pattern, track) => pattern ? pattern.trackIds.indexOf(track.id) : -1
 )
 
 // ############ STEPS
