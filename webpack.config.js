@@ -28,8 +28,7 @@ module.exports = {
         include: [
           path.resolve(__dirname, './index.js'),
           path.resolve(__dirname, 'app/'),
-          path.resolve(__dirname, 'node_modules/push-wrapper/'),
-          path.resolve(__dirname, 'node_modules/wac.sample-player/')
+          path.resolve(__dirname, 'node_modules/push-wrapper/')
         ],
         loader: 'babel-loader',
         query: {
