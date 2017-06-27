@@ -1,5 +1,4 @@
 import { createPattern, selectPattern } from './sequencer/patternActions'
-import { selectTrack } from './ui/actions'
 import { initialisePlayers } from './voices/actions'
 import { loadSample } from './samples/actions'
 import { createKit } from './kits/actions'

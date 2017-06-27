@@ -48,6 +48,11 @@ export const trackSelector = createSelector(
   (tracks, id) => tracks.byId[id]
 )
 
+export const selectedTrackIndex = createSelector(
+  [currentPattern, currentTrack],
+  (pattern, track) => (pattern && pattern.trackIds.indexOf(track.id)) || -1
+)
+
 // ############ STEPS
 const stepsSelector = state => state.entities.steps
 
