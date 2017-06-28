@@ -1,9 +1,4 @@
 'use strict'
-
-// Feels like this is doing too much, specifically parsing state and passing
-// it back up in onClick/padReleased callbacks...
-// I'm concerned this will be re-rendering all the time...
-
 import React from 'react'
 import { connect } from 'react-redux'
 import PushGridPad from '../push/PushGridPad'
@@ -17,7 +12,7 @@ const style = {
   justifyContent: 'space-around'
 }
 
-const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => {
+const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect) => {
   if (isCurrentStep) return hasNote ? Colours.turquoise : Colours.orange
   return hasNote ? fadeEffect(Colours.blue, velocity) : Colours.off
 }
@@ -47,8 +42,7 @@ const StepDisplay = ({pads, numberOfSteps, onClick, onRelease = () => {}, stepDa
           <PushGridPad rgb={Colours.black} pad={pad} />
         </DomGridPad>
       )
-
-        )}
+    )}
   </div>
 )
 
