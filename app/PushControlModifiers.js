@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteOff, deleteOn, shiftOff, shiftOn } from './push/actions'
+import { clipOff, clipOn, deleteOff, deleteOn, shiftOff, shiftOn } from './push/actions'
 import DomPushButton from './push/DomPushButton'
 import PushButton from './push/PushButton'
 
@@ -16,6 +16,7 @@ class PushControlModifiers extends React.Component {
     this.shiftOff = this.shiftOff.bind(this)
     this.toggleShift = this.toggleShift.bind(this)
     this.toggleDelete = this.toggleDelete.bind(this)
+    this.toggleClip = this.toggleClip.bind(this)
     this.keypress = this.keypress.bind(this)
   }
 
@@ -56,10 +57,23 @@ class PushControlModifiers extends React.Component {
     this.props.shiftOff()
   }
 
+  toggleClip () {
+    this.props.clip ? this.props.clipOff() : this.props.clipOn()
+  }
+
   render () {
-    const {shift, push, del} = this.props
+    const {clip, shift, push, del} = this.props
     return (
       <div>
+        <DomPushButton active={clip}
+          label='Clip'
+          padPressed={this.toggleClip}
+        />
+        <PushButton button={push.button('Clip')}
+          dim={true}
+          on={clip}
+          onPressed={this.toggleClip}
+        />
         <DomPushButton active={shift}
           label='Shift'
           padPressed={this.toggleShift}
@@ -90,8 +104,14 @@ class PushControlModifiers extends React.Component {
 }
 
 export default connect(
-  ({ push: { modifiers: { shift, del } } }) => ({ shift, del }),
+  ({ push: { modifiers } }) => modifiers,
   (dispatch) => ({
+    clipOn () {
+      dispatch(clipOn())
+    },
+    clipOff () {
+      dispatch(clipOff())
+    },
     deleteOn () {
       dispatch(deleteOn())
     },

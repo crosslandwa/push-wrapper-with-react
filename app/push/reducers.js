@@ -1,5 +1,6 @@
 const initialPushState = {
   modifiers: {
+    clip: false,
     del: false,
     shift: false
   }
@@ -18,6 +19,12 @@ export default function push (state = initialPushState, { type }) {
       return Object.assign({},
         state,
         {modifiers: Object.assign({}, state.modifiers, {del: type === 'PUSH_DELETE_ON'})}
+      )
+    case 'PUSH_CLIP_ON':
+    case 'PUSH_CLIP_OFF':
+      return Object.assign({},
+        state,
+        {modifiers: Object.assign({}, state.modifiers, {clip: type === 'PUSH_CLIP_ON'})}
       )
   }
   return state

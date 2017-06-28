@@ -13,3 +13,11 @@ export function deleteOn () {
 export function deleteOff () {
   return { type: 'PUSH_DELETE_OFF' }
 }
+
+export function clipOff () {
+  return { type: 'PUSH_CLIP_OFF' }
+}
+
+export function clipOn () {
+  return { type: 'PUSH_CLIP_ON' }
+}
