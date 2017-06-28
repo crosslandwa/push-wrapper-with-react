@@ -117,7 +117,7 @@ export function armSequencer () {
   return { type: 'SEQUENCER_ARM' }
 }
 
-export function recordStep (trackId, { pitch, velocity }) {
+export function realtimeStepRecord (trackId, { pitch, velocity }) {
   return (dispatch, getState) => {
     const { sequencer: { playing, lastStepTimeMs } } = getState()
     const beatTimeDelta = playing
@@ -131,7 +131,6 @@ export function recordStep (trackId, { pitch, velocity }) {
     if (!playing) {
       dispatch(startSequence(0))
     }
-    return stepNumber
   }
 }
 
