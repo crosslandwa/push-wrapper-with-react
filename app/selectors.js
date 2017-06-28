@@ -79,8 +79,8 @@ export const currentStepNumberForTrack = (state, trackId) => {
 }
 
 export const nextStepNumberForTrack = (state, trackId) => {
-  const track = trackSelector(state, trackId)
-  return (currentStepNumberForTrack(state, trackId) + 1) % track.numberOfSteps
+  const index = trackIndex(state, trackId)
+  return state.sequencer.nextSteps[index]
 }
 
 export const selectedStep = state => stepSelector(state, selectedStepIdSelector(state))

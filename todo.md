@@ -3,13 +3,13 @@ PITCH CONTROL
 - how to delete a parameter lock for a step?
 
 - re-trigger voice without click
+- re-triggering when realtime recording steps (re-triggered by sequencer)
 - voice muting
 - multiple kits
 - more samples
-- realtime step record to nearest (rather than next) step
 - multiple/switchable patterns (work on current one in a 'scratch pad')
 - save state to/from JSON
-- sample player decay envelope. How to apply this to all voices at once
-- stutter
-- pattern length (per voice?)
 - swing
+- stutter
+- sample player decay envelope - change all voices at once?
+- pattern length - change all voices at once?
