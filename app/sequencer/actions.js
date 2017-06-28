@@ -123,13 +123,15 @@ export function recordStep (trackId, { pitch, velocity }) {
     const beatTimeDelta = playing
       ? (Scheduling.nowMs() - lastStepTimeMs) / stepLengthMs(currentBpm(getState()))
       : 0
-    const stepNumber = beatTimeDelta > 0.5
+    const stepNumber = Math.max(0, beatTimeDelta > 0.5
       ? nextStepNumberForTrack(getState(), trackId)
       : currentStepNumberForTrack(getState(), trackId)
-    dispatch(turnStepOn(trackId, Math.max(0, stepNumber), pitch, velocity))
+    )
+    dispatch(turnStepOn(trackId, stepNumber, pitch, velocity))
     if (!playing) {
       dispatch(startSequence(0))
     }
+    return stepNumber
   }
 }
 
