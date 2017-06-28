@@ -1,11 +1,13 @@
 import { clone } from '../reducers/utils'
 
+const emptyStepNumbers = () => [-1, -1, -1, -1, -1, -1, -1, -1]
+
 const initialSequencerState = {
   patternId: null,
   bpm: 120,
   deleteModeTrackIds: [],
-  currentStep: -1,
-  nextStep: -1,
+  currentSteps: emptyStepNumbers(),
+  nextSteps: emptyStepNumbers(),
   selectedStepId: null,
   playing: false,
   recording: false
@@ -23,13 +25,14 @@ export default function sequencer (state = initialSequencerState, action) {
     case 'STEP_TURN_OFF':
       return unselectStep(state, action.id)
     case 'SEQUENCER_ADVANCE_STEP':
-      return Object.assign({}, state, { currentStep: action.currentStep, lastStepTimeMs: action.nowMs, nextStep: action.nextStep })
+      const { currentSteps, nextSteps } = action
+      return Object.assign({}, state, { currentSteps, lastStepTimeMs: action.nowMs, nextSteps })
     case 'SEQUENCER_NEXT_STEP':
-      return Object.assign({}, state, { nextStep: action.stepNumber })
+      return Object.assign({}, state, { nextSteps: emptyStepNumbers().map(x => action.stepNumber) })
     case 'SEQUENCER_START':
-      return Object.assign({}, state, { currentStep: -1, nextStep: action.stepNumber, playing: true })
+      return Object.assign({}, state, { currentSteps: emptyStepNumbers(),  nextSteps: emptyStepNumbers().map(x => action.stepNumber), playing: true })
     case 'SEQUENCER_STOP':
-      return Object.assign({}, state, { currentStep: -1, nextStep: -1, playing: false })
+      return Object.assign({}, state, { currentSteps: emptyStepNumbers(), nextSteps: emptyStepNumbers(), playing: false })
     case 'SEQUENCER_ARM':
       return Object.assign({}, state, { recording: true })
     case 'SEQUENCER_DISARM':
