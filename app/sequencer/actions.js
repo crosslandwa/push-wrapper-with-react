@@ -91,10 +91,11 @@ function stepLengthMs(bpm) {
 
 function playSequencedVoices  () {
   return (dispatch, getState) => {
-    const { sequencer: { bpm, currentStep, deleteModeTrackIds, lastStepTimeMs } } = getState()
+    const { sequencer: { deleteModeTrackIds, lastStepTimeMs } } = getState()
     currentPattern(getState()).trackIds.forEach((trackId, index) => {
       const track = trackSelector(getState(), trackId)
-      const stepId = track.stepIds[currentStep]
+      const stepNumber = currentStepNumberForTrack(getState(), track.id)
+      const stepId = track.stepIds[stepNumber]
       if (!stepId) return
       const step = stepSelector(getState(), stepId)
       dispatch(deleteModeTrackIds.includes(trackId)
@@ -105,7 +106,7 @@ function playSequencedVoices  () {
           })
       )
     })
-    const nextStepTime = lastStepTimeMs + stepLengthMs(bpm)
+    const nextStepTime = lastStepTimeMs + stepLengthMs(currentBpm(getState()))
     Scheduling.atATime(() => dispatch(advanceSequence(nextStepTime)), nextStepTime)
   }
 }

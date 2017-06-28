@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import PushGridPad from '../push/PushGridPad'
 import DomGridPad from '../push/DomGridPad'
 import { Colours, fade, domFade } from '../push/colours'
-import { stepSelector, trackSelector } from '../selectors'
+import { currentStepNumberForTrack, stepSelector, trackSelector } from '../selectors'
 
 const style = {
   display: 'flex',
@@ -45,14 +45,13 @@ const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
 )
 
 const mapStateToProps = (state, { trackId }) => {
-  const { sequencer: {currentStep} } = state
   const track = trackSelector(state, trackId)
   return {
     stepData: [...Array(track.numberOfSteps).keys()].map(stepNumber => {
       const stepId = track.stepIds[stepNumber]
       return {
         id: stepId,
-        isCurrentStep: stepNumber === currentStep,
+        isCurrentStep: stepNumber === currentStepNumberForTrack(state, track.id),
         hasNote: !!stepId,
         velocity: stepId && stepSelector(state, stepId).midiVelocity
       }
