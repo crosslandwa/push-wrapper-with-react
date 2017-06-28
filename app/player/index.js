@@ -1,6 +1,5 @@
 const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext() // should this be a singleton
 
-const midiGain = velocity => ({ toAbsolute: () => velocity / 127, velocity })
 const midiNoteToF = note => 440.0 * Math.pow(2, (note - 69.0) / 12.0)
 const middleCFreq = midiNoteToF(36)
 const playbackRate = note => midiNoteToF(note) / middleCFreq
@@ -29,7 +28,7 @@ class Player {
     const now = context.currentTime
     source.start(now)
     source.stop(now + (playbackLength * 2))
-    this.envelope.gain.setValueAtTime(1, now)
+    this.envelope.gain.setValueAtTime(velocity / 127, now)
     this.envelope.gain.linearRampToValueAtTime(0.8, now + (playbackLength * 0.8))
     this.envelope.gain.linearRampToValueAtTime(0, now + playbackLength)
   }
