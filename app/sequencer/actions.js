@@ -123,13 +123,18 @@ export function realtimeStepRecord (trackId, { pitch, velocity }) {
     const beatTimeDelta = playing
       ? (Scheduling.nowMs() - lastStepTimeMs) / stepLengthMs(currentBpm(getState()))
       : 0
+    const nextStepNumber = nextStepNumberForTrack(getState(), trackId)
     const stepNumber = Math.max(0, beatTimeDelta > 0.5
-      ? nextStepNumberForTrack(getState(), trackId)
+      ? nextStepNumber
       : currentStepNumberForTrack(getState(), trackId)
     )
     dispatch(turnStepOn(trackId, stepNumber, pitch, velocity))
     if (!playing) {
       dispatch(startSequence(0))
+    } else if (stepNumber !== nextStepNumber) {
+      // play if the step has been recorded for CURRENT step
+      // do not play if its recorded on NEXT step (as sequencer will play it)
+      dispatch(playVoiceForTrack(trackId, { pitch, velocity }))
     }
   }
 }

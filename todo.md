@@ -3,7 +3,6 @@ PITCH CONTROL
 - how to delete a parameter lock for a step?
 
 - re-trigger voice without click
-- re-triggering when realtime recording steps (re-triggered by sequencer)
 - voice muting
 - multiple kits
 - more samples
