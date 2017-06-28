@@ -69,9 +69,14 @@ export function startSequence (stepNumber = 0) {
 
 function advanceSequence (stepTimeMs) {
   return (dispatch, getState) => {
-    const { sequencer: { playing } } = getState()
+    const { sequencer: { nextStep, playing } } = getState()
     if (!playing) return
-    dispatch({ type: 'SEQUENCER_ADVANCE_STEP', nowMs: stepTimeMs || Scheduling.nowMs() })
+    dispatch({
+      type: 'SEQUENCER_ADVANCE_STEP',
+      currentStep: nextStep,
+      nextStep: (nextStep + 1) % 32,
+      nowMs: stepTimeMs || Scheduling.nowMs()
+    })
     return dispatch(playSequencedVoices())
   }
 }
