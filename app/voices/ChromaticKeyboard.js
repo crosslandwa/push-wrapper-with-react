@@ -20,17 +20,18 @@ const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, i
     : recording ? ChromaticSampleRecorderContainer : ChromaticSamplePlayerContainer
   return (
     <div style={style} >
-      {[0, 1, 3, 0, 6, 8, 10, 0].map((offset, index) => (
-          offset
-            ? <Component
-              key={index}
-              trackId={trackId}
-              pitch={offset + basePitch}
-              pad={blackRow[index]}
-              rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.black}
-              />
+      {[0, 1, 3, 0, 6, 8, 10, 0].map((offset, index) => offset
+        ? (
+          <Component
+            key={index}
+            trackId={trackId}
+            pitch={offset + basePitch}
+            pad={blackRow[index]}
+            rgb={(selectedStepPitch === (offset + basePitch)) ? Colours.orange : Colours.black}
+          />
+        )
         : <DomGridPad key={index} />
-      ))}
+      )}
       {[0, 2, 4, 5, 7, 9, 11, 12].map((offset, index) => (
         <Component
           key={index}
