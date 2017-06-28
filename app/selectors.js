@@ -53,6 +53,11 @@ export const selectedTrackIndex = createSelector(
   (pattern, track) => pattern ? pattern.trackIds.indexOf(track.id) : -1
 )
 
+const trackIndex = createSelector( //state, trackId
+  [currentPattern, identity(1)],
+  (pattern, trackId) => pattern ? pattern.trackIds.indexOf(trackId) : -1
+)
+
 // ############ STEPS
 const stepsSelector = state => state.entities.steps
 
@@ -64,6 +69,16 @@ export const stepSelector = createSelector(
   [stepsSelector, identity(1)],
   (steps, stepId) => steps.byId[stepId]
 )
+
+export const currentStepNumberForTrack = (state, trackId) => {
+  const index = trackIndex(state, trackId)
+  return state.sequencer.currentStep
+}
+
+export const nextStepNumberForTrack = (state, trackId) => {
+  const track = trackSelector(state, trackId)
+  return (currentStepNumberForTrack(state, trackId) + 1) % track.numberOfSteps
+}
 
 export const selectedStep = state => stepSelector(state, selectedStepIdSelector(state))
 

@@ -2,7 +2,7 @@ const context = window.AudioContext ? new window.AudioContext() : new window.web
 const Scheduling = require('wac.scheduling')(context)
 
 import { playVoiceForTrack } from '../voices/actions'
-import { currentBpm, currentPattern, currentVoice, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
+import { currentBpm, currentPattern, currentVoice, currentStepNumberForTrack, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -115,8 +115,14 @@ export function armSequencer () {
 
 export function recordStep (trackId, { pitch, velocity }) {
   return (dispatch, getState) => {
-    const { sequencer: { currentStep, playing } } = getState()
-    dispatch(turnStepOn(trackId, Math.max(0, currentStep), pitch, velocity))
+    const { sequencer: { playing, lastStepTimeMs } } = getState()
+    const beatTimeDelta = playing
+      ? (Scheduling.nowMs() - lastStepTimeMs) / stepLengthMs(currentBpm(getState()))
+      : 0
+    const stepNumber = beatTimeDelta > 0.5
+      ? nextStepNumberForTrack(getState(), trackId)
+      : currentStepNumberForTrack(getState(), trackId)
+    dispatch(turnStepOn(trackId, Math.max(0, stepNumber), pitch, velocity))
     if (!playing) {
       dispatch(startSequence(0))
     }
