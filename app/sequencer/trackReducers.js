@@ -10,6 +10,8 @@ export default function tracks (state = intialState, action) {
       return addStep(state, action.trackId, action.id, action.stepNumber)
     case 'STEP_TURN_OFF':
       return removeStep(state, action.id)
+    case 'TRACK_UPDATE_NUMBER_OF_STEPS':
+      return updateNumberOfSteps(state, action.id, action.numberOfSteps)
   }
   return state
 }
@@ -42,5 +44,11 @@ function removeStep (state, stepId) {
       stepIds[stepIds.indexOf(stepId)] = null
     }
   })
+  return updated
+}
+
+function updateNumberOfSteps (state, trackId, numberOfSteps) {
+  const updated = clone(state)
+  updated.byId[trackId].numberOfSteps = numberOfSteps
   return updated
 }

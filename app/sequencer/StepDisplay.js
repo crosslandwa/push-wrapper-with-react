@@ -22,32 +22,41 @@ const displayRgb = ({isCurrentStep, hasNote, velocity}, fadeEffect = x => x) => 
   return hasNote ? fadeEffect(Colours.blue, velocity) : Colours.off
 }
 
-const StepDisplay = ({pads, onClick, onRelease = () => {}, stepData}) => (
+const StepDisplay = ({pads, numberOfSteps, onClick, onRelease = () => {}, stepData}) => (
   <div style={style} >
-    {pads.map((pad, stepNumber) => (
-      <DomGridPad
-        key={stepNumber}
-        active={stepData[stepNumber].isCurrentStep || stepData[stepNumber].hasNote}
-        rgb={displayRgb(stepData[stepNumber], domFade)}
-        padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
-        padReleased={() => onRelease(stepData[stepNumber].id)}
-      >
-        <PushGridPad
+    {pads.map((pad, stepNumber) => stepNumber < numberOfSteps
+      ? (
+        <DomGridPad
           key={stepNumber}
-          rgb={displayRgb(stepData[stepNumber], fade)}
-          pad={pad}
+          active={stepData[stepNumber].isCurrentStep || stepData[stepNumber].hasNote}
+          rgb={displayRgb(stepData[stepNumber], domFade)}
           padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
           padReleased={() => onRelease(stepData[stepNumber].id)}
-        />
-      </DomGridPad>
-    ))}
+        >
+          <PushGridPad
+            key={stepNumber}
+            rgb={displayRgb(stepData[stepNumber], fade)}
+            pad={pad}
+            padPressed={() => onClick(stepNumber, stepData[stepNumber].id)}
+            padReleased={() => onRelease(stepData[stepNumber].id)}
+          />
+        </DomGridPad>
+      )
+      : (
+        <DomGridPad rgb={Colours.black} active={true} key={stepNumber}>
+          <PushGridPad rgb={Colours.black} pad={pad} />
+        </DomGridPad>
+      )
+
+        )}
   </div>
 )
 
-const mapStateToProps = (state, { trackId }) => {
+const mapStateToProps = (state, { pads, trackId }) => {
   const track = trackSelector(state, trackId)
   return {
-    stepData: [...Array(track.numberOfSteps).keys()].map(stepNumber => {
+    numberOfSteps: track.numberOfSteps,
+    stepData: pads.map((pad, stepNumber) => {
       const stepId = track.stepIds[stepNumber]
       return {
         id: stepId,

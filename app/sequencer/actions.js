@@ -147,3 +147,11 @@ export function changeBpmBy (delta) {
     bpm: Math.max(20, Math.min(currentBpm(getState()) + delta, 300))
   })
 }
+
+export function changeNumberOfStepsBy (trackId, delta) {
+  return (dispatch, getState) => dispatch({
+    type: 'TRACK_UPDATE_NUMBER_OF_STEPS',
+    id: trackId,
+    numberOfSteps: Math.max(1, Math.min(trackSelector(getState(), trackId).numberOfSteps + delta, 32))
+  })
+}
