@@ -10,6 +10,7 @@ import StepJumping from './sequencer/StepJumping'
 import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
+import PatternSelectPads from './sequencer/PatternSelectPads'
 
 import { connect } from 'react-redux'
 import { currentPattern, patternIds, currentTrack, selectedStep } from './selectors'
@@ -80,7 +81,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
           : <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
         }
         <LCDComponent pushLcdSegmentsRow={push.lcdSegmentsRow}/>
-        <GridSelectButtons trackIds={trackIds} patternIds={patternIds} push={push}/>
+        <GridSelectButtons trackIds={trackIds} push={push}/>
         <div style={gridStyle}>
           {[...Array(8).keys()].map(index => (
             <TrackControlComponent
@@ -99,10 +100,20 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
             whiteRow={push.gridRow(4)}
             trackId={selectedTrackId}
           />
-          <StepControlComponent
-            pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
-            trackId={selectedTrackId}
-          />
+          {pushState.modifiers.clip
+            ? (
+              <PatternSelectPads
+                pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
+                patternIds={patternIds}
+              />
+            ) : (
+              <StepControlComponent
+                pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
+                trackId={selectedTrackId}
+              />
+            )
+          }
+
         </div>
       </div>
       <div style={rhButtonsStyle} >

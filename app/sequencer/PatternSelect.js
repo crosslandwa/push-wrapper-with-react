@@ -2,25 +2,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createPatternWithCurrentKit, selectPattern } from './patternActions'
-import DomGridButton from '../push/DomGridButton'
-import PushGridSelectButton from '../push/PushGridSelectButton'
+import DomGridPad from '../push/DomGridPad'
+import PushGridPad from '../push/PushGridPad'
 import { Colours } from '../push/colours'
 import { currentPattern } from '../selectors'
 
 const PatternSelect = props => {
-  const {button, patternId, selectPattern, selected} = props
+  const {pad, patternId, selectPattern, selected} = props
   return (
-    <DomGridButton
-      onPressed={selectPattern}
+    <DomGridPad
+      padPressed={selectPattern}
       active={true}
       rgb={selected ? Colours.blue : (patternId ? Colours.orange : Colours.off)}
     >
-      <PushGridSelectButton
-        button={button}
-        onPressed={selectPattern}
+      <PushGridPad
+        pad={pad}
+        padPressed={selectPattern}
         rgb={selected ? Colours.blue : (patternId ? Colours.orange : Colours.off)}
       />
-    </DomGridButton>
+    </DomGridPad>
   )
 }
 
