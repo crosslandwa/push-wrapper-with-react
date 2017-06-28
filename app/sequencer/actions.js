@@ -2,7 +2,7 @@ const context = window.AudioContext ? new window.AudioContext() : new window.web
 const Scheduling = require('wac.scheduling')(context)
 
 import { playVoiceForTrack } from '../voices/actions'
-import { currentBpm, currentPattern, currentVoice, currentStepNumberForTrack, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
+import { currentBpm, currentPattern, currentVoice, currentStepNumberForTrack, currentTracksForPattern, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -69,14 +69,12 @@ export function startSequence (stepNumber = 0) {
 
 function advanceSequence (stepTimeMs) {
   return (dispatch, getState) => {
-    const { sequencer: { nextSteps, playing } } = getState()
+    const { sequencer: { playing } } = getState()
+    const patternTracks = currentTracksForPattern(getState())
+    const currentSteps = patternTracks.map(track => nextStepNumberForTrack(getState(), track.id))
+    const nextSteps = patternTracks.map((track, index) => (currentSteps[index] + 1) % track.numberOfSteps)
     if (!playing) return
-    dispatch({
-      type: 'SEQUENCER_ADVANCE_STEP',
-      currentSteps: nextSteps.slice(),
-      nextSteps: nextSteps.map(nextStep => (nextStep + 1) % 32), // TODO track.numberOfSteps
-      nowMs: stepTimeMs || Scheduling.nowMs()
-    })
+    dispatch({ type: 'SEQUENCER_ADVANCE_STEP', currentSteps, nextSteps, nowMs: stepTimeMs || Scheduling.nowMs() })
     return dispatch(playSequencedVoices())
   }
 }

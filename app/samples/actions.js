@@ -1,6 +1,6 @@
-// TODO probably pass this is in, created as singleton in App...
 import { sampleIds } from '../selectors'
 
+// TODO probably pass this is in, created as singleton in App...
 const audioContext = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext()
 const buffers = {}
 

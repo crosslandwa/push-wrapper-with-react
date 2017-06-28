@@ -43,6 +43,9 @@ export const trackIds = state => tracksSelector(state).allIds
 
 export const currentTrack = state => trackSelector(state, state.ui.selectedTrackId)
 
+export const currentTracksForPattern = state => currentPattern(state).trackIds
+  .map(trackId => trackSelector(state, trackId))
+
 export const trackSelector = createSelector(
   [tracksSelector, identity(1)],
   (tracks, id) => tracks.byId[id]
