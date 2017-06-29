@@ -44,7 +44,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
   let StepControlComponent = StepControl
   if (pushState.modifiers.shift) {
     StepControlComponent = StepJumping
-  } else if (pushState.modifiers.del) {
+  } else if (pushState.modifiers.delete) {
     StepControlComponent = StepDelete
   }
 
@@ -63,7 +63,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
             <TrackControlComponent
               key={index}
               recording={recording}
-              del={pushState.modifiers.del}
+              del={pushState.modifiers.delete}
               trackId={trackIds[index]}
               pad={push.gridRow(7)[index]}
             />
