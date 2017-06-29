@@ -11,7 +11,6 @@ const paddedRow = row => row.concat(emptyRow).slice(0, 8)
 const style = {
   display: 'flex',
   width: '100%',
-  height: '100%',
   flexWrap: 'wrap',
   justifyContent: 'space-around',
   backgroundColor: '#e16301',

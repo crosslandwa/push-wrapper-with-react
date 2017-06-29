@@ -20,13 +20,14 @@ import StepControlKnobs from './sequencer/StepControlKnobs'
 const columnWidth = 56
 
 const pushContainerStyle = {
-  display: 'table',
+  display: 'flex',
   backgroundColor: '#4a4a4a',
   borderStyle: 'solid',
   borderWidth: 2,
   borderRadius: 4,
   boxShadow: 'inset 0px 0px 200px rgba(25, 25, 25, 1)',
-  padding: 12
+  padding: 12,
+  width: columnWidth * 14
 }
 
 const lhButtonsStyle = {
@@ -69,11 +70,8 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
   return (
     <div style={pushContainerStyle} >
       <div style={lhButtonsStyle}>
-        <div style={buttonColumnStyle}>
-          <PushControlModifiers push={push} />
-          <TransportControls push={push} />
-        </div>
-        <div style={buttonColumnStyle} />
+        <PushControlModifiers push={push} />
+        <TransportControls push={push} />
       </div>
       <div style={{width: 544}}>
         {isStepSelected
