@@ -1,12 +1,14 @@
 'use strict'
 import React from 'react'
-import TransportControls from './TransportControls'
 import ModifierButton from './ModifierButton'
+import TransportButton from './TransportButton'
 import PushKnob from '../push/PushKnob'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
 import BpmControlKnob from '../sequencer/BpmControlKnob'
 import { clipOff, clipOn, deleteOff, deleteOn, shiftOff, shiftOn } from '../push/actions'
+import { startSequence, stopSequence, armSequencer, disarmSequencer } from '../sequencer/actions'
+import { Colours } from '../push/colours'
 
 const lhStyle = {
   display: 'flex',
@@ -41,7 +43,24 @@ export const LeftSideControls = ({push}) => (
       <ClickyDraggy><DomKnob /></ClickyDraggy>
     </BpmControlKnob>
     {createModifier(push ,'Delete', deleteOn, deleteOff, 'Backspace')}
-    <TransportControls push={push} />
+    <TransportButton
+      modifier='recording'
+      label='Rec'
+      pushButton={push.button('Rec')}
+      turnOn={armSequencer}
+      turnOff={disarmSequencer}
+      keypress='a'
+      rgb={Colours.red}
+    />
+    <TransportButton
+      modifier='playing'
+      label='Play'
+      pushButton={push.button('Play')}
+      turnOn={startSequence}
+      turnOff={stopSequence}
+      keypress=' ' // space bar
+      rgb={Colours.green}
+    />
   </div>
 )
 

@@ -24,13 +24,14 @@ const padStyleActive = (rgb) => ({
   borderColor: `rgba(100, 100, 100, 0.3)`
 })
 
-const DomButton = ({active, children, padPressed, padReleased, rgb = Colours.orange, label = ''}) => (
+const DomButton = ({active, children, doubleHeight, padPressed, padReleased, rgb = Colours.orange, label = ''}) => (
   <div
     onMouseDown={() => padPressed && padPressed()}
     onMouseUp={() => padReleased && padReleased()}
     style={Object.assign({},
       padStyleBase,
-      active ? padStyleActive(rgb) : {}
+      active ? padStyleActive(rgb) : {},
+      doubleHeight ? { height: 48, lineHeight: '48px' } : {}
     )}
   >
     {label}
