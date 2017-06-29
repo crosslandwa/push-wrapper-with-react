@@ -30,7 +30,7 @@ const TrackVoiceControl = ({knobs, trackId}) => {
         <ClickyDraggy><DomKnob /></ClickyDraggy>
       </DecayKnob>
       <NumberOfStepsKnob trackId={trackId} >
-        <PushKnob knob={knobs[3]} />
+        <PushKnob knob={knobs[4]} />
         <ClickyDraggy><DomKnob /></ClickyDraggy>
       </NumberOfStepsKnob>
     </ChannelKnobs>
