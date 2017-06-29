@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { startSequence, stopSequence, armSequencer, disarmSequencer } from './sequencer/actions'
-import DomPushButton from './push/DomPushButton'
+import DomButton from './push/DomButton'
 import { Colours } from './push/colours'
 import PushButton from './push/PushButton'
 import PushKnob from './push/PushKnob'
@@ -50,9 +50,9 @@ class TransportControls extends React.Component {
           <PushKnob knob={push.tempoKnob()} />
           <ClickyDraggy><DomKnob /></ClickyDraggy>
         </BpmControlKnob>
-        <DomPushButton label='Rec' padPressed={this.toggleArmed} active={recording} rgb={Colours.red} />
+        <DomButton label='Rec' padPressed={this.toggleArmed} active={recording} rgb={Colours.red} />
         <PushButton button={push.button('Rec')} dim={true} on={recording} onPressed={this.toggleArmed} />
-        <DomPushButton label='Play' padPressed={this.togglePlay} active={playing} rgb={Colours.green} />
+        <DomButton label='Play' padPressed={this.togglePlay} active={playing} rgb={Colours.green} />
         <PushButton button={push.button('Play')} dim={true} on={playing} onPressed={this.togglePlay} />
       </div>
     )

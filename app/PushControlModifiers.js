@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { clipOff, clipOn, deleteOff, deleteOn, shiftOff, shiftOn } from './push/actions'
-import DomPushButton from './push/DomPushButton'
+import DomButton from './push/DomButton'
 import PushButton from './push/PushButton'
 
 import bindKeypress from './utils/bindKeypress'
@@ -65,7 +65,7 @@ class PushControlModifiers extends React.Component {
     const {clip, shift, push, del} = this.props
     return (
       <div>
-        <DomPushButton active={clip}
+        <DomButton active={clip}
           label='Clip'
           padPressed={this.toggleClip}
         />
@@ -74,7 +74,7 @@ class PushControlModifiers extends React.Component {
           on={clip}
           onPressed={this.toggleClip}
         />
-        <DomPushButton active={shift}
+        <DomButton active={shift}
           label='Shift'
           padPressed={this.toggleShift}
         />
@@ -84,7 +84,7 @@ class PushControlModifiers extends React.Component {
           onPressed={this.shiftOn}
           onReleased={this.shiftOff}
         />
-        <DomPushButton active={del}
+        <DomButton active={del}
           label='Delete'
           padPressed={this.toggleDelete}
         />
