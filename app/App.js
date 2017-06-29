@@ -16,8 +16,6 @@ import { currentPattern, patternIds, currentTrack, selectedStep } from './select
 import LCDComponent from './ui/LCDComponent'
 import StepControlKnobs from './sequencer/StepControlKnobs'
 
-const columnWidth = 56
-
 const pushContainerStyle = {
   display: 'flex',
   backgroundColor: '#4a4a4a',
@@ -25,8 +23,8 @@ const pushContainerStyle = {
   borderWidth: 2,
   borderRadius: 4,
   boxShadow: 'inset 0px 0px 200px rgba(25, 25, 25, 1)',
-  padding: 12,
-  width: columnWidth * 14
+  padding: '12px 6px',
+  width: 770
 }
 
 const gridStyle = {
