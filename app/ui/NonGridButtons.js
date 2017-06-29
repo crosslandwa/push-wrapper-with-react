@@ -2,6 +2,10 @@
 import React from 'react'
 import TransportControls from './TransportControls'
 import ModifierButton from './ModifierButton'
+import PushKnob from '../push/PushKnob'
+import ClickyDraggy from '../push/ClickyDraggy'
+import DomKnob from '../push/DomKnob'
+import BpmControlKnob from '../sequencer/BpmControlKnob'
 import { clipOff, clipOn, deleteOff, deleteOn, shiftOff, shiftOn } from '../push/actions'
 
 const lhStyle = {
@@ -32,6 +36,10 @@ const createModifier = (push, name, on, off, keypress='') => (
 
 export const LeftSideControls = ({push}) => (
   <div style={lhStyle}>
+    <BpmControlKnob>
+      <PushKnob knob={push.tempoKnob()} />
+      <ClickyDraggy><DomKnob /></ClickyDraggy>
+    </BpmControlKnob>
     {createModifier(push ,'Delete', deleteOn, deleteOff, 'Backspace')}
     <TransportControls push={push} />
   </div>
