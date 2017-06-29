@@ -1,11 +1,11 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { clipOff, clipOn, deleteOff, deleteOn, shiftOff, shiftOn } from './push/actions'
-import DomButton from './push/DomButton'
-import PushButton from './push/PushButton'
+import { clipOff, clipOn, deleteOff, deleteOn, shiftOff, shiftOn } from '../push/actions'
+import DomButton from '../push/DomButton'
+import PushButton from '../push/PushButton'
 
-import bindKeypress from './utils/bindKeypress'
+import bindKeypress from '../utils/bindKeypress'
 
 class PushControlModifiers extends React.Component {
   constructor(props) {

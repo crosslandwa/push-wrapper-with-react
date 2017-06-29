@@ -1,16 +1,16 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { startSequence, stopSequence, armSequencer, disarmSequencer } from './sequencer/actions'
-import DomButton from './push/DomButton'
-import { Colours } from './push/colours'
-import PushButton from './push/PushButton'
-import PushKnob from './push/PushKnob'
-import ClickyDraggy from './push/ClickyDraggy'
-import DomKnob from './push/DomKnob'
-import BpmControlKnob from './sequencer/BpmControlKnob'
+import { startSequence, stopSequence, armSequencer, disarmSequencer } from '../sequencer/actions'
+import DomButton from '../push/DomButton'
+import { Colours } from '../push/colours'
+import PushButton from '../push/PushButton'
+import PushKnob from '../push/PushKnob'
+import ClickyDraggy from '../push/ClickyDraggy'
+import DomKnob from '../push/DomKnob'
+import BpmControlKnob from '../sequencer/BpmControlKnob'
 
-import bindKeypress from './utils/bindKeypress'
+import bindKeypress from '../utils/bindKeypress'
 
 class TransportControls extends React.Component {
   constructor(props) {

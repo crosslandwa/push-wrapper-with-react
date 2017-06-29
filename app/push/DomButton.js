@@ -3,7 +3,6 @@ import React from 'react'
 import { Colours } from './colours'
 
 const padStyleBase = {
-  display: 'inline-block',
   height: 24,
   lineHeight: '24px',
   textAlign: 'center',
