@@ -32,7 +32,6 @@ const createModifier = (push, name, on, off, keypress='') => (
 
 export const LeftSideControls = ({push}) => (
   <div style={lhStyle}>
-    {createModifier(push ,'Clip', clipOn, clipOff, 'c')}
     {createModifier(push ,'Delete', deleteOn, deleteOff, 'Backspace')}
     <TransportControls push={push} />
   </div>
@@ -40,6 +39,7 @@ export const LeftSideControls = ({push}) => (
 
 export const RightSideControls = ({push}) => (
   <div style={rhStyle}>
+    {createModifier(push ,'Clip', clipOn, clipOff, 'c')}
     {createModifier(push ,'Shift', shiftOn, shiftOff, 'Shift')}
   </div>
 )
