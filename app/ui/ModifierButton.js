@@ -4,19 +4,49 @@ import { connect } from 'react-redux'
 import DomButton from '../push/DomButton'
 import PushButton from '../push/PushButton'
 
-const ModifierButton = ({active, label, pushButton, turnOff, turnOn}) => (
-  <DomButton active={active}
-    label={label}
-    padPressed={() => active ? turnOff() : turnOn()}
-  >
-    <PushButton button={pushButton}
-      dim={true}
-      on={active}
-      onPressed={turnOn}
-      onReleased={turnOff}
-    />
-  </DomButton>
-)
+import bindKeypress from '../utils/bindKeypress'
+
+class ModifierButton extends React.Component {
+  constructor(props) {
+    super(props)
+    this.keypress = this.keypress.bind(this)
+    this.toggle = this.toggle.bind(this)
+  }
+
+  toggle () {
+    this.props.active ? this.props.turnOff() : this.props.turnOn()
+  }
+
+  render () {
+    const {active, label, pushButton, turnOff, turnOn} = this.props
+    return (
+      <DomButton active={active}
+        label={label}
+        padPressed={this.toggle}
+      >
+        <PushButton button={pushButton}
+          dim={true}
+          on={active}
+          onPressed={turnOn}
+          onReleased={turnOff}
+        />
+      </DomButton>
+    )
+  }
+
+  keypress (event) {
+    if (event.key === this.props.keypress) {
+      event.preventDefault()
+      this.toggle()
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.keypress) {
+      bindKeypress(this.keypress)
+    }
+  }
+}
 
 const mapStateToProps = ({ push: { modifiers }}, ownProps) => ({
   active: modifiers[ownProps.modifier]

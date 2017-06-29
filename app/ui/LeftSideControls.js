@@ -11,21 +11,22 @@ const style = {
   justifyContent: 'flex-end'
 }
 
-const createModifier = (push, name, on, off) => (
+const createModifier = (push, name, on, off, keypress='') => (
   <ModifierButton
     modifier={name.toLowerCase()}
     label={name}
     pushButton={push.button(name)}
     turnOn={on}
     turnOff={off}
+    keypress={keypress}
   />
 )
 
 const LeftSideControls = ({push}) => (
   <div style={style}>
-    {createModifier(push ,'Clip', clipOn, clipOff)}
-    {createModifier(push ,'Delete', deleteOn, deleteOff)}
-    {createModifier(push ,'Shift', shiftOn, shiftOff)}
+    {createModifier(push ,'Clip', clipOn, clipOff, 'c')}
+    {createModifier(push ,'Delete', deleteOn, deleteOff, 'Backspace')}
+    {createModifier(push ,'Shift', shiftOn, shiftOff, 'Shift')}
     <TransportControls push={push} />
   </div>
 )
