@@ -18,7 +18,7 @@ export default function push (state = initialPushState, { type }) {
     case 'PUSH_DELETE_OFF':
       return Object.assign({},
         state,
-        {modifiers: Object.assign({}, state.modifiers, {del: type === 'PUSH_DELETE_ON'})}
+        {modifiers: Object.assign({}, state.modifiers, {delete: type === 'PUSH_DELETE_ON'})}
       )
     case 'PUSH_CLIP_ON':
     case 'PUSH_CLIP_OFF':
