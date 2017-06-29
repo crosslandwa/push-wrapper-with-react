@@ -6,15 +6,18 @@ import { currentBpm, currentPattern, currentSample, currentTrack, currentVoice, 
 
 const LCDComponent = (props) => <LCD {...props} />
 
+const bpmRow = (state, ownProps) => ['', '', '', '', '', '', '    bpm:', currentBpm(state)]
+
 const voiceDisplay = (state, ownProps) => {
   const track = currentTrack(state)
   const trackIndex = selectedTrackIndex(state)
   const voice = currentVoice(state)
   return {
     data: [
-      [voice.pitch, currentSample(state).name, currentBpm(state), voice.decay, track.numberOfSteps],
-      ['pitch', 'sample', 'bpm', 'decay', 'length'],
-      [`voice: ${trackIndex}`]
+      [voice.pitch, currentSample(state).name, voice.decay, track.numberOfSteps],
+      ['pitch', 'sample', 'decay', 'length'],
+      [`voice: ${trackIndex}`],
+      bpmRow(state, ownProps)
     ]
   }
 }
@@ -27,7 +30,8 @@ const stepDisplay = (state, ownProps) => {
     data: [
       [step.midiPitch || '-', step.midiVelocity],
       ['pitch', 'velocity'],
-      [`step: ${stepNumber}`]
+      [`step: ${stepNumber}`],
+      bpmRow(state, ownProps)
     ]
   }
 }

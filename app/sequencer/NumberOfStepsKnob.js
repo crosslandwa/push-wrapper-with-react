@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { changeNumberOfStepsBy } from './actions'
 
-const BpmControlKnob = ({ children, trackId, updateNumberOfSteps }) => (
+const NumberOfStepsKnob = ({ children, trackId, updateNumberOfSteps }) => (
   <div>
     {React.Children.map(children, (child) => React.cloneElement(
       child,
@@ -24,4 +24,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BpmControlKnob)
+export default connect(mapStateToProps, mapDispatchToProps)(NumberOfStepsKnob)

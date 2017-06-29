@@ -5,6 +5,10 @@ import { startSequence, stopSequence, armSequencer, disarmSequencer } from './se
 import DomPushButton from './push/DomPushButton'
 import { Colours } from './push/colours'
 import PushButton from './push/PushButton'
+import PushKnob from './push/PushKnob'
+import ClickyDraggy from './push/ClickyDraggy'
+import DomKnob from './push/DomKnob'
+import BpmControlKnob from './sequencer/BpmControlKnob'
 
 import bindKeypress from './utils/bindKeypress'
 
@@ -42,6 +46,10 @@ class TransportControls extends React.Component {
     const {playing, recording, push} = this.props
     return (
       <div>
+        <BpmControlKnob>
+          <PushKnob knob={push.tempoKnob()} />
+          <ClickyDraggy><DomKnob /></ClickyDraggy>
+        </BpmControlKnob>
         <DomPushButton label='Rec' padPressed={this.toggleArmed} active={recording} rgb={Colours.red} />
         <PushButton button={push.button('Rec')} dim={true} on={recording} onPressed={this.toggleArmed} />
         <DomPushButton label='Play' padPressed={this.togglePlay} active={playing} rgb={Colours.green} />
