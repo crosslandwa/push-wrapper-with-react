@@ -4,11 +4,19 @@ import TransportControls from './TransportControls'
 import ModifierButton from './ModifierButton'
 import { clipOff, clipOn, deleteOff, deleteOn, shiftOff, shiftOn } from '../push/actions'
 
-const style = {
+const lhStyle = {
   display: 'flex',
   width: 112,
   flexDirection: 'column',
   justifyContent: 'flex-end'
+}
+
+const rhStyle = {
+  display: 'flex',
+  width: 112,
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+  alignItems: 'center'
 }
 
 const createModifier = (push, name, on, off, keypress='') => (
@@ -22,13 +30,16 @@ const createModifier = (push, name, on, off, keypress='') => (
   />
 )
 
-const LeftSideControls = ({push}) => (
-  <div style={style}>
+export const LeftSideControls = ({push}) => (
+  <div style={lhStyle}>
     {createModifier(push ,'Clip', clipOn, clipOff, 'c')}
     {createModifier(push ,'Delete', deleteOn, deleteOff, 'Backspace')}
-    {createModifier(push ,'Shift', shiftOn, shiftOff, 'Shift')}
     <TransportControls push={push} />
   </div>
 )
 
-export default LeftSideControls
+export const RightSideControls = ({push}) => (
+  <div style={rhStyle}>
+    {createModifier(push ,'Shift', shiftOn, shiftOff, 'Shift')}
+  </div>
+)

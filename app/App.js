@@ -2,7 +2,7 @@
 import React from 'react'
 import DomGridPad from './push/DomGridPad'
 import GridSelectButtons from './ui/GridSelectButtons'
-import LeftSideControls from './ui/LeftSideControls'
+import { LeftSideControls, RightSideControls } from './ui/NonGridButtons'
 import StepControl from './sequencer/StepControl'
 import StepDelete from './sequencer/StepDelete'
 import StepJumping from './sequencer/StepJumping'
@@ -29,12 +29,6 @@ const pushContainerStyle = {
   width: columnWidth * 14
 }
 
-const rhButtonsStyle = {
-  display: 'table-cell',
-  width: columnWidth * 3,
-  verticalAlign: 'bottom'
-}
-
 const gridStyle = {
   display: 'flex',
   flexWrap: 'wrap',
@@ -43,12 +37,6 @@ const gridStyle = {
   borderStyle: 'solid',
   borderWidth: 2,
   borderColor: 'transparent'
-}
-
-const buttonColumnStyle = {
-  display: 'inline-block',
-  width: columnWidth,
-  verticalAlign: 'bottom'
 }
 
 const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected, selectedTrackId }) => {
@@ -104,11 +92,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
 
         </div>
       </div>
-      <div style={rhButtonsStyle} >
-        <div style={buttonColumnStyle} />
-        <div style={buttonColumnStyle} />
-        <div style={buttonColumnStyle} />
-      </div>
+      <RightSideControls push={push} />
     </div>
   )
 }
