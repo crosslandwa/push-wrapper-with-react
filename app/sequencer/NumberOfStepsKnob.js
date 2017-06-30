@@ -12,6 +12,7 @@ const NumberOfStepsKnob = props => (
     <PushKnob {...props} />
   </ClickyDraggy>
 )
+
 const mapStateToProps = (state, ownProps) => {
   return {}
 }

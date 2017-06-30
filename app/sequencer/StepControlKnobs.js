@@ -12,10 +12,7 @@ import { selectedStep } from '../selectors'
 const StepControlKnobs = ({knobs, stepId}) => {
   return (
     <ChannelKnobs>
-      <StepPitchControl stepId={stepId} >
-        <PushKnob knob={knobs[0]} />
-        <ClickyDraggy><DomKnob /></ClickyDraggy>
-      </StepPitchControl>
+      <StepPitchControl stepId={stepId} knob={knobs[0]} />
       <StepVelocityControl stepId={stepId} >
         <PushKnob knob={knobs[1]} />
         <ClickyDraggy><DomKnob /></ClickyDraggy>
