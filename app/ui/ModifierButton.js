@@ -48,17 +48,4 @@ class ModifierButton extends React.Component {
   }
 }
 
-const mapStateToProps = ({ push: { modifiers }}, ownProps) => ({
-  active: modifiers[ownProps.modifier]
-})
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  turnOn () {
-    dispatch(ownProps.turnOn())
-  },
-  turnOff () {
-    dispatch(ownProps.turnOff())
-  }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ModifierButton)
+export default ModifierButton

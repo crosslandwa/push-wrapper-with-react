@@ -1,12 +1,13 @@
 'use strict'
 import React from 'react'
-import ModifierButton from './ModifierButton'
 import TransportButton from './TransportButton'
 import PushKnob from '../push/PushKnob'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
 import BpmControlKnob from '../sequencer/BpmControlKnob'
-import { clipOff, clipOn, deleteOff, deleteOn, shiftOff, shiftOn } from '../push/actions'
+import ClipModifierButton from './ClipModifierButton'
+import DeleteModifierButton from './DeleteModifierButton'
+import ShiftModifierButton from './ShiftModifierButton'
 import { startSequence, stopSequence, armSequencer, disarmSequencer } from '../sequencer/actions'
 import { Colours } from '../push/colours'
 
@@ -25,17 +26,6 @@ const rhStyle = {
   alignItems: 'center'
 }
 
-const createModifier = (push, name, on, off, keypress='') => (
-  <ModifierButton
-    modifier={name.toLowerCase()}
-    label={name}
-    pushButton={push.button(name)}
-    turnOn={on}
-    turnOff={off}
-    keypress={keypress}
-  />
-)
-
 export const LeftSideControls = ({push}) => (
   <div style={lhStyle}>
     <div/>
@@ -47,7 +37,7 @@ export const LeftSideControls = ({push}) => (
       <DomKnob />
     </div>
     <div>
-      {createModifier(push ,'Delete', deleteOn, deleteOff, 'Backspace')}
+      <DeleteModifierButton pushButton={push.button('Delete')} />
     </div>
     <div>
       <TransportButton
@@ -76,11 +66,11 @@ export const RightSideControls = ({push}) => (
   <div style={rhStyle}>
     <div/>
     <div>
-      {createModifier(push ,'Clip', clipOn, clipOff, 'c')}
+      <ClipModifierButton pushButton={push.button('Clip')} />
     </div>
     <div/>
     <div>
-      {createModifier(push ,'Shift', shiftOn, shiftOff, 'Shift')}
+      <ShiftModifierButton pushButton={push.button('Shift')} />
     </div>
     <div/>
   </div>
