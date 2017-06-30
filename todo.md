@@ -4,7 +4,7 @@ PITCH CONTROL
 
 - re-trigger voice without click
 - voice muting
-- multiple kits
+- duplicate kit
 - more samples
 - multiple/switchable patterns (work on current one in a 'scratch pad')
 - save state to/from JSON

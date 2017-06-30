@@ -12,7 +12,7 @@ import TrackVoiceControl from './voices/TrackVoiceControl'
 import PatternSelectPads from './sequencer/PatternSelectPads'
 
 import { connect } from 'react-redux'
-import { currentPattern, patternIds, currentTrack, selectedStep } from './selectors'
+import { currentPattern, kitIds, patternIds, currentTrack, selectedStep } from './selectors'
 import LCDComponent from './ui/LCDComponent'
 import StepControlKnobs from './sequencer/StepControlKnobs'
 
@@ -37,7 +37,7 @@ const gridStyle = {
   borderColor: 'transparent'
 }
 
-const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected, selectedTrackId }) => {
+const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepSelected, selectedTrackId }) => {
 
   let StepControlComponent = StepControl
   if (pushState.modifiers.shift) {
@@ -55,7 +55,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
           : <TrackVoiceControl knobs={push.channelKnobs()} trackId={selectedTrackId} />
         }
         <LCDComponent pushLcdSegmentsRow={push.lcdSegmentsRow}/>
-        <GridSelectButtons trackIds={trackIds} push={push}/>
+        <GridSelectButtons kitIds={kitIds} trackIds={trackIds} push={push}/>
         <div style={gridStyle}>
           {[...Array(8).keys()].map(index => (
             <TrackControlComponent
@@ -98,6 +98,7 @@ const App = ({ patternIds, push, pushState, trackIds, recording, isStepSelected,
 const mapStateToProps = (state, ownProps) => {
   const {push, sequencer: {recording}} = state
   return {
+    kitIds: kitIds(state),
     patternIds: patternIds(state),
     pushState: push,
     recording,

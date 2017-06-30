@@ -4,6 +4,7 @@ import DomGridButton from '../push/DomGridButton'
 import PushGridSelectButton from '../push/PushGridSelectButton'
 import { Colours } from '../push/colours'
 import TrackSelectButton from '../voices/TrackSelectButton'
+import KitSelectButton from '../sequencer/KitSelectButton'
 
 const style = {
   display: 'flex',
@@ -15,9 +16,15 @@ const style = {
   borderColor: 'transparent'
 }
 
-const GridSelectButtons = ({trackIds, push}) => (
+const GridSelectButtons = ({kitIds, trackIds, push}) => (
   <div style={style}>
-    {[...Array(8).keys()].map(index => <DomGridButton key={index} />)}
+    {[...Array(8).keys()].map(index => (
+      <KitSelectButton
+        key={index}
+        button={push.channelSelectButtons()[index]}
+        kitId={kitIds[index]}
+      />
+    ))}
     {[...Array(8).keys()].map(index => index < trackIds.length
       ? (
         <TrackSelectButton

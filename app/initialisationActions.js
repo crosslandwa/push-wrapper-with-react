@@ -1,7 +1,7 @@
 import { createPattern, selectPattern } from './sequencer/patternActions'
 import { initialisePlayers } from './voices/actions'
 import { loadSample } from './samples/actions'
-import { createKit } from './kits/actions'
+import { createDefaultKit } from './kits/actions'
 import { kitIds, patternIds, sampleIds, sampleSelector } from './selectors'
 
 export function init () {
@@ -23,9 +23,9 @@ export function init () {
               return dispatch(loadSample(sample.url, sample.name, sample.id))
           }))
       })
-      .then(sampleIds => {
+      .then(() => {
         return (currentKitIds.length == 0)
-          ? dispatch(createKit(sampleIds))
+          ? dispatch(createDefaultKit())
           : currentKitIds[0]
       })
       .then(kitId => {
