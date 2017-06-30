@@ -1,5 +1,4 @@
 import { selectTrack } from '../ui/actions'
-import { switchPlayerToTrack } from '../voices/actions'
 import { currentKit, patternIds, patternSelector, sampleIds, trackIds, selectedTrackIndex } from '../selectors'
 
 export function createPatternWithCurrentKit() {
@@ -28,7 +27,6 @@ export function selectPattern (id) {
     const pattern = patternSelector(getState(), id)
     const index = selectedTrackIndex(getState())
     dispatch({ type: 'PATTERN_SELECT', id })
-    pattern.trackIds.forEach(trackId => dispatch(switchPlayerToTrack(trackId)))
     dispatch(selectTrack(pattern.trackIds[Math.max(index, 0)]))
   }
 }

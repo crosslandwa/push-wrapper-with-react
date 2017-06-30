@@ -6,8 +6,6 @@ const playbackRate = note => midiNoteToF(note) / middleCFreq
 
 class Player {
   constructor () {
-    const emptyBuffer = context.createBuffer(1, context.sampleRate / 1000, context.sampleRate)
-    this.buffer = emptyBuffer
     const self = this
     this.envelope = context.createGain()
     this.envelope.connect(context.destination) // TODO attach to mixer
@@ -16,11 +14,11 @@ class Player {
     this.startedListeners = []
   }
 
-  play (pitch, velocity, decayPercent = 100) {
+  play (buffer, pitch, velocity, decayPercent = 100) {
     // this sounds loads better than using wac.sample-player (with an envelope applied over the top). What about re-triggers?
     const source = context.createBufferSource()
-    const playbackLength = (this.buffer.duration * (decayPercent / 100)) / playbackRate(pitch)
-    source.buffer = this.buffer
+    const playbackLength = (buffer.duration * (decayPercent / 100)) / playbackRate(pitch)
+    source.buffer = buffer
     source.playbackRate.value = playbackRate(pitch)
     source.connect(this.envelope)
     source.addEventListener('ended', () => this.stoppedListeners.forEach(listener => listener()))
@@ -31,11 +29,6 @@ class Player {
     this.envelope.gain.setValueAtTime(velocity / 127, now)
     this.envelope.gain.linearRampToValueAtTime(0.8, now + (playbackLength * 0.8))
     this.envelope.gain.linearRampToValueAtTime(0, now + playbackLength)
-  }
-
-  changeSample (buffer) {
-    this.buffer = buffer
-    return this
   }
 
   onStarted (listener) {

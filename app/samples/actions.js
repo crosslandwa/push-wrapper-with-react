@@ -4,6 +4,8 @@ import { sampleIds } from '../selectors'
 const audioContext = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext()
 const buffers = {}
 
+const emptyBuffer = audioContext.createBuffer(1, audioContext.sampleRate / 1000, audioContext.sampleRate)
+
 export function sampleBuffer (sampleId) {
   return buffers[sampleId]
 }

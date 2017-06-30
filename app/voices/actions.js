@@ -12,7 +12,7 @@ export function playVoiceForTrack (trackId, {pitch, velocity}) {
   return (dispatch, getState) => {
     const voice = voiceForTrack(getState(), trackId)
     const playerIndex = currentPattern(getState()).trackIds.indexOf(trackId)
-    players[playerIndex].play(pitch || voice.pitch, velocity, voice.decay)
+    players[playerIndex].play(sampleBuffer(voice.sampleId), pitch || voice.pitch, velocity, voice.decay)
   }
 }
 
@@ -42,19 +42,10 @@ export function initialisePlayers () {
   }
 }
 
-export function switchPlayerToTrack (trackId) {
-  return (dispatch, getState) => {
-    const index = currentPattern(getState()).trackIds.indexOf(trackId)
-    const sample = sampleForTrack(getState(), trackId)
-    return players[index].changeSample(sampleBuffer(sample.id))
-  }
-}
-
 export function switchSample(trackId, sampleId) {
   return (dispatch, getState) => {
     const voiceId = voiceForTrack(getState(), trackId).id
     dispatch({ type: 'VOICE_SWITCH_SAMPLE', voiceId, sampleId })
-    dispatch(switchPlayerToTrack(trackId))
   }
 }
 
