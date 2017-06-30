@@ -12,10 +12,7 @@ import ChannelKnobs from '../ui/ChannelKnobs'
 const TrackVoiceControl = ({knobs, trackId}) => {
   return (
     <ChannelKnobs>
-      <PitchControl trackId={trackId} >
-        <PushKnob knob={knobs[0]} />
-        <ClickyDraggy><DomKnob /></ClickyDraggy>
-      </PitchControl>
+      <PitchControl trackId={trackId} knob={knobs[0]} />
       <SampleSelect trackId={trackId} >
         <PushKnob knob={knobs[1]} />
         <ClickyDraggy><DomKnob /></ClickyDraggy>

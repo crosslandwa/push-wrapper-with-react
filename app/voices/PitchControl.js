@@ -1,33 +1,26 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
+import PushKnob from '../push/PushKnob'
+import ClickyDraggy from '../push/ClickyDraggy'
+import DomKnob from '../push/DomKnob'
 import { updatePitch } from './actions'
 
-const PitchControl = props => {
-  const {trackId, updatePitch} = props
-  return (
-    <div>
-      {React.Children.map(props.children, (child) => React.cloneElement(
-        child,
-        { onTurned: delta => updatePitch(trackId, delta) }
-      ))}
-    </div>
-  )
-}
+const PitchControl = props => (
+  <ClickyDraggy {...props}>
+    <DomKnob />
+    <PushKnob {...props} />
+  </ClickyDraggy>
+)
 
-const mapStateToProps = (state, ownProps) => {
-  return {}
-}
+const mapStateToProps = (state, ownProps) => ({})
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch, { trackId }) => {
   return {
-    updatePitch(trackId, delta) {
+    onTurned(delta) {
       dispatch(updatePitch(trackId, delta))
     }
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PitchControl)
+export default connect(mapStateToProps, mapDispatchToProps)(PitchControl)
