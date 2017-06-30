@@ -1,24 +1,24 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
+import PushKnob from '../push/PushKnob'
+import ClickyDraggy from '../push/ClickyDraggy'
+import DomKnob from '../push/DomKnob'
 import { changeNumberOfStepsBy } from './actions'
 
-const NumberOfStepsKnob = ({ children, trackId, updateNumberOfSteps }) => (
-  <div>
-    {React.Children.map(children, (child) => React.cloneElement(
-      child,
-      { onTurned: delta => updateNumberOfSteps(trackId, delta) }
-    ))}
-  </div>
+const NumberOfStepsKnob = props => (
+  <ClickyDraggy {...props} >
+    <DomKnob />
+    <PushKnob {...props} />
+  </ClickyDraggy>
 )
-
 const mapStateToProps = (state, ownProps) => {
   return {}
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch, { trackId }) => {
   return {
-    updateNumberOfSteps(trackId, delta) {
+    onTurned(delta) {
       dispatch(changeNumberOfStepsBy(trackId, delta))
     }
   }
