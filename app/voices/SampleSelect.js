@@ -1,18 +1,20 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
+import PushKnob from '../push/PushKnob'
+import ClickyDraggy from '../push/ClickyDraggy'
+import DomKnob from '../push/DomKnob'
 import { switchSample } from './actions'
 import { currentSample, sampleIds } from '../selectors'
 
 const SampleSelect = props => {
   const {trackId, changeSample, nextSampleId, prevSampleId} = props
+  const onTurned = delta => changeSample(trackId, delta > 0 ? nextSampleId : prevSampleId)
   return (
-    <div>
-      {React.Children.map(props.children, (child) => React.cloneElement(
-        child,
-        { onTurned: delta => changeSample(trackId, delta > 0 ? nextSampleId : prevSampleId) }
-      ))}
-    </div>
+    <ClickyDraggy {...props} onTurned={onTurned} >
+      <DomKnob />
+      <PushKnob {...props} onTurned={onTurned} />
+    </ClickyDraggy>
   )
 }
 
@@ -37,7 +39,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SampleSelect)
+export default connect(mapStateToProps, mapDispatchToProps)(SampleSelect)
