@@ -1,8 +1,6 @@
 'use strict'
 import React from 'react'
 import TransportButton from './TransportButton'
-import PushKnob from '../push/PushKnob'
-import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
 import BpmControlKnob from '../sequencer/BpmControlKnob'
 import ClipModifierButton from './ClipModifierButton'
@@ -30,10 +28,7 @@ export const LeftSideControls = ({push}) => (
   <div style={lhStyle}>
     <div/>
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-      <BpmControlKnob>
-        <PushKnob knob={push.tempoKnob()} />
-        <ClickyDraggy><DomKnob /></ClickyDraggy>
-      </BpmControlKnob>
+      <BpmControlKnob knob={push.tempoKnob()} />
       <DomKnob />
     </div>
     <div>

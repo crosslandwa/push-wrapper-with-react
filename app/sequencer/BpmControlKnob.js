@@ -1,15 +1,16 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
+import PushKnob from '../push/PushKnob'
+import ClickyDraggy from '../push/ClickyDraggy'
+import DomKnob from '../push/DomKnob'
 import { changeBpmBy } from './actions'
 
-const BpmControlKnob = ({ children, updateBpm }) => (
-  <div>
-    {React.Children.map(children, (child) => React.cloneElement(
-      child,
-      { onTurned: updateBpm }
-    ))}
-  </div>
+const BpmControlKnob = props => (
+  <ClickyDraggy {...props}>
+    <DomKnob />
+    <PushKnob {...props} />
+  </ClickyDraggy>
 )
 
 const mapStateToProps = (state, ownProps) => {
@@ -18,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    updateBpm(delta) {
+    onTurned(delta) {
       dispatch(changeBpmBy(delta))
     }
   }
