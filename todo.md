@@ -4,7 +4,8 @@ PITCH CONTROL
 
 - re-trigger voice without click
 - voice muting
-- duplicate kit
+- duplicate kit (hold duplicate, press kit select button, copies current kit to that kit)
+- duplicate pattern (hold duplicate, press pattern select button, copies current pattern to that pattern)
 - more samples
 - multiple/switchable patterns (work on current one in a 'scratch pad')
 - save state to/from JSON
