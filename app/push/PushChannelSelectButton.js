@@ -26,6 +26,12 @@ class PushChannelSelectButton extends React.Component {
       case Colours.green:
         button.ledOn('green')
         break
+      case Colours.red:
+        button.ledOn('red')
+        break
+      case Colours.yellow:
+        button.ledOn('yellow')
+        break
       case Colours.orange:
       default:
         button.ledOn('orange')

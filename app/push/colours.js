@@ -6,7 +6,8 @@ const Colours = {
   orange: [250, 160, 10],
   red: [200, 10, 0],
   turquoise: [30, 220, 170],
-  white: [240, 240, 240]
+  white: [240, 240, 240],
+  yellow: [230, 240, 70],
 }
 
 const fade = (rgb, velocity) => rgb.map(x => Math.round(x / 127 * velocity))
