@@ -2,7 +2,7 @@ const context = window.AudioContext ? new window.AudioContext() : new window.web
 const Scheduling = require('wac.scheduling')(context)
 
 import { playVoiceForTrack } from '../voices/actions'
-import { currentBpm, currentPattern, currentVoice, currentStepNumberForTrack, currentTracksForPattern, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
+import { currentBpm, currentVoice, currentStepNumberForTrack, currentTracksForPattern, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -90,15 +90,14 @@ function stepLengthMs(bpm) {
 function playSequencedVoices  () {
   return (dispatch, getState) => {
     const { sequencer: { deleteModeTrackIds, lastStepTimeMs } } = getState()
-    currentPattern(getState()).trackIds.forEach((trackId, index) => {
-      const track = trackSelector(getState(), trackId)
+    currentTracksForPattern(getState()).forEach(track => {
       const stepNumber = currentStepNumberForTrack(getState(), track.id)
       const stepId = track.stepIds[stepNumber]
       if (!stepId) return
       const step = stepSelector(getState(), stepId)
-      dispatch(deleteModeTrackIds.includes(trackId)
+      dispatch(deleteModeTrackIds.includes(track.id)
         ? turnStepOff(stepId)
-        : playVoiceForTrack(trackId, {
+        : playVoiceForTrack(track.id, {
             pitch: step.midiPitch,
             velocity: step.midiVelocity
           })
