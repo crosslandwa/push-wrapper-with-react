@@ -60,7 +60,7 @@ export function startSequence (stepNumber = 0) {
     const { sequencer: { playing } } = getState()
     if (!playing) {
       dispatch({ type: 'SEQUENCER_START', stepNumber })
-      dispatch(advanceSequence())
+      dispatch(advanceSequence(Scheduling.nowMs()))
     } else {
       dispatch({ type: 'SEQUENCER_NEXT_STEP', stepNumber })
     }
@@ -70,11 +70,12 @@ export function startSequence (stepNumber = 0) {
 function advanceSequence (stepTimeMs) {
   return (dispatch, getState) => {
     const { sequencer: { playing } } = getState()
+    if (!playing) return
+    
     const patternTracks = currentTracksForPattern(getState())
     const currentSteps = patternTracks.map(track => nextStepNumberForTrack(getState(), track.id))
     const nextSteps = patternTracks.map((track, index) => (currentSteps[index] + 1) % track.numberOfSteps)
-    if (!playing) return
-    dispatch({ type: 'SEQUENCER_ADVANCE_STEP', currentSteps, nextSteps, nowMs: stepTimeMs || Scheduling.nowMs() })
+    dispatch({ type: 'SEQUENCER_ADVANCE_STEP', currentSteps, nextSteps, nowMs: stepTimeMs})
     return dispatch(playSequencedVoices())
   }
 }
