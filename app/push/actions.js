@@ -1,34 +1,11 @@
-export function shiftOn () {
-  return modifierOn('shift')
-}
-
-export function shiftOff () {
-  return modifierOff('shift')
-}
-
-export function deleteOn () {
-  return modifierOn('delete')
-}
-
-export function deleteOff () {
-  return modifierOff('delete')
-}
-
-export function clipOff () {
-  return modifierOff('clip')
-}
-
-export function clipOn () {
-  return modifierOn('clip')
-}
-
-export function fixedLengthOn () {
-  return modifierOn('fixedLength')
-}
-
-export function fixedLengthOff () {
-  return modifierOff('fixedLength')
-}
+export const shiftOn = () => modifierOn('shift')
+export const shiftOff = () => modifierOff('shift')
+export const deleteOn = () => modifierOn('delete')
+export const deleteOff = () => modifierOff('delete')
+export const clipOff = () => modifierOff('clip')
+export const clipOn = () => modifierOn('clip')
+export const fixedLengthOn = () => modifierOn('fixedLength')
+export const fixedLengthOff = () => modifierOff('fixedLength')
 
 function modifierOn (modifier) {
   return { type: 'PUSH_MODIFIER_ON', modifier }
