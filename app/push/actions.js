@@ -1,25 +1,25 @@
 export function shiftOn () {
-  return { type: 'PUSH_SHIFT_ON' }
+  return modifierOn('shift')
 }
 
 export function shiftOff () {
-  return { type: 'PUSH_SHIFT_OFF' }
+  return modifierOff('shift')
 }
 
 export function deleteOn () {
-  return { type: 'PUSH_DELETE_ON' }
+  return modifierOn('delete')
 }
 
 export function deleteOff () {
-  return { type: 'PUSH_DELETE_OFF' }
+  return modifierOff('delete')
 }
 
 export function clipOff () {
-  return { type: 'PUSH_CLIP_OFF' }
+  return modifierOff('clip')
 }
 
 export function clipOn () {
-  return { type: 'PUSH_CLIP_ON' }
+  return modifierOn('clip')
 }
 
 export function fixedLengthOn () {
