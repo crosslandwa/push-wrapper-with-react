@@ -6,21 +6,26 @@ import PushButton from '../push/PushButton'
 
 import bindKeypress from '../utils/bindKeypress'
 
-const recIconStyle = {
+const iconStyle = {
   alignSelf: 'center',
   marginLeft: 'auto',
   marginRight: 'auto',
+}
+
+const recIconStyle = Object.assign({}, iconStyle, {
   height: 24,
   width: 24,
   borderRadius: 50,
   borderWidth: 2,
   borderStyle: 'solid',
   borderColor: 'rgba(100, 100, 100, 1)',
-  boxShadow: 'inset 0px 0px 8px rgba(200, 200, 200, 1)',
-  cursor: 'pointer'
-}
+})
 
-const playIconStyle = {}
+const playIconStyle = Object.assign({}, iconStyle, {
+	borderTop: '12px solid transparent',
+	borderBottom: '12px solid transparent',
+  borderLeft: '24px solid rgba(100, 100, 100, 1)'
+})
 
 class TransportButton extends React.Component {
   constructor(props) {
@@ -39,7 +44,6 @@ class TransportButton extends React.Component {
     return (
       <DomButton active={active}
         doubleHeight={true}
-        label={!isRec && label}
         padPressed={this.toggle}
         rgb={rgb}
       >
