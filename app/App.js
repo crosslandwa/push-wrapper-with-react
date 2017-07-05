@@ -10,6 +10,7 @@ import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
 import PatternSelectPads from './sequencer/PatternSelectPads'
+import PatternLengthPads from './sequencer/PatternLengthPads'
 
 import { connect } from 'react-redux'
 import { currentPattern, kitIds, patternIds, currentTrack, selectedStep } from './selectors'
@@ -40,11 +41,18 @@ const gridStyle = {
 
 const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepSelected, selectedTrackId }) => {
 
-  let StepControlComponent = StepControl
-  if (pushState.modifiers.shift) {
-    StepControlComponent = StepJumping
+  const bottomPads = [...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]
+  let bottomPadsComponent
+  if (pushState.modifiers.fixedLength) {
+    bottomPadsComponent = <PatternLengthPads pads={bottomPads} trackId={selectedTrackId}/>
+  } else if (pushState.modifiers.clip) {
+    bottomPadsComponent = <PatternSelectPads pads={bottomPads} patternIds={patternIds} />
+  } else if (pushState.modifiers.shift) {
+    bottomPadsComponent = <StepJumping pads={bottomPads} trackId={selectedTrackId} />
   } else if (pushState.modifiers.delete) {
-    StepControlComponent = StepDelete
+    bottomPadsComponent = <StepDelete pads={bottomPads} trackId={selectedTrackId} />
+  } else {
+    bottomPadsComponent = <StepControl pads={bottomPads} trackId={selectedTrackId} />
   }
 
   return (
@@ -75,20 +83,7 @@ const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepS
             whiteRow={push.gridRow(4)}
             trackId={selectedTrackId}
           />
-          {pushState.modifiers.clip
-            ? (
-              <PatternSelectPads
-                pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
-                patternIds={patternIds}
-              />
-            ) : (
-              <StepControlComponent
-                pads={[...push.gridRow(3), ...push.gridRow(2), ...push.gridRow(1), ...push.gridRow(0)]}
-                trackId={selectedTrackId}
-              />
-            )
-          }
-
+          {bottomPadsComponent}
         </div>
       </div>
       <RightSideControls push={push} />

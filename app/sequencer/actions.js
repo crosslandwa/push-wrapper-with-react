@@ -71,7 +71,7 @@ function advanceSequence (stepTimeMs) {
   return (dispatch, getState) => {
     const { sequencer: { playing } } = getState()
     if (!playing) return
-    
+
     const patternTracks = currentTracksForPattern(getState())
     const currentSteps = patternTracks.map(track => nextStepNumberForTrack(getState(), track.id))
     const nextSteps = patternTracks.map((track, index) => (currentSteps[index] + 1) % track.numberOfSteps)
@@ -160,4 +160,12 @@ export function changeNumberOfStepsBy (trackId, delta) {
     id: trackId,
     numberOfSteps: Math.max(1, Math.min(trackSelector(getState(), trackId).numberOfSteps + delta, 32))
   })
+}
+
+export function changeNumberOfStepsTo (trackId, numberOfSteps) {
+  return {
+    type: 'TRACK_UPDATE_NUMBER_OF_STEPS',
+    id: trackId,
+    numberOfSteps
+  }
 }
