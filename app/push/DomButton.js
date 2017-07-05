@@ -4,7 +4,7 @@ import { Colours } from './colours'
 
 const padStyleBase = {
   height: 24,
-  textAlign: 'center',
+  // textAlign: 'center',
   fontSize: 10,
   width: 48,
   marginLeft: 2,
@@ -17,14 +17,15 @@ const padStyleBase = {
   borderColor: '#333333',
   cursor: 'pointer',
   display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
+  justifyContent: 'flex-start',
+  alignItems: 'flex-start',
+  padding: 2
 }
 
 const padStyleActive = (rgb) => ({
   opacity: 0.9,
   boxShadow: `inset 0px 0px 50px rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
-  borderColor: `rgba(100, 100, 100, 0.3)`
+  borderColor: 'rgba(100, 100, 100, 0.3)'
 })
 
 const DomButton = ({active, children, doubleHeight, padPressed, padReleased, rgb = Colours.orange, label = ''}) => (
@@ -34,7 +35,7 @@ const DomButton = ({active, children, doubleHeight, padPressed, padReleased, rgb
     style={Object.assign({},
       padStyleBase,
       active ? padStyleActive(rgb) : {},
-      doubleHeight ? { height: 48, lineHeight: '48px' } : {}
+      doubleHeight ? { height: 48 } : {}
     )}
   >
     {label}
