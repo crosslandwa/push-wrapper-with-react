@@ -1,8 +1,9 @@
 const initialPushState = {
   modifiers: {
     clip: false,
-    del: false,
-    shift: false
+    delete: false,
+    shift: false,
+    fixedLength: false
   }
 }
 
