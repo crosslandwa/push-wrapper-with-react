@@ -4,8 +4,8 @@ import { Colours } from './colours'
 
 const padStyleBase = {
   height: 24,
-  lineHeight: '24px',
   textAlign: 'center',
+  fontSize: 10,
   width: 48,
   marginLeft: 2,
   marginRight: 2,
@@ -15,7 +15,10 @@ const padStyleBase = {
   borderWidth: 2,
   borderStyle: 'solid',
   borderColor: '#333333',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
 }
 
 const padStyleActive = (rgb) => ({

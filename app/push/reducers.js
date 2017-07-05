@@ -6,7 +6,7 @@ const initialPushState = {
   }
 }
 
-export default function push (state = initialPushState, { type }) {
+export default function push (state = initialPushState, { modifier, type }) {
   switch (type) {
     case 'PUSH_SHIFT_ON':
     case 'PUSH_SHIFT_OFF':
@@ -25,6 +25,12 @@ export default function push (state = initialPushState, { type }) {
       return Object.assign({},
         state,
         {modifiers: Object.assign({}, state.modifiers, {clip: type === 'PUSH_CLIP_ON'})}
+      )
+    case 'PUSH_MODIFIER_ON':
+    case 'PUSH_MODIFIER_OFF':
+      return Object.assign({},
+        state,
+        {modifiers: Object.assign({}, state.modifiers, {[modifier]: type === 'PUSH_MODIFIER_ON'})}
       )
   }
   return state

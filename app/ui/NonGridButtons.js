@@ -5,6 +5,7 @@ import DomKnob from '../push/DomKnob'
 import BpmControlKnob from '../sequencer/BpmControlKnob'
 import ClipModifierButton from './ClipModifierButton'
 import DeleteModifierButton from './DeleteModifierButton'
+import FixedLengthModifierButton from './FixedLengthModifierButton'
 import ShiftModifierButton from './ShiftModifierButton'
 import { startSequence, stopSequence, armSequencer, disarmSequencer } from '../sequencer/actions'
 import { Colours } from '../push/colours'
@@ -35,6 +36,7 @@ export const LeftSideControls = ({push}) => (
       <DeleteModifierButton pushButton={push.button('Delete')} />
     </div>
     <div>
+      <FixedLengthModifierButton pushButton={push.button('FixedLength')} />
       <TransportButton
         modifier='recording'
         label='Rec'

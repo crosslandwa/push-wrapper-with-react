@@ -23,6 +23,7 @@ const pushContainerStyle = {
   borderWidth: 2,
   borderRadius: 4,
   boxShadow: 'inset 0px 0px 200px rgba(25, 25, 25, 1)',
+  fontFamily: 'sans-serif',
   padding: '12px 6px',
   width: 770
 }

@@ -21,3 +21,19 @@ export function clipOff () {
 export function clipOn () {
   return { type: 'PUSH_CLIP_ON' }
 }
+
+export function fixedLengthOn () {
+  return modifierOn('fixedLength')
+}
+
+export function fixedLengthOff () {
+  return modifierOff('fixedLength')
+}
+
+function modifierOn (modifier) {
+  return { type: 'PUSH_MODIFIER_ON', modifier }
+}
+
+function modifierOff (modifier) {
+  return { type: 'PUSH_MODIFIER_OFF', modifier }
+}
