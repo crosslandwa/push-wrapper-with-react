@@ -3,6 +3,7 @@ import React from 'react'
 import TransportButton from './TransportButton'
 import DomKnob from '../push/DomKnob'
 import BpmControlKnob from '../sequencer/BpmControlKnob'
+import SwingControlKnob from '../sequencer/SwingControlKnob'
 import ClipModifierButton from './ClipModifierButton'
 import DeleteModifierButton from './DeleteModifierButton'
 import FixedLengthModifierButton from './FixedLengthModifierButton'
@@ -30,7 +31,7 @@ export const LeftSideControls = ({push}) => (
     <div/>
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
       <BpmControlKnob knob={push.tempoKnob()} />
-      <DomKnob />
+      <SwingControlKnob knob={push.swingKnob()} />
     </div>
     <div>
       <DeleteModifierButton pushButton={push.button('Delete')} />

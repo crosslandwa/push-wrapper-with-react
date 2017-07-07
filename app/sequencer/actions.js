@@ -2,7 +2,7 @@ const context = window.AudioContext ? new window.AudioContext() : new window.web
 const Scheduling = require('wac.scheduling')(context)
 
 import { playVoiceForTrack } from '../voices/actions'
-import { currentBpm, currentVoice, currentStepNumberForTrack, currentTracksForPattern, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
+import { currentBpm, currentVoice, currentStepNumberForTrack, currentSwing, currentTracksForPattern, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -151,6 +151,13 @@ export function changeBpmBy (delta) {
   return (dispatch, getState) => dispatch({
     type: 'SEQUENCER_UPDATE_BPM',
     bpm: Math.max(20, Math.min(currentBpm(getState()) + delta, 300))
+  })
+}
+
+export function changeSwingBy (delta) {
+  return (dispatch, getState) => dispatch({
+    type: 'SEQUENCER_UPDATE_SWING',
+    swing: Math.max(0, Math.min(currentSwing(getState()) + delta, 100))
   })
 }
 

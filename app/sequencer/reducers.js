@@ -3,14 +3,15 @@ import { clone } from '../reducers/utils'
 const emptyStepNumbers = () => [-1, -1, -1, -1, -1, -1, -1, -1]
 
 const initialSequencerState = {
-  patternId: null,
   bpm: 120,
-  deleteModeTrackIds: [],
   currentSteps: emptyStepNumbers(),
-  nextSteps: emptyStepNumbers(),
-  selectedStepId: null,
+  deleteModeTrackIds: [],
+  patternId: null,
   playing: false,
-  recording: false
+  nextSteps: emptyStepNumbers(),
+  recording: false,
+  selectedStepId: null,
+  swing: 0
 }
 
 export default function sequencer (state = initialSequencerState, action) {
@@ -41,6 +42,8 @@ export default function sequencer (state = initialSequencerState, action) {
       return Object.assign({}, state, { patternId: action.id })
     case 'SEQUENCER_UPDATE_BPM':
       return Object.assign({}, state, { bpm: action.bpm })
+    case 'SEQUENCER_UPDATE_SWING':
+      return Object.assign({}, state, { swing: action.swing })
   }
   return state
 }

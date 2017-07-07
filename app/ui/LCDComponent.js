@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import LCD from './LCD'
-import { currentBpm, currentPattern, currentSample, currentTrack, currentVoice, selectedStep, selectedTrackIndex } from '../selectors'
+import { currentBpm, currentPattern, currentSample, currentSwing, currentTrack, currentVoice, selectedStep, selectedTrackIndex } from '../selectors'
 
 const LCDComponent = (props) => <LCD {...props} />
 
@@ -15,7 +15,7 @@ const voiceDisplay = (state, ownProps) => {
       [voice.pitch, currentSample(state).name, voice.decay, track.numberOfSteps],
       ['pitch', 'sample', 'decay', 'length'],
       ['bpm', 'swing', '', '', '', '', '', `voice: ${trackIndex}`],
-      [currentBpm(state), 0]
+      [currentBpm(state), currentSwing(state)]
     ]
   }
 }
@@ -29,7 +29,7 @@ const stepDisplay = (state, ownProps) => {
       [step.midiPitch || '-', step.midiVelocity],
       ['pitch', 'velocity'],
       ['bpm', 'swing', '', '', '', '', '', `step: ${stepNumber}`],
-      [currentBpm(state), 0]
+      [currentBpm(state), currentSwing(state)]
     ]
   }
 }

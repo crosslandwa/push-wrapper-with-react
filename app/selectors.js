@@ -3,6 +3,7 @@ import { createSelector } from 'reselect'
 const identity = index => (...args) => args[index]
 
 export const currentBpm = state => state.sequencer.bpm
+export const currentSwing = state => state.sequencer.swing
 
 // ############ PATTERN
 const currentPatternId = state => state.sequencer.patternId
