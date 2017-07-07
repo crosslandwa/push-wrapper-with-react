@@ -91,20 +91,23 @@ function stepLengthMs(bpm) {
 function playSequencedVoices  () {
   return (dispatch, getState) => {
     const { sequencer: { deleteModeTrackIds, lastStepTimeMs } } = getState()
+    const stepLength = stepLengthMs(currentBpm(getState()))
     currentTracksForPattern(getState()).forEach(track => {
       const stepNumber = currentStepNumberForTrack(getState(), track.id)
       const stepId = track.stepIds[stepNumber]
       if (!stepId) return
       const step = stepSelector(getState(), stepId)
-      dispatch(deleteModeTrackIds.includes(track.id)
-        ? turnStepOff(stepId)
-        : playVoiceForTrack(track.id, {
+      deleteModeTrackIds.includes(track.id)
+        ? dispatch(turnStepOff(stepId))
+        : Scheduling.atATime(
+          () => dispatch(playVoiceForTrack(track.id, {
             pitch: step.midiPitch,
             velocity: step.midiVelocity
-          })
-      )
+          })),
+          lastStepTimeMs + ((stepNumber % 2) * currentSwing(getState()) * 0.01 * stepLength)
+        )
     })
-    const nextStepTime = lastStepTimeMs + stepLengthMs(currentBpm(getState()))
+    const nextStepTime = lastStepTimeMs + stepLength
     Scheduling.atATime(() => dispatch(advanceSequence(nextStepTime)), nextStepTime)
   }
 }
@@ -157,7 +160,7 @@ export function changeBpmBy (delta) {
 export function changeSwingBy (delta) {
   return (dispatch, getState) => dispatch({
     type: 'SEQUENCER_UPDATE_SWING',
-    swing: Math.max(0, Math.min(currentSwing(getState()) + delta, 100))
+    swing: Math.max(0, Math.min(currentSwing(getState()) + delta, 50))
   })
 }
 
