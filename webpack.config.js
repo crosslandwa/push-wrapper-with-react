@@ -1,3 +1,4 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
@@ -19,7 +20,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.ejs'
-    })
+    }),
+    new CopyWebpackPlugin([{ from: 'audio' }])
   ]),
   module: {
     rules: [

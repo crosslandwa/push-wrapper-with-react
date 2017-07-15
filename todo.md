@@ -1,17 +1,23 @@
-PITCH CONTROL
 - realtime sequence recording/parameter lock type behaviour. What I think....?
-- how to delete a parameter lock for a step?
+  - how to delete a parameter lock for a step?
+  - decay per step
+  - edit multiple steps at same time?
 
 - more samples
+  - some task to pull in non-version controlled audio assets from disk as part of build
 - pan per voice/step
 - re-trigger voice without click
+  - previous sample playback is interfering with current sample playback [BUG] - listen to tambourine
 - voice muting
 - duplicate kit (hold duplicate, press kit select button, copies current kit to that kit)
 - duplicate pattern (hold duplicate, press pattern select button, copies current pattern to that pattern)
 - multiple/switchable patterns (work on current one in a 'scratch pad')
 - save state to/from JSON
 - swing
+  - overall timing seems to suffer with current implementation (swung per pattern)
+  - change it to switchable to 16n/8n
+  - save as part of pattern?
 - stutter
-- sample player decay envelope - change all voices at once?
-- decay per step
-- pattern length - change all voices at once?
+- change all voices at once?
+  - sample player decay envelope
+  - pattern length

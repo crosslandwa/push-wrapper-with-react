@@ -10,19 +10,10 @@ export function init () {
     const currentSampleIds = sampleIds(getState())
     const currentKitIds = kitIds(getState())
     return Promise.resolve(dispatch(initialisePlayers()))
-      .then(() => {
-        return currentSampleIds.length === 0
-          ? Promise.all([
-              dispatch(loadSample('kick.mp3', 'kick')),
-              dispatch(loadSample('snare.mp3', 'snare')),
-              dispatch(loadSample('hat.mp3', 'hat')),
-              dispatch(loadSample('bleep.mp3', 'bleep'))
-            ])
-          : Promise.all(currentSampleIds.map(sampleId => {
-              const sample = sampleSelector(getState(), sampleId)
-              return dispatch(loadSample(sample.url, sample.name, sample.id))
-          }))
-      })
+      .then(() => dispatch(currentSampleIds.length === 0
+        ? loadSamples()
+        : loadSamplesFromRestoredState()
+      ))
       .then(() => {
         return (currentKitIds.length == 0)
           ? dispatch(createDefaultKit())
@@ -34,5 +25,27 @@ export function init () {
           : currentPatternIds[0]
         dispatch(selectPattern(patternId))
       })
+  }
+}
+
+function loadSamples () {
+  return (dispatch, getState) => {
+    console.log('Loading samples...')
+    return Promise.all([
+      // order here will imply initial kit sample assignment
+      ['kick', 'snare', 'clap', 'cloing', 'tang', 'tom', 'hat', 'tamb']
+        .forEach(name => dispatch(loadSample(`${name}.mp3`, name)))
+    ])
+  }
+}
+
+function loadSamplesFromRestoredState () {
+  return (dispatch, getState) => {
+    console.log('Restoring samples from state...')
+    const currentSampleIds = sampleIds(getState())
+    return Promise.all(currentSampleIds.map(sampleId => {
+      const sample = sampleSelector(getState(), sampleId)
+      return dispatch(loadSample(sample.url, sample.name, sample.id))
+    }))
   }
 }
