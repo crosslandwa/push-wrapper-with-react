@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import LCD from './LCD'
-import { currentBpm, currentPattern, currentSample, currentSwing, currentTrack, currentVoice, selectedStep, selectedTrackIndex } from '../selectors'
+import { currentBpm, currentPattern, currentSample, currentSwing, currentTrack, currentVoice, sampleIds, sampleSelector, selectedStep, selectedTrackIndex } from '../selectors'
 
 const LCDComponent = (props) => <LCD {...props} />
 
@@ -10,14 +10,28 @@ const voiceDisplay = (state, ownProps) => {
   const track = currentTrack(state)
   const trackIndex = selectedTrackIndex(state)
   const voice = currentVoice(state)
+  const sample = currentSample(state)
   return {
     data: [
-      [voice.pitch, currentSample(state).name, voice.decay, track.numberOfSteps],
+      [voice.pitch, sample.name, voice.decay, track.numberOfSteps],
       ['pitch', 'sample', 'decay', 'length'],
-      [],
+      sampleIdList(state, sample.id),
       [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `voice: ${trackIndex}`]
     ]
   }
+}
+
+const sampleIdList = (state, currentSampleId) => {
+  const ids = sampleIds(state)
+  const sample = id => sampleSelector(state, id)
+  return arrayRotate(ids, ids.indexOf(currentSampleId) - 1).slice(0,8).map(sample).map(s => s.name)
+}
+
+function arrayRotate(input, count) {
+  let arr = input.slice()
+  count -= arr.length * Math.floor(count / arr.length)
+  arr.push.apply(arr, arr.splice(0, count))
+  return arr
 }
 
 const stepDisplay = (state, ownProps) => {
