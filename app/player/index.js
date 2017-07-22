@@ -27,7 +27,7 @@ class Player {
     source.start(now)
     source.stop(now + (playbackLength * 2))
     this.envelope.gain.setValueAtTime(velocity / 127, now)
-    this.envelope.gain.linearRampToValueAtTime(0.8, now + (playbackLength * 0.8))
+    this.envelope.gain.linearRampToValueAtTime((velocity / 127) * 0.8, now + (playbackLength * 0.8))
     this.envelope.gain.linearRampToValueAtTime(0, now + playbackLength)
   }
 
