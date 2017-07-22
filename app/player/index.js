@@ -7,9 +7,9 @@ const playbackRate = note => midiNoteToF(note) / middleCFreq
 class Player {
   constructor () {
     const self = this
-    this.envelope = context.createGain()
-    this.envelope.connect(context.destination) // TODO attach to mixer
-    this.envelope.gain.setValueAtTime(1, context.currentTime)
+    this.volume = context.createGain()
+    this.volume.connect(context.destination) // TODO attach to mixer
+    this.volume.gain.setValueAtTime(1, context.currentTime)
     this.stoppedListeners = []
     this.startedListeners = []
   }
@@ -17,18 +17,21 @@ class Player {
   play (buffer, pitch, velocity, decayPercent = 100) {
     // this sounds loads better than using wac.sample-player (with an envelope applied over the top). What about re-triggers?
     const source = context.createBufferSource()
-    const playbackLength = (buffer.duration * (decayPercent / 100)) / playbackRate(pitch)
+    const envelope = context.createGain()
+    const rate = playbackRate(pitch)
+    const playbackLength = (buffer.duration * (decayPercent / 100)) / rate
     source.buffer = buffer
-    source.playbackRate.value = playbackRate(pitch)
-    source.connect(this.envelope)
+    source.playbackRate.value = rate
+    source.connect(envelope)
+    envelope.connect(this.volume)
     source.addEventListener('ended', () => this.stoppedListeners.forEach(listener => listener()))
     this.startedListeners.forEach(listener => listener(velocity))
     const now = context.currentTime
+    envelope.gain.setValueAtTime(velocity / 127, now)
+    envelope.gain.linearRampToValueAtTime((velocity / 127) * 0.8, now + (playbackLength * 0.8))
+    envelope.gain.linearRampToValueAtTime(0, now + playbackLength)
     source.start(now)
-    source.stop(now + (playbackLength * 2))
-    this.envelope.gain.setValueAtTime(velocity / 127, now)
-    this.envelope.gain.linearRampToValueAtTime((velocity / 127) * 0.8, now + (playbackLength * 0.8))
-    this.envelope.gain.linearRampToValueAtTime(0, now + playbackLength)
+    source.stop(now + (playbackLength * 1.2))
   }
 
   onStarted (listener) {

@@ -6,8 +6,6 @@
 - more samples
   - some task to pull in non-version controlled audio assets from disk as part of build
 - pan per voice/step
-- re-trigger voice without click
-  - previous sample playback is interfering with current sample playback [BUG] - listen to tambourine
 - voice muting
 - duplicate kit (hold duplicate, press kit select button, copies current kit to that kit)
 - duplicate pattern (hold duplicate, press pattern select button, copies current pattern to that pattern)
