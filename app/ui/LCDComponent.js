@@ -14,8 +14,8 @@ const voiceDisplay = (state, ownProps) => {
     data: [
       [voice.pitch, currentSample(state).name, voice.decay, track.numberOfSteps],
       ['pitch', 'sample', 'decay', 'length'],
-      ['bpm', 'swing', '', '', '', '', '', `voice: ${trackIndex}`],
-      [currentBpm(state), currentSwing(state)]
+      [],
+      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `voice: ${trackIndex}`]
     ]
   }
 }
@@ -28,8 +28,8 @@ const stepDisplay = (state, ownProps) => {
     data: [
       [step.midiPitch || '-', step.midiVelocity],
       ['pitch', 'velocity'],
-      ['bpm', 'swing', '', '', '', '', '', `step: ${stepNumber}`],
-      [currentBpm(state), currentSwing(state)]
+      [],
+      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `step: ${stepNumber}`]
     ]
   }
 }
