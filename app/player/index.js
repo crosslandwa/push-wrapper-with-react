@@ -19,7 +19,7 @@ class Player {
     const source = context.createBufferSource()
     const envelope = context.createGain()
     const rate = playbackRate(pitch)
-    const playbackLength = (buffer.duration * (decayPercent / 100)) / rate
+    const playbackLength = (buffer.duration * Math.pow(decayPercent / 100, 2.5)) / rate
     source.buffer = buffer
     source.playbackRate.value = rate
     source.connect(envelope)
