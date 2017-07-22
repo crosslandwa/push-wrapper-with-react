@@ -121,3 +121,5 @@ export const sampleForTrack = createSelector( // state, trackId
   [voiceForTrack, samplesSelector],
   (voice, samples) => samples.byId[voice.sampleId]
 )
+
+export const sampleSelectionOn = (state) => state.ui.sampleSelectionOn

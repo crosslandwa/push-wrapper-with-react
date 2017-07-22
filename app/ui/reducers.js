@@ -1,5 +1,6 @@
 const initialUiState = {
-  selectedTrackId: null
+  selectedTrackId: null,
+  sampleSelectionOn: false
 }
 
 export default function push (state = initialUiState, action) {
@@ -9,6 +10,12 @@ export default function push (state = initialUiState, action) {
         state,
         { selectedTrackId: action.trackId }
       )
+    case 'UI_SAMPLE_SELECT_START':
+    case 'UI_SAMPLE_SELECT_STOP':
+    return Object.assign({},
+      state,
+      { sampleSelectionOn: action.type === 'UI_SAMPLE_SELECT_START' }
+    )
   }
   return state
 }

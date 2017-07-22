@@ -5,15 +5,16 @@ import PushKnob from '../push/PushKnob'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
 import { switchSample } from './actions'
+import { startSampleSelection, stopSampleSelection } from '../ui/actions'
 import { currentSample, sampleIds } from '../selectors'
 
 const SampleSelect = props => {
-  const {trackId, changeSample, nextSampleId, prevSampleId} = props
+  const {trackId, changeSample, nextSampleId, prevSampleId, onPressed, onReleased} = props
   const onTurned = delta => changeSample(trackId, delta > 0 ? nextSampleId : prevSampleId)
   return (
-    <ClickyDraggy {...props} onTurned={onTurned} >
+    <ClickyDraggy {...props} onTurned={onTurned} onPressed={onPressed} onReleased={onReleased} >
       <DomKnob />
-      <PushKnob {...props} onTurned={onTurned} />
+      <PushKnob {...props} onTurned={onTurned} onPressed={onPressed} onReleased={onReleased} />
     </ClickyDraggy>
   )
 }
@@ -35,7 +36,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     changeSample(trackId, sampleId) {
       dispatch(switchSample(trackId, sampleId))
-    }
+    },
+    onPressed() {
+      dispatch(startSampleSelection())
+    },
+    onReleased() {
+      dispatch(stopSampleSelection())
+    },
   }
 }
 

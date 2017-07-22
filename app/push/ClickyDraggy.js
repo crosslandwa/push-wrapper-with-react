@@ -14,11 +14,13 @@ class ClickyDraggy extends React.Component {
     e.stopPropagation()
     e.preventDefault()
     this.setState({selected: true, lastDragPosition: e.pageY})
+    this.props.onPressed && this.props.onPressed()
   }
 
   release (e) {
     if (!this.state.selected) return
     this.setState({selected: false})
+    this.props.onReleased && this.props.onReleased()
   }
 
   drag (e) {
