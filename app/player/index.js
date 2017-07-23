@@ -8,13 +8,15 @@ class Player {
   constructor () {
     const self = this
     this.volume = context.createGain()
-    this.volume.connect(context.destination) // TODO attach to mixer
     this.volume.gain.setValueAtTime(1, context.currentTime)
+    this.filter = context.createBiquadFilter(),
+    this.filter.connect(this.volume)
+    this.volume.connect(context.destination) // TODO attach to mixer
     this.stoppedListeners = []
     this.startedListeners = []
   }
 
-  play (buffer, pitch, velocity, decayPercent = 100) {
+  play ({buffer, pitch, velocity, decayPercent = 100, filterFrequency = 20000}) {
     // this sounds loads better than using wac.sample-player (with an envelope applied over the top). What about re-triggers?
     const source = context.createBufferSource()
     const envelope = context.createGain()
@@ -23,10 +25,11 @@ class Player {
     source.buffer = buffer
     source.playbackRate.value = rate
     source.connect(envelope)
-    envelope.connect(this.volume)
+    envelope.connect(this.filter)
     source.addEventListener('ended', () => this.stoppedListeners.forEach(listener => listener()))
     this.startedListeners.forEach(listener => listener(velocity))
     const now = context.currentTime
+    this.filter.frequency.setValueAtTime(filterFrequency, now)
     envelope.gain.setValueAtTime(velocity / 127, now)
     envelope.gain.linearRampToValueAtTime((velocity / 127) * 0.8, now + (playbackLength * 0.8))
     envelope.gain.linearRampToValueAtTime(0, now + playbackLength)

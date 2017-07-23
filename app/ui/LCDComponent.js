@@ -3,7 +3,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import LCD from './LCD'
 import { currentBpm, currentPattern, currentSample, currentSwing, currentTrack, currentVoice, sampleIds, sampleSelectionOn, sampleSelector, selectedStep, selectedTrackIndex } from '../selectors'
+import NonLinearScale from '../utils/nonLinearScale'
 
+const frequencyScaling = NonLinearScale(0, 100, 80, 20000, 1000)
+const filterF = amount => Math.floor(frequencyScaling(amount))
 const LCDComponent = (props) => <LCD {...props} />
 
 const voiceDisplay = (state, ownProps) => {
@@ -13,8 +16,8 @@ const voiceDisplay = (state, ownProps) => {
   const sample = currentSample(state)
   return {
     data: [
-      [voice.pitch, sample.name, voice.decay, track.numberOfSteps],
-      ['pitch', 'sample', 'decay', 'length'],
+      [voice.pitch, sample.name, voice.decay, track.numberOfSteps, `${filterF(voice.filterAmount)} Hz`],
+      ['pitch', 'sample', 'decay', 'length', 'filterF'],
       sampleSelectionOn(state) ? sampleIdList(state, sample.id) : [],
       [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `voice: ${trackIndex}`]
     ]
