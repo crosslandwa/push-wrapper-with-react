@@ -14,7 +14,7 @@ const frequencyScaling = NonLinearScale(0, 100, 80, 20000, 1000)
 
 const player = (state, trackId) => players[currentPattern(state).trackIds.indexOf(trackId)]
 
-export function playVoiceForTrack (trackId, {pitch, velocity}) {
+export function playVoiceForTrack (trackId, {pitch, velocity, stepTimeMs}) {
   return (dispatch, getState) => {
     const voice = voiceForTrack(getState(), trackId)
     player(getState(), trackId).play({
@@ -22,7 +22,8 @@ export function playVoiceForTrack (trackId, {pitch, velocity}) {
       pitch: pitch || voice.pitch,
       velocity,
       decayPercent: voice.decay,
-      filterFrequency: frequencyScaling(voice.filterAmount)
+      filterFrequency: frequencyScaling(voice.filterAmount),
+      stepTimeMs
     })
   }
 }

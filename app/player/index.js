@@ -20,7 +20,7 @@ class Player {
     this.volume.gain.setValueAtTime(absolute, context.currentTime)
   }
 
-  play ({buffer, pitch, velocity, decayPercent = 100, filterFrequency = 20000}) {
+  play ({buffer, pitch, velocity, decayPercent = 100, filterFrequency = 20000, stepTimeMs}) {
     // this sounds loads better than using wac.sample-player (with an envelope applied over the top). What about re-triggers?
     const source = context.createBufferSource()
     const envelope = context.createGain()
@@ -32,13 +32,13 @@ class Player {
     envelope.connect(this.filter)
     source.addEventListener('ended', () => this.stoppedListeners.forEach(listener => listener()))
     this.startedListeners.forEach(listener => listener(velocity))
-    const now = context.currentTime
-    this.filter.frequency.setValueAtTime(filterFrequency, now)
-    envelope.gain.setValueAtTime(velocity / 127, now)
-    envelope.gain.linearRampToValueAtTime((velocity / 127) * 0.8, now + (playbackLength * 0.8))
-    envelope.gain.linearRampToValueAtTime(0, now + playbackLength)
-    source.start(now)
-    source.stop(now + (playbackLength * 1.2))
+    const stepTimeSeconds = stepTimeMs ? (stepTimeMs / 1000) : context.currentTime
+    this.filter.frequency.setValueAtTime(filterFrequency, stepTimeSeconds)
+    envelope.gain.setValueAtTime(velocity / 127, stepTimeSeconds)
+    envelope.gain.linearRampToValueAtTime((velocity / 127) * 0.8, stepTimeSeconds + (playbackLength * 0.8))
+    envelope.gain.linearRampToValueAtTime(0, stepTimeSeconds + playbackLength)
+    source.start(stepTimeSeconds)
+    source.stop(stepTimeSeconds + (playbackLength * 1.2))
   }
 
   onStarted (listener) {

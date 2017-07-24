@@ -99,13 +99,11 @@ function playSequencedVoices  () {
       const step = stepSelector(getState(), stepId)
       deleteModeTrackIds.includes(track.id)
         ? dispatch(turnStepOff(stepId))
-        : Scheduling.atATime(
-          () => dispatch(playVoiceForTrack(track.id, {
-            pitch: step.midiPitch,
-            velocity: step.midiVelocity
-          })),
-          lastStepTimeMs + ((stepNumber % 2) * currentSwing(getState()) * 0.01 * stepLength)
-        )
+        : dispatch(playVoiceForTrack(track.id, {
+          pitch: step.midiPitch,
+          velocity: step.midiVelocity,
+          stepTimeMs: lastStepTimeMs + ((stepNumber % 2) * currentSwing(getState()) * 0.01 * stepLength)
+        }))
     })
     const nextStepTime = lastStepTimeMs + stepLength
     Scheduling.atATime(() => dispatch(advanceSequence(nextStepTime)), nextStepTime)

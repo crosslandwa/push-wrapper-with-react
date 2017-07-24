@@ -12,10 +12,10 @@
 - multiple/switchable patterns (work on current one in a 'scratch pad')
 - save state to/from JSON
 - swing
-  - overall timing seems to suffer with current implementation (swung per pattern)
   - change it to switchable to 16n/8n
   - save as part of pattern?
 - stutter
 - change all voices at once?
   - sample player decay envelope
   - pattern length
+- LCD is rendering on every step

@@ -8,7 +8,7 @@ import { updateVolumeAction, updateVolume } from './actions'
 import { voiceForTrack } from '../selectors'
 
 const VolumeControl = props => {
-  props.updateVolume(props.midiVolume)
+  props.updateVolume(props.midiVolume) // TODO this won't work - updateVolume won't be called for state changes (e.g. initialisation when this component isn't in the UI)
   return (
     <ClickyDraggy {...props}>
       <DomKnob />
