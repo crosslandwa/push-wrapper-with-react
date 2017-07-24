@@ -8,8 +8,9 @@ import midiVelocityToAbsolute from '../voices/midiVelocityToAbsolute'
 
 const frequencyScaling = NonLinearScale(0, 100, 80, 20000, 1000)
 const filterF = amount => Math.floor(frequencyScaling(amount))
-const LCDComponent = (props) => <LCD {...props} />
 const dbVolume = (midiVolume) => parseFloat(20 * Math.log10(midiVelocityToAbsolute(midiVolume))).toFixed(2) + 'dB'
+
+const LCDComponent = (props) => <LCD {...props} />
 
 const voiceDisplay = (state, ownProps) => {
   const track = currentTrack(state)
