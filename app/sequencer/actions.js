@@ -162,14 +162,6 @@ export function changeSwingBy (delta) {
   })
 }
 
-export function changeNumberOfStepsBy (trackId, delta) {
-  return (dispatch, getState) => dispatch({
-    type: 'TRACK_UPDATE_NUMBER_OF_STEPS',
-    id: trackId,
-    numberOfSteps: Math.max(1, Math.min(trackSelector(getState(), trackId).numberOfSteps + delta, 32))
-  })
-}
-
 export function changeNumberOfStepsTo (trackId, numberOfSteps) {
   return {
     type: 'TRACK_UPDATE_NUMBER_OF_STEPS',

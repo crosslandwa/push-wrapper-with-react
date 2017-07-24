@@ -13,14 +13,13 @@ const dbVolume = (midiVolume) => parseFloat(20 * Math.log10(midiVelocityToAbsolu
 const LCDComponent = (props) => <LCD {...props} />
 
 const voiceDisplay = (state, ownProps) => {
-  const track = currentTrack(state)
   const trackIndex = selectedTrackIndex(state)
   const voice = currentVoice(state)
   const sample = currentSample(state)
   return {
     data: [
-      [voice.pitch, sample.name, voice.decay, track.numberOfSteps, '', '', `${filterF(voice.filterAmount)} Hz`, dbVolume(voice.midiVolume)],
-      ['pitch', 'sample', 'decay', 'length', '', '', 'filterF', 'volume'],
+      [voice.pitch, sample.name, voice.decay, '', '', '', `${filterF(voice.filterAmount)} Hz`, dbVolume(voice.midiVolume)],
+      ['pitch', 'sample', 'decay', '', '', '', 'filterF', 'volume'],
       sampleSelectionOn(state) ? sampleIdList(state, sample.id) : [],
       [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `voice: ${trackIndex}`]
     ]
