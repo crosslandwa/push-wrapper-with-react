@@ -7,6 +7,7 @@ import DecayKnob from './DecayKnob'
 import ChannelKnobs from '../ui/ChannelKnobs'
 import FilterFrequencyControl from './FilterFrequencyControl'
 import VolumeControl from './VolumeControl'
+import DomKnob from '../push/DomKnob'
 
 const TrackVoiceControl = ({knobs, trackId}) => {
   return (
@@ -15,8 +16,10 @@ const TrackVoiceControl = ({knobs, trackId}) => {
       <SampleSelect trackId={trackId} knob={knobs[1]} />
       <DecayKnob trackId={trackId} knob={knobs[2]} />
       <NumberOfStepsKnob trackId={trackId} knob={knobs[3]} />
-      <FilterFrequencyControl trackId={trackId} knob={knobs[4]} />
-      <VolumeControl trackId={trackId} knob={knobs[5]} />
+      <DomKnob />
+      <DomKnob />
+      <FilterFrequencyControl trackId={trackId} knob={knobs[6]} />
+      <VolumeControl trackId={trackId} knob={knobs[7]} />
     </ChannelKnobs>
   )
 }
