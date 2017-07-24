@@ -21,6 +21,8 @@ export default function voices (state = initialState, action) {
       return updateDecay(state, action.id, action.decay)
     case 'VOICE_UPDATE_FILTER_F':
       return updateFilterF(state, action.id, action.filterAmount)
+    case 'VOICE_UPDATE_VOLUME':
+      return updateParam(state, action.id, 'midiVolume', action.midiVolume)
   }
   return state
 }
@@ -40,7 +42,8 @@ function createVoices (state, ids, sampleIds) {
         pitch: 36,
         velocity: 0,
         decay: 100,
-        filterAmount: 100
+        filterAmount: 100,
+        midiVolume: 108
       }
       return byId
     }, clone(state.byId)),
@@ -69,5 +72,11 @@ function updateDecay(state, id, decay = 100) {
 function updateFilterF(state, id, filterAmount = 100) {
   const updated = clone(state)
   updated.byId[id].filterAmount = filterAmount
+  return updated
+}
+
+function updateParam(state, id, param, value) {
+  const updated = clone(state)
+  updated.byId[id][param] = value
   return updated
 }

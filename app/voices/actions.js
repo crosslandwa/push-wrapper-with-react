@@ -2,6 +2,7 @@ import { sampleBuffer } from '../samples/actions'
 import { currentPattern, sampleForTrack, voiceForTrack } from '../selectors'
 import Player from '../player'
 import NonLinearScale from '../utils/nonLinearScale'
+import midiVelocityToAbsolute from './midiVelocityToAbsolute'
 
 let players = []
 
@@ -11,11 +12,12 @@ const clampBetween0And100 = clamp(0, 100)
 const clampBetween1And100 = clamp(1, 100)
 const frequencyScaling = NonLinearScale(0, 100, 80, 20000, 1000)
 
+const player = (state, trackId) => players[currentPattern(state).trackIds.indexOf(trackId)]
+
 export function playVoiceForTrack (trackId, {pitch, velocity}) {
   return (dispatch, getState) => {
     const voice = voiceForTrack(getState(), trackId)
-    const playerIndex = currentPattern(getState()).trackIds.indexOf(trackId)
-    players[playerIndex].play({
+    player(getState(), trackId).play({
       buffer: sampleBuffer(voice.sampleId),
       pitch: pitch || voice.pitch,
       velocity,
@@ -88,5 +90,22 @@ export function updateFilterFrequency (trackId, delta) {
       id: voice.id,
       filterAmount: clampBetween0And100(delta + voice.filterAmount)
     })
+  }
+}
+
+export function updateVolumeAction (trackId, delta) {
+  return (dispatch, getState) => {
+    const voice = voiceForTrack(getState(), trackId)
+    dispatch({
+      type: 'VOICE_UPDATE_VOLUME',
+      id: voice.id,
+      midiVolume: clampBetween0And127(delta + voice.midiVolume)
+    })
+  }
+}
+
+export function updateVolume (trackId, midiVolume) {
+  return (dispatch, getState) => {
+    player(getState(), trackId).updateVolume(midiVelocityToAbsolute(midiVolume))
   }
 }

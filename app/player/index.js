@@ -16,6 +16,10 @@ class Player {
     this.startedListeners = []
   }
 
+  updateVolume (absolute) {
+    this.volume.gain.setValueAtTime(absolute, context.currentTime)
+  }
+
   play ({buffer, pitch, velocity, decayPercent = 100, filterFrequency = 20000}) {
     // this sounds loads better than using wac.sample-player (with an envelope applied over the top). What about re-triggers?
     const source = context.createBufferSource()

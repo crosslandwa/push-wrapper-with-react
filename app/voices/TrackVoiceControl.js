@@ -6,6 +6,7 @@ import NumberOfStepsKnob from '../sequencer/NumberOfStepsKnob'
 import DecayKnob from './DecayKnob'
 import ChannelKnobs from '../ui/ChannelKnobs'
 import FilterFrequencyControl from './FilterFrequencyControl'
+import VolumeControl from './VolumeControl'
 
 const TrackVoiceControl = ({knobs, trackId}) => {
   return (
@@ -15,6 +16,7 @@ const TrackVoiceControl = ({knobs, trackId}) => {
       <DecayKnob trackId={trackId} knob={knobs[2]} />
       <NumberOfStepsKnob trackId={trackId} knob={knobs[3]} />
       <FilterFrequencyControl trackId={trackId} knob={knobs[4]} />
+      <VolumeControl trackId={trackId} knob={knobs[5]} />
     </ChannelKnobs>
   )
 }
