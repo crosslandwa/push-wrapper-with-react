@@ -55,7 +55,6 @@ const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepS
   } else {
     bottomPadsComponent = <StepControl pads={bottomPads} trackId={selectedTrackId} />
   }
-
   return (
     <div style={pushContainerStyle} >
       <LeftSideControls push={push} />
@@ -89,7 +88,7 @@ const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepS
       </div>
       <RightSideControls push={push} />
       <div>
-        <SamplePlayer />
+        {trackIds.map((trackId, index) => <SamplePlayer key={trackId} trackId={trackId} />)}
       </div>
     </div>
   )

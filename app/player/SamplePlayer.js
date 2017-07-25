@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
 import Player from './index'
+import { connect } from 'react-redux'
 
 class SamplePlayer extends React.Component {
   constructor(props) {
@@ -19,7 +20,6 @@ class SamplePlayer extends React.Component {
   }
 
   render() {
-    console.log('player render')
     return null
   }
 
@@ -28,15 +28,25 @@ class SamplePlayer extends React.Component {
   }
 
   componentDidMount() {
+    console.log('mounting', this.props.trackId)
     const unsubscribeStartedListener = this.state.player.onStarted(this.playing)
     const unsubscribeStoppedListener = this.state.player.onStopped(this.stopped)
+    this.props.register(this.state.player)
     this.setState({unsubscribeStartedListener, unsubscribeStoppedListener})
   }
 
   componentWillUnmount() {
+    console.log('unmounting', this.props.trackId)
     this.state.unsubscribeStartedListener()
     this.state.unsubscribeStoppedListener()
+    this.props.unregister()
   }
 }
 
-export default SamplePlayer
+const mapStateToProps = (state) => ({})
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  register: (player) => dispatch({ type: 'REGISTER_PLAYER', trackId: ownProps.trackId, player }),
+  unregister: () => dispatch({ type: 'UNREGISTER_PLAYER', trackId: ownProps.trackId })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SamplePlayer)
