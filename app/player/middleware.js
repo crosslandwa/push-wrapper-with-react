@@ -11,6 +11,9 @@ export default (store) => (next) => (action) => {
     case 'PLAYER_PLAY':
       playersByTrackId[action.trackId] && playersByTrackId[action.trackId].play(action.playbackData)
       return
+    case 'PLAYER_UPDATE_VOLUME':
+      playersByTrackId[action.trackId] && playersByTrackId[action.trackId].updateVolume(action.absoluteVolume)
+      return
   }
 
   return next(action)

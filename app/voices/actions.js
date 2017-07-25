@@ -10,9 +10,6 @@ const clampBetween0And127 = clamp(0, 127)
 const clampBetween0And100 = clamp(0, 100)
 const clampBetween1And100 = clamp(1, 100)
 
-
-const player = (state, trackId) => players[currentPattern(state).trackIds.indexOf(trackId)]
-
 function voicePlaying (voiceId, velocity) {
   return { type: 'VOICE_PLAYING', velocity, id: voiceId }
 }
@@ -79,19 +76,14 @@ export function updateFilterFrequency (trackId, delta) {
   }
 }
 
-export function updateVolumeAction (trackId, delta) {
+export function updateVolume (trackId, delta) {
   return (dispatch, getState) => {
     const voice = voiceForTrack(getState(), trackId)
+    const newMidiVolume = clampBetween0And127(delta + voice.midiVolume)
     dispatch({
       type: 'VOICE_UPDATE_VOLUME',
       id: voice.id,
-      midiVolume: clampBetween0And127(delta + voice.midiVolume)
+      midiVolume: newMidiVolume
     })
-  }
-}
-
-export function updateVolume (trackId, midiVolume) {
-  return (dispatch, getState) => {
-    player(getState(), trackId).updateVolume(midiVelocityToAbsolute(midiVolume))
   }
 }

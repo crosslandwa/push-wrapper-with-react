@@ -2,6 +2,8 @@
 import React from 'react'
 import Player from './index'
 import { connect } from 'react-redux'
+import midiVelocityToAbsolute from '../voices/midiVelocityToAbsolute'
+import { voiceForTrack } from '../selectors'
 
 class SamplePlayer extends React.Component {
   constructor(props) {
@@ -12,23 +14,25 @@ class SamplePlayer extends React.Component {
   }
 
   playing() {
+    // TODO dispatch playing action
     this.props.onPressed && this.props.onPressed()
   }
 
   stopped() {
+    // TODO dispatch playing action
     this.props.onReleased && this.props.onReleased()
   }
 
   render() {
+    this.props.updateVolume(this.props.midiVolume)
     return null
   }
 
-  shouldComponentUpdate() {
-    return false
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.midiVolume !== nextProps.midiVolume
   }
 
-  componentDidMount() {
-    console.log('mounting', this.props.trackId)
+  componentWillMount() {
     const unsubscribeStartedListener = this.state.player.onStarted(this.playing)
     const unsubscribeStoppedListener = this.state.player.onStopped(this.stopped)
     this.props.register(this.state.player)
@@ -36,17 +40,19 @@ class SamplePlayer extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log('unmounting', this.props.trackId)
     this.state.unsubscribeStartedListener()
     this.state.unsubscribeStoppedListener()
     this.props.unregister()
   }
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state, ownProps) => ({
+  midiVolume: voiceForTrack(state, ownProps.trackId).midiVolume
+})
 const mapDispatchToProps = (dispatch, ownProps) => ({
   register: (player) => dispatch({ type: 'REGISTER_PLAYER', trackId: ownProps.trackId, player }),
-  unregister: () => dispatch({ type: 'UNREGISTER_PLAYER', trackId: ownProps.trackId })
+  unregister: () => dispatch({ type: 'UNREGISTER_PLAYER', trackId: ownProps.trackId }),
+  updateVolume: (midiVolume) => dispatch({ type: 'PLAYER_UPDATE_VOLUME', trackId: ownProps.trackId, absoluteVolume: midiVelocityToAbsolute(midiVolume)})
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SamplePlayer)
