@@ -10,8 +10,10 @@ const clampBetween0And127 = clamp(0, 127)
 const clampBetween0And100 = clamp(0, 100)
 const clampBetween1And100 = clamp(1, 100)
 
-function voicePlaying (voiceId, velocity) {
-  return { type: 'VOICE_PLAYING', velocity, id: voiceId }
+export function voicePlaying (trackId, velocity) {
+  return (dispatch, getState) => {
+    dispatch({ type: 'VOICE_PLAYING', velocity, id: voiceForTrack(getState(), trackId).id })
+  }
 }
 
 export function initialisePlayers () {

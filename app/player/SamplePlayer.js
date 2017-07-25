@@ -4,6 +4,7 @@ import Player from './index'
 import { connect } from 'react-redux'
 import midiVelocityToAbsolute from '../voices/midiVelocityToAbsolute'
 import { voiceForTrack } from '../selectors'
+import { voicePlaying } from '../voices/actions'
 
 class SamplePlayer extends React.Component {
   constructor(props) {
@@ -13,14 +14,12 @@ class SamplePlayer extends React.Component {
     this.state = { player: new Player() }
   }
 
-  playing() {
-    // TODO dispatch playing action
-    this.props.onPressed && this.props.onPressed()
+  playing(velocity) {
+    this.props.playing(velocity)
   }
 
   stopped() {
-    // TODO dispatch playing action
-    this.props.onReleased && this.props.onReleased()
+    this.props.stopped()
   }
 
   render() {
@@ -51,7 +50,9 @@ const mapStateToProps = (state, ownProps) => ({
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
   register: (player) => dispatch({ type: 'REGISTER_PLAYER', trackId: ownProps.trackId, player }),
-  unregister: () => dispatch({ type: 'UNREGISTER_PLAYER', trackId: ownProps.trackId })
+  unregister: () => dispatch({ type: 'UNREGISTER_PLAYER', trackId: ownProps.trackId }),
+  playing: (velocity) => dispatch(voicePlaying(ownProps.trackId, velocity)),
+  stopped: () => dispatch(voicePlaying(ownProps.trackId, 0))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SamplePlayer)
