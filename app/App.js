@@ -8,6 +8,7 @@ import StepDelete from './sequencer/StepDelete'
 import StepJumping from './sequencer/StepJumping'
 import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
+import TrackMute from './voices/TrackMute'
 import TrackVoiceControl from './voices/TrackVoiceControl'
 import PatternSelectPads from './sequencer/PatternSelectPads'
 import PatternLengthPads from './sequencer/PatternLengthPads'
@@ -75,7 +76,7 @@ const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepS
               pad={push.gridRow(7)[index]}
             />
           ))}
-          {[...Array(8).keys()].map(index => <DomGridPad key={index} />)}
+          {trackIds.map((trackId, index) => <TrackMute key={trackId} trackId={trackId} pad={push.gridRow(6)[index]} />)}
           <ChromaticKeyboard
             basePitch={36}
             blackRow={push.gridRow(5)}

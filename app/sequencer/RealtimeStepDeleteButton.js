@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
-import { deleteModeOff, deleteModeOn } from './actions'
+import { muteOff, muteOn } from './actions'
 import { Colours } from '../push/colours'
 
 const RealtimeStepDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (
@@ -11,7 +11,6 @@ const RealtimeStepDeleteButton = ({ padPressed, padReleased, pad, rgb }) => (
     padPressed={padPressed}
     padReleased={padReleased}
     active={true}
-    className="pad"
     rgb={rgb}
   >
     <PushGridPad
@@ -29,10 +28,10 @@ export default connect(
   }),
   (dispatch, { trackId }) => ({
     padPressed () {
-      dispatch(deleteModeOn(trackId))
+      dispatch(muteOn(trackId))
     },
     padReleased () {
-      dispatch(deleteModeOff(trackId))
+      dispatch(muteOff(trackId))
     }
   })
 )(RealtimeStepDeleteButton)

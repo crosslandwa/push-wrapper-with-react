@@ -23,12 +23,13 @@ class SamplePlayer extends React.Component {
   }
 
   render() {
-    this.state.player.updateVolume(this.props.absoluteVolume)
+    const { absoluteVolume, muted } = this.props
+    this.state.player.updateVolume(absoluteVolume * (muted ? 0 : 1))
     return null
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.absoluteVolume !== nextProps.absoluteVolume
+    return (this.props.absoluteVolume !== nextProps.absoluteVolume) || (this.props.muted !== nextProps.muted)
   }
 
   componentWillMount() {
@@ -45,9 +46,13 @@ class SamplePlayer extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  absoluteVolume: midiVelocityToAbsolute(voiceForTrack(state, ownProps.trackId).midiVolume)
-})
+const mapStateToProps = (state, ownProps) => {
+  const voice = voiceForTrack(state, ownProps.trackId)
+  return {
+    absoluteVolume: midiVelocityToAbsolute(voice.midiVolume),
+    muted: voice.muted
+  }
+}
 const mapDispatchToProps = (dispatch, ownProps) => ({
   register: (player) => dispatch({ type: 'REGISTER_PLAYER', trackId: ownProps.trackId, player }),
   unregister: () => dispatch({ type: 'UNREGISTER_PLAYER', trackId: ownProps.trackId }),
