@@ -1,7 +1,6 @@
-import { sampleBuffer } from '../samples/actions'
+
 import { currentPattern, sampleForTrack, voiceForTrack } from '../selectors'
 import Player from '../player'
-import NonLinearScale from '../utils/nonLinearScale'
 import midiVelocityToAbsolute from './midiVelocityToAbsolute'
 
 let players = []
@@ -10,23 +9,9 @@ const clamp = (min, max) => x => Math.max(min, Math.min(x, max))
 const clampBetween0And127 = clamp(0, 127)
 const clampBetween0And100 = clamp(0, 100)
 const clampBetween1And100 = clamp(1, 100)
-const frequencyScaling = NonLinearScale(0, 100, 80, 20000, 1000)
+
 
 const player = (state, trackId) => players[currentPattern(state).trackIds.indexOf(trackId)]
-
-export function playVoiceForTrack (trackId, {pitch, velocity, stepTimeMs}) {
-  return (dispatch, getState) => {
-    const voice = voiceForTrack(getState(), trackId)
-    player(getState(), trackId).play({
-      buffer: sampleBuffer(voice.sampleId),
-      pitch: pitch || voice.pitch,
-      velocity,
-      decayPercent: voice.decay,
-      filterFrequency: frequencyScaling(voice.filterAmount),
-      stepTimeMs
-    })
-  }
-}
 
 function voicePlaying (voiceId, velocity) {
   return { type: 'VOICE_PLAYING', velocity, id: voiceId }

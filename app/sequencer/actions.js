@@ -1,7 +1,7 @@
 const context = window.AudioContext ? new window.AudioContext() : new window.webkitAudioContext() // should this be a singleton
 const Scheduling = require('wac.scheduling')(context)
 
-import { playVoiceForTrack } from '../voices/actions'
+import { playVoiceForTrack } from '../player/actions'
 import { currentBpm, currentVoice, currentStepNumberForTrack, currentSwing, currentTracksForPattern, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
 
 export function selectStep (stepId) {
