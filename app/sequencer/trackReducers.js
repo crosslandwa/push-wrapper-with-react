@@ -11,10 +11,10 @@ export default function tracks (state = intialState, action) {
     case 'STEP_TURN_OFF':
       return removeStep(state, action.id)
     case 'TRACK_UPDATE_NUMBER_OF_STEPS':
-      return updateNumberOfSteps(state, action.id, action.numberOfSteps)
+      return updateParam(state, action.id, 'numberOfSteps', action.numberOfSteps)
     case 'TRACK_MUTE_ON':
     case 'TRACK_MUTE_OFF':
-      return updateMuteState(state, action.id, action.type === 'TRACK_MUTE_ON')
+      return updateParam(state, action.id, 'muted', action.type === 'TRACK_MUTE_ON')
 
   }
   return state
@@ -52,14 +52,8 @@ function removeStep (state, stepId) {
   return updated
 }
 
-function updateNumberOfSteps (state, trackId, numberOfSteps) {
+function updateParam(state, id, param, value) {
   const updated = clone(state)
-  updated.byId[trackId].numberOfSteps = numberOfSteps
-  return updated
-}
-
-function updateMuteState (state, trackId, muted) {
-  const updated = clone(state)
-  updated.byId[trackId].muted = muted
+  updated.byId[id][param] = value
   return updated
 }
