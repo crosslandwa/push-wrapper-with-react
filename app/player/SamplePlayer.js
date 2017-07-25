@@ -24,12 +24,12 @@ class SamplePlayer extends React.Component {
   }
 
   render() {
-    this.props.updateVolume(this.props.midiVolume)
+    this.state.player.updateVolume(this.props.absoluteVolume)
     return null
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.midiVolume !== nextProps.midiVolume
+    return this.props.absoluteVolume !== nextProps.absoluteVolume
   }
 
   componentWillMount() {
@@ -47,12 +47,11 @@ class SamplePlayer extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  midiVolume: voiceForTrack(state, ownProps.trackId).midiVolume
+  absoluteVolume: midiVelocityToAbsolute(voiceForTrack(state, ownProps.trackId).midiVolume)
 })
 const mapDispatchToProps = (dispatch, ownProps) => ({
   register: (player) => dispatch({ type: 'REGISTER_PLAYER', trackId: ownProps.trackId, player }),
-  unregister: () => dispatch({ type: 'UNREGISTER_PLAYER', trackId: ownProps.trackId }),
-  updateVolume: (midiVolume) => dispatch({ type: 'PLAYER_UPDATE_VOLUME', trackId: ownProps.trackId, absoluteVolume: midiVelocityToAbsolute(midiVolume)})
+  unregister: () => dispatch({ type: 'UNREGISTER_PLAYER', trackId: ownProps.trackId })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SamplePlayer)
