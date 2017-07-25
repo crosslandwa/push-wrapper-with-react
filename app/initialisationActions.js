@@ -8,18 +8,17 @@ export function init () {
     const currentPatternIds = patternIds(getState())
     const currentSampleIds = sampleIds(getState())
     const currentKitIds = kitIds(getState())
-    return Promise.resolve()
-      .then(() => dispatch(currentSampleIds.length === 0
+    return dispatch(currentSampleIds.length === 0
         ? loadSamples()
         : loadSamplesFromRestoredState()
-      ))
+      )
       .then(() => {
-        return (currentKitIds.length == 0)
+        return (currentKitIds.length === 0)
           ? dispatch(createDefaultKit())
           : currentKitIds[0]
       })
       .then(kitId => {
-        const patternId = (currentPatternIds.length == 0)
+        const patternId = (currentPatternIds.length === 0)
           ? dispatch(createPattern(kitId))
           : currentPatternIds[0]
         dispatch(selectPattern(patternId))

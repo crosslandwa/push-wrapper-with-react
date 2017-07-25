@@ -6,7 +6,7 @@
 - more samples
   - some task to pull in non-version controlled audio assets from disk as part of build
 - pan per voice/step
-- voice volume/muting
+- voice muting
 - duplicate kit (hold duplicate, press kit select button, copies current kit to that kit)
 - duplicate pattern (hold duplicate, press pattern select button, copies current pattern to that pattern)
 - multiple/switchable patterns (work on current one in a 'scratch pad')
