@@ -11,6 +11,7 @@ import ChromaticKeyboard from './voices/ChromaticKeyboard'
 import TrackVoiceControl from './voices/TrackVoiceControl'
 import PatternSelectPads from './sequencer/PatternSelectPads'
 import PatternLengthPads from './sequencer/PatternLengthPads'
+import SamplePlayer from './player/SamplePlayer'
 
 import { connect } from 'react-redux'
 import { currentPattern, kitIds, patternIds, currentTrack, selectedStep } from './selectors'
@@ -87,6 +88,9 @@ const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepS
         </div>
       </div>
       <RightSideControls push={push} />
+      <div>
+        <SamplePlayer />
+      </div>
     </div>
   )
 }
