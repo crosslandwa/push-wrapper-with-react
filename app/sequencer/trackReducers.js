@@ -12,6 +12,10 @@ export default function tracks (state = intialState, action) {
       return removeStep(state, action.id)
     case 'TRACK_UPDATE_NUMBER_OF_STEPS':
       return updateNumberOfSteps(state, action.id, action.numberOfSteps)
+    case 'TRACK_MUTE_ON':
+    case 'TRACK_MUTE_OFF':
+      return updateMuteState(state, action.id, action.type === 'TRACK_MUTE_ON')
+
   }
   return state
 }
@@ -21,6 +25,7 @@ function addTracks (state, ids) {
     byId: ids.reduce((byId, id, index) => {
       byId[id] = {
         id,
+        muted: false,
         numberOfSteps: 32,
         stepIds: []
       }
@@ -50,5 +55,11 @@ function removeStep (state, stepId) {
 function updateNumberOfSteps (state, trackId, numberOfSteps) {
   const updated = clone(state)
   updated.byId[trackId].numberOfSteps = numberOfSteps
+  return updated
+}
+
+function updateMuteState (state, trackId, muted) {
+  const updated = clone(state)
+  updated.byId[trackId].muted = muted
   return updated
 }

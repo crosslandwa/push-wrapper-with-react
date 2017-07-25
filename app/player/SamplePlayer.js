@@ -3,7 +3,7 @@ import React from 'react'
 import Player from './index'
 import { connect } from 'react-redux'
 import midiVelocityToAbsolute from '../voices/midiVelocityToAbsolute'
-import { voiceForTrack } from '../selectors'
+import { trackSelector, voiceForTrack } from '../selectors'
 import { voicePlaying } from '../voices/actions'
 
 class SamplePlayer extends React.Component {
@@ -46,13 +46,10 @@ class SamplePlayer extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const voice = voiceForTrack(state, ownProps.trackId)
-  return {
-    absoluteVolume: midiVelocityToAbsolute(voice.midiVolume),
-    muted: voice.muted
-  }
-}
+const mapStateToProps = (state, ownProps) => ({
+  absoluteVolume: midiVelocityToAbsolute(voiceForTrack(state, ownProps.trackId).midiVolume),
+  muted: trackSelector(state, ownProps.trackId).muted
+})
 const mapDispatchToProps = (dispatch, ownProps) => ({
   register: (player) => dispatch({ type: 'REGISTER_PLAYER', trackId: ownProps.trackId, player }),
   unregister: () => dispatch({ type: 'UNREGISTER_PLAYER', trackId: ownProps.trackId }),

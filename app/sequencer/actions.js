@@ -169,3 +169,18 @@ export function changeNumberOfStepsTo (trackId, numberOfSteps) {
     numberOfSteps
   }
 }
+
+
+export function muteTrack (trackId) {
+  return {
+    type: 'TRACK_MUTE_ON',
+    id: trackId
+  }
+}
+
+export function unmuteTrack (trackId) {
+  return {
+    type: 'TRACK_MUTE_OFF',
+    id: trackId
+  }
+}

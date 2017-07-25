@@ -64,23 +64,3 @@ export function updateVolume (trackId, delta) {
     })
   }
 }
-
-export function muteOn (trackId) {
-  return (dispatch, getState) => {
-    const voice = voiceForTrack(getState(), trackId)
-    dispatch({
-      type: 'VOICE_MUTE_ON',
-      id: voice.id
-    })
-  }
-}
-
-export function muteOff (trackId) {
-  return (dispatch, getState) => {
-    const voice = voiceForTrack(getState(), trackId)
-    dispatch({
-      type: 'VOICE_MUTE_OFF',
-      id: voice.id
-    })
-  }
-}

@@ -23,10 +23,6 @@ export default function voices (state = initialState, action) {
       return updateFilterF(state, action.id, action.filterAmount)
     case 'VOICE_UPDATE_VOLUME':
       return updateParam(state, action.id, 'midiVolume', action.midiVolume)
-    case 'VOICE_MUTE_ON':
-      return updateParam(state, action.id, 'muted', true)
-    case 'VOICE_MUTE_OFF':
-      return updateParam(state, action.id, 'muted', false)
   }
   return state
 }
@@ -47,8 +43,7 @@ function createVoices (state, ids, sampleIds) {
         velocity: 0,
         decay: 100,
         filterAmount: 100,
-        midiVolume: 108,
-        muted: false
+        midiVolume: 108
       }
       return byId
     }, clone(state.byId)),

@@ -3,9 +3,9 @@ import React from 'react'
 import { connect } from 'react-redux'
 import DomGridPad from '../push/DomGridPad'
 import PushGridPad from '../push/PushGridPad'
-import { muteOff, muteOn } from './actions'
+import { unmuteTrack, muteTrack } from './actions'
 import { Colours } from '../push/colours'
-import { voiceForTrack } from '../selectors'
+import { trackSelector } from '../selectors'
 
 const TrackMute = ({ muteOn, muteOff, pad, muted }) => (
   <DomGridPad
@@ -24,14 +24,14 @@ const TrackMute = ({ muteOn, muteOff, pad, muted }) => (
 
 export default connect(
   ( state, { trackId }) => ({
-    muted: voiceForTrack(state, trackId).muted
+    muted: trackSelector(state, trackId).muted
   }),
   (dispatch, { trackId }) => ({
     muteOn () {
-      dispatch(muteOn(trackId))
+      dispatch(muteTrack(trackId))
     },
     muteOff () {
-      dispatch(muteOff(trackId))
+      dispatch(unmuteTrack(trackId))
     }
   })
 )(TrackMute)
