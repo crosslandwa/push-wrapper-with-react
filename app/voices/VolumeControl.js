@@ -4,11 +4,10 @@ import { connect } from 'react-redux'
 import PushKnob from '../push/PushKnob'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
-import { updateVolumeAction, updateVolume } from './actions'
+import { updateVolume } from './actions'
 import { voiceForTrack } from '../selectors'
 
 const VolumeControl = props => {
-  props.updateVolume(props.midiVolume) // TODO this won't work - updateVolume won't be called for state changes (e.g. initialisation when this component isn't in the UI)
   return (
     <ClickyDraggy {...props}>
       <DomKnob />
@@ -24,10 +23,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, { trackId }) => {
   return {
     onTurned(delta) {
-      dispatch(updateVolumeAction(trackId, delta))
-    },
-    updateVolume(volume) {
-      dispatch(updateVolume(trackId, volume))
+      dispatch(updateVolume(trackId, delta))
     }
   }
 }

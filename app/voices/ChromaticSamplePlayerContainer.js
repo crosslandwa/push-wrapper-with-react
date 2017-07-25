@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { playVoiceForTrack } from './actions'
+import { playVoiceForTrack } from '../player/actions'
 import ChromaticKeyboardPad from './ChromaticKeyboardPad'
 
 const ChromaticSamplePlayerContainer = (props) => <ChromaticKeyboardPad {...props} />

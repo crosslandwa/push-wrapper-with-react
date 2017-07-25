@@ -30,7 +30,10 @@ class Player {
     source.playbackRate.value = rate
     source.connect(envelope)
     envelope.connect(this.filter)
-    source.addEventListener('ended', () => this.stoppedListeners.forEach(listener => listener()))
+    source.addEventListener('ended', () => {
+      envelope.disconnect()
+      this.stoppedListeners.forEach(listener => listener())
+    })
     this.startedListeners.forEach(listener => listener(velocity))
     const stepTimeSeconds = stepTimeMs ? (stepTimeMs / 1000) : context.currentTime
     this.filter.frequency.setValueAtTime(filterFrequency, stepTimeSeconds)

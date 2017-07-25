@@ -10,6 +10,7 @@ import persistState from 'redux-localstorage'
 import App from './app/App'
 import rootReducer from './app/reducers'
 import { init } from './app/initialisationActions'
+import samplePlayerMiddleware from './app/player/middleware'
 
 const loadPush = () => pushWrapper.webMIDIio()
   .catch(err => { console.warn(err); return { inputPort: {}, outputPort: { send: () => {} } } })
@@ -31,6 +32,7 @@ function app([push]) {
     rootReducer,
     composeEnhancers(
       applyMiddleware(thunkMiddleware),
+      applyMiddleware(samplePlayerMiddleware),
       persistState('entities', {  key: 'push-with-react' })
     )
   )

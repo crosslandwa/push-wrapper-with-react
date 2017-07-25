@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { playVoiceForTrack } from './actions'
+import { playVoiceForTrack } from '../player/actions'
 import TrackPlayingPad from './TrackPlayingPad'
 
 const TrackPlayerContainer = (props) => <TrackPlayingPad {...props} />
