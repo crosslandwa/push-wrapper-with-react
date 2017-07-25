@@ -1,5 +1,4 @@
 import { createPattern, selectPattern } from './sequencer/patternActions'
-import { initialisePlayers } from './voices/actions'
 import { loadSample } from './samples/actions'
 import { createDefaultKit } from './kits/actions'
 import { kitIds, patternIds, sampleIds, sampleSelector } from './selectors'
@@ -9,7 +8,7 @@ export function init () {
     const currentPatternIds = patternIds(getState())
     const currentSampleIds = sampleIds(getState())
     const currentKitIds = kitIds(getState())
-    return Promise.resolve(dispatch(initialisePlayers()))
+    return Promise.resolve()
       .then(() => dispatch(currentSampleIds.length === 0
         ? loadSamples()
         : loadSamplesFromRestoredState()

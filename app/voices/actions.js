@@ -1,9 +1,6 @@
-
-import { currentPattern, sampleForTrack, voiceForTrack } from '../selectors'
+import { voiceForTrack } from '../selectors'
 import Player from '../player'
 import midiVelocityToAbsolute from './midiVelocityToAbsolute'
-
-let players = []
 
 const clamp = (min, max) => x => Math.max(min, Math.min(x, max))
 const clampBetween0And127 = clamp(0, 127)
@@ -13,28 +10,6 @@ const clampBetween1And100 = clamp(1, 100)
 export function voicePlaying (trackId, velocity) {
   return (dispatch, getState) => {
     dispatch({ type: 'VOICE_PLAYING', velocity, id: voiceForTrack(getState(), trackId).id })
-  }
-}
-
-export function initialisePlayers () {
-  return (dispatch, getState) => {
-    return Promise.all(
-      [...Array(8).keys()].map(index => new Player())
-    ).then(newPlayers => {
-      players = newPlayers
-      players.forEach((player, index) => {
-        player.onStarted(velocity => {
-          const trackId = currentPattern(getState()).trackIds[index]
-          const voiceId = voiceForTrack(getState(), trackId).id
-          dispatch(voicePlaying(voiceId, velocity))
-        })
-        player.onStopped(() => {
-          const trackId = currentPattern(getState()).trackIds[index]
-          const voiceId = voiceForTrack(getState(), trackId).id
-          dispatch(voicePlaying(voiceId, 0))
-        })
-      })
-    })
   }
 }
 
@@ -62,7 +37,7 @@ export function updateDecay(trackId, delta) {
     dispatch({
       type: 'VOICE_UPDATE_DECAY',
       id: voice.id,
-      decay: clampBetween1And100((voice.decay || 100) + delta)
+      decay: clampBetween1And100((voice.decay) + delta)
     })
   }
 }
