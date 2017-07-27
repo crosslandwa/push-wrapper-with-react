@@ -3,7 +3,8 @@ const initialPushState = {
     clip: false,
     delete: false,
     shift: false,
-    fixedLength: false
+    fixedLength: false,
+    duplicate: false
   }
 }
 

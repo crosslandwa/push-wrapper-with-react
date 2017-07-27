@@ -6,6 +6,7 @@ import BpmControlKnob from '../sequencer/BpmControlKnob'
 import SwingControlKnob from '../sequencer/SwingControlKnob'
 import ClipModifierButton from './ClipModifierButton'
 import DeleteModifierButton from './DeleteModifierButton'
+import DuplicateModifierButton from './DuplicateModifierButton'
 import FixedLengthModifierButton from './FixedLengthModifierButton'
 import ShiftModifierButton from './ShiftModifierButton'
 import { startSequence, stopSequence, armSequencer, disarmSequencer } from '../sequencer/actions'
@@ -38,6 +39,7 @@ export const LeftSideControls = ({push}) => (
     </div>
     <div>
       <FixedLengthModifierButton pushButton={push.button('FixedLength')} />
+      <DuplicateModifierButton pushButton={push.button('Duplicate')} />
       <TransportButton
         modifier='recording'
         label='Rec'
