@@ -8,7 +8,7 @@ import FilterFrequencyControl from './FilterFrequencyControl'
 import VolumeControl from './VolumeControl'
 import DomKnob from '../push/DomKnob'
 
-const TrackVoiceControl = ({knobs, trackId}) => {
+const TrackVoiceControl = ({knobs, trackId, trackIds}) => {
   return (
     <ChannelKnobs>
       <PitchControl trackId={trackId} knob={knobs[0]} />
@@ -17,7 +17,7 @@ const TrackVoiceControl = ({knobs, trackId}) => {
       <DomKnob />
       <DomKnob />
       <DomKnob />
-      <FilterFrequencyControl trackId={trackId} knob={knobs[6]} />
+      <FilterFrequencyControl trackIds={trackIds} knob={knobs[6]} />
       <VolumeControl trackId={trackId} knob={knobs[7]} />
     </ChannelKnobs>
   )

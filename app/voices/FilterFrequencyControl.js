@@ -15,10 +15,10 @@ const FilterFrequencyControl = props => (
 
 const mapStateToProps = (state, ownProps) => ({})
 
-const mapDispatchToProps = (dispatch, { trackId }) => {
+const mapDispatchToProps = (dispatch, { trackIds }) => {
   return {
     onTurned(delta) {
-      dispatch(updateFilterFrequency(trackId, delta))
+      dispatch(updateFilterFrequency(trackIds, delta))
     }
   }
 }
