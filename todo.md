@@ -17,7 +17,6 @@
 - change all voices at once?
   - sample player decay envelope
   - pattern length
-- LCD is rendering on every step
 
 
 ### Look at arrow functions/plugin to remove
