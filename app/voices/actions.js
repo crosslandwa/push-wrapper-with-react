@@ -46,7 +46,7 @@ export function updateFilterFrequency (trackIds, delta) {
   return (dispatch, getState) => {
     const voices = trackIds.map(id => voiceForTrack(getState(), id))
     return dispatch({
-      type: 'VOICE_UPDATE_FILTER_FREQS',
+      type: 'VOICES_UPDATE_FILTER_FREQ',
       ids: voices.map(voice => voice.id),
       filterAmounts: voices.map(voice => clampBetween0And100(voice.filterAmount + delta))
     })
