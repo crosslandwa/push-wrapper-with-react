@@ -21,10 +21,20 @@ export default function voices (state = initialState, action) {
       return updateParam(state, action.id, 'decay', action.decay)
     case 'VOICE_UPDATE_FILTER_F':
       return updateParam(state, action.id, 'filterAmount', action.filterAmount)
+    case 'VOICE_UPDATE_FILTER_FREQS':
+      return updateParamBatch(state, 'filterAmount', action.ids, action.filterAmounts)
     case 'VOICE_UPDATE_VOLUME':
       return updateParam(state, action.id, 'midiVolume', action.midiVolume)
   }
   return state
+}
+
+function updateParamBatch (state, param, ids, values) {
+  const updated = clone(state)
+  ids.forEach((id, index) => {
+    updated.byId[id][param] = values[index]
+  })
+  return updated
 }
 
 function voicePlaying (state = [], {id, velocity = 0}) {

@@ -13,6 +13,7 @@
 - swing
   - change it to switchable to 16n/8n
   - save as part of pattern?
+  - prevent skipped sequences getting out of swing sync
 - stutter
 - change all voices at once?
   - sample player decay envelope

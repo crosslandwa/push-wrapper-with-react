@@ -43,12 +43,16 @@ export function updateDecay(trackId, delta) {
 }
 
 export function updateFilterFrequency (trackId, delta) {
+  return updateFilterF([trackId], delta)
+}
+
+function updateFilterF (trackIds, delta) {
   return (dispatch, getState) => {
-    const voice = voiceForTrack(getState(), trackId)
-    dispatch({
-      type: 'VOICE_UPDATE_FILTER_F',
-      id: voice.id,
-      filterAmount: clampBetween0And100(delta + voice.filterAmount)
+    const voices = trackIds.map(id => voiceForTrack(getState(), id))
+    return dispatch({
+      type: 'VOICE_UPDATE_FILTER_FREQS',
+      ids: voices.map(voice => voice.id),
+      filterAmounts: voices.map(voice => clampBetween0And100(voice.filterAmount + delta))
     })
   }
 }
