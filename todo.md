@@ -18,3 +18,45 @@
   - sample player decay envelope
   - pattern length
 - LCD is rendering on every step
+
+
+### Look at arrow functions/plugin to remove
+
+```
+class Button extends React.Component {
+  // Use an arrow function here:
+  handleClick = () => {
+    console.log('clickity');
+  }
+
+  render() {
+    return (
+      <button onClick={this.handleClick}/>
+    );
+  }
+}
+```
+
+Can use arrow functions so don't need to bind in the constructor
+need the babel `babel-plugin-transform-class-properties` plugin
+
+then in webapck:
+```
+{
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              'react',
+              'flow'
+            ],
+            plugins: [
+              'transform-object-rest-spread',
+              'transform-class-properties'
+            ]
+          }
+        }
+      }
+```
