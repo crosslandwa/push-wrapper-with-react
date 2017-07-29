@@ -50,7 +50,7 @@ function createVoices (state, ids, sampleIds) {
         pitch: 36,
         velocity: 0,
         decay: 100,
-        filterAmount: 100,
+        filterAmount: 127,
         midiVolume: 108
       }
       return byId

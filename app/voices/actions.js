@@ -48,7 +48,7 @@ export function updateFilterFrequency (trackIds, delta) {
     return dispatch({
       type: 'VOICES_UPDATE_FILTER_FREQ',
       ids: voices.map(voice => voice.id),
-      filterAmounts: voices.map(voice => clampBetween0And100(voice.filterAmount + delta))
+      filterAmounts: voices.map(voice => clampBetween0And127(voice.filterAmount + delta))
     })
   }
 }

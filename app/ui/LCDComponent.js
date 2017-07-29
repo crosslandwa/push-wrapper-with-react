@@ -5,8 +5,8 @@ import LCD from './LCD'
 import { currentBpm, currentPattern, currentSample, currentSwing, currentTrack, currentVoice, sampleIds, sampleSelectionOn, sampleSelector, selectedStep, selectedTrackIndex } from '../selectors'
 import NonLinearScale from '../utils/nonLinearScale'
 import midiVelocityToAbsolute from '../voices/midiVelocityToAbsolute'
+import { frequencyScaling } from '../player/actions'
 
-const frequencyScaling = NonLinearScale(0, 100, 80, 20000, 1000)
 const filterF = amount => Math.floor(frequencyScaling(amount))
 const dbVolume = (midiVolume) => parseFloat(20 * Math.log10(midiVelocityToAbsolute(midiVolume))).toFixed(2) + 'dB'
 

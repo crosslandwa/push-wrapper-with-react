@@ -2,7 +2,7 @@ import { sampleBuffer } from '../samples/actions'
 import NonLinearScale from '../utils/nonLinearScale'
 import { voiceForTrack } from '../selectors'
 
-const frequencyScaling = NonLinearScale(0, 100, 80, 20000, 1000)
+export const frequencyScaling = NonLinearScale(0, 127, 80, 20000, 1000)
 
 export function playVoiceForTrack (trackId, {pitch, velocity, stepTimeMs}) {
   return (dispatch, getState) => {
