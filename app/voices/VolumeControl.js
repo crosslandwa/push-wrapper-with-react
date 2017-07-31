@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PushKnob from '../push/PushKnob'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
@@ -16,16 +17,8 @@ const VolumeControl = props => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  midiVolume: voiceForTrack(state, ownProps.trackId).midiVolume
-})
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  onTurned: updateVolume
+}, dispatch)
 
-const mapDispatchToProps = (dispatch, { trackId }) => {
-  return {
-    onTurned(delta) {
-      dispatch(updateVolume(trackId, delta))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(VolumeControl)
+export default connect(null, mapDispatchToProps)(VolumeControl)

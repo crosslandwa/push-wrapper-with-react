@@ -1,4 +1,4 @@
-import { voiceForTrack } from '../selectors'
+import { currentVoice, modifiersDuplicateSelector, voicesForCurrentKit, voiceForTrack } from '../selectors'
 import Player from '../player'
 import midiVelocityToAbsolute from './midiVelocityToAbsolute'
 
@@ -53,14 +53,20 @@ export function updateFilterFrequency (trackIds, delta) {
   }
 }
 
-export function updateVolume (trackId, delta) {
+export function updateVolume (delta) {
   return (dispatch, getState) => {
-    const voice = voiceForTrack(getState(), trackId)
-    const newMidiVolume = clampBetween0And127(delta + voice.midiVolume)
-    dispatch({
-      type: 'VOICES_UPDATE_VOLUME',
-      ids: [voice.id],
-      midiVolumes: [newMidiVolume]
-    })
+    const state = getState()
+    const voices = modifiersDuplicateSelector(state)
+      ? voicesForCurrentKit(state)
+      : [currentVoice(state)]
+    return dispatch(updateVolumesFor(voices, delta))
+  }
+}
+
+function updateVolumesFor (voices, delta) {
+  return {
+    type: 'VOICES_UPDATE_VOLUME',
+    ids: voices.map(voice => voice.id),
+    midiVolumes: voices.map(voice => clampBetween0And127(delta + voice.midiVolume))
   }
 }

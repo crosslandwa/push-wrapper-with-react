@@ -28,8 +28,6 @@ const patternForTrack = createSelector( // state, trackId
 // ############ KIT
 const kitsSelector = state => state.entities.kits
 
-const kitSelector = (state, id) => kitSelector(state).byId[id]
-
 export const kitIds = state => kitsSelector(state).allIds
 
 export const currentKit = createSelector( // state
@@ -88,6 +86,7 @@ export const selectedStep = state => stepSelector(state, selectedStepIdSelector(
 
 // ############ VOICE
 const voicesSelector = state => state.entities.voices
+const voiceSelector = (state, id) => voicesSelector(state).byId[id]
 
 export const voiceIds = state => voicesSelector(state).allIds
 
@@ -100,6 +99,11 @@ export const voiceForTrack = createSelector( // state, trackId
     const voiceId = kits.byId[pattern.kitId].voiceIds[index]
     return voices.byId[voiceId]
   }
+)
+
+export const voicesForCurrentKit = createSelector( // state
+  [currentKit, identity(0)],
+  (kit, state) => kit.voiceIds.map(id => voiceSelector(state, id))
 )
 
 // ############ SAMPLE
@@ -123,3 +127,7 @@ export const sampleForTrack = createSelector( // state, trackId
 )
 
 export const sampleSelectionOn = (state) => state.ui.sampleSelectionOn
+
+// ############ modifiers
+
+export const modifiersDuplicateSelector = state => state.push.modifiers.duplicate
