@@ -18,7 +18,8 @@
 - change all voices at once?
   - sample player decay envelope
   - pattern length
-
+- reset params
+  - hold delete, touch knob (hold duplicate for all voices?)
 
 ### Look at arrow functions/plugin to remove
 

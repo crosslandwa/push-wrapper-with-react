@@ -21,8 +21,8 @@ export default function voices (state = initialState, action) {
       return updateParam(state, action.id, 'decay', action.decay)
     case 'VOICES_UPDATE_FILTER_FREQ':
       return updateParamBatch(state, 'filterAmount', action.ids, action.filterAmounts)
-    case 'VOICE_UPDATE_VOLUME':
-      return updateParam(state, action.id, 'midiVolume', action.midiVolume)
+    case 'VOICES_UPDATE_VOLUME':
+      return updateParamBatch(state, 'midiVolume', action.ids, action.midiVolumes)
   }
   return state
 }

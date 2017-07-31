@@ -58,9 +58,9 @@ export function updateVolume (trackId, delta) {
     const voice = voiceForTrack(getState(), trackId)
     const newMidiVolume = clampBetween0And127(delta + voice.midiVolume)
     dispatch({
-      type: 'VOICE_UPDATE_VOLUME',
-      id: voice.id,
-      midiVolume: newMidiVolume
+      type: 'VOICES_UPDATE_VOLUME',
+      ids: [voice.id],
+      midiVolumes: [newMidiVolume]
     })
   }
 }
