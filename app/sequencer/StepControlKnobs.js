@@ -11,7 +11,7 @@ import DomKnob from '../push/DomKnob'
 const StepControlKnobs = ({knobs, stepId}) => {
   return (
     <ChannelKnobs>
-      <StepPitchControl stepId={stepId} knob={knobs[0]} />
+      <StepPitchControl knob={knobs[0]} />
       <DomKnob />
       <StepDecayControl knob={knobs[2]} />
       <DomKnob />

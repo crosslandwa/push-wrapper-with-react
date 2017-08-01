@@ -26,16 +26,20 @@ export function turnStepOn (trackId, stepNumber, pitch, velocity) {
   }
 }
 
-export function changeStepPitchBy(id, delta) {
-  return (dispatch, getState) => dispatch(updateStepPitch(
-    id,
-    (stepSelector(getState(), id).midiPitch || currentVoice(getState()).pitch) + delta
-  ))
+export function changeStepPitchBy(delta) {
+  return (dispatch, getState) => {
+    const steps = [selectedStep(getState())] // TODO select and edit multiple steps
+    const voice = currentVoice(getState())
+    return dispatch(updateStepPitch(
+      steps.map(step => step.id),
+      steps.map(step => (step.midiPitch || voice.pitch) + delta)
+    ))
+  }
 }
 
 export function changeStepDecayBy (delta) {
   return (dispatch, getState) => {
-    const steps = [selectedStep(getState())]
+    const steps = [selectedStep(getState())] // TODO select and edit multiple steps
     const voice = currentVoice(getState())
     dispatch({
       type: 'STEPS_UPDATE_DECAY',
@@ -53,12 +57,12 @@ export function changeStepVelocityBy(id, delta) {
   })
 }
 
-function updateStepPitch(id, pitch) {
-  return { type: 'STEPS_UPDATE_PITCH', ids: [id], values: [pitch] }
+function updateStepPitch(ids, pitches) {
+  return { type: 'STEPS_UPDATE_PITCH', ids, values: pitches }
 }
 
 export function updateSelectedStepPitch(pitch) {
-  return (dispatch, getState) => dispatch(updateStepPitch(selectedStep(getState()).id, pitch))
+  return (dispatch, getState) => dispatch(updateStepPitch([selectedStep(getState()).id], [pitch]))
 }
 
 export function turnStepOff (id) {
