@@ -54,7 +54,7 @@ export function changeStepVelocityBy(id, delta) {
 }
 
 function updateStepPitch(id, pitch) {
-  return {type: 'STEP_UPDATE_PITCH', id, pitch}
+  return { type: 'STEPS_UPDATE_PITCH', ids: [id], values: [pitch] }
 }
 
 export function updateSelectedStepPitch(pitch) {
