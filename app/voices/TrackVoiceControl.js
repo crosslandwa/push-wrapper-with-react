@@ -11,7 +11,7 @@ import DomKnob from '../push/DomKnob'
 const TrackVoiceControl = ({knobs, trackId, trackIds}) => {
   return (
     <ChannelKnobs>
-      <PitchControl trackId={trackId} knob={knobs[0]} />
+      <PitchControl knob={knobs[0]} />
       <SampleSelect trackId={trackId} knob={knobs[1]} />
       <DecayKnob knob={knobs[2]} />
       <DomKnob />

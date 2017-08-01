@@ -20,13 +20,16 @@ export function switchSample(trackId, sampleId) {
   }
 }
 
-export function updatePitch(trackId, delta) {
+export function updatePitch (delta) {
   return (dispatch, getState) => {
-    const voice = voiceForTrack(getState(), trackId)
-    dispatch({
-      type: 'VOICE_UPDATE_PITCH',
-      id: voice.id,
-      pitch: clampBetween0And127(voice.pitch + delta)
+    const state = getState()
+    const voices = modifiersDuplicateSelector(state)
+      ? voicesForCurrentKit(state)
+      : [currentVoice(state)]
+    return dispatch({
+      type: 'VOICES_UPDATE_PITCH',
+      ids: voices.map(voice => voice.id),
+      pitches: voices.map(voice => clampBetween0And127(voice.pitch + delta))
     })
   }
 }

@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PushKnob from '../push/PushKnob'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
@@ -13,14 +14,8 @@ const PitchControl = props => (
   </ClickyDraggy>
 )
 
-const mapStateToProps = (state, ownProps) => ({})
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  onTurned: updatePitch
+}, dispatch)
 
-const mapDispatchToProps = (dispatch, { trackId }) => {
-  return {
-    onTurned(delta) {
-      dispatch(updatePitch(trackId, delta))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PitchControl)
+export default connect(null, mapDispatchToProps)(PitchControl)
