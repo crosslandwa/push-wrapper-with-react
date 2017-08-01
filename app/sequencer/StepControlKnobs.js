@@ -5,7 +5,6 @@ import StepDecayControl from './StepDecayControl'
 import StepPitchControl from './StepPitchControl'
 import StepVelocityControl from './StepVelocityControl'
 import ChannelKnobs from '../ui/ChannelKnobs'
-import { selectedStep } from '../selectors'
 import DomKnob from '../push/DomKnob'
 
 const StepControlKnobs = ({knobs}) => {
