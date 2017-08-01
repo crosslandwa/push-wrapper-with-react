@@ -59,14 +59,10 @@ export function updateVolume (delta) {
     const voices = modifiersDuplicateSelector(state)
       ? voicesForCurrentKit(state)
       : [currentVoice(state)]
-    return dispatch(updateVolumesFor(voices, delta))
-  }
-}
-
-function updateVolumesFor (voices, delta) {
-  return {
-    type: 'VOICES_UPDATE_VOLUME',
-    ids: voices.map(voice => voice.id),
-    midiVolumes: voices.map(voice => clampBetween0And127(delta + voice.midiVolume))
+    return dispatch({
+      type: 'VOICES_UPDATE_VOLUME',
+      ids: voices.map(voice => voice.id),
+      midiVolumes: voices.map(voice => clampBetween0And127(delta + voice.midiVolume))
+    })
   }
 }
