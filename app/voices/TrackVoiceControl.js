@@ -17,7 +17,7 @@ const TrackVoiceControl = ({knobs, trackId, trackIds}) => {
       <DomKnob />
       <DomKnob />
       <DomKnob />
-      <FilterFrequencyControl trackIds={trackIds} knob={knobs[6]} />
+      <FilterFrequencyControl knob={knobs[6]} />
       <VolumeControl knob={knobs[7]} />
     </ChannelKnobs>
   )

@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import PushKnob from '../push/PushKnob'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
@@ -13,14 +14,8 @@ const FilterFrequencyControl = props => (
   </ClickyDraggy>
 )
 
-const mapStateToProps = (state, ownProps) => ({})
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  onTurned: updateFilterFrequency
+}, dispatch)
 
-const mapDispatchToProps = (dispatch, { trackIds }) => {
-  return {
-    onTurned(delta) {
-      dispatch(updateFilterFrequency(trackIds, delta))
-    }
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(FilterFrequencyControl)
+export default connect(null, mapDispatchToProps)(FilterFrequencyControl)
