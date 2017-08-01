@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
+import StepDecayControl from './StepDecayControl'
 import StepPitchControl from './StepPitchControl'
 import StepVelocityControl from './StepVelocityControl'
 import ChannelKnobs from '../ui/ChannelKnobs'
@@ -12,7 +13,7 @@ const StepControlKnobs = ({knobs, stepId}) => {
     <ChannelKnobs>
       <StepPitchControl stepId={stepId} knob={knobs[0]} />
       <DomKnob />
-      <DomKnob />
+      <StepDecayControl knob={knobs[2]} />
       <DomKnob />
       <DomKnob />
       <DomKnob />

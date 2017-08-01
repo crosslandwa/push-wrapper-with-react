@@ -1,6 +1,5 @@
 - realtime sequence recording/parameter lock type behaviour. What I think....?
   - how to delete a parameter lock for a step?
-  - decay per step
   - edit multiple steps at same time?
 
 - more samples

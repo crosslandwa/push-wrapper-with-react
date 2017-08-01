@@ -45,8 +45,8 @@ const stepDisplay = (state, ownProps) => {
   const stepNumber = track.stepIds.indexOf(step.id)
   return {
     data: [
-      [step.midiPitch || '-', '', '', '', '', '', '', step.midiVelocity],
-      ['pitch', '', '', '', '', '', '', 'velocity'],
+      [step.midiPitch || '-', '', step.voiceDecay || '-', '', '', '', '', step.midiVelocity],
+      ['pitch', '', 'decay', '', '', '', '', 'velocity'],
       [],
       [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `step: ${stepNumber}`]
     ]

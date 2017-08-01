@@ -4,7 +4,7 @@ import { voiceForTrack } from '../selectors'
 
 export const frequencyScaling = NonLinearScale(0, 127, 80, 20000, 1000)
 
-export function playVoiceForTrack (trackId, {pitch, velocity, stepTimeMs}) {
+export function playVoiceForTrack (trackId, {decay, pitch, velocity, stepTimeMs}) {
   return (dispatch, getState) => {
     const voice = voiceForTrack(getState(), trackId)
     dispatch({
@@ -14,7 +14,7 @@ export function playVoiceForTrack (trackId, {pitch, velocity, stepTimeMs}) {
         buffer: sampleBuffer(voice.sampleId),
         pitch: pitch || voice.pitch,
         velocity,
-        decayPercent: voice.decay,
+        decayPercent: decay || voice.decay,
         filterFrequency: frequencyScaling(voice.filterAmount),
         stepTimeMs
       }

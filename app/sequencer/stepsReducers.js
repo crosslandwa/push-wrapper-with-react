@@ -1,9 +1,10 @@
 import {clone} from '../reducers/utils'
 
-const step = (id, pitch = null, velocity = null) => ({
+const step = (id, pitch = null, velocity = null, decay = null) => ({
   id,
   midiPitch: pitch,
-  midiVelocity: velocity
+  midiVelocity: velocity,
+  voiceDecay: decay
 })
 
 const intialState = {
@@ -21,8 +22,18 @@ export default function steps (state = intialState, action) {
       return updatePitch(state, action)
     case 'STEP_UPDATE_VELOCITY':
       return updateVelocity(state, action.id, action.velocity)
+    case 'STEPS_UPDATE_DECAY':
+      return updateParamBatch(state, 'voiceDecay', action.ids, action.values)
   }
   return state
+}
+
+function updateParamBatch (state, param, ids, values) {
+  const updated = clone(state)
+  ids.forEach((id, index) => {
+    updated.byId[id][param] = values[index]
+  })
+  return updated
 }
 
 function updatePitch(state, {id, pitch}) {

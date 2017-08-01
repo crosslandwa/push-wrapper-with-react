@@ -4,6 +4,10 @@ const Scheduling = require('wac.scheduling')(context)
 import { playVoiceForTrack } from '../player/actions'
 import { currentBpm, currentVoice, currentStepNumberForTrack, currentSwing, currentTracksForPattern, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
 
+const clamp = (min, max) => x => Math.max(min, Math.min(x, max))
+const clampBetween1And100 = clamp(1, 100)
+const clampBetween1And127 = clamp(1, 127)
+
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
 }
@@ -29,11 +33,23 @@ export function changeStepPitchBy(id, delta) {
   ))
 }
 
+export function changeStepDecayBy (delta) {
+  return (dispatch, getState) => {
+    const steps = [selectedStep(getState())]
+    const voice = currentVoice(getState())
+    dispatch({
+      type: 'STEPS_UPDATE_DECAY',
+      ids: steps.map(step => step.id),
+      values: steps.map(step => clampBetween1And100((step.voiceDecay || voice.decay) + delta)) // TODO duplication of decay limits
+    })
+  }
+}
+
 export function changeStepVelocityBy(id, delta) {
   return (dispatch, getState) => dispatch({
     type: 'STEP_UPDATE_VELOCITY',
     id,
-    velocity: Math.max(1, Math.min(stepSelector(getState(), id).midiVelocity + delta, 127))
+    velocity: clampBetween1And127(stepSelector(getState(), id).midiVelocity + delta) // TODO duplication of velocity limits
   })
 }
 
@@ -100,6 +116,7 @@ function playSequencedVoices  () {
       deleteModeTrackIds.includes(track.id)
         ? dispatch(turnStepOff(stepId))
         : dispatch(playVoiceForTrack(track.id, {
+          decay: step.voiceDecay,
           pitch: step.midiPitch,
           velocity: step.midiVelocity,
           stepTimeMs: lastStepTimeMs + ((stepNumber % 2) * currentSwing(getState()) * 0.01 * stepLength)
