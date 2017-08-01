@@ -49,12 +49,15 @@ export function changeStepDecayBy (delta) {
   }
 }
 
-export function changeStepVelocityBy(id, delta) {
-  return (dispatch, getState) => dispatch({
-    type: 'STEP_UPDATE_VELOCITY',
-    id,
-    velocity: clampBetween1And127(stepSelector(getState(), id).midiVelocity + delta) // TODO duplication of velocity limits
-  })
+export function changeStepVelocityBy(delta) {
+  return (dispatch, getState) => {
+    const steps = [selectedStep(getState())] // TODO select and edit multiple steps
+    return dispatch({
+      type: 'STEPS_UPDATE_VELOCITY',
+      ids: steps.map(step => step.id),
+      values: steps.map(step => clampBetween1And127(step.midiVelocity + delta)) // TODO duplication of velocity limits
+    })
+  }
 }
 
 function updateStepPitch(ids, pitches) {

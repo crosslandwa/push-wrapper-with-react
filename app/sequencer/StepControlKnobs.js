@@ -8,7 +8,7 @@ import ChannelKnobs from '../ui/ChannelKnobs'
 import { selectedStep } from '../selectors'
 import DomKnob from '../push/DomKnob'
 
-const StepControlKnobs = ({knobs, stepId}) => {
+const StepControlKnobs = ({knobs}) => {
   return (
     <ChannelKnobs>
       <StepPitchControl knob={knobs[0]} />
@@ -18,11 +18,9 @@ const StepControlKnobs = ({knobs, stepId}) => {
       <DomKnob />
       <DomKnob />
       <DomKnob />
-      <StepVelocityControl stepId={stepId} knob={knobs[7]} />
+      <StepVelocityControl knob={knobs[7]} />
     </ChannelKnobs>
   )
 }
 
-const mapStateToProps = (state, { trackId }) => ({ stepId: selectedStep(state).id })
-
-export default connect(mapStateToProps)(StepControlKnobs)
+export default StepControlKnobs

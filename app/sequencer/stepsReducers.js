@@ -20,8 +20,8 @@ export default function steps (state = intialState, action) {
       return removeStep(state, action)
     case 'STEPS_UPDATE_PITCH':
       return updateParamBatch(state, 'midiPitch', action.ids, action.values)
-    case 'STEP_UPDATE_VELOCITY':
-      return updateVelocity(state, action.id, action.velocity)
+    case 'STEPS_UPDATE_VELOCITY':
+      return updateParamBatch(state, 'midiVelocity', action.ids, action.values)
     case 'STEPS_UPDATE_DECAY':
       return updateParamBatch(state, 'voiceDecay', action.ids, action.values)
   }
@@ -33,12 +33,6 @@ function updateParamBatch (state, param, ids, values) {
   ids.forEach((id, index) => {
     updated.byId[id][param] = values[index]
   })
-  return updated
-}
-
-function updateVelocity(state, id, velocity) {
-  const updated = clone(state)
-  updated.byId[id].midiVelocity = velocity
   return updated
 }
 
