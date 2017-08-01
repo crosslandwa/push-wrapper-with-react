@@ -12,7 +12,7 @@ const TrackVoiceControl = ({knobs, trackId, trackIds}) => {
   return (
     <ChannelKnobs>
       <PitchControl knob={knobs[0]} />
-      <SampleSelect trackId={trackId} knob={knobs[1]} />
+      <SampleSelect knob={knobs[1]} />
       <DecayKnob knob={knobs[2]} />
       <DomKnob />
       <DomKnob />

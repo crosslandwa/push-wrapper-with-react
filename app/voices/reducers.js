@@ -13,8 +13,8 @@ export default function voices (state = initialState, action) {
       return voicePlaying(state, action)
     case 'KIT_CREATE':
       return createVoices(state, action.voiceIds, action.sampleIds)
-    case 'VOICE_SWITCH_SAMPLE':
-      return updateParam(state, action.voiceId, 'sampleId', action.sampleId)
+    case 'VOICES_SWITCH_SAMPLE':
+      return updateParamBatch(state, 'sampleId', action.ids, action.sampleIds)
     case 'VOICES_UPDATE_PITCH':
       return updateParamBatch(state, 'pitch', action.ids, action.pitches)
     case 'VOICES_UPDATE_DECAY':

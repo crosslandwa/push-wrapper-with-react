@@ -1,4 +1,5 @@
 import { currentVoice, modifiersDuplicateSelector, voicesForCurrentKit, voiceForTrack } from '../selectors'
+import { currentSample, sampleIds } from '../selectors'
 import Player from '../player'
 import midiVelocityToAbsolute from './midiVelocityToAbsolute'
 
@@ -13,10 +14,29 @@ export function voicePlaying (trackId, velocity) {
   }
 }
 
-export function switchSample(trackId, sampleId) {
+export function switchSample (delta) {
   return (dispatch, getState) => {
-    const voiceId = voiceForTrack(getState(), trackId).id
-    dispatch({ type: 'VOICE_SWITCH_SAMPLE', voiceId, sampleId })
+    const state = getState()
+    const voices = modifiersDuplicateSelector(state)
+      ? voicesForCurrentKit(state)
+      : [currentVoice(state)]
+
+    const allSampleIds = sampleIds(state)
+    const newSampleId = delta > 0
+      ? function (voice) {
+        const index = allSampleIds.indexOf(voice.sampleId)
+        return allSampleIds[(index + 1) % allSampleIds.length]
+      }
+      : function (voice) {
+        const index = allSampleIds.indexOf(voice.sampleId)
+        return allSampleIds[index === 0 ? allSampleIds.length - 1 : index - 1]
+      }
+
+    return dispatch({
+      type: 'VOICES_SWITCH_SAMPLE',
+      ids: voices.map(voice => voice.id),
+      sampleIds: voices.map(newSampleId)
+    })
   }
 }
 
