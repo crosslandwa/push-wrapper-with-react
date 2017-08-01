@@ -10,7 +10,7 @@ const initialState = {
 export default function voices (state = initialState, action) {
   switch (action.type) {
     case 'VOICE_PLAYING':
-      return voicePlaying(state, action)
+      return updateParamBatch(state, 'velocity', [action.id], [action.velocity])
     case 'KIT_CREATE':
       return createVoices(state, action.voiceIds, action.sampleIds)
     case 'VOICES_SWITCH_SAMPLE':
@@ -35,12 +35,6 @@ function updateParamBatch (state, param, ids, values) {
   return updated
 }
 
-function voicePlaying (state = [], {id, velocity = 0}) {
-  const updated = clone(state)
-  updated.byId[id].velocity = velocity
-  return updated
-}
-
 function createVoices (state, ids, sampleIds) {
   return {
     byId: ids.reduce((byId, id, index) => {
@@ -57,10 +51,4 @@ function createVoices (state, ids, sampleIds) {
     }, clone(state.byId)),
     allIds: state.allIds.concat(ids)
   }
-}
-
-function updateParam(state, id, param, value) {
-  const updated = clone(state)
-  updated.byId[id][param] = value
-  return updated
 }
