@@ -31,13 +31,16 @@ export function updatePitch(trackId, delta) {
   }
 }
 
-export function updateDecay(trackId, delta) {
+export function updateDecay (delta) {
   return (dispatch, getState) => {
-    const voice = voiceForTrack(getState(), trackId)
-    dispatch({
-      type: 'VOICE_UPDATE_DECAY',
-      id: voice.id,
-      decay: clampBetween1And100((voice.decay) + delta)
+    const state = getState()
+    const voices = modifiersDuplicateSelector(state)
+      ? voicesForCurrentKit(state)
+      : [currentVoice(state)]
+    return dispatch({
+      type: 'VOICES_UPDATE_DECAY',
+      ids: voices.map(voice => voice.id),
+      decays: voices.map(voice => clampBetween1And100(voice.decay + delta))
     })
   }
 }
