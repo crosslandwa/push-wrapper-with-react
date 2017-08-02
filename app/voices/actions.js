@@ -49,14 +49,18 @@ function dispatchVoicesUpdate (type, transform) {
   }
 }
 
-export function resetPitch() {
+function dispatchVoicesReset (type) {
   return (dispatch, getState) => {
     const voices = selectedVoiceOrCurrentKitVoices(getState)
     return dispatch({
-      type: 'VOICES_RESET_PITCH',
+      type,
       ids: voices.map(voice => voice.id)
     })
   }
+}
+
+export function resetPitch () {
+  return dispatchVoicesReset('VOICES_RESET_PITCH')
 }
 
 export function updatePitch (delta) {
