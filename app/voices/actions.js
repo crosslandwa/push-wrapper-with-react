@@ -17,9 +17,7 @@ export function voicePlaying (trackId, velocity) {
 export function switchSample (delta) {
   return (dispatch, getState) => {
     const state = getState()
-    const voices = modifiersDuplicateSelector(state)
-      ? voicesForCurrentKit(state)
-      : [currentVoice(state)]
+    const voices = selectedVoiceOrCurrentKitVoices(getState)
 
     const allSampleIds = sampleIds(state)
     const newSampleId = delta > 0
@@ -35,17 +33,21 @@ export function switchSample (delta) {
     return dispatch({
       type: 'VOICES_SWITCH_SAMPLE',
       ids: voices.map(voice => voice.id),
-      sampleIds: voices.map(newSampleId)
+      values: voices.map(newSampleId)
     })
   }
 }
 
+function selectedVoiceOrCurrentKitVoices (getState) {
+  const state = getState()
+  return modifiersDuplicateSelector(state)
+    ? voicesForCurrentKit(state)
+    : [currentVoice(state)]
+}
+
 export function resetPitch() {
   return (dispatch, getState) => {
-    const state = getState()
-    const voices = modifiersDuplicateSelector(state)
-      ? voicesForCurrentKit(state)
-      : [currentVoice(state)]
+    const voices = selectedVoiceOrCurrentKitVoices(getState)
     return dispatch({
       type: 'VOICES_RESET_PITCH',
       ids: voices.map(voice => voice.id)
@@ -55,56 +57,44 @@ export function resetPitch() {
 
 export function updatePitch (delta) {
   return (dispatch, getState) => {
-    const state = getState()
-    const voices = modifiersDuplicateSelector(state)
-      ? voicesForCurrentKit(state)
-      : [currentVoice(state)]
+    const voices = selectedVoiceOrCurrentKitVoices(getState)
     return dispatch({
       type: 'VOICES_UPDATE_PITCH',
       ids: voices.map(voice => voice.id),
-      pitches: voices.map(voice => clampBetween0And127(voice.pitch + delta))
+      values: voices.map(voice => clampBetween0And127(voice.pitch + delta))
     })
   }
 }
 
 export function updateDecay (delta) {
   return (dispatch, getState) => {
-    const state = getState()
-    const voices = modifiersDuplicateSelector(state)
-      ? voicesForCurrentKit(state)
-      : [currentVoice(state)]
+    const voices = selectedVoiceOrCurrentKitVoices(getState)
     return dispatch({
       type: 'VOICES_UPDATE_DECAY',
       ids: voices.map(voice => voice.id),
-      decays: voices.map(voice => clampBetween1And100(voice.decay + delta))
+      values: voices.map(voice => clampBetween1And100(voice.decay + delta))
     })
   }
 }
 
 export function updateFilterFrequency (delta) {
   return (dispatch, getState) => {
-    const state = getState()
-    const voices = modifiersDuplicateSelector(state)
-      ? voicesForCurrentKit(state)
-      : [currentVoice(state)]
+    const voices = selectedVoiceOrCurrentKitVoices(getState)
     return dispatch({
       type: 'VOICES_UPDATE_FILTER_FREQ',
       ids: voices.map(voice => voice.id),
-      filterAmounts: voices.map(voice => clampBetween0And127(voice.filterAmount + delta))
+      values: voices.map(voice => clampBetween0And127(voice.filterAmount + delta))
     })
   }
 }
 
 export function updateVolume (delta) {
   return (dispatch, getState) => {
-    const state = getState()
-    const voices = modifiersDuplicateSelector(state)
-      ? voicesForCurrentKit(state)
-      : [currentVoice(state)]
+    const voices = selectedVoiceOrCurrentKitVoices(getState)
     return dispatch({
       type: 'VOICES_UPDATE_VOLUME',
       ids: voices.map(voice => voice.id),
-      midiVolumes: voices.map(voice => clampBetween0And127(delta + voice.midiVolume))
+      values: voices.map(voice => clampBetween0And127(delta + voice.midiVolume))
     })
   }
 }

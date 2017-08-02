@@ -22,17 +22,17 @@ export default function voices (state = initialState, action) {
     case 'KIT_CREATE':
       return createVoices(state, action.voiceIds, action.sampleIds)
     case 'VOICES_SWITCH_SAMPLE':
-      return updateParamBatch(state, 'sampleId', action.ids, action.sampleIds)
+      return updateParamBatch(state, 'sampleId', action.ids, action.values)
     case 'VOICES_UPDATE_PITCH':
-      return updateParamBatch(state, 'pitch', action.ids, action.pitches)
+      return updateParamBatch(state, 'pitch', action.ids, action.values)
     case 'VOICES_RESET_PITCH':
       return updateParamBatch(state, 'pitch', action.ids, action.ids.map(id => initialVoiceState.pitch))
     case 'VOICES_UPDATE_DECAY':
-      return updateParamBatch(state, 'decay', action.ids, action.decays)
+      return updateParamBatch(state, 'decay', action.ids, action.values)
     case 'VOICES_UPDATE_FILTER_FREQ':
-      return updateParamBatch(state, 'filterAmount', action.ids, action.filterAmounts)
+      return updateParamBatch(state, 'filterAmount', action.ids, action.values)
     case 'VOICES_UPDATE_VOLUME':
-      return updateParamBatch(state, 'midiVolume', action.ids, action.midiVolumes)
+      return updateParamBatch(state, 'midiVolume', action.ids, action.values)
   }
   return state
 }
