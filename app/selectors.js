@@ -131,3 +131,4 @@ export const sampleSelectionOn = (state) => state.ui.sampleSelectionOn
 // ############ modifiers
 
 export const modifiersDuplicateSelector = state => state.push.modifiers.duplicate
+export const modifiersDeleteSelector = state => state.push.modifiers.delete
