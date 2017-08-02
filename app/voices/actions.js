@@ -40,6 +40,19 @@ export function switchSample (delta) {
   }
 }
 
+export function resetPitch() {
+  return (dispatch, getState) => {
+    const state = getState()
+    const voices = modifiersDuplicateSelector(state)
+      ? voicesForCurrentKit(state)
+      : [currentVoice(state)]
+    return dispatch({
+      type: 'VOICES_RESET_PITCH',
+      ids: voices.map(voice => voice.id)
+    })
+  }
+}
+
 export function updatePitch (delta) {
   return (dispatch, getState) => {
     const state = getState()

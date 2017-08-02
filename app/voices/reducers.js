@@ -1,6 +1,14 @@
 import { clone } from '../reducers/utils'
 
-const initialVoiceState = {}
+const initialVoiceState = {
+  id: null,
+  sampleId: null,
+  pitch: 36,
+  velocity: 0,
+  decay: 100,
+  filterAmount: 127,
+  midiVolume: 108
+}
 
 const initialState = {
   byId: {},
@@ -17,6 +25,8 @@ export default function voices (state = initialState, action) {
       return updateParamBatch(state, 'sampleId', action.ids, action.sampleIds)
     case 'VOICES_UPDATE_PITCH':
       return updateParamBatch(state, 'pitch', action.ids, action.pitches)
+    case 'VOICES_RESET_PITCH':
+      return updateParamBatch(state, 'pitch', action.ids, action.ids.map(id => initialVoiceState.pitch))
     case 'VOICES_UPDATE_DECAY':
       return updateParamBatch(state, 'decay', action.ids, action.decays)
     case 'VOICES_UPDATE_FILTER_FREQ':
@@ -38,15 +48,10 @@ function updateParamBatch (state, param, ids, values) {
 function createVoices (state, ids, sampleIds) {
   return {
     byId: ids.reduce((byId, id, index) => {
-      byId[id] = {
-        id,
-        sampleId: sampleIds[index],
-        pitch: 36,
-        velocity: 0,
-        decay: 100,
-        filterAmount: 127,
-        midiVolume: 108
-      }
+      byId[id] = Object.assign({},
+        initialVoiceState,
+        { id, sampleId: sampleIds[index]}
+      )
       return byId
     }, clone(state.byId)),
     allIds: state.allIds.concat(ids)

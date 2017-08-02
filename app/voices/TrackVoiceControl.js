@@ -6,14 +6,21 @@ import ChannelKnobs from '../ui/ChannelKnobs'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
 import PushKnob from '../push/PushKnob'
-import { updateDecay, updateFilterFrequency, updatePitch, updateVolume } from './actions'
+import { resetPitch, updatePitch } from './actions'
+import { updateDecay, updateFilterFrequency, updateVolume } from './actions'
 import { switchSample } from './actions'
 import { startSampleSelection, stopSampleSelection } from '../ui/actions'
+import { modifiersDeleteSelector } from '../selectors'
 
-const Knob = connect(
-  null,
-  (dispatch, ownProps) => bindActionCreators(ownProps.actions, dispatch)
-)((props) => (
+const mergeProps = (state, { dispatch }, ownProps) => {
+  const actions = Object.assign(
+    {},
+    modifiersDeleteSelector(state) ? ownProps.resetActions || {} : ownProps.actions
+  )
+  return Object.assign({}, ownProps, bindActionCreators(actions, dispatch))
+}
+
+const Knob = connect((state) => state, null, mergeProps)((props) => (
   <ClickyDraggy {...props} >
     <DomKnob />
     <PushKnob {...props} />
@@ -23,7 +30,7 @@ const Knob = connect(
 const TrackVoiceControl = ({knobs}) => {
   return (
     <ChannelKnobs>
-      <Knob knob={knobs[0]} actions={{ onTurned: updatePitch }}/>
+      <Knob knob={knobs[0]} actions={{ onTurned: updatePitch }} resetActions={{ onTurned: resetPitch }} />
       <Knob knob={knobs[1]} actions={{ onTurned: switchSample, onPressed: startSampleSelection, onReleased: stopSampleSelection }}/>
       <Knob knob={knobs[2]} actions={{ onTurned: updateDecay }}/>
       <DomKnob />
