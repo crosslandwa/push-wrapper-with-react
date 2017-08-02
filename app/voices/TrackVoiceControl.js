@@ -8,7 +8,8 @@ import DomKnob from '../push/DomKnob'
 import PushKnob from '../push/PushKnob'
 import { resetPitch, updatePitch } from './actions'
 import { resetDecay, updateDecay } from './actions'
-import { updateFilterFrequency, updateVolume } from './actions'
+import { resetFilterFrequency, updateFilterFrequency } from './actions'
+import { resetVolume, updateVolume } from './actions'
 import { switchSample } from './actions'
 import { startSampleSelection, stopSampleSelection } from '../ui/actions'
 import { modifiersDeleteSelector } from '../selectors'
@@ -37,8 +38,8 @@ const TrackVoiceControl = ({knobs}) => {
       <DomKnob />
       <DomKnob />
       <DomKnob />
-      <Knob knob={knobs[6]} actions={{ onTurned: updateFilterFrequency }}/>
-      <Knob knob={knobs[7]} actions={{ onTurned: updateVolume }}/>
+      <Knob knob={knobs[6]} actions={{ onTurned: updateFilterFrequency }} resetActions={{ onTurned: resetFilterFrequency }} />
+      <Knob knob={knobs[7]} actions={{ onTurned: updateVolume }} resetActions={{ onTurned: resetVolume }} />
     </ChannelKnobs>
   )
 }

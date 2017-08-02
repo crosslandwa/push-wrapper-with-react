@@ -81,11 +81,19 @@ export function updateDecay (delta) {
   )
 }
 
+export function resetFilterFrequency () {
+  return dispatchVoicesReset('VOICES_RESET_FILTER_FREQ')
+}
+
 export function updateFilterFrequency (delta) {
   return dispatchVoicesUpdate(
     'VOICES_UPDATE_FILTER_FREQ',
     voice => clampBetween0And127(voice.filterAmount + delta)
   )
+}
+
+export function resetVolume () {
+  return dispatchVoicesReset('VOICES_RESET_VOLUME')
 }
 
 export function updateVolume (delta) {

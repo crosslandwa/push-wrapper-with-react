@@ -33,8 +33,12 @@ export default function voices (state = initialState, action) {
       return updateParamBatch(state, 'decay', action.ids, action.ids.map(id => initialVoiceState.decay))
     case 'VOICES_UPDATE_FILTER_FREQ':
       return updateParamBatch(state, 'filterAmount', action.ids, action.values)
+    case 'VOICES_RESET_FILTER_FREQ':
+      return updateParamBatch(state, 'filterAmount', action.ids, action.ids.map(id => initialVoiceState.filterAmount))
     case 'VOICES_UPDATE_VOLUME':
       return updateParamBatch(state, 'midiVolume', action.ids, action.values)
+    case 'VOICES_RESET_VOLUME':
+      return updateParamBatch(state, 'midiVolume', action.ids, action.ids.map(id => initialVoiceState.midiVolume))
   }
   return state
 }
