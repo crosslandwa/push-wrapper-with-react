@@ -1,24 +1,36 @@
 'use strict'
 import React from 'react'
-import PitchControl from './PitchControl'
-import SampleSelect from './SampleSelect'
-import DecayKnob from './DecayKnob'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import ChannelKnobs from '../ui/ChannelKnobs'
-import FilterFrequencyControl from './FilterFrequencyControl'
-import VolumeControl from './VolumeControl'
+import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
+import PushKnob from '../push/PushKnob'
+import { updateDecay, updateFilterFrequency, updatePitch, updateVolume } from './actions'
+import { switchSample } from './actions'
+import { startSampleSelection, stopSampleSelection } from '../ui/actions'
+
+const Knob = connect(
+  null,
+  (dispatch, ownProps) => bindActionCreators(ownProps.actions, dispatch)
+)((props) => (
+  <ClickyDraggy {...props} >
+    <DomKnob />
+    <PushKnob {...props} />
+  </ClickyDraggy>
+))
 
 const TrackVoiceControl = ({knobs}) => {
   return (
     <ChannelKnobs>
-      <PitchControl knob={knobs[0]} />
-      <SampleSelect knob={knobs[1]} />
-      <DecayKnob knob={knobs[2]} />
+      <Knob knob={knobs[0]} actions={{ onTurned: updatePitch }}/>
+      <Knob knob={knobs[1]} actions={{ onTurned: switchSample, onPressed: startSampleSelection, onReleased: stopSampleSelection }}/>
+      <Knob knob={knobs[2]} actions={{ onTurned: updateDecay }}/>
       <DomKnob />
       <DomKnob />
       <DomKnob />
-      <FilterFrequencyControl knob={knobs[6]} />
-      <VolumeControl knob={knobs[7]} />
+      <Knob knob={knobs[6]} actions={{ onTurned: updateFilterFrequency }}/>
+      <Knob knob={knobs[7]} actions={{ onTurned: updateVolume }}/>
     </ChannelKnobs>
   )
 }
