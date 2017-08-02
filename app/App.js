@@ -51,8 +51,8 @@ const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepS
     bottomPadsComponent = <PatternSelectPads pads={bottomPads} patternIds={patternIds} />
   } else if (pushState.modifiers.shift) {
     bottomPadsComponent = <StepJumping pads={bottomPads} trackId={selectedTrackId} />
-  } else if (pushState.modifiers.delete) {
-    bottomPadsComponent = <StepDelete pads={bottomPads} trackId={selectedTrackId} />
+  // } else if (pushState.modifiers.delete) {
+    // bottomPadsComponent = <StepDelete pads={bottomPads} trackId={selectedTrackId} />
   } else {
     bottomPadsComponent = <StepControl pads={bottomPads} trackId={selectedTrackId} />
   }
