@@ -70,6 +70,10 @@ export function updatePitch (delta) {
   )
 }
 
+export function resetDecay () {
+  return dispatchVoicesReset('VOICES_RESET_DECAY')
+}
+
 export function updateDecay (delta) {
   return dispatchVoicesUpdate(
     'VOICES_UPDATE_DECAY',

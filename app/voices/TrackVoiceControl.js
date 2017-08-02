@@ -7,7 +7,8 @@ import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
 import PushKnob from '../push/PushKnob'
 import { resetPitch, updatePitch } from './actions'
-import { updateDecay, updateFilterFrequency, updateVolume } from './actions'
+import { resetDecay, updateDecay } from './actions'
+import { updateFilterFrequency, updateVolume } from './actions'
 import { switchSample } from './actions'
 import { startSampleSelection, stopSampleSelection } from '../ui/actions'
 import { modifiersDeleteSelector } from '../selectors'
@@ -32,7 +33,7 @@ const TrackVoiceControl = ({knobs}) => {
     <ChannelKnobs>
       <Knob knob={knobs[0]} actions={{ onTurned: updatePitch }} resetActions={{ onTurned: resetPitch }} />
       <Knob knob={knobs[1]} actions={{ onTurned: switchSample, onPressed: startSampleSelection, onReleased: stopSampleSelection }}/>
-      <Knob knob={knobs[2]} actions={{ onTurned: updateDecay }}/>
+      <Knob knob={knobs[2]} actions={{ onTurned: updateDecay }} resetActions={{ onTurned: resetDecay }} />
       <DomKnob />
       <DomKnob />
       <DomKnob />
