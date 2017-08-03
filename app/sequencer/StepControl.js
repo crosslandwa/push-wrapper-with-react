@@ -4,35 +4,33 @@ import { connect } from 'react-redux'
 import { turnStepOff, turnStepOn, selectStep, unselectStep } from './actions'
 import StepDisplay from './StepDisplay'
 
+const timeThreshold = 200
 
 class StepControl extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.pressed = this.pressed.bind(this)
     this.released = this.released.bind(this)
     this.state = {}
   }
 
-  pressed(stepNumber, stepId) {
-    let selectedStepId = stepId
-    let time = new Date().getTime()
-    if (!stepId) {
-      selectedStepId = this.props.turnStepOn(stepNumber) // omitted optional pitch, velocity
-      time = time - 201
-    }
+  pressed (stepNumber, stepId) {
+    const selectedStepId = stepId
+      ? stepId
+      : this.props.turnStepOn(stepNumber) // omitted optional pitch, velocity
     this.props.selectStep(selectedStepId)
-    this.setState({ selectedTime: time })
+    this.setState({ selectedTime: new Date().getTime() - (stepId ? 0 : timeThreshold) })
   }
 
-  released(stepId) {
-    const now = new Date().getTime()
+  released (stepId) {
     this.props.unselectStep(stepId)
-    if ((now - this.state.selectedTime) < 200) {
+    const timeHeld = new Date().getTime() - this.state.selectedTime
+    if (timeHeld < timeThreshold) {
       this.props.turnStepOff(stepId)
     }
   }
 
-  render() {
+  render () {
     return <StepDisplay {...this.props} onClick={this.pressed} onRelease={this.released} />
   }
 }
@@ -50,18 +48,6 @@ export default connect(
       dispatch(selectStep(stepId))
     },
     unselectStep (stepId) {
-      dispatch(unselectStep(stepId))
-    },
-
-    // OLD WAYS
-    onClick (stepNumber, stepId) {
-      let selectedStepId = stepId
-      if (!stepId) {
-        selectedStepId = dispatch(turnStepOn(trackId, stepNumber)) // omitted optional pitch, velocity
-      }
-      dispatch(selectStep(selectedStepId))
-    },
-    onRelease (stepId) {
       dispatch(unselectStep(stepId))
     }
   })
