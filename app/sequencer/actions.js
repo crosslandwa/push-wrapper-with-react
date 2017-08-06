@@ -2,11 +2,7 @@ const context = window.AudioContext ? new window.AudioContext() : new window.web
 const Scheduling = require('wac.scheduling')(context)
 
 import { playVoiceForTrack } from '../player/actions'
-import { currentBpm, currentVoice, currentStepNumberForTrack, currentSwing, currentTracksForPattern, nextStepNumberForTrack, stepIds, stepSelector, trackSelector, selectedStep } from '../selectors'
-
-const clamp = (min, max) => x => Math.max(min, Math.min(x, max))
-const clampBetween1And100 = clamp(1, 100)
-const clampBetween1And127 = clamp(1, 127)
+import { currentBpm, currentStepNumberForTrack, currentSwing, currentTracksForPattern, nextStepNumberForTrack, stepIds, stepSelector } from '../selectors'
 
 export function selectStep (stepId) {
   return { type: 'SEQUENCER_STEP_SELECT', stepId }
@@ -24,48 +20,6 @@ export function turnStepOn (trackId, stepNumber, pitch, velocity) {
     dispatch({ type: 'STEP_TURN_ON', id, trackId, stepNumber, pitch, velocity })
     return id
   }
-}
-
-export function changeStepPitchBy(delta) {
-  return (dispatch, getState) => {
-    const steps = [selectedStep(getState())] // TODO select and edit multiple steps
-    const voice = currentVoice(getState())
-    return dispatch(updateStepPitch(
-      steps.map(step => step.id),
-      steps.map(step => (step.midiPitch || voice.pitch) + delta)
-    ))
-  }
-}
-
-export function changeStepDecayBy (delta) {
-  return (dispatch, getState) => {
-    const steps = [selectedStep(getState())] // TODO select and edit multiple steps
-    const voice = currentVoice(getState())
-    dispatch({
-      type: 'STEPS_UPDATE_DECAY',
-      ids: steps.map(step => step.id),
-      values: steps.map(step => clampBetween1And100((step.voiceDecay || voice.decay) + delta)) // TODO duplication of decay limits
-    })
-  }
-}
-
-export function changeStepVelocityBy(delta) {
-  return (dispatch, getState) => {
-    const steps = [selectedStep(getState())] // TODO select and edit multiple steps
-    return dispatch({
-      type: 'STEPS_UPDATE_VELOCITY',
-      ids: steps.map(step => step.id),
-      values: steps.map(step => clampBetween1And127(step.midiVelocity + delta)) // TODO duplication of velocity limits
-    })
-  }
-}
-
-function updateStepPitch(ids, pitches) {
-  return { type: 'STEPS_UPDATE_PITCH', ids, values: pitches }
-}
-
-export function updateSelectedStepPitch(pitch) {
-  return (dispatch, getState) => dispatch(updateStepPitch([selectedStep(getState()).id], [pitch]))
 }
 
 export function turnStepOff (id) {

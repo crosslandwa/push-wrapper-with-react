@@ -6,7 +6,7 @@ import ChannelKnobs from '../ui/ChannelKnobs'
 import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
 import PushKnob from '../push/PushKnob'
-import { changeStepDecayBy, changeStepPitchBy, changeStepVelocityBy } from './actions'
+import { changeStepDecayBy, changeStepPitchBy, changeStepVelocityBy } from './stepsActions'
 
 const Knob = connect(
   null,
