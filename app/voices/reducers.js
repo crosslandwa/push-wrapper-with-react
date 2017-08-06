@@ -1,6 +1,14 @@
 import { clone } from '../reducers/utils'
 
-const initialVoiceState = {}
+const initialVoiceState = {
+  id: null,
+  sampleId: null,
+  pitch: 36,
+  velocity: 0,
+  decay: 100,
+  filterAmount: 127,
+  midiVolume: 108
+}
 
 const initialState = {
   byId: {},
@@ -14,15 +22,23 @@ export default function voices (state = initialState, action) {
     case 'KIT_CREATE':
       return createVoices(state, action.voiceIds, action.sampleIds)
     case 'VOICES_SWITCH_SAMPLE':
-      return updateParamBatch(state, 'sampleId', action.ids, action.sampleIds)
+      return updateParamBatch(state, 'sampleId', action.ids, action.values)
     case 'VOICES_UPDATE_PITCH':
-      return updateParamBatch(state, 'pitch', action.ids, action.pitches)
+      return updateParamBatch(state, 'pitch', action.ids, action.values)
+    case 'VOICES_RESET_PITCH':
+      return updateParamBatch(state, 'pitch', action.ids, action.ids.map(id => initialVoiceState.pitch))
     case 'VOICES_UPDATE_DECAY':
-      return updateParamBatch(state, 'decay', action.ids, action.decays)
+      return updateParamBatch(state, 'decay', action.ids, action.values)
+    case 'VOICES_RESET_DECAY':
+      return updateParamBatch(state, 'decay', action.ids, action.ids.map(id => initialVoiceState.decay))
     case 'VOICES_UPDATE_FILTER_FREQ':
-      return updateParamBatch(state, 'filterAmount', action.ids, action.filterAmounts)
+      return updateParamBatch(state, 'filterAmount', action.ids, action.values)
+    case 'VOICES_RESET_FILTER_FREQ':
+      return updateParamBatch(state, 'filterAmount', action.ids, action.ids.map(id => initialVoiceState.filterAmount))
     case 'VOICES_UPDATE_VOLUME':
-      return updateParamBatch(state, 'midiVolume', action.ids, action.midiVolumes)
+      return updateParamBatch(state, 'midiVolume', action.ids, action.values)
+    case 'VOICES_RESET_VOLUME':
+      return updateParamBatch(state, 'midiVolume', action.ids, action.ids.map(id => initialVoiceState.midiVolume))
   }
   return state
 }
@@ -38,15 +54,10 @@ function updateParamBatch (state, param, ids, values) {
 function createVoices (state, ids, sampleIds) {
   return {
     byId: ids.reduce((byId, id, index) => {
-      byId[id] = {
-        id,
-        sampleId: sampleIds[index],
-        pitch: 36,
-        velocity: 0,
-        decay: 100,
-        filterAmount: 127,
-        midiVolume: 108
-      }
+      byId[id] = Object.assign({},
+        initialVoiceState,
+        { id, sampleId: sampleIds[index]}
+      )
       return byId
     }, clone(state.byId)),
     allIds: state.allIds.concat(ids)

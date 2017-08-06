@@ -1,24 +1,45 @@
 'use strict'
 import React from 'react'
-import PitchControl from './PitchControl'
-import SampleSelect from './SampleSelect'
-import DecayKnob from './DecayKnob'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import ChannelKnobs from '../ui/ChannelKnobs'
-import FilterFrequencyControl from './FilterFrequencyControl'
-import VolumeControl from './VolumeControl'
+import ClickyDraggy from '../push/ClickyDraggy'
 import DomKnob from '../push/DomKnob'
+import PushKnob from '../push/PushKnob'
+import { resetPitch, updatePitch } from './actions'
+import { resetDecay, updateDecay } from './actions'
+import { resetFilterFrequency, updateFilterFrequency } from './actions'
+import { resetVolume, updateVolume } from './actions'
+import { switchSample } from './actions'
+import { startSampleSelection, stopSampleSelection } from '../ui/actions'
+import { modifiersDeleteSelector } from '../selectors'
+
+const mergeProps = (state, { dispatch }, ownProps) => {
+  const actions = Object.assign(
+    {},
+    modifiersDeleteSelector(state) ? ownProps.resetActions || {} : ownProps.actions
+  )
+  return Object.assign({}, ownProps, bindActionCreators(actions, dispatch))
+}
+
+const Knob = connect((state) => state, null, mergeProps)((props) => (
+  <ClickyDraggy {...props} >
+    <DomKnob />
+    <PushKnob {...props} />
+  </ClickyDraggy>
+))
 
 const TrackVoiceControl = ({knobs}) => {
   return (
     <ChannelKnobs>
-      <PitchControl knob={knobs[0]} />
-      <SampleSelect knob={knobs[1]} />
-      <DecayKnob knob={knobs[2]} />
+      <Knob knob={knobs[0]} actions={{ onTurned: updatePitch }} resetActions={{ onTurned: resetPitch }} />
+      <Knob knob={knobs[1]} actions={{ onTurned: switchSample, onPressed: startSampleSelection, onReleased: stopSampleSelection }}/>
+      <Knob knob={knobs[2]} actions={{ onTurned: updateDecay }} resetActions={{ onTurned: resetDecay }} />
       <DomKnob />
       <DomKnob />
       <DomKnob />
-      <FilterFrequencyControl knob={knobs[6]} />
-      <VolumeControl knob={knobs[7]} />
+      <Knob knob={knobs[6]} actions={{ onTurned: updateFilterFrequency }} resetActions={{ onTurned: resetFilterFrequency }} />
+      <Knob knob={knobs[7]} actions={{ onTurned: updateVolume }} resetActions={{ onTurned: resetVolume }} />
     </ChannelKnobs>
   )
 }
