@@ -6,31 +6,22 @@ import DomGridButton from '../push/DomGridButton'
 import PushGridSelectButton from '../push/PushGridSelectButton'
 import { resetSelectedStepsPitch } from './stepsActions'
 
+const noop = () => {}
+
 const StepResetButtons = ({buttons, resetPitch, style}) => (
   <div style={style} >
-    {[
+    {[resetPitch, noop, noop, noop, noop, noop, noop, noop].map((action, index) => (
       <DomGridButton
-        key='resetPitch'
+        key={index}
         active={false}
-        onPressed={resetPitch}
+        onPressed={action}
       >
         <PushGridSelectButton
-          button={buttons[0]}
-          padPressed={resetPitch}
+          button={buttons[index]}
+          padPressed={action}
         />
       </DomGridButton>
-    ].concat([...Array(7).keys()].map(index => (
-      <DomGridButton
-        key={index + 1}
-        active={false}
-        rgb={Colours.off}
-      >
-        <PushGridSelectButton
-          button={buttons[index + 1]}
-          rgb={Colours.off}
-        />
-      </DomGridButton>
-    )))}
+    ))}
   </div>
 )
 
