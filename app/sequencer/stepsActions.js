@@ -26,6 +26,15 @@ export function changeStepPitchBy(delta) {
   }
 }
 
+export function resetSelectedStepsDecay () {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'STEPS_RESET_DECAY',
+      ids: selectedSteps(getState()).map(step => step.id)
+    })
+  }
+}
+
 export function changeStepDecayBy (delta) {
   return (dispatch, getState) => {
     const steps = selectedSteps(getState())

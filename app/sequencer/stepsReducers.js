@@ -24,6 +24,8 @@ export default function steps (state = intialState, action) {
       return updateParamBatch(state, 'midiPitch', action.ids, action.ids.map(id => null))
     case 'STEPS_UPDATE_VELOCITY':
       return updateParamBatch(state, 'midiVelocity', action.ids, action.values)
+    case 'STEPS_RESET_DECAY':
+      return updateParamBatch(state, 'voiceDecay', action.ids, action.ids.map(id => null))
     case 'STEPS_UPDATE_DECAY':
       return updateParamBatch(state, 'voiceDecay', action.ids, action.values)
   }

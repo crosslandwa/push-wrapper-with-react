@@ -4,13 +4,13 @@ import { connect } from 'react-redux'
 import { Colours } from '../push/colours'
 import DomGridButton from '../push/DomGridButton'
 import PushGridSelectButton from '../push/PushGridSelectButton'
-import { resetSelectedStepsPitch } from './stepsActions'
+import { resetSelectedStepsDecay, resetSelectedStepsPitch } from './stepsActions'
 
 const noop = () => {}
 
-const StepResetButtons = ({buttons, resetPitch, style}) => (
+const StepResetButtons = ({buttons, resetDecay, resetPitch, style}) => (
   <div style={style} >
-    {[resetPitch, noop, noop, noop, noop, noop, noop, noop].map((action, index) => (
+    {[resetPitch, noop, resetDecay, noop, noop, noop, noop, noop].map((action, index) => (
       <DomGridButton
         key={index}
         active={false}
@@ -26,6 +26,7 @@ const StepResetButtons = ({buttons, resetPitch, style}) => (
 )
 
 const mapDispatchToProps = {
+  resetDecay: resetSelectedStepsDecay,
   resetPitch: resetSelectedStepsPitch
 }
 
