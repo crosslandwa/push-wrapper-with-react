@@ -47,6 +47,15 @@ export function changeStepDecayBy (delta) {
   }
 }
 
+export function resetSelectedStepsVelocity () {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'STEPS_RESET_VELOCITY',
+      ids: selectedSteps(getState()).map(step => step.id)
+    })
+  }
+}
+
 export function changeStepVelocityBy(delta) {
   return (dispatch, getState) => {
     const steps = selectedSteps(getState())
