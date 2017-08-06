@@ -4,9 +4,20 @@ const clamp = (min, max) => x => Math.max(min, Math.min(x, max))
 const clampBetween1And100 = clamp(1, 100)
 const clampBetween1And127 = clamp(1, 127)
 
+const selectedSteps = (state) => [selectedStep(state)] // TODO select and edit multiple steps
+
+export function resetSelectedStepsPitch () {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'STEPS_RESET_PITCH',
+      ids: selectedSteps(getState()).map(step => step.id)
+    })
+  }
+}
+
 export function changeStepPitchBy(delta) {
   return (dispatch, getState) => {
-    const steps = [selectedStep(getState())] // TODO select and edit multiple steps
+    const steps = selectedSteps(getState())
     const voice = currentVoice(getState())
     return dispatch(updateStepPitch(
       steps.map(step => step.id),
@@ -17,7 +28,7 @@ export function changeStepPitchBy(delta) {
 
 export function changeStepDecayBy (delta) {
   return (dispatch, getState) => {
-    const steps = [selectedStep(getState())] // TODO select and edit multiple steps
+    const steps = selectedSteps(getState())
     const voice = currentVoice(getState())
     dispatch({
       type: 'STEPS_UPDATE_DECAY',
@@ -29,7 +40,7 @@ export function changeStepDecayBy (delta) {
 
 export function changeStepVelocityBy(delta) {
   return (dispatch, getState) => {
-    const steps = [selectedStep(getState())] // TODO select and edit multiple steps
+    const steps = selectedSteps(getState())
     return dispatch({
       type: 'STEPS_UPDATE_VELOCITY',
       ids: steps.map(step => step.id),
