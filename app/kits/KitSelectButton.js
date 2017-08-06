@@ -1,12 +1,12 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { createPatternWithCurrentKit, selectPattern, selectKitForCurrentPattern } from './patternActions'
+import { createPatternWithCurrentKit, selectPattern, selectKitForCurrentPattern } from '../sequencer/patternActions'
 import DomGridButton from '../push/DomGridButton'
 import PushChannelSelectButton from '../push/PushChannelSelectButton'
 import { Colours } from '../push/colours'
 import { currentPattern } from '../selectors'
-import { createDefaultKit } from '../kits/actions'
+import { createDefaultKit } from './actions'
 
 const KitSelectButton = props => {
   const {button, kitId, selectKit, selected} = props

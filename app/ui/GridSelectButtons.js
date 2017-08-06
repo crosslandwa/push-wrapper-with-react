@@ -4,7 +4,8 @@ import DomGridButton from '../push/DomGridButton'
 import PushGridSelectButton from '../push/PushGridSelectButton'
 import { Colours } from '../push/colours'
 import TrackSelectButton from '../voices/TrackSelectButton'
-import KitSelectButton from '../sequencer/KitSelectButton'
+import KitSelectButtons from '../kits/KitSelectButtons'
+import StepResetButtons from '../sequencer/StepResetButtons'
 
 const style = {
   display: 'flex',
@@ -16,36 +17,22 @@ const style = {
   borderColor: 'transparent'
 }
 
-const GridSelectButtons = ({kitIds, trackIds, push}) => (
-  <div style={style}>
-    {[...Array(8).keys()].map(index => (
-      <KitSelectButton
-        key={index}
-        button={push.channelSelectButtons()[index]}
-        kitId={kitIds[index]}
-      />
-    ))}
-    {[...Array(8).keys()].map(index => index < trackIds.length
-      ? (
+const GridSelectButtons = ({isStepSelected, kitIds, trackIds, push}) => {
+  return (
+    <div style={style}>
+      {isStepSelected
+        ? <StepResetButtons style={style} buttons={push.channelSelectButtons()} />
+        : <KitSelectButtons style={style} buttons={push.channelSelectButtons()} kitIds={kitIds} />
+      }
+      {[...Array(8).keys()].map(index => (
         <TrackSelectButton
-          key={index}
+          key={trackIds[index]}
           button={push.gridSelectButtons()[index]}
           trackId={trackIds[index]}
         />
-      ) :  (
-        <DomGridButton
-          key={index}
-          active={false}
-          rgb={Colours.off}
-        >
-          <PushGridSelectButton
-            button={push.gridSelectButtons()[index]}
-            rgb={Colours.off}
-          />
-        </DomGridButton>
-      )
-    )}
-  </div>
-)
+      ))}
+    </div>
+  )
+}
 
 export default GridSelectButtons
