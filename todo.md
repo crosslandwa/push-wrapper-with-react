@@ -1,4 +1,3 @@
-- select multiple steps for editing
 - more samples
   - some task to pull in non-version controlled audio assets from disk as part of build
 - pan per voice/step

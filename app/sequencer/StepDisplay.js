@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import PushGridPad from '../push/PushGridPad'
 import DomGridPad from '../push/DomGridPad'
 import { Colours, fade, domFade } from '../push/colours'
-import { currentStepNumberForTrack, isRecording, stepSelector, trackSelector } from '../selectors'
+import { currentStepNumberForTrack, isRecording, selectedSteps, stepSelector, trackSelector } from '../selectors'
 
 const style = {
   display: 'flex',
@@ -12,7 +12,8 @@ const style = {
   justifyContent: 'space-around'
 }
 
-const displayRgb = ({isCurrentStep, hasNote, velocity}, recording, fadeEffect) => {
+const displayRgb = ({isCurrentStep, isSelected, hasNote, velocity}, recording, fadeEffect) => {
+  if (isSelected) return Colours.orange
   if (isCurrentStep) return hasNote
     ? Colours.turquoise
     : recording ? Colours.red : Colours.green
@@ -57,6 +58,7 @@ const mapStateToProps = (state, { pads, trackId }) => {
       const stepId = track.stepIds[stepNumber]
       return {
         id: stepId,
+        isSelected: stepId === (selectedSteps(state)[0] || {}).id, // TODO duplicate knowledge from LCD that first selected step is the one we're displaying info about
         isCurrentStep: stepNumber === currentStepNumberForTrack(state, track.id),
         hasNote: !!stepId,
         velocity: stepId && stepSelector(state, stepId).midiVelocity
