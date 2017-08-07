@@ -14,7 +14,7 @@ import TrackMute from './sequencer/TrackMute'
 import SamplePlayer from './player/SamplePlayer'
 
 import { connect } from 'react-redux'
-import { currentPattern, kitIds, patternIds, currentTrack, selectedStep } from './selectors'
+import { currentPattern, isRecording, kitIds, patternIds, currentTrack, selectedSteps } from './selectors'
 import LCDComponent from './ui/LCDComponent'
 import StepControlKnobs from './sequencer/StepControlKnobs'
 
@@ -93,14 +93,14 @@ const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepS
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const {push, sequencer: {recording}} = state
+  const {push} = state
   return {
     kitIds: kitIds(state),
     patternIds: patternIds(state),
     pushState: push,
-    recording,
+    recording: isRecording(state),
     trackIds: currentPattern(state).trackIds,
-    isStepSelected: !!selectedStep(state),
+    isStepSelected: selectedSteps(state).length > 0,
     selectedTrackId: currentTrack(state).id
   }
 }

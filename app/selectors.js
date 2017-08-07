@@ -4,6 +4,7 @@ const identity = index => (...args) => args[index]
 
 export const currentBpm = state => state.sequencer.bpm
 export const currentSwing = state => state.sequencer.swing
+export const isRecording = state => state.sequencer.recording
 
 // ############ PATTERN
 const currentPatternId = state => state.sequencer.patternId
@@ -63,7 +64,7 @@ const trackIndex = createSelector( //state, trackId
 // ############ STEPS
 const stepsSelector = state => state.entities.steps
 
-const selectedStepIdSelector = state => state.sequencer.selectedStepId
+const selectedStepIdsSelector = state => state.sequencer.selectedStepIds
 
 export const stepIds = state => stepsSelector(state).allIds
 
@@ -82,7 +83,7 @@ export const nextStepNumberForTrack = (state, trackId) => {
   return state.sequencer.nextSteps[index]
 }
 
-export const selectedStep = state => stepSelector(state, selectedStepIdSelector(state))
+export const selectedSteps = state => selectedStepIdsSelector(state).map(stepId => stepSelector(state, stepId))
 
 // ############ VOICE
 const voicesSelector = state => state.entities.voices

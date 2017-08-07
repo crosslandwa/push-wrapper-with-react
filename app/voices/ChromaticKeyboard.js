@@ -6,7 +6,7 @@ import ChromaticStepEditorContainer from './ChromaticStepEditorContainer'
 import ChromaticSamplePlayerContainer from './ChromaticSamplePlayerContainer'
 import ChromaticSampleRecorderContainer from './ChromaticSampleRecorderContainer'
 import { Colours } from '../push/colours'
-import { currentVoice, selectedStep } from '../selectors'
+import { currentVoice, selectedSteps } from '../selectors'
 
 const style = {
   display: 'flex',
@@ -47,10 +47,11 @@ const ChromaticKeyboard = ({trackId, basePitch, blackRow, whiteRow, recording, i
 
 const mapStateToProps = (state, ownProps) => {
   const voice = currentVoice(state)
-  const step = selectedStep(state)
+  const steps = selectedSteps(state)
+  const isStepSelected = steps.length > 0
   return {
-    isStepSelected: !!step,
-    selectedStepPitch: step ? (step.midiPitch || voice.pitch) : null
+    isStepSelected,
+    selectedStepPitch: isStepSelected ? (steps[0].midiPitch || voice.pitch) : null
   }
 }
 

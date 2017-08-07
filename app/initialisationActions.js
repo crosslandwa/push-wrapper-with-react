@@ -14,12 +14,12 @@ export function init () {
       )
       .then(() => {
         return (currentKitIds.length === 0)
-          ? dispatch(createDefaultKit())
-          : currentKitIds[0]
+          ? Promise.all([...Array(8).keys()].map(index => dispatch(createDefaultKit())))
+          : currentKitIds
       })
-      .then(kitId => {
+      .then(kitIds => {
         const patternId = (currentPatternIds.length === 0)
-          ? dispatch(createPattern(kitId))
+          ? dispatch(createPattern(kitIds[0]))
           : currentPatternIds[0]
         dispatch(selectPattern(patternId))
       })

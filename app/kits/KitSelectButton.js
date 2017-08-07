@@ -6,20 +6,19 @@ import DomGridButton from '../push/DomGridButton'
 import PushChannelSelectButton from '../push/PushChannelSelectButton'
 import { Colours } from '../push/colours'
 import { currentPattern } from '../selectors'
-import { createDefaultKit } from './actions'
 
 const KitSelectButton = props => {
-  const {button, kitId, selectKit, selected} = props
+  const {button, selectKit, selected} = props
   return (
     <DomGridButton
       onPressed={selectKit}
-      active={!!kitId}
-      rgb={selected ? Colours.green : !!kitId ? Colours.orange : Colours.off}
+      active={selected}
+      rgb={selected ? Colours.green : Colours.off}
     >
       <PushChannelSelectButton
         button={button}
         onPressed={selectKit}
-        rgb={selected ? Colours.green : !!kitId ? Colours.orange : Colours.off}
+        rgb={selected ? Colours.green : Colours.off}
       />
     </DomGridButton>
   )
@@ -32,8 +31,7 @@ const mapStateToProps = (state, { kitId }) => ({
 const mapDispatchToProps = (dispatch, { kitId }) => {
   return {
     selectKit() {
-      const toSelect = kitId || dispatch(createDefaultKit())
-      dispatch(selectKitForCurrentPattern(toSelect))
+      dispatch(selectKitForCurrentPattern(kitId))
     }
   }
 }

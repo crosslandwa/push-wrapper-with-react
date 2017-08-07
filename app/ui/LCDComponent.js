@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import LCD from './LCD'
-import { currentBpm, currentPattern, currentSample, currentSwing, currentTrack, currentVoice, sampleIds, sampleSelectionOn, sampleSelector, selectedStep, selectedTrackIndex } from '../selectors'
+import { currentBpm, currentPattern, currentSample, currentSwing, currentVoice, sampleIds, sampleSelectionOn, sampleSelector, selectedSteps, selectedTrackIndex } from '../selectors'
 import NonLinearScale from '../utils/nonLinearScale'
 import midiVelocityToAbsolute from '../voices/midiVelocityToAbsolute'
 import { frequencyScaling } from '../player/actions'
@@ -40,21 +40,20 @@ function arrayRotate(input, count) {
 }
 
 const stepDisplay = (state, ownProps) => {
-  const track = currentTrack(state)
-  const step = selectedStep(state)
-  const stepNumber = track.stepIds.indexOf(step.id)
+  const steps = selectedSteps(state)
+  const step = steps[0]
   return {
     data: [
       [step.midiPitch || '-', '', step.voiceDecay || '-', '', '', '', '', step.midiVelocity],
       ['pitch', '', 'decay', '', '', '', '', 'velocity'],
       [],
-      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `step: ${stepNumber}`]
+      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `steps: ${steps.length}`]
     ]
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return (selectedStep(state) ? stepDisplay : voiceDisplay)(state, ownProps)
+  return (selectedSteps(state).length > 0 ? stepDisplay : voiceDisplay)(state, ownProps)
 }
 
 export default connect(mapStateToProps)(LCDComponent)
