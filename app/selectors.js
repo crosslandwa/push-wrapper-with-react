@@ -4,6 +4,7 @@ const identity = index => (...args) => args[index]
 
 export const currentBpm = state => state.sequencer.bpm
 export const currentSwing = state => state.sequencer.swing
+export const isRecording = state => state.sequencer.recording
 
 // ############ PATTERN
 const currentPatternId = state => state.sequencer.patternId
