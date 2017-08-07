@@ -58,7 +58,7 @@ const mapStateToProps = (state, { pads, trackId }) => {
       const stepId = track.stepIds[stepNumber]
       return {
         id: stepId,
-        isSelected: stepId === (selectedSteps(state)[0] || {}).id, // TODO duplicate knowledge from LCD that first selected step is the one we're displaying info about
+        isSelected: stepId && (stepId === (selectedSteps(state)[0] || {}).id), // TODO duplicate knowledge from LCD that first selected step is the one we're displaying info about
         isCurrentStep: stepNumber === currentStepNumberForTrack(state, track.id),
         hasNote: !!stepId,
         velocity: stepId && stepSelector(state, stepId).midiVelocity
