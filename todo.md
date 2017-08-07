@@ -1,7 +1,4 @@
-- realtime sequence recording/parameter lock type behaviour. What I think....?
-  - how to delete a parameter lock for a step?
-  - edit multiple steps at same time?
-
+- select multiple steps for editing
 - more samples
   - some task to pull in non-version controlled audio assets from disk as part of build
 - pan per voice/step
@@ -14,11 +11,9 @@
   - save as part of pattern?
   - prevent skipped sequences getting out of swing sync
 - stutter
-- change all voices at once?
-  - sample player decay envelope
-  - pattern length
+- filter F per step
 - reset params
-  - hold delete, touch knob (hold duplicate for all voices?)
+  - hold delete, press channel select button (instead of turning knob)
 
 ### Look at arrow functions/plugin to remove
 
