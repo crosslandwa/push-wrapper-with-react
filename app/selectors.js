@@ -82,7 +82,7 @@ export const nextStepNumberForTrack = (state, trackId) => {
   return state.sequencer.nextSteps[index]
 }
 
-export const selectedStep = state => stepSelector(state, selectedStepIdSelector(state))
+export const selectedSteps = state => [stepSelector(state, selectedStepIdSelector(state))].filter(x => typeof x !== 'undefined') // TODO make this return many
 
 // ############ VOICE
 const voicesSelector = state => state.entities.voices

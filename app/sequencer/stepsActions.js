@@ -1,10 +1,8 @@
-import { currentVoice, selectedStep } from '../selectors'
+import { currentVoice, selectedSteps } from '../selectors'
 
 const clamp = (min, max) => x => Math.max(min, Math.min(x, max))
 const clampBetween1And100 = clamp(1, 100)
 const clampBetween1And127 = clamp(1, 127)
-
-const selectedSteps = (state) => [selectedStep(state)] // TODO select and edit multiple steps
 
 export function resetSelectedStepsPitch () {
   return (dispatch, getState) => {
@@ -72,5 +70,11 @@ function updateStepPitch(ids, pitches) {
 }
 
 export function updateSelectedStepPitch(pitch) {
-  return (dispatch, getState) => dispatch(updateStepPitch([selectedStep(getState()).id], [pitch]))
+  return (dispatch, getState) => {
+    const steps = selectedSteps(getState())
+    dispatch(updateStepPitch(
+      steps.map(step => step.id),
+      steps.map(step => pitch)
+    ))
+  }
 }
