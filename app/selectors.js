@@ -63,7 +63,7 @@ const trackIndex = createSelector( //state, trackId
 // ############ STEPS
 const stepsSelector = state => state.entities.steps
 
-const selectedStepIdSelector = state => state.sequencer.selectedStepId
+const selectedStepIdsSelector = state => state.sequencer.selectedStepIds
 
 export const stepIds = state => stepsSelector(state).allIds
 
@@ -82,7 +82,7 @@ export const nextStepNumberForTrack = (state, trackId) => {
   return state.sequencer.nextSteps[index]
 }
 
-export const selectedSteps = state => [stepSelector(state, selectedStepIdSelector(state))].filter(x => typeof x !== 'undefined') // TODO make this return many
+export const selectedSteps = state => selectedStepIdsSelector(state).map(stepId => stepSelector(state, stepId))
 
 // ############ VOICE
 const voicesSelector = state => state.entities.voices

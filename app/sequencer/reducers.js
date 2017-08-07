@@ -10,7 +10,7 @@ const initialSequencerState = {
   playing: false,
   nextSteps: emptyStepNumbers(),
   recording: false,
-  selectedStepId: null,
+  selectedStepIds: [],
   swing: 0
 }
 
@@ -49,12 +49,17 @@ export default function sequencer (state = initialSequencerState, action) {
 }
 
 function selectStep (state, {stepId})  {
-  return Object.assign({}, state, { selectedStepId: stepId})
+  const currentlySelected = state.selectedStepIds.slice()
+  return Object.assign({}, state, {
+    selectedStepIds: currentlySelected.concat(
+      currentlySelected.includes(stepId) ? [] : stepId
+    )
+  })
 }
 
 function unselectStep (state, stepId)  {
   return Object.assign({}, state, {
-    selectedStepId: state.selectedStepId === stepId ? null : state.selectedStepId
+    selectedStepIds: state.selectedStepIds.slice().filter(id => id !== stepId)
   })
 }
 
