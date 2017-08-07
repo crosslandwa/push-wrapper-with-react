@@ -19,7 +19,7 @@ const StepResetButtons = ({buttons, resetDecay, resetPitch, resetVelocity, style
       >
         <PushChannelSelectButton
           button={buttons[index]}
-          padPressed={action}
+          onPressed={action}
           rgb={Colours.red}
         />
       </DomGridButton>
