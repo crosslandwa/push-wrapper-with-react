@@ -5,24 +5,31 @@ import { turnStepOff, turnStepOn, selectStep, unselectStep } from './actions'
 import StepDisplay from './StepDisplay'
 
 const timeThreshold = 200
+const noop = () => {}
 
 class StepControl extends React.Component {
   constructor (props) {
     super(props)
     this.pressed = this.pressed.bind(this)
     this.released = this.released.bind(this)
-    this.state = {}
+    this.state = { cancel: noop }
   }
 
   pressed (stepNumber, stepId) {
     const selectedStepId = stepId
       ? stepId
       : this.props.turnStepOn(stepNumber) // omitted optional pitch, velocity
-    this.props.selectStep(selectedStepId)
-    this.setState({ selectedTime: new Date().getTime() - (stepId ? 0 : timeThreshold) })
+
+    const handle = setTimeout(() => this.props.selectStep(selectedStepId), timeThreshold)
+
+    this.setState({
+      cancel: () => clearTimeout(handle),
+      selectedTime: new Date().getTime() - (stepId ? 0 : timeThreshold)
+    })
   }
 
   released (stepId) {
+    this.state.cancel()
     this.props.unselectStep(stepId)
     const timeHeld = new Date().getTime() - this.state.selectedTime
     if (timeHeld < timeThreshold) {
