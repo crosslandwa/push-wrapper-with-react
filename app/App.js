@@ -4,7 +4,6 @@ import DomGridPad from './push/DomGridPad'
 import GridSelectButtons from './ui/GridSelectButtons'
 import { LeftSideControls, RightSideControls } from './ui/NonGridButtons'
 import StepControl from './sequencer/StepControl'
-import StepDelete from './sequencer/StepDelete'
 import StepJumping from './sequencer/StepJumping'
 import TrackControlComponent from './voices/TrackControlComponent'
 import ChromaticKeyboard from './voices/ChromaticKeyboard'
@@ -51,8 +50,6 @@ const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepS
     bottomPadsComponent = <PatternSelectPads pads={bottomPads} patternIds={patternIds} />
   } else if (pushState.modifiers.shift) {
     bottomPadsComponent = <StepJumping pads={bottomPads} trackId={selectedTrackId} />
-  } else if (pushState.modifiers.delete) {
-    bottomPadsComponent = <StepDelete pads={bottomPads} trackId={selectedTrackId} />
   } else {
     bottomPadsComponent = <StepControl pads={bottomPads} trackId={selectedTrackId} />
   }
