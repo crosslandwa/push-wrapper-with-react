@@ -20,6 +20,8 @@ export default function sequencer (state = initialSequencerState, action) {
       return deleteModeOn(state, action.trackId)
     case 'SEQUENCER_DELETE_MODE_OFF':
       return deleteModeOff(state, action.trackId)
+    case 'UI_SELECT_TRACK':
+      return unselectAllSteps(state)
     case 'SEQUENCER_STEP_SELECT':
       return selectStep(state, action)
     case 'SEQUENCER_STEP_UNSELECT':
@@ -55,6 +57,10 @@ function selectStep (state, {stepId})  {
       currentlySelected.includes(stepId) ? [] : stepId
     )
   })
+}
+
+function unselectAllSteps (state) {
+  return Object.assign({}, state, { selectedStepIds: initialSequencerState.selectedStepIds })
 }
 
 function unselectStep (state, stepId)  {
