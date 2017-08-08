@@ -11,8 +11,6 @@
   - prevent skipped sequences getting out of swing sync
 - stutter
 - filter F per step
-- reset voice params
-  - hold delete, press channel select button (instead of turning knob)
 
 ### Look at arrow functions/plugin to remove
 
