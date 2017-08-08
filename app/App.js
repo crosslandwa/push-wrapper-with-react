@@ -62,7 +62,7 @@ const App = ({ kitIds, patternIds, push, pushState, trackIds, recording, isStepS
           : <TrackVoiceControl knobs={push.channelKnobs()} />
         }
         <LCDComponent pushLcdSegmentsRow={push.lcdSegmentsRow}/>
-        <GridSelectButtons isStepSelected={isStepSelected} kitIds={kitIds} trackIds={trackIds} push={push}/>
+        <GridSelectButtons deleteModifier={pushState.modifiers.delete} isStepSelected={isStepSelected} kitIds={kitIds} trackIds={trackIds} push={push}/>
         <div style={gridStyle}>
           {[...Array(8).keys()].map(index => (
             <TrackControlComponent

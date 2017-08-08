@@ -21,7 +21,7 @@ const voiceDisplay = (state, ownProps) => {
       [voice.pitch, sample.name, voice.decay, '', '', '', `${filterF(voice.filterAmount)} Hz`, dbVolume(voice.midiVolume)],
       ['pitch', 'sample', 'decay', '', '', '', 'filterF', 'volume'],
       sampleSelectionOn(state) ? sampleIdList(state, sample.id) : [],
-      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', '']
+      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', 'VOICE']
     ]
   }
 }
@@ -47,7 +47,7 @@ const stepDisplay = (state, ownProps) => {
       [step.midiPitch || '-', '', step.voiceDecay || '-', '', '', '', '', step.midiVelocity],
       ['pitch', '', 'decay', '', '', '', '', 'velocity'],
       [],
-      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `steps: ${steps.length}`]
+      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `STEPS: ${steps.length}`]
     ]
   }
 }

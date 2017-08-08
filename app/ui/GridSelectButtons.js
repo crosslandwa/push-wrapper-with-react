@@ -6,6 +6,7 @@ import { Colours } from '../push/colours'
 import TrackSelectButton from '../voices/TrackSelectButton'
 import KitSelectButtons from '../kits/KitSelectButtons'
 import StepResetButtons from '../sequencer/StepResetButtons'
+import VoiceResetButtons from '../voices/VoiceResetButtons'
 
 const style = {
   display: 'flex',
@@ -17,13 +18,19 @@ const style = {
   borderColor: 'transparent'
 }
 
-const GridSelectButtons = ({isStepSelected, kitIds, trackIds, push}) => {
+const GridSelectButtons = ({deleteModifier, isStepSelected, kitIds, trackIds, push}) => {
+  let topRow
+  if (isStepSelected) {
+    topRow = <StepResetButtons style={style} buttons={push.channelSelectButtons()} />
+  } else if (deleteModifier) {
+    topRow = <VoiceResetButtons style={style} buttons={push.channelSelectButtons()} />
+  } else {
+    topRow = <KitSelectButtons style={style} buttons={push.channelSelectButtons()} kitIds={kitIds} />
+  }
+
   return (
     <div style={style}>
-      {isStepSelected
-        ? <StepResetButtons style={style} buttons={push.channelSelectButtons()} />
-        : <KitSelectButtons style={style} buttons={push.channelSelectButtons()} kitIds={kitIds} />
-      }
+      {topRow}
       {[...Array(8).keys()].map(index => (
         <TrackSelectButton
           key={trackIds[index]}
