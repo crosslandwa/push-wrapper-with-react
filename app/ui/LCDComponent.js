@@ -3,7 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import LCD from './LCD'
 import { mostRecentlySelectedStep, selectedSteps } from '../selectors'
-import { currentBpm, currentPattern, currentSample, currentSwing, currentVoice, sampleIds, sampleSelectionOn, sampleSelector, selectedTrackIndex } from '../selectors'
+import { currentBpm, currentSample, currentSwing, currentVoice, sampleIds, sampleSelectionOn, sampleSelector } from '../selectors'
 import NonLinearScale from '../utils/nonLinearScale'
 import midiVelocityToAbsolute from '../voices/midiVelocityToAbsolute'
 import { frequencyScaling } from '../player/actions'
@@ -14,7 +14,6 @@ const dbVolume = (midiVolume) => parseFloat(20 * Math.log10(midiVelocityToAbsolu
 const LCDComponent = (props) => <LCD {...props} />
 
 const voiceDisplay = (state, ownProps) => {
-  const trackIndex = selectedTrackIndex(state)
   const voice = currentVoice(state)
   const sample = currentSample(state)
   return {
@@ -22,7 +21,7 @@ const voiceDisplay = (state, ownProps) => {
       [voice.pitch, sample.name, voice.decay, '', '', '', `${filterF(voice.filterAmount)} Hz`, dbVolume(voice.midiVolume)],
       ['pitch', 'sample', 'decay', '', '', '', 'filterF', 'volume'],
       sampleSelectionOn(state) ? sampleIdList(state, sample.id) : [],
-      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', `voice: ${trackIndex}`]
+      [`bpm:${currentBpm(state)}`, `swing:${currentSwing(state)}`, '', '', '', '', '', '']
     ]
   }
 }
