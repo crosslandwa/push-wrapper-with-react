@@ -85,6 +85,8 @@ export const nextStepNumberForTrack = (state, trackId) => {
 
 export const selectedSteps = state => selectedStepIdsSelector(state).map(stepId => stepSelector(state, stepId))
 
+export const mostRecentlySelectedStep = state => selectedSteps(state).slice(-1)[0] || {}
+
 // ############ VOICE
 const voicesSelector = state => state.entities.voices
 const voiceSelector = (state, id) => voicesSelector(state).byId[id]

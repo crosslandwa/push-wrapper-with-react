@@ -2,7 +2,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import LCD from './LCD'
-import { currentBpm, currentPattern, currentSample, currentSwing, currentVoice, sampleIds, sampleSelectionOn, sampleSelector, selectedSteps, selectedTrackIndex } from '../selectors'
+import { mostRecentlySelectedStep, selectedSteps } from '../selectors'
+import { currentBpm, currentPattern, currentSample, currentSwing, currentVoice, sampleIds, sampleSelectionOn, sampleSelector, selectedTrackIndex } from '../selectors'
 import NonLinearScale from '../utils/nonLinearScale'
 import midiVelocityToAbsolute from '../voices/midiVelocityToAbsolute'
 import { frequencyScaling } from '../player/actions'
@@ -41,7 +42,7 @@ function arrayRotate(input, count) {
 
 const stepDisplay = (state, ownProps) => {
   const steps = selectedSteps(state)
-  const step = steps[0]
+  const step = mostRecentlySelectedStep(state)
   return {
     data: [
       [step.midiPitch || '-', '', step.voiceDecay || '-', '', '', '', '', step.midiVelocity],
