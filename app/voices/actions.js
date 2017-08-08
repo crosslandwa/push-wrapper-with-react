@@ -14,7 +14,7 @@ export function voicePlaying (trackId, velocity) {
   }
 }
 
-export function switchSample (delta) {
+export function switchSelectedVoicesSample (delta) {
   return (dispatch, getState) => {
     return dispatch(dispatchVoicesUpdate(
       'VOICES_SWITCH_SAMPLE',
@@ -63,7 +63,7 @@ export function resetSelectedVoicesPitch () {
   return dispatchVoicesReset('VOICES_RESET_PITCH')
 }
 
-export function updatePitch (delta) {
+export function updateSelectedVoicesPitch (delta) {
   return dispatchVoicesUpdate(
     'VOICES_UPDATE_PITCH',
     voice => clampBetween0And127(voice.pitch + delta)
@@ -74,7 +74,7 @@ export function resetSelectedVoicesDecay () {
   return dispatchVoicesReset('VOICES_RESET_DECAY')
 }
 
-export function updateDecay (delta) {
+export function updateSelectedVoicesDecay (delta) {
   return dispatchVoicesUpdate(
     'VOICES_UPDATE_DECAY',
     voice => clampBetween1And100(voice.decay + delta)
@@ -85,7 +85,7 @@ export function resetSelectedVoicesFilterFrequency () {
   return dispatchVoicesReset('VOICES_RESET_FILTER_FREQ')
 }
 
-export function updateFilterFrequency (delta) {
+export function updateSelectedVoicesFilterFrequency (delta) {
   return dispatchVoicesUpdate(
     'VOICES_UPDATE_FILTER_FREQ',
     voice => clampBetween0And127(voice.filterAmount + delta)
@@ -96,7 +96,7 @@ export function resetSelectedVoicesVolume () {
   return dispatchVoicesReset('VOICES_RESET_VOLUME')
 }
 
-export function updateVolume (delta) {
+export function updateSelectedVoicesVolume (delta) {
   return dispatchVoicesUpdate(
     'VOICES_UPDATE_VOLUME',
     voice => clampBetween0And127(delta + voice.midiVolume)
