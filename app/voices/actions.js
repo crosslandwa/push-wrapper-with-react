@@ -59,7 +59,7 @@ function dispatchVoicesReset (type) {
   }
 }
 
-export function resetPitch () {
+export function resetSelectedVoicesPitch () {
   return dispatchVoicesReset('VOICES_RESET_PITCH')
 }
 
@@ -70,7 +70,7 @@ export function updatePitch (delta) {
   )
 }
 
-export function resetDecay () {
+export function resetSelectedVoicesDecay () {
   return dispatchVoicesReset('VOICES_RESET_DECAY')
 }
 
@@ -81,7 +81,7 @@ export function updateDecay (delta) {
   )
 }
 
-export function resetFilterFrequency () {
+export function resetSelectedVoicesFilterFrequency () {
   return dispatchVoicesReset('VOICES_RESET_FILTER_FREQ')
 }
 
@@ -92,7 +92,7 @@ export function updateFilterFrequency (delta) {
   )
 }
 
-export function resetVolume () {
+export function resetSelectedVoicesVolume () {
   return dispatchVoicesReset('VOICES_RESET_VOLUME')
 }
 

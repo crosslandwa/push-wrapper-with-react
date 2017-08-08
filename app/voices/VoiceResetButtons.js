@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Colours } from '../push/colours'
 import DomGridButton from '../push/DomGridButton'
 import PushChannelSelectButton from '../push/PushChannelSelectButton'
-import { resetDecay, resetFilterFrequency, resetPitch, resetVolume } from './actions'
+import { resetSelectedVoicesDecay, resetSelectedVoicesFilterFrequency, resetSelectedVoicesPitch, resetSelectedVoicesVolume } from './actions'
 
 const noop = () => {}
 
@@ -28,10 +28,10 @@ const VoiceResetButtons = ({buttons, resetDecay, resetFilter, resetPitch, resetV
 )
 
 const mapDispatchToProps = {
-  resetDecay: resetDecay,
-  resetFilter: resetFilterFrequency,
-  resetPitch: resetPitch,
-  resetVolume: resetVolume
+  resetDecay: resetSelectedVoicesDecay,
+  resetFilter: resetSelectedVoicesFilterFrequency,
+  resetPitch: resetSelectedVoicesPitch,
+  resetVolume: resetSelectedVoicesVolume
 }
 
 export default connect(null, mapDispatchToProps)(VoiceResetButtons)
