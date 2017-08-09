@@ -18,14 +18,14 @@ const style = {
   borderColor: 'transparent'
 }
 
-const GridSelectButtons = ({deleteModifier, isStepSelected, kitIds, trackIds, push}) => {
+const GridSelectButtons = ({deleteModifier, isStepSelected, trackIds, push}) => {
   let topRow
   if (isStepSelected) {
     topRow = <StepResetButtons style={style} buttons={push.channelSelectButtons()} />
   } else if (deleteModifier) {
     topRow = <VoiceResetButtons style={style} buttons={push.channelSelectButtons()} />
   } else {
-    topRow = <KitSelectButtons style={style} buttons={push.channelSelectButtons()} kitIds={kitIds} />
+    topRow = <KitSelectButtons style={style} buttons={push.channelSelectButtons()} />
   }
 
   return (

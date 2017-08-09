@@ -1,7 +1,8 @@
 'use strict'
 import React from 'react'
-import { Colours } from '../push/colours'
+import { connect } from 'react-redux'
 import KitSelectButton from './KitSelectButton'
+import { kitIds } from '../selectors'
 
 const KitSelectButtons = ({buttons, kitIds, style}) => (
   <div style={style} >
@@ -15,5 +16,8 @@ const KitSelectButtons = ({buttons, kitIds, style}) => (
   </div>
 )
 
-// TODO connect and grab kitIDs here, rather than passing up from App
-export default KitSelectButtons
+const mapStateToProps = (state) => ({
+  kitIds: kitIds(state)
+})
+
+export default connect(mapStateToProps)(KitSelectButtons)
