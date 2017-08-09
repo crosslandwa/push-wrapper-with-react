@@ -1,20 +1,20 @@
-import { currentKit, currentPattern, kitIds, modifiersDuplicateSelector, sampleIds, voiceIds, voicesForCurrentKit, voicesForKit } from '../selectors'
+import { currentPattern, modifiersDuplicateSelector, sampleIds, voicesForCurrentKit, voicesForKit } from '../selectors'
 
-// TODO this can be converted to initialise kits (x8) as there is no dynamic creation of kits
-export function createKit (sampleIds) {
+function createKit (kitIndex, sampleIds) {
   return (dispatch, getState) => {
-    const allVoiceIds = voiceIds(getState())
-    const kitVoiceIds = sampleIds.map((sampleId, x) => `voice-${allVoiceIds.length + x}`)
+    const id = `kit-${kitIndex}`
+    // knowledge here that we have eight voices per kit
+    const kitVoiceIds = sampleIds.map((sampleId, x) => `voice-${kitIndex * 8 + x}`)
 
-    const id = `kit-${kitIds(getState()).length}`
     dispatch({ type: 'KIT_CREATE', id, voiceIds: kitVoiceIds, sampleIds })
     return id
   }
 }
 
-export function createDefaultKit () {
+export function createDefaultKits () {
   return (dispatch, getState) => {
-    return dispatch(createKit(sampleIds(getState()).slice(0, 8)))
+    const defaultSampleIds = sampleIds(getState()).slice(0, 8)
+    return Promise.all([...Array(8).keys()].map(index => dispatch(createKit(index, defaultSampleIds))))
   }
 }
 

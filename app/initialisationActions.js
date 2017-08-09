@@ -1,6 +1,6 @@
 import { createPattern, selectPattern } from './sequencer/patternActions'
 import { loadSample } from './samples/actions'
-import { createDefaultKit } from './kits/actions'
+import { createDefaultKits } from './kits/actions'
 import { kitIds, patternIds, sampleIds, sampleSelector } from './selectors'
 
 export function init () {
@@ -14,7 +14,7 @@ export function init () {
       )
       .then(() => {
         return (currentKitIds.length === 0)
-          ? Promise.all([...Array(8).keys()].map(index => dispatch(createDefaultKit())))
+          ? dispatch(createDefaultKits())
           : currentKitIds
       })
       .then(kitIds => {

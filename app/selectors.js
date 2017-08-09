@@ -102,8 +102,6 @@ export const mostRecentlySelectedStep = createSelector( // state
 const voicesSelector = state => state.entities.voices
 const voiceSelector = (state, id) => voicesSelector(state).byId[id]
 
-export const voiceIds = state => voicesSelector(state).allIds
-
 export const currentVoice = state => voiceForTrack(state, currentTrack(state).id)
 
 export const voiceForTrack = createSelector( // state, trackId

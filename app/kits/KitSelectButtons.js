@@ -15,4 +15,5 @@ const KitSelectButtons = ({buttons, kitIds, style}) => (
   </div>
 )
 
+// TODO connect and grab kitIDs here, rather than passing up from App
 export default KitSelectButtons
