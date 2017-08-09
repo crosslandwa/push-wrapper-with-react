@@ -23,7 +23,7 @@ export function copyIfDuplicateHeldThenSelectKitForCurrentPattern (kitId) {
     const patternId = currentPattern(getState()).id
     modifiersDuplicateSelector(getState())
       ? dispatch({
-        type: 'KIT_COPY',
+        type: 'KIT_COPY_THEN_SELECT',
         sourceVoices: voicesForCurrentKit(getState()),
         targetVoiceIds: voicesForKit(getState(), kitId).map(voice => voice.id),
         kitId,

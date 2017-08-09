@@ -19,7 +19,7 @@ export default function voices (state = initialState, action) {
   switch (action.type) {
     case 'VOICE_PLAYING':
       return updateParamBatch(state, 'velocity', [action.id], [action.velocity])
-    case 'KIT_COPY':
+    case 'KIT_COPY_THEN_SELECT':
       return copyVoices(state, action.sourceVoices, action.targetVoiceIds)
     case 'KIT_CREATE':
       return createVoices(state, action.voiceIds, action.sampleIds)

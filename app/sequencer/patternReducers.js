@@ -6,7 +6,7 @@ export default function patterns (state = intialState, action) {
   switch (action.type) {
     case 'PATTERN_CREATE':
       return addPattern(state, action.id, action.kitId, action.trackIds)
-    case 'KIT_COPY':
+    case 'KIT_COPY_THEN_SELECT':
     case 'PATTERN_SELECT_KIT':
       return selectKit(state, action.patternId, action.kitId)
   }
