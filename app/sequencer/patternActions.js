@@ -1,6 +1,8 @@
 import { selectTrack } from '../ui/actions'
 import { currentKit, modifiersDuplicateSelector, patternIds, patternSelector, sampleIds, trackIds, trackSelector, selectedTrackIndex } from '../selectors'
 
+const duplicateButtonPressed = modifiersDuplicateSelector
+
 function createPatternWithCurrentKit() {
   return (dispatch, getState) => dispatch(createThenSelectPattern(currentKit(getState()).id))
 }
@@ -48,25 +50,28 @@ function deletePattern (id) {
   }
 }
 
+function copyCurrentPattern (targetPatternId) {
+  return (dispatch, getState) => {
+    if (targetPatternId) {
+      dispatch(deletePattern(targetPatternId))
+    }
+    // foreach track
+    // copy all steps (new stepIds)
+    // create new track, with stepIds, filling in the nulls
+    // collect new tracks
+    // create pattern with trackIds
+    // select new pattern
+  }
+}
+
 export function createOrCopyThenSelectPattern (patternId) {
   return (dispatch, getState) => {
-    if (modifiersDuplicateSelector(getState())) {
-      // COPY pattern
-      if (patternId) {
-        dispatch(deletePattern(patternId))
-      }
-      // foreach track
-      // copy all steps (new stepIds)
-      // create new track, with stepIds, filling in the nulls
-      // collect new tracks
-      // create pattern with trackIds
-      // select new pattern
-
-      // do all that without dispatching loads of actions?
+    if (duplicateButtonPressed(getState())) {
+      dispatch(copyCurrentPattern(patternId))
     } else {
       return patternId
-      ? dispatch(selectPattern(patternId))
-      : dispatch(createPatternWithCurrentKit())
+        ? dispatch(selectPattern(patternId))
+        : dispatch(createPatternWithCurrentKit())
     }
   }
 }
