@@ -9,6 +9,8 @@ export default function patterns (state = intialState, action) {
     case 'KIT_COPY_THEN_SELECT':
     case 'PATTERN_SELECT_KIT':
       return selectKit(state, action.patternId, action.kitId)
+    case 'PATTERN_DELETE':
+      return removePattern(state, action.id)
   }
   return state
 }
@@ -23,5 +25,12 @@ function addPattern (state, id, kitId, trackIds) {
 function selectKit(state, patternId, kitId) {
   const updated = clone(state)
   updated.byId[patternId].kitId = kitId
+  return updated
+}
+
+function removePattern(state, id) {
+  const updated = clone(state)
+  delete updated.byId[id]
+  updated.allIds = updated.allIds.filter(x => x !== id)
   return updated
 }

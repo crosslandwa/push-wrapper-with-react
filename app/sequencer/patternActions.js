@@ -1,5 +1,5 @@
 import { selectTrack } from '../ui/actions'
-import { currentKit, patternIds, patternSelector, sampleIds, trackIds, selectedTrackIndex } from '../selectors'
+import { currentKit, modifiersDuplicateSelector, patternIds, patternSelector, sampleIds, trackIds, trackSelector, selectedTrackIndex } from '../selectors'
 
 function createPatternWithCurrentKit() {
   return (dispatch, getState) => dispatch(createThenSelectPattern(currentKit(getState()).id))
@@ -34,10 +34,39 @@ export function selectPattern (id) {
   }
 }
 
+function deletePattern (id) {
+  return (dispatch, getState) => {
+    const targetPattern = patternSelector(getState(), id)
+    const tracks = targetPattern.trackIds.map(id => trackSelector(getState(), id))
+    const stepIds = tracks.reduce((acc, it) => acc.concat(it.stepIds), []).filter(id => id !== null)
+    dispatch({
+      type: 'PATTERN_DELETE',
+      id,
+      trackIds: targetPattern.trackIds,
+      stepIds
+    })
+  }
+}
+
 export function createOrCopyThenSelectPattern (patternId) {
   return (dispatch, getState) => {
-    return patternId
+    if (modifiersDuplicateSelector(getState())) {
+      // COPY pattern
+      if (patternId) {
+        dispatch(deletePattern(patternId))
+      }
+      // foreach track
+      // copy all steps (new stepIds)
+      // create new track, with stepIds, filling in the nulls
+      // collect new tracks
+      // create pattern with trackIds
+      // select new pattern
+
+      // do all that without dispatching loads of actions?
+    } else {
+      return patternId
       ? dispatch(selectPattern(patternId))
       : dispatch(createPatternWithCurrentKit())
+    }
   }
 }

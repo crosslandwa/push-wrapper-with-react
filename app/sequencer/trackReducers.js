@@ -15,6 +15,8 @@ export default function tracks (state = intialState, action) {
     case 'TRACK_MUTE_ON':
     case 'TRACK_MUTE_OFF':
       return updateParam(state, action.id, 'muted', action.type === 'TRACK_MUTE_ON')
+    case 'PATTERN_DELETE':
+      return action.trackIds.reduce((state, id) => removeTrack(state, id), state)
 
   }
   return state
@@ -55,5 +57,12 @@ function removeStep (state, stepId) {
 function updateParam(state, id, param, value) {
   const updated = clone(state)
   updated.byId[id][param] = value
+  return updated
+}
+
+function removeTrack(state, id) {
+  const updated = clone(state)
+  delete updated.byId[id]
+  updated.allIds = updated.allIds.filter(x => x !== id)
   return updated
 }

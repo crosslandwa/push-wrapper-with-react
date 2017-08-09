@@ -24,7 +24,7 @@ export default function steps (state = intialState, action) {
     case 'STEP_TURN_ON':
       return addStep(state, action)
     case 'STEP_TURN_OFF':
-      return removeStep(state, action)
+      return removeStep(state, action.id)
     case 'STEPS_UPDATE_PITCH':
       return updateParamBatch(state, 'midiPitch', action.ids, action.values)
     case 'STEPS_RESET_PITCH':
@@ -37,6 +37,8 @@ export default function steps (state = intialState, action) {
       return updateParamBatch(state, 'voiceDecay', action.ids, action.ids.map(id => null))
     case 'STEPS_UPDATE_DECAY':
       return updateParamBatch(state, 'voiceDecay', action.ids, action.values)
+    case 'PATTERN_DELETE':
+      return action.stepIds.reduce((state, id) => removeStep(state, id), state)
   }
   return state
 }
@@ -56,7 +58,7 @@ function addStep(state, {id, pitch, velocity}) {
   return updated
 }
 
-function removeStep(state, {id}) {
+function removeStep(state, id) {
   const updated = clone(state)
   delete updated.byId[id]
   updated.allIds = updated.allIds.filter(x => x !== id)
