@@ -9,16 +9,17 @@ import { currentPattern } from '../selectors'
 
 const PatternSelect = props => {
   const {pad, patternId, selectPattern, selected} = props
+  const rgb = selected ? Colours.orange : (patternId ? Colours.blue : Colours.off)
   return (
     <DomGridPad
       padPressed={selectPattern}
       active={true}
-      rgb={selected ? Colours.blue : (patternId ? Colours.orange : Colours.off)}
+      rgb={rgb}
     >
       <PushGridPad
         pad={pad}
         padPressed={selectPattern}
-        rgb={selected ? Colours.blue : (patternId ? Colours.orange : Colours.off)}
+        rgb={rgb}
       />
     </DomGridPad>
   )
