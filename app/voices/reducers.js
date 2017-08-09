@@ -19,6 +19,8 @@ export default function voices (state = initialState, action) {
   switch (action.type) {
     case 'VOICE_PLAYING':
       return updateParamBatch(state, 'velocity', [action.id], [action.velocity])
+    case 'KIT_COPY':
+      return copyVoices(state, action.sourceVoices, action.targetVoiceIds)
     case 'KIT_CREATE':
       return createVoices(state, action.voiceIds, action.sampleIds)
     case 'VOICES_SWITCH_SAMPLE':
@@ -47,6 +49,14 @@ function updateParamBatch (state, param, ids, values) {
   const updated = clone(state)
   ids.forEach((id, index) => {
     updated.byId[id][param] = values[index]
+  })
+  return updated
+}
+
+function copyVoices (state, sourceVoices, targetVoiceIds) {
+  const updated = clone(state)
+  targetVoiceIds.forEach((id, index) => {
+    updated.byId[id] = Object.assign({}, sourceVoices[index], { id: updated.byId[id].id })
   })
   return updated
 }

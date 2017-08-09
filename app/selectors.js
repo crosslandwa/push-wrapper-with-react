@@ -29,6 +29,11 @@ const patternForTrack = createSelector( // state, trackId
 // ############ KIT
 const kitsSelector = state => state.entities.kits
 
+const kitSelector = createSelector( // state, id
+  [kitsSelector, identity(1)],
+  (kits, id) => kits.byId[id]
+)
+
 export const kitIds = state => kitsSelector(state).allIds
 
 export const currentKit = createSelector( // state
@@ -108,6 +113,11 @@ export const voiceForTrack = createSelector( // state, trackId
     const voiceId = kits.byId[pattern.kitId].voiceIds[index]
     return voices.byId[voiceId]
   }
+)
+
+export const voicesForKit = createSelector( // state, kitId
+  [kitSelector, identity(0)],
+  (kit, state) => kit.voiceIds.map(id => voiceSelector(state, id))
 )
 
 export const voicesForCurrentKit = createSelector( // state

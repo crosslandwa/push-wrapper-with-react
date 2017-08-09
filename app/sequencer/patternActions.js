@@ -1,5 +1,5 @@
 import { selectTrack } from '../ui/actions'
-import { currentKit, currentPattern, patternIds, patternSelector, sampleIds, trackIds, selectedTrackIndex } from '../selectors'
+import { currentKit, patternIds, patternSelector, sampleIds, trackIds, selectedTrackIndex } from '../selectors'
 
 export function createPatternWithCurrentKit() {
   return (dispatch, getState) => dispatch(createPattern(currentKit(getState()).id))
@@ -28,12 +28,5 @@ export function selectPattern (id) {
     const index = selectedTrackIndex(getState())
     dispatch({ type: 'PATTERN_SELECT', id })
     dispatch(selectTrack(pattern.trackIds[Math.max(index, 0)]))
-  }
-}
-
-export function selectKitForCurrentPattern (kitId) {
-  return (dispatch, getState) => {
-    const patternId = currentPattern(getState()).id
-    dispatch({ type: 'PATTERN_SELECT_KIT', kitId, patternId })
   }
 }

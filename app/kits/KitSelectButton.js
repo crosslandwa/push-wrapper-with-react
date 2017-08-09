@@ -1,11 +1,11 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { createPatternWithCurrentKit, selectPattern, selectKitForCurrentPattern } from '../sequencer/patternActions'
 import DomGridButton from '../push/DomGridButton'
 import PushChannelSelectButton from '../push/PushChannelSelectButton'
 import { Colours } from '../push/colours'
 import { currentPattern } from '../selectors'
+import { copyIfDuplicateHeldThenSelectKitForCurrentPattern } from './actions'
 
 const KitSelectButton = props => {
   const {button, selectKit, selected} = props
@@ -31,7 +31,7 @@ const mapStateToProps = (state, { kitId }) => ({
 const mapDispatchToProps = (dispatch, { kitId }) => {
   return {
     selectKit() {
-      dispatch(selectKitForCurrentPattern(kitId))
+      dispatch(copyIfDuplicateHeldThenSelectKitForCurrentPattern(kitId))
     }
   }
 }
