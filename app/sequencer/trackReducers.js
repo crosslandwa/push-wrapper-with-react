@@ -4,7 +4,7 @@ const intialState = { byId: {}, allIds: [] }
 
 export default function tracks (state = intialState, action) {
   switch (action.type) {
-    case 'PATTERN_CREATE':
+    case 'PATTERN_CREATE_THEN_SELECT':
       return addTracks(state, action.trackIds)
     case 'STEP_TURN_ON':
       return addStep(state, action.trackId, action.id, action.stepNumber)

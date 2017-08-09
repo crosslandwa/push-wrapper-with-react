@@ -1,4 +1,4 @@
-import { createPattern, selectPattern } from './sequencer/patternActions'
+import { createThenSelectPattern, selectPattern } from './sequencer/patternActions'
 import { loadSample } from './samples/actions'
 import { createDefaultKits } from './kits/actions'
 import { kitIds, patternIds, sampleIds, sampleSelector } from './selectors'
@@ -18,10 +18,9 @@ export function init () {
           : currentKitIds
       })
       .then(kitIds => {
-        const patternId = (currentPatternIds.length === 0)
-          ? dispatch(createPattern(kitIds[0]))
-          : currentPatternIds[0]
-        dispatch(selectPattern(patternId))
+        return (currentPatternIds.length === 0)
+          ? dispatch(createThenSelectPattern(kitIds[0]))
+          : dispatch(selectPattern(currentPatternIds[0]))
       })
   }
 }

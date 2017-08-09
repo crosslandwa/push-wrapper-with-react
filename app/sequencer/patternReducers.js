@@ -4,7 +4,7 @@ const intialState = { byId: {}, allIds: [] }
 
 export default function patterns (state = intialState, action) {
   switch (action.type) {
-    case 'PATTERN_CREATE':
+    case 'PATTERN_CREATE_THEN_SELECT':
       return addPattern(state, action.id, action.kitId, action.trackIds)
     case 'KIT_COPY_THEN_SELECT':
     case 'PATTERN_SELECT_KIT':

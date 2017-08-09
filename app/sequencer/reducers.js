@@ -40,6 +40,7 @@ export default function sequencer (state = initialSequencerState, action) {
       return Object.assign({}, state, { recording: true })
     case 'SEQUENCER_DISARM':
       return Object.assign({}, state, { recording: false })
+    case 'PATTERN_CREATE_THEN_SELECT':
     case 'PATTERN_SELECT':
       return Object.assign({}, state, { patternId: action.id })
     case 'SEQUENCER_UPDATE_BPM':
