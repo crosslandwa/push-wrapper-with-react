@@ -2,7 +2,7 @@ import { currentPattern, modifiersDuplicateSelector, sampleIds, voicesForCurrent
 
 function createKit (kitIndex, sampleIds) {
   return (dispatch, getState) => {
-    const id = `kit-${kitIndex}`
+    const id = `kit${kitIndex}`
     // knowledge here that we have eight voices per kit
     const kitVoiceIds = sampleIds.map((sampleId, x) => `voice-${kitIndex * 8 + x}`)
 
