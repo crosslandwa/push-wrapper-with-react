@@ -39,16 +39,16 @@ export function selectPattern (id) {
   }
 }
 
-function deleteExistingSteps (id) {
+function deleteStepsForPattern (patternId) {
   return (dispatch, getState) => {
-    const targetPattern = patternSelector(getState(), id)
-    const tracks = targetPattern.trackIds.map(id => trackSelector(getState(), id))
+    const pattern = patternSelector(getState(), patternId)
+    const tracks = pattern.trackIds.map(id => trackSelector(getState(), id))
     const stepIds = tracks.reduce((acc, it) => acc.concat(it.stepIds), []).filter(nonNull)
     dispatch(turnStepsOff(stepIds))
     // dispatch({
     //   type: 'PATTERN_DELETE',
-    //   id,
-    //   trackIds: targetPattern.trackIds,
+    //   id: patternId,
+    //   trackIds: pattern.trackIds,
     //   stepIds
     // })
   }
@@ -57,7 +57,7 @@ function deleteExistingSteps (id) {
 function copyCurrentPattern (targetPatternId) {
   return (dispatch, getState) => {
     if (targetPatternId) {
-      dispatch(deleteExistingSteps(targetPatternId))
+      dispatch(deleteStepsForPattern(targetPatternId))
     }
     // does this belong in reducer? there's a lot of knowledge of state shape here
     const state = getState()
