@@ -56,9 +56,7 @@ function deleteStepsForPattern (patternId) {
 
 function copyCurrentPattern (targetPatternId) {
   return (dispatch, getState) => {
-    if (targetPatternId) {
-      dispatch(deleteStepsForPattern(targetPatternId))
-    }
+
     // does this belong in reducer? there's a lot of knowledge of state shape here
     const state = getState()
     const originalPattern = currentPattern(state)
@@ -81,6 +79,9 @@ function copyCurrentPattern (targetPatternId) {
     const newSteps = clone(originalSteps)
       .map(step => Object.assign(step, { id: updateId(step.id) }))
 
+    if (targetPatternId) {
+      dispatch(deleteStepsForPattern(targetPatternId))
+    }
     dispatch({
       type: 'PATTERN_INSERT_NEW',
       pattern: newPattern,
