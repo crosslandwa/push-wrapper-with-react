@@ -47,8 +47,6 @@ export default function sequencer (state = initialSequencerState, action) {
       return Object.assign({}, state, { bpm: action.bpm })
     case 'SEQUENCER_UPDATE_SWING':
       return Object.assign({}, state, { swing: action.swing })
-    case 'PATTERN_DELETE':
-      return action.stepIds.reduce((state, id) => unselectStep(state, id), state)
   }
   return state
 }

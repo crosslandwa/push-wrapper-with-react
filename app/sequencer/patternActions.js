@@ -1,8 +1,9 @@
 import { turnStepsOff } from './actions'
 import { selectTrack } from '../ui/actions'
 import { clone } from '../reducers/utils'
-import { currentKit, currentPattern, modifiersDuplicateSelector, patternIds, patternSelector, sampleIds, selectedTrackIndex, stepSelector, trackSelector } from '../selectors'
-
+import { currentKit, currentPattern, patternIds, patternSelector, sampleIds, selectedTrackIndex, stepSelector, trackSelector } from '../selectors'
+import { modifiersDeleteSelector, modifiersDuplicateSelector } from '../selectors'
+const deleteButtonPressed = modifiersDeleteSelector
 const duplicateButtonPressed = modifiersDuplicateSelector
 const nonNull = x => x !== null
 
@@ -39,18 +40,24 @@ export function selectPattern (id) {
   }
 }
 
+function deletePattern (patternId) {
+  return (dispatch, getState) => {
+    const pattern = patternSelector(getState(), patternId)
+    dispatch(deleteStepsForPattern(pattern.id))
+    dispatch({
+      type: 'PATTERN_DELETE',
+      id: pattern.id,
+      trackIds: pattern.trackIds
+    })
+  }
+}
+
 function deleteStepsForPattern (patternId) {
   return (dispatch, getState) => {
     const pattern = patternSelector(getState(), patternId)
     const tracks = pattern.trackIds.map(id => trackSelector(getState(), id))
     const stepIds = tracks.reduce((acc, it) => acc.concat(it.stepIds), []).filter(nonNull)
     dispatch(turnStepsOff(stepIds))
-    // dispatch({
-    //   type: 'PATTERN_DELETE',
-    //   id: patternId,
-    //   trackIds: pattern.trackIds,
-    //   stepIds
-    // })
   }
 }
 
@@ -92,9 +99,15 @@ function copyCurrentPattern (targetPatternId) {
   }
 }
 
-export function createOrCopyThenSelectPattern (patternId) {
+export function patternButtonPressed (patternId) {
   return (dispatch, getState) => {
-    if (duplicateButtonPressed(getState())) {
+    const state = getState()
+
+    if (currentPattern(state).id === patternId) {
+      return
+    } else if (patternId && deleteButtonPressed(state)) {
+      return dispatch(deletePattern(patternId))
+    } else if (duplicateButtonPressed(state)) {
       dispatch(copyCurrentPattern(patternId))
     } else {
       return patternId

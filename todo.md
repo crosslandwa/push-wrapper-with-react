@@ -1,7 +1,7 @@
 - more samples
   - some task to pull in non-version controlled audio assets from disk as part of build
 - pan per voice/step
-- duplicate pattern (hold duplicate, press pattern select button, copies current pattern to that pattern)
+- make patterns be sparse, i.e. appear on grid where placed, not on first N pads
 - multiple/switchable patterns (work on current one in a 'scratch pad')
 - save state to/from JSON file
 - swing

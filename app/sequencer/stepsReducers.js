@@ -37,8 +37,6 @@ export default function steps (state = intialState, action) {
       return updateParamBatch(state, 'voiceDecay', action.ids, action.ids.map(id => null))
     case 'STEPS_UPDATE_DECAY':
       return updateParamBatch(state, 'voiceDecay', action.ids, action.values)
-    case 'PATTERN_DELETE':
-      return action.stepIds.reduce((state, id) => removeStep(state, id), state)
     case 'PATTERN_INSERT_NEW':
       return insertSteps(state, action.steps)
   }
