@@ -9,7 +9,7 @@ export default function tracks (state = intialState, action) {
     case 'STEP_TURN_ON':
       return addStep(state, action.trackId, action.id, action.stepNumber)
     case 'STEP_TURN_OFF':
-      return removeStep(state, action.id)
+      return action.ids.reduce((state, id) => removeStep(state, id), state)
     case 'TRACK_UPDATE_NUMBER_OF_STEPS':
       return updateParam(state, action.id, 'numberOfSteps', action.numberOfSteps)
     case 'TRACK_MUTE_ON':
@@ -17,6 +17,8 @@ export default function tracks (state = intialState, action) {
       return updateParam(state, action.id, 'muted', action.type === 'TRACK_MUTE_ON')
     case 'PATTERN_DELETE':
       return action.trackIds.reduce((state, id) => removeTrack(state, id), state)
+    case 'PATTERN_INSERT_NEW':
+      return insertTracks(state, action.tracks)
 
   }
   return state
@@ -34,6 +36,16 @@ function addTracks (state, ids) {
       return byId
     }, clone(state.byId)),
     allIds: state.allIds.concat(ids)
+  }
+}
+
+function insertTracks (state, tracks) {
+  return {
+    byId: tracks.reduce((byId, track) => {
+      byId[track.id] = track
+      return byId
+    }, clone(state.byId)),
+    allIds: state.allIds.concat(tracks.map(track => track.id))
   }
 }
 

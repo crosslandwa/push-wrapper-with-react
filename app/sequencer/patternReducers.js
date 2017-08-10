@@ -11,6 +11,8 @@ export default function patterns (state = intialState, action) {
       return selectKit(state, action.patternId, action.kitId)
     case 'PATTERN_DELETE':
       return removePattern(state, action.id)
+    case 'PATTERN_INSERT_NEW':
+      return addPattern(state, action.pattern.id, action.pattern.kitId, action.pattern.trackIds)
   }
   return state
 }
@@ -18,7 +20,7 @@ export default function patterns (state = intialState, action) {
 function addPattern (state, id, kitId, trackIds) {
   return {
     byId: Object.assign({}, state.byId, {[id]: {id, kitId, trackIds}}),
-    allIds: state.allIds.concat(id)
+    allIds: state.allIds.includes(id) ? state.allIds.slice() : state.allIds.concat(id)
   }
 }
 

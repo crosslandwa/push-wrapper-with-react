@@ -9,7 +9,7 @@ export function selectStep (stepId) {
 }
 
 export function unselectStep (stepId) {
-  return { type: 'SEQUENCER_STEP_UNSELECT', id: stepId }
+  return { type: 'SEQUENCER_STEP_UNSELECT', ids: [stepId] }
 }
 
 export function turnStepOn (trackId, stepNumber, pitch, velocity) {
@@ -20,10 +20,8 @@ export function turnStepOn (trackId, stepNumber, pitch, velocity) {
   }
 }
 
-export function turnStepOff (id) {
-  return (dispatch, getState) => {
-    dispatch({ type: 'STEP_TURN_OFF', id })
-  }
+export function turnStepsOff (ids) {
+  return { type: 'STEP_TURN_OFF', ids }
 }
 
 export function stopSequence () {

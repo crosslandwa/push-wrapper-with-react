@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import { connect } from 'react-redux'
-import { turnStepOff, turnStepOn, selectStep, unselectStep } from './actions'
+import { turnStepsOff, turnStepOn, selectStep, unselectStep } from './actions'
 import StepDisplay from './StepDisplay'
 
 const timeThreshold = 200
@@ -49,7 +49,7 @@ export default connect(
       return dispatch(turnStepOn(trackId, stepNumber))
     },
     turnStepOff (stepId) {
-      return dispatch(turnStepOff(stepId))
+      return dispatch(turnStepsOff([stepId]))
     },
     selectStep (stepId) {
       dispatch(selectStep(stepId))
