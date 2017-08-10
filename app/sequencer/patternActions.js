@@ -1,5 +1,5 @@
 import { selectTrack } from '../ui/actions'
-import { currentKit, modifiersDuplicateSelector, patternIds, patternSelector, sampleIds, trackIds, trackSelector, selectedTrackIndex } from '../selectors'
+import { currentKit, modifiersDuplicateSelector, patternIds, patternSelector, sampleIds, trackSelector, selectedTrackIndex } from '../selectors'
 
 const duplicateButtonPressed = modifiersDuplicateSelector
 
@@ -9,10 +9,9 @@ function createPatternWithCurrentKit() {
 
 export function createThenSelectPattern (kitId) {
   return (dispatch, getState) => {
-    const allTrackIds = trackIds(getState())
     const patternSampleIds = sampleIds(getState())
-    const id = `pattern${patternIds(getState()).length}`
-    const patternTrackIds = patternSampleIds.map((sampleId, x) => `track${allTrackIds.length + x}`)
+    const id = `p-${patternIds(getState()).length}`
+    const patternTrackIds = patternSampleIds.map((sampleId, x) => `${id}-t-${x}`)
     dispatch({
       type: 'PATTERN_CREATE_THEN_SELECT',
       id,

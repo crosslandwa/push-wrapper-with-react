@@ -44,8 +44,6 @@ export const currentKit = createSelector( // state
 // ############ TRACK
 const tracksSelector = state => state.entities.tracks
 
-export const trackIds = state => tracksSelector(state).allIds
-
 export const currentTrack = state => trackSelector(state, state.ui.selectedTrackId)
 
 export const currentTracksForPattern = state => currentPattern(state).trackIds
