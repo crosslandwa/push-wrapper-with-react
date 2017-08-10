@@ -25,7 +25,7 @@ export default function sequencer (state = initialSequencerState, action) {
     case 'SEQUENCER_STEP_SELECT':
       return selectStep(state, action)
     case 'SEQUENCER_STEP_UNSELECT':
-    case 'STEP_TURN_OFF':
+    case 'STEPS_TURN_OFF':
       return action.ids.reduce((state, id) => unselectStep(state, id), state)
     case 'SEQUENCER_ADVANCE_STEP':
       const { currentSteps, nextSteps } = action

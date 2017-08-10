@@ -23,7 +23,7 @@ export default function steps (state = intialState, action) {
   switch (action.type) {
     case 'STEP_TURN_ON':
       return addStep(state, action)
-    case 'STEP_TURN_OFF':
+    case 'STEPS_TURN_OFF':
       return action.ids.reduce((state, id) => removeStep(state, id), state)
     case 'STEPS_UPDATE_PITCH':
       return updateParamBatch(state, 'midiPitch', action.ids, action.values)

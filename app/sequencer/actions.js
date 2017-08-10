@@ -21,7 +21,7 @@ export function turnStepOn (trackId, stepNumber, pitch, velocity) {
 }
 
 export function turnStepsOff (ids) {
-  return { type: 'STEP_TURN_OFF', ids }
+  return { type: 'STEPS_TURN_OFF', ids }
 }
 
 export function stopSequence () {

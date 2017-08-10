@@ -8,7 +8,7 @@ export default function tracks (state = intialState, action) {
       return addTracks(state, action.trackIds)
     case 'STEP_TURN_ON':
       return addStep(state, action.trackId, action.id, action.stepNumber)
-    case 'STEP_TURN_OFF':
+    case 'STEPS_TURN_OFF':
       return action.ids.reduce((state, id) => removeStep(state, id), state)
     case 'TRACK_UPDATE_NUMBER_OF_STEPS':
       return updateParam(state, action.id, 'numberOfSteps', action.numberOfSteps)
