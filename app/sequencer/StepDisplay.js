@@ -47,7 +47,6 @@ class StepPad extends React.Component {
 const mapStateToStepProps = (state, { stepNumber, stepId, trackId }) => {
   const selectedStepIds = selectedSteps(state).map(step => step.id)
   return {
-    id: stepId,
     isDisplayedInEditWindow: stepId && (stepId === mostRecentlySelectedStep(state).id),
     isSelected: stepId && selectedStepIds.includes(stepId),
     isCurrentStep: stepNumber === currentStepNumberForTrack(state, trackId),
