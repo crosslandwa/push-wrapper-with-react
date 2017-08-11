@@ -12,7 +12,7 @@ const style = {
   justifyContent: 'space-around'
 }
 
-const displayRgb = (fadeEffect, isCurrentStep, isDisplayedInEditWindow, isSelected, hasNote, velocity, recording) => {
+const displayRgb = (fadeEffect, { isCurrentStep, isDisplayedInEditWindow, isSelected, hasNote, velocity, recording }) => {
   if (isDisplayedInEditWindow) return Colours.yellow
   if (isSelected) return Colours.orange
   if (isCurrentStep) return hasNote
@@ -23,9 +23,8 @@ const displayRgb = (fadeEffect, isCurrentStep, isDisplayedInEditWindow, isSelect
 
 class StepPad extends React.Component {
   render () {
-    const { onClick, onRelease, pad, stepId, stepNumber } = this.props
-    const { isCurrentStep, isDisplayedInEditWindow, isSelected, hasNote, velocity, recording } = this.props
-    const rgb = (fadeEffect) => displayRgb(fadeEffect, isCurrentStep, isDisplayedInEditWindow, isSelected, hasNote, velocity, recording)
+    const { hasNote, isCurrentStep, onClick, onRelease, pad, stepId, stepNumber } = this.props
+    const rgb = (fadeEffect) => displayRgb(fadeEffect, this.props)
     return (
       <DomGridPad
         active={isCurrentStep || hasNote}
