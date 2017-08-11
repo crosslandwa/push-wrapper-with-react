@@ -42,23 +42,36 @@ class StepPad extends React.Component {
   }
 }
 
-const mapStateToStepProps = (state, ownProps) => ({})
+const mapStateToStepProps = (state, { stepNumber, stepId, trackId }) => {
+  const selectedStepIds = selectedSteps(state).map(step => step.id)
+  return {
+    stepData: {
+      id: stepId,
+      isDisplayedInEditWindow: stepId && (stepId === mostRecentlySelectedStep(state).id),
+      isSelected: stepId && selectedStepIds.includes(stepId),
+      isCurrentStep: stepNumber === currentStepNumberForTrack(state, trackId),
+      hasNote: !!stepId,
+      velocity: stepId && stepSelector(state, stepId).midiVelocity
+    }
+  }
+}
 const ConnectedStepPad = connect(mapStateToStepProps)(StepPad)
 
 class StepDisplay extends React.Component {
   render () {
-    const {pads, numberOfSteps, onClick, onRelease = () => {}} = this.props
+    const { pads, numberOfSteps, onClick, onRelease = () => {}, trackId, trackStepIds } = this.props
     return (
       <div style={style} >
         {pads.map((pad, stepNumber) => stepNumber < numberOfSteps
           ? (
             <ConnectedStepPad
               key={stepNumber}
-              stepData={this.props.stepData[stepNumber]}
               onClick={this.props.onClick}
               onRelease={onRelease}
               pad={pad}
               stepNumber={stepNumber}
+              trackId={trackId}
+              stepId={trackStepIds[stepNumber]}
             />
           )
           : (
@@ -71,9 +84,11 @@ class StepDisplay extends React.Component {
     )
   }
 
-  // shouldComponentUpdate(nextProps) {
-  //   return this.props.numberOfSteps !== nextProps.numberOfSteps
-  // }
+  shouldComponentUpdate(nextProps) {
+    return (this.props.trackId !== nextProps.trackId)
+      || (this.props.numberOfSteps !== nextProps.numberOfSteps)
+      || (this.props.trackStepIds.toString() !== nextProps.trackStepIds.toString())
+  }
 }
 
 const mapStateToProps = (state, { pads, trackId }) => {
@@ -82,17 +97,7 @@ const mapStateToProps = (state, { pads, trackId }) => {
   return {
     numberOfSteps: track.numberOfSteps,
     recording: isRecording(state),
-    stepData: pads.map((pad, stepNumber) => {
-      const stepId = track.stepIds[stepNumber]
-      return {
-        id: stepId,
-        isDisplayedInEditWindow: stepId && (stepId === mostRecentlySelectedStep(state).id),
-        isSelected: stepId && selectedStepIds.includes(stepId),
-        isCurrentStep: stepNumber === currentStepNumberForTrack(state, track.id),
-        hasNote: !!stepId,
-        velocity: stepId && stepSelector(state, stepId).midiVelocity
-      }
-    })
+    trackStepIds: track.stepIds
   }
 }
 
