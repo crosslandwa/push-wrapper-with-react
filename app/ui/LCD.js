@@ -50,10 +50,6 @@ class LCD extends React.Component {
       </div>
     )
   }
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.data.toString() !== nextProps.data.toString()
-  }
 }
 
 export default LCD

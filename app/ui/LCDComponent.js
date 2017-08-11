@@ -11,7 +11,15 @@ import { frequencyScaling } from '../player/actions'
 const filterF = amount => Math.floor(frequencyScaling(amount))
 const dbVolume = (midiVolume) => parseFloat(20 * Math.log10(midiVelocityToAbsolute(midiVolume))).toFixed(2) + 'dB'
 
-const LCDComponent = (props) => <LCD {...props} />
+class LCDComponent extends React.Component {
+  render () {
+    return <LCD {...this.props} />
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return this.props.data.toString() !== nextProps.data.toString()
+  }
+}
 
 const voiceDisplay = (state, ownProps) => {
   const voice = currentVoice(state)
