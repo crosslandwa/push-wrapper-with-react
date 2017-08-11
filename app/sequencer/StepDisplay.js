@@ -15,25 +15,22 @@ const style = {
 const displayRgb = (fadeEffect, { isCurrentStep, isDisplayedInEditWindow, isSelected, hasNote, velocity, recording }) => {
   if (isDisplayedInEditWindow) return Colours.yellow
   if (isSelected) return Colours.orange
-  if (isCurrentStep) return hasNote
-    ? Colours.turquoise
-    : recording ? Colours.red : Colours.green
+  if (isCurrentStep) return hasNote ? Colours.turquoise : (recording ? Colours.red : Colours.green)
   return hasNote ? fadeEffect(Colours.blue, velocity) : Colours.off
 }
 
 class StepPad extends React.Component {
   render () {
     const { hasNote, isCurrentStep, onClick, onRelease, pad, stepId, stepNumber } = this.props
-    const rgb = (fadeEffect) => displayRgb(fadeEffect, this.props)
     return (
       <DomGridPad
         active={isCurrentStep || hasNote}
-        rgb={rgb(domFade)}
+        rgb={displayRgb(domFade, this.props)}
         padPressed={() => onClick(stepNumber, stepId)}
         padReleased={() => onRelease(stepId)}
       >
         <PushGridPad
-          rgb={rgb(fade)}
+          rgb={displayRgb(fade, this.props)}
           pad={pad}
           padPressed={() => onClick(stepNumber, stepId)}
           padReleased={() => onRelease(stepId)}
@@ -44,14 +41,20 @@ class StepPad extends React.Component {
 }
 
 const mapStateToStepProps = (state, { stepNumber, stepId, trackId }) => {
-  const selectedStepIds = selectedSteps(state).map(step => step.id)
-  return {
-    isDisplayedInEditWindow: stepId && (stepId === mostRecentlySelectedStep(state).id),
-    isSelected: stepId && selectedStepIds.includes(stepId),
-    isCurrentStep: stepNumber === currentStepNumberForTrack(state, trackId),
-    hasNote: !!stepId,
-    velocity: stepId && stepSelector(state, stepId).midiVelocity
-  }
+  return stepId
+    ? {
+      isDisplayedInEditWindow: stepId === mostRecentlySelectedStep(state).id,
+      isSelected: selectedSteps(state).map(step => step.id).includes(stepId),
+      isCurrentStep: stepNumber === currentStepNumberForTrack(state, trackId),
+      hasNote: true,
+      velocity: stepSelector(state, stepId).midiVelocity
+    }
+    : {
+      isDisplayedInEditWindow: false,
+      isSelected: false,
+      isCurrentStep: stepNumber === currentStepNumberForTrack(state, trackId),
+      hasNote: false
+    }
 }
 const ConnectedStepPad = connect(mapStateToStepProps)(StepPad)
 
@@ -93,7 +96,6 @@ class StepDisplay extends React.Component {
 
 const mapStateToProps = (state, { pads, trackId }) => {
   const track = trackSelector(state, trackId)
-  const selectedStepIds = selectedSteps(state).map(step => step.id)
   return {
     numberOfSteps: track.numberOfSteps,
     recording: isRecording(state),
