@@ -39,12 +39,21 @@ class LCDStrip extends React.Component {
   }
 }
 
-const LCD = ({data = [], pushLcdSegmentsRow}) => (
-  <div style={style}>
-    {paddedRows(data).map((row, index) => (
-      <LCDStrip key={index} data={row} rowIndex={index} pushLcdSegmentsRow={pushLcdSegmentsRow(3 - index)} />
-    ))}
-  </div>
-)
+class LCD extends React.Component {
+  render () {
+    const {data = [], pushLcdSegmentsRow} = this.props
+    return (
+      <div style={style}>
+        {paddedRows(data).map((row, index) => (
+          <LCDStrip key={index} data={row} rowIndex={index} pushLcdSegmentsRow={pushLcdSegmentsRow(3 - index)} />
+        ))}
+      </div>
+    )
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return this.props.data.toString() !== nextProps.data.toString()
+  }
+}
 
 export default LCD
