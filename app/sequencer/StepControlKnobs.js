@@ -8,29 +8,31 @@ import DomKnob from '../push/DomKnob'
 import PushKnob from '../push/PushKnob'
 import { changeStepDecayBy, changeStepPitchBy, changeStepVelocityBy } from './stepsActions'
 
-const Knob = connect(
-  null,
-  (dispatch, ownProps) => bindActionCreators(ownProps.actions, dispatch)
-)((props) => (
+const Knob = (props) => (
   <ClickyDraggy {...props} >
     <DomKnob />
     <PushKnob {...props} />
   </ClickyDraggy>
-))
+)
 
-const StepControlKnobs = ({knobs}) => {
+const StepControlKnobs = (props) => {
+  const { knobs } = props
   return (
     <ChannelKnobs>
-      <Knob knob={knobs[0]} actions={{ onTurned: changeStepPitchBy }}/>
+      <Knob knob={knobs[0]} onTurned={props.changePitch} />
       <DomKnob />
-      <Knob knob={knobs[2]} actions={{ onTurned: changeStepDecayBy }}/>
-      <DomKnob />
-      <DomKnob />
+      <Knob knob={knobs[2]} onTurned={props.changeDecay} />
       <DomKnob />
       <DomKnob />
-      <Knob knob={knobs[7]} actions={{ onTurned: changeStepVelocityBy }}/>
+      <DomKnob />
+      <DomKnob />
+      <Knob knob={knobs[7]} onTurned={props.changeVelocity} />
     </ChannelKnobs>
   )
 }
 
-export default StepControlKnobs
+export default connect(null, {
+  changeDecay: changeStepDecayBy,
+  changePitch: changeStepPitchBy,
+  changeVelocity: changeStepVelocityBy
+})(StepControlKnobs)

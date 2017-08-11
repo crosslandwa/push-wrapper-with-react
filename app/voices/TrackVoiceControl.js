@@ -15,12 +15,14 @@ const mergeProps = (state, { dispatch }, ownProps) => {
   return Object.assign({}, ownProps, bindActionCreators(ownProps.actions, dispatch))
 }
 
-const Knob = connect((state) => state, null, mergeProps)((props) => (
-  <ClickyDraggy {...props} >
-    <DomKnob />
-    <PushKnob {...props} />
-  </ClickyDraggy>
-))
+const Knob = connect(null, null, mergeProps)((props) => {
+  return (
+    <ClickyDraggy {...props} >
+      <DomKnob />
+      <PushKnob {...props} />
+    </ClickyDraggy>
+  )
+})
 
 const TrackVoiceControl = ({knobs}) => {
   return (
