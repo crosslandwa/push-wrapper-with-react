@@ -22,13 +22,12 @@ const padStyleActive = (rgb) => ({
 
 const DomGridPad = ({children, pad, active = false, padPressed, padReleased, rgb = Colours.blue}) => (
   <div
-    className='pad'
     onMouseDown={() => padPressed && padPressed(100)}
     onMouseUp={() => padReleased && padReleased()}
-    style={Object.assign({},
-      padStyleBase,
-      active ? padStyleActive(rgb) : {}
-    )}
+    style={{
+      ...padStyleBase,
+      ...(active ? padStyleActive(rgb) : {})
+    }}
   >
     {children}
   </div>

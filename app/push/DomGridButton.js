@@ -24,10 +24,10 @@ const DomGridButton = ({active, children, onPressed, onReleased, rgb = Colours.o
   <div
     onMouseDown={() => onPressed && onPressed()}
     onMouseUp={() => onReleased && onReleased()}
-    style={Object.assign({},
-      padStyleBase,
-      active ? padStyleActive(rgb) : {}
-    )}
+    style={{
+      ...padStyleBase,
+      ...(active ? padStyleActive(rgb) : {})
+    }}
   >
     {children}
   </div>
